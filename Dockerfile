@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
         build-essential \
         bzip2 \
         ca-certificates \
+        file \
         libglib2.0-0 \
         libsm6 \
         libxext6 \
