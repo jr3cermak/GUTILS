@@ -23,7 +23,7 @@ import logging
 L = logging.getLogger(__name__)  # noqa
 
 config_path = resource('slocum', 'config', 'bass-20160909T1733')
-original_binary = resource('slocum', 'real', 'binary', 'bass-20160909T1733')
+original_binary = resource('slocum', 'binary', 'bass-20160909T1733')
 binary_path = output('binary', 'bass-20160909T1733')
 ascii_path = output('ascii', 'bass-20160909T1733')
 netcdf_path = output('netcdf', 'bass-20160909T1733')

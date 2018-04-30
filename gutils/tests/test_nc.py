@@ -28,7 +28,7 @@ class TestCreateGliderScript(GutilsTestClass):
 
     def tearDown(self):
         outputs = [
-            resource('slocum', 'real', 'netcdf')
+            resource('slocum', 'netcdf')
         ]
         for d in outputs:
             try:
@@ -37,7 +37,7 @@ class TestCreateGliderScript(GutilsTestClass):
                 pass
 
     def test_defaults(self):
-        out_base = resource('slocum', 'real', 'netcdf', 'bass-20160909T1733')
+        out_base = resource('slocum', 'netcdf', 'bass-20160909T1733')
         args = dict(
             file=resource('slocum', 'usf_bass_2016_253_0_6_sbd.dat'),
             reader_class=SlocumReader,
@@ -74,7 +74,7 @@ class TestCreateGliderScript(GutilsTestClass):
             assert check_dataset(ds(file=o)) == 0
 
     def test_all_ascii(self):
-        out_base = resource('slocum', 'real', 'netcdf', 'bass-20160909T1733')
+        out_base = resource('slocum', 'netcdf', 'bass-20160909T1733')
         safe_makedirs(out_base)
 
         for f in glob(resource('slocum', 'usf_bass*.dat')):
@@ -113,12 +113,12 @@ class TestCreateGliderScript(GutilsTestClass):
             assert check_dataset(ds(file=o)) == 0
 
     def test_delayed(self):
-        out_base = resource('slocum', 'real', 'netcdf', 'modena-2015')
+        out_base = resource('slocum', 'netcdf', 'modena-20150625T0000')
 
         args = dict(
             file=resource('slocum', 'modena_2015_175_0_9_dbd.dat'),
             reader_class=SlocumReader,
-            config_path=resource('slocum', 'config', 'modena-2015'),
+            config_path=resource('slocum', 'config', 'modena-20150625T0000'),
             output_path=out_base,
             subset=False,
             template='trajectory',

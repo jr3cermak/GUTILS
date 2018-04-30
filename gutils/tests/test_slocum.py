@@ -17,8 +17,8 @@ class TestSlocumMerger(GutilsTestClass):
     def setUp(self):
         super(TestSlocumMerger, self).setUp()
 
-        self.binary_path = resource('slocum', 'real', 'binary', 'bass-20150407T1300')
-        self.ascii_path = resource('slocum', 'real', 'ascii', 'bass-20150407T1300')
+        self.binary_path = resource('slocum', 'binary', 'bass-20150407T1300')
+        self.ascii_path = resource('slocum', 'ascii', 'bass-20150407T1300')
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path)  # Remove generated ASCII
@@ -68,8 +68,8 @@ class TestSlocumReaderNoGPS(GutilsTestClass):
 
     def setUp(self):
         super(TestSlocumReaderNoGPS, self).setUp()
-        self.binary_path = resource('slocum', 'real', 'binary', 'bass-20150407T1300')
-        self.ascii_path = resource('slocum', 'real', 'ascii', 'bass-20150407T1300')
+        self.binary_path = resource('slocum', 'binary', 'bass-20150407T1300')
+        self.ascii_path = resource('slocum', 'ascii', 'bass-20150407T1300')
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path)  # Remove generated ASCII
@@ -109,8 +109,8 @@ class TestSlocumReaderWithGPS(GutilsTestClass):
 
     def setUp(self):
         super(TestSlocumReaderWithGPS, self).setUp()
-        self.binary_path = resource('slocum', 'real', 'binary', 'bass-20160909T1733')
-        self.ascii_path = resource('slocum', 'real', 'ascii', 'bass-20160909T1733')
+        self.binary_path = resource('slocum', 'binary', 'bass-20160909T1733')
+        self.ascii_path = resource('slocum', 'ascii', 'bass-20160909T1733')
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path)  # Remove generated ASCII
@@ -149,9 +149,9 @@ class TestSlocumExportDelayed(GutilsTestClass):
 
     def setUp(self):
         super(TestSlocumExportDelayed, self).setUp()
-        self.binary_path = resource('slocum', 'real', 'binary', 'modena-2015')
-        self.ascii_path = resource('slocum', 'real', 'ascii', 'modena-2015')
-        self.cache_path = os.path.join(self.binary_path, 'cac')
+        self.binary_path = resource('slocum', 'binary', 'modena-20150625T0000')
+        self.ascii_path = resource('slocum', 'ascii', 'modena-20150625T0000')
+        self.cache_path = resource('slocum', 'config', 'modena-20150625T0000')
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path)  # Remove generated ASCII

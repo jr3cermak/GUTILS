@@ -17,19 +17,13 @@ L = logging.getLogger(__name__)  # noqa
 @pytest.mark.long
 @pytest.mark.parametrize("deployment", [
     'bass-20160909T1733',
-    # 'modena-20160909T1758',
-    # 'ramses-20160909T2028',
-    # 'ramses-20170516T1345',
-    # 'salacia-20160919T2028',
-    # 'salacia-20170710T1942',
-    # 'ramses-20170905T1728',
 ])
 def test_real_deployments(deployment):
     setup_testing_logger(level=logging.WARNING)
-    binary_path = resource('slocum', 'real', 'binary', deployment)
-    ascii_path = resource('slocum', 'real', 'ascii', deployment)
-    netcdf_path = resource('slocum', 'real', 'netcdf', deployment)
-    default_configs = resource('slocum', 'real', 'config', deployment)
+    binary_path = resource('slocum', 'binary', deployment)
+    ascii_path = resource('slocum', 'ascii', deployment)
+    netcdf_path = resource('slocum', 'netcdf', deployment)
+    default_configs = resource('slocum', 'config', deployment)
 
     # Config path is usually an env variable pointing to a configuration setup
     all_config_path = os.environ.get('GUTILS_TEST_CONFIG_DIRECTORY', default_configs)

@@ -1,2210 +1,0 @@
-dbd_label:    DBD(dinkum_binary_data)file
-encoding_ver:    5
-num_ascii_tags:    14
-all_sensors:    F
-the8x3_filename:    03280000
-full_filename:    salacia-2016-270-4-0
-filename_extension:    sbd
-mission_name:    SHELF_40.MI
-fileopen_time:    Tue_Sep_27_22:05:20_2016
-total_num_sensors:    2027
-sensors_per_cycle:    15
-state_bytes_per_cycle:    4
-sensor_list_crc:    ce6ed3f1
-sensor_list_factored:    0
-s: F    0   -1 1 cc_bpump_mode enum
-s: F    1   -1 4 cc_bpump_value X
-s: F    2   -1 1 cc_depth_state_mode enum
-s: F    3   -1 1 cc_final_bpump_mode enum
-s: F    4   -1 4 cc_final_bpump_value X
-s: F    5   -1 1 cc_final_depth_state_mode enum
-s: F    6   -1 1 cc_final_heading_mode enum
-s: F    7   -1 4 cc_final_heading_value X
-s: F    8   -1 1 cc_final_inflection_mode enum
-s: F    9   -1 1 cc_final_is_comatose bool
-s: F   10   -1 1 cc_final_mission_status_mode enum
-s: F   11   -1 1 cc_final_pitch_mode enum
-s: F   12   -1 4 cc_final_pitch_value X
-s: F   13   -1 1 cc_final_threng_mode enum
-s: F   14   -1 1 cc_final_thruster_mode enum
-s: F   15   -1 4 cc_final_thruster_value X
-s: F   16   -1 4 cc_final_time_til_inflect s
-s: F   17   -1 1 cc_heading_mode enum
-s: F   18   -1 4 cc_heading_value X
-s: F   19   -1 1 cc_inflection_mode enum
-s: F   20   -1 1 cc_is_comatose bool
-s: F   21   -1 1 cc_mission_status_mode enum
-s: F   22   -1 1 cc_pitch_mode enum
-s: F   23   -1 4 cc_pitch_value X
-s: F   24   -1 1 cc_threng_mode enum
-s: F   25   -1 1 cc_thruster_mode enum
-s: F   26   -1 4 cc_thruster_value X
-s: F   27   -1 4 cc_time_til_inflect s
-s: F   28   -1 1 c_acoustic_modem_target_id enum
-s: F   29   -1 1 c_air_pump enum
-s: F   30   -1 4 c_alt_recall msecs
-s: F   31   -1 4 c_alt_time sec
-s: F   32   -1 1 c_argos_on enum
-s: F   33   -1 4 c_att_recall msec
-s: F   34   -1 4 c_att_time sec
-s: F   35   -1 1 c_autoballast_state enum
-s: F   36   -1 4 c_autoballast_volume X
-s: F   37   -1 4 c_autobaud_max_ber nodim
-s: F   38   -1 4 c_auvb_num_fields_to_send nodim
-s: F   39   -1 4 c_auvb_on sec
-s: F   40   -1 1 c_badd_clear_remote_data bool
-s: F   41   -1 4 c_badd_datacol_status_secs sec
-s: F   42   -1 4 c_badd_data_min_rate %
-s: F   43   -1 4 c_badd_data_min_tries int
-s: F   44   -1 1 c_badd_debug enum
-s: F   45   -1 4 c_badd_download_range m
-s: F   46   -1 4 c_badd_initial_wait_secs sec
-s: F   47   -1 4 c_badd_input_parse_secs sec
-s: F   48   -1 1 c_badd_mode enum
-s: F   49   -1 4 c_badd_on sec
-s: F   50   -1 4 c_badd_range_secs sec
-s: F   51   -1 4 c_badd_range_tries int
-s: F   52   -1 4 c_badd_retry_wait_secs sec
-s: F   53   -1 4 c_badd_session_secs sec
-s: F   54   -1 1 c_badd_target_id enum
-s: F   55   -1 4 c_badd_transaction_num nodim
-s: F   56   -1 4 c_ballast_pumped cc
-s: F   57   -1 4 c_bam_chars_to_get_before_surfacing nodim
-s: F   58   -1 4 c_bam_cmd_parse_secs sec
-s: F   59   -1 4 c_bam_datacol_report_secs sec
-s: F   60   -1 4 c_bam_inactivity_secs sec
-s: F   61   -1 1 c_bam_mode enum
-s: F   62   -1 4 c_bam_number_of_echos nodim
-s: F   63   -1 4 c_bam_on sec
-s: F   64   -1 1 c_bam_target_id enum
-s: F   65   -1 4 c_bam_update_secs sec
-s: F   66   -1 4 c_battpos in
-s: F   67   -1 4 c_battroll rad
-s: F   68   -1 1 c_baud_attempt_max enum
-s: F   69   -1 1 c_baud_attempt_min enum
-s: F   70   -1 4 c_bb2c_num_fields_to_send nodim
-s: F   71   -1 4 c_bb2c_on sec
-s: F   72   -1 4 c_bb2flsV2_num_fields_to_send nodim
-s: F   73   -1 4 c_bb2flsV2_on sec
-s: F   74   -1 4 c_bb2flsV3_num_fields_to_send nodim
-s: F   75   -1 4 c_bb2flsV3_on sec
-s: F   76   -1 4 c_bb2flsV4_num_fields_to_send nodim
-s: F   77   -1 4 c_bb2flsV4_on sec
-s: F   78   -1 4 c_bb2flsV5_num_fields_to_send nodim
-s: F   79   -1 4 c_bb2flsV5_on sec
-s: F   80   -1 4 c_bb2flsV6_num_fields_to_send nodim
-s: F   81   -1 4 c_bb2flsV6_on sec
-s: F   82   -1 4 c_bb2flsV7_num_fields_to_send nodim
-s: F   83   -1 4 c_bb2flsV7_on sec
-s: F   84   -1 4 c_bb2fls_num_fields_to_send nodim
-s: F   85   -1 4 c_bb2fls_on sec
-s: F   86   -1 4 c_bb2fV2_num_fields_to_send nodim
-s: F   87   -1 4 c_bb2fV2_on sec
-s: F   88   -1 4 c_bb2f_num_fields_to_send nodim
-s: F   89   -1 4 c_bb2f_on sec
-s: F   90   -1 4 c_bb2lss_num_fields_to_send nodim
-s: F   91   -1 4 c_bb2lss_on sec
-s: F   92   -1 4 c_bb3sloV2_num_fields_to_send nodim
-s: F   93   -1 4 c_bb3sloV2_on sec
-s: F   94   -1 4 c_bb3sloV3_num_fields_to_send nodim
-s: F   95   -1 4 c_bb3sloV3_on sec
-s: F   96   -1 4 c_bb3slo_num_fields_to_send nodim
-s: F   97   -1 4 c_bb3slo_on sec
-s: F   98   -1 4 c_bbam_num_fields_to_send nodim
-s: F   99   -1 4 c_bbam_on sec
-s: F  100   -1 4 c_bbfl2sV2_num_fields_to_send nodim
-s: F  101   -1 4 c_bbfl2sV2_on sec
-s: F  102   -1 4 c_bbfl2s_num_fields_to_send nodim
-s: F  103   -1 4 c_bbfl2s_on sec
-s: F  104   -1 4 c_bsipar_num_fields_to_send nodim
-s: F  105   -1 4 c_bsipar_on sec
-s: F  106   -1 4 c_c3sfl_num_fields_to_send nodim
-s: F  107   -1 4 c_c3sfl_on sec
-s: F  108   -1 4 c_climb_battpos in
-s: F  109   -1 4 c_climb_bpump X
-s: F  110   -1 4 c_climb_target_depth m
-s: F  111   -1 1 c_console_on bool
-s: F  112   -1 4 c_coulomb_on sec
-s: F  113   -1 4 c_ctd41cp2_num_fields_to_send nodim
-s: F  114   -1 4 c_ctd41cp2_on sec
-s: F  115   -1 4 c_ctd41cp_num_fields_to_send nodim
-s: F  116   -1 4 c_delta_bpump_ballast X
-s: F  117   -1 4 c_delta_bpump_speed X
-s: F  118   -1 1 c_depth_rate_running_avg_num enum
-s: F  119   -1 4 c_de_oil_vol cc
-s: F  120   -1 4 c_digifin_cmd_data nodim
-s: F  121   -1 4 c_digifin_read_reg nodim
-s: F  122   -1 4 c_digifin_write_reg nodim
-s: F  123   -1 4 c_dive_battpos in
-s: F  124   -1 4 c_dive_bpump X
-s: F  125   -1 4 c_dive_target_depth m
-s: F  126   -1 4 c_dmon_on sec
-s: F  127   -1 4 c_dvl_on sec
-s: F  128   -1 4 c_echosndr853_on sec
-s: F  129   -1 4 c_fin rad
-s: F  130   -1 4 c_FIRe_num_fields_to_send nodim
-s: F  131   -1 4 c_FIRe_on sec
-s: F  132   -1 4 c_fl3sloV2_num_fields_to_send nodim
-s: F  133   -1 4 c_fl3sloV2_on sec
-s: F  134   -1 4 c_fl3slo_num_fields_to_send nodim
-s: F  135   -1 4 c_fl3slo_on sec
-s: F  136   -1 4 c_flbbcd_num_fields_to_send nodim
-s: F  137   -1 4 c_flbbcd_on sec
-s: F  138   -1 4 c_flbbrh_num_fields_to_send nodim
-s: F  139   -1 4 c_flbbrh_on sec
-s: F  140   -1 4 c_flbb_num_fields_to_send nodim
-s: F  141   -1 4 c_flbb_on sec
-s: F  142   -1 4 c_flntu_num_fields_to_send nodim
-s: F  143   -1 4 c_flntu_on sec
-s: F  144   -1 4 c_flrh_num_fields_to_send nodim
-s: F  145   -1 4 c_flrh_on sec
-s: F  146   -1 4 c_fluid_pumped cc
-s: F  147   -1 4 c_flur_num_fields_to_send nodim
-s: F  148   -1 4 c_flur_on sec
-s: F  149   -1 4 c_gamma_rad5_on sec
-s: F  150   -1 4 c_glbps_num_fields_to_send nodim
-s: F  151   -1 4 c_glbps_on sec
-s: F  152   -1 1 c_gps_on enum
-s: F  153   -1 4 c_heading rad
-s: F  154   -1 4 c_heap_measurement_period mins
-s: F  155   -1 4 c_hover_battpos in
-s: F  156   -1 4 c_hydrophone_drive_num nodim
-s: F  157   -1 4 c_hydrophone_duration sec
-s: F  158   -1 4 c_hydrophone_gain nodim
-s: F  159   -1 4 c_hydrophone_num_channels nodim
-s: F  160   -1 4 c_hydrophone_on sec
-s: F  161   -1 4 c_hydrophone_post_delay sec
-s: F  162   -1 4 c_hydrophone_post_pings nodim
-s: F  163   -1 4 c_hydrophone_pre_delay sec
-s: F  164   -1 4 c_hydrophone_pre_pings nodim
-s: F  165   -1 4 c_hydrophone_sample_rate Hz
-s: F  166   -1 4 c_iridium_atok_timeout sec
-s: F  167   -1 4 c_iridium_await_connect_max mins
-s: F  168   -1 1 c_iridium_cmd_echo enum
-s: F  169   -1 1 c_iridium_current_num enum
-s: F  170   -1 4 c_iridium_lead_zeros nodim
-s: F  171   -1 4 c_iridium_lead_zeros_alt nodim
-s: F  172   -1 4 c_iridium_no_char_timeout mins
-s: F  173   -1 1 c_iridium_on enum
-s: F  174   -1 4 c_iridium_phone_num digits
-s: F  175   -1 4 c_iridium_phone_num_alt digits
-s: F  176   -1 4 c_iridium_power_on_delay sec
-s: F  177   -1 4 c_iridium_redials_per_on_off nodim
-s: F  178   -1 4 c_iridium_redial_delay sec
-s: F  179   -1 4 c_iridium_register sec
-s: F  180   -1 4 c_iridium_reread_config_files button
-s: F  181   -1 4 c_iridium_time_til_callback sec
-s: F  182   -1 4 c_leakdetect_recall msec
-s: F  183   -1 4 c_leakdetect_time s
-s: F  184   -1 4 c_lithium_battery_on sec
-s: F  185   -1 4 c_logger_ctrl_timeout sec
-s: F  186   -1 4 c_logger_on sec
-s: F  187   -1 4 c_moteopd_data_overtime sec
-s: F  188   -1 1 c_moteopd_debug bool
-s: F  189   -1 4 c_moteopd_on sec
-s: F  190   -1 4 c_nbctd_num_fields_to_send nodim
-s: F  191   -1 1 c_obsolete_on bool
-s: F  192   -1 4 c_ocr504I_num_fields_to_send nodim
-s: F  193   -1 4 c_ocr504I_on sec
-s: F  194   -1 4 c_ocr504R_num_fields_to_send nodim
-s: F  195   -1 4 c_ocr504R_on sec
-s: F  196   -1 4 c_ocr507I_num_fields_to_send nodim
-s: F  197   -1 4 c_ocr507I_on sec
-s: F  198   -1 4 c_ocr507R_num_fields_to_send nodim
-s: F  199   -1 4 c_ocr507R_on sec
-s: F  200   -1 4 c_oxy3835_num_fields_to_send nodim
-s: F  201   -1 4 c_oxy3835_on sec
-s: F  202   -1 4 c_oxy3835_wphase_num_fields_to_send nodim
-s: F  203   -1 4 c_oxy3835_wphase_on sec
-s: F  204   -1 4 c_oxy4_num_fields_to_send nodim
-s: F  205   -1 4 c_oxy4_on sec
-s: F  206   -1 1 c_pinger_on bool
-s: F  207   -1 4 c_pitch rad
-s: F  208   -1 4 c_pressure_recall msec
-s: F  209   -1 4 c_pressure_time sec
-s: F  210   -1 4 c_profile_on sec
-s: F  211   -1 4 c_profile_recall msec
-s: F  212   -1 1 c_recovery_on bool
-s: F  213   -1 1 c_reread_mafiles bool
-s: F  214   -1 4 c_rinkoII_num_fields_to_send nodim
-s: F  215   -1 4 c_rinkoII_on sec
-s: F  216   -1 4 c_roll rad
-s: F  217   -1 4 c_sam_num_fields_to_send nodim
-s: F  218   -1 4 c_sam_on sec
-s: F  219   -1 4 c_satpar_num_fields_to_send nodim
-s: F  220   -1 4 c_satpar_on sec
-s: F  221   -1 4 c_science_all_on secs
-s: F  222   -1 1 c_science_all_on_enabled bool
-s: F  223   -1 1 c_science_on bool
-s: F  224   -1 4 c_science_printout nodim
-s: F  225   -1 1 c_science_send_all bool
-s: F  226   -1 4 c_science_stress_on sensors/sec
-s: F  227   -1 4 c_speed m/s
-s: F  228   -1 1 c_speed_ctrl bool
-s: F  229   -1 4 c_speed_max m/s
-s: F  230   -1 4 c_speed_min m/s
-s: F  231   -1 4 c_sscsd_on sec
-s: F  232   -1 1 c_strobe_ctrl bool
-s: F  233   -1 4 c_suna_on sec
-s: F  234   -1 4 c_tarr_on sec
-s: F  235   -1 4 c_thermal_acc_pres_recall msec
-s: F  236   -1 4 c_thermal_acc_pres_time sec
-s: F  237   -1 1 c_thermal_pump enum
-s: F  238   -1 1 c_thermal_updown enum
-s: F  239   -1 1 c_thermal_valve enum
-s: F  240   -1 4 c_thruster_current_cal nodim
-s: F  241   -1 4 c_thruster_depth_rate_depth m
-s: F  242   -1 4 c_thruster_depth_rate_secs s
-s: F  243   -1 4 c_thruster_on %
-s: F  244   -1 4 c_thruster_surface_depth m
-s: F  245   -1 4 c_thruster_surface_secs s
-s: F  246   -1 4 c_time_ratio X
-s: F  247   -1 4 c_uModem_on sec
-s: F  248   -1 1 c_use_sc_model bool
-s: F  249   -1 4 c_veh_temp_recall msec
-s: F  250   -1 4 c_veh_temp_time s
-s: F  251   -1 4 c_viper_collect_timeout sec
-s: F  252   -1 4 c_viper_detection_done_timeout sec
-s: F  253   -1 4 c_viper_gain nodim
-s: F  254   -1 4 c_viper_max_errors nodim
-s: F  255   -1 4 c_viper_max_sample_starts nodim
-s: F  256   -1 4 c_viper_on sec
-s: F  257   -1 4 c_viper_reset_timeout sec
-s: F  258   -1 4 c_viper_start_sampling_timeout sec
-s: F  259   -1 4 c_viper_turn_off_timeout sec
-s: F  260   -1 4 c_viper_turn_on_timeout sec
-s: F  261   -1 4 c_vr2c_num_fields_to_send nodim
-s: F  262   -1 4 c_vr2c_on sec
-s: F  263   -1 4 c_vsf_num_fields_to_send nodim
-s: F  264   -1 4 c_vsf_on sec
-s: F  265   -1 4 c_wait_for_ballast sec
-s: F  266   -1 1 c_wait_for_pitch bool
-s: F  267   -1 1 c_weight_drop bool
-s: F  268   -1 4 c_whfctd_num_fields_to_send nodim
-s: F  269   -1 4 c_whfctd_on sec
-s: T  270    0 8 c_wpt_lat lat
-s: T  271    1 8 c_wpt_lon lon
-s: F  272   -1 4 c_wpt_x_lmc m
-s: F  273   -1 4 c_wpt_y_lmc m
-s: F  274   -1 4 dc_c_ballast_pumped cc
-s: F  275   -1 4 dc_c_battpos in
-s: F  276   -1 4 dc_c_battroll rad
-s: F  277   -1 4 dc_c_fluid_pumped cc
-s: F  278   -1 4 dc_c_oil_volume cc
-s: F  279   -1 1 dc_c_thermal_updown enum
-s: F  280   -1 4 dc_c_thruster_on %
-s: F  281   -1 4 dhs_channel nodim
-s: F  282   -1 4 dhs_duration s
-s: F  283   -1 4 dhs_gain dB
-s: F  284   -1 1 dhs_sampling bool
-s: F  285   -1 4 dhs_silence_lvl nodim
-s: F  286   -1 4 dhs_start_time abstime
-s: F  287   -1 1 dhs_valid bool
-s: F  288   -1 4 dhs_xmit_files nodim
-s: F  289   -1 1 f_altimeter_model enum
-s: F  290   -1 1 f_argos_format enum
-s: F  291   -1 4 f_auto_picozoom_heap_reqd bytes
-s: F  292   -1 4 f_ballast_passive_retraction_delay ms
-s: F  293   -1 4 f_ballast_pumped_battery_spike_trigger volts
-s: F  294   -1 4 f_ballast_pumped_cal_b cc
-s: F  295   -1 4 f_ballast_pumped_cal_m cc/Volt
-s: F  296   -1 4 f_ballast_pumped_db_frac_dz nodim
-s: F  297   -1 4 f_ballast_pumped_deadz_width cc
-s: F  298   -1 4 f_ballast_pumped_nominal_vel cc/sec
-s: F  299   -1 4 f_ballast_pumped_reqd_vel_frac nodim
-s: F  300   -1 4 f_ballast_pumped_safety_max cc
-s: F  301   -1 4 f_ballast_pumped_stall_retry sec
-s: F  302   -1 4 f_battpos_cal_b inches
-s: F  303   -1 4 f_battpos_cal_m inches/Volt
-s: F  304   -1 4 f_battpos_db_frac_dz nodim
-s: F  305   -1 4 f_battpos_deadzone_width inches
-s: F  306   -1 4 f_battpos_nominal_vel inches/sec
-s: F  307   -1 4 f_battpos_reqd_vel_frac nodim
-s: F  308   -1 4 f_battpos_safety_max inches
-s: F  309   -1 4 f_battroll_cal_b rad
-s: F  310   -1 4 f_battroll_cal_m rad/Volt
-s: F  311   -1 4 f_battroll_db_frac_dz nodim
-s: F  312   -1 4 f_battroll_deadzone_width rad
-s: F  313   -1 4 f_battroll_nominal_vel rad/sec
-s: F  314   -1 4 f_battroll_offset rad
-s: F  315   -1 4 f_battroll_reqd_vel_frac nodim)0.25
-s: F  316   -1 4 f_battroll_safety_max rad
-s: F  317   -1 1 f_clock_source enum
-s: F  318   -1 4 f_coulomb_battery_capacity amp-hrs
-s: F  319   -1 4 f_coulomb_calibration_factor %
-s: F  320   -1 4 f_crush_depth m
-s: F  321   -1 1 f_depth_rate_method enum
-s: F  322   -1 4 f_depth_subsampling_rate sec
-s: F  323   -1 4 f_depth_subsampling_rate_default_deep sec
-s: F  324   -1 4 f_depth_subsampling_rate_default_shallow sec
-s: F  325   -1 4 f_device_reinit_timeout min
-s: F  326   -1 4 f_de_max_secs_for_updown_to_finish secs
-s: F  327   -1 4 f_de_oil_vol_db_frac_dz nodim
-s: F  328   -1 4 f_de_oil_vol_deadz_width cc
-s: F  329   -1 4 f_de_oil_vol_in_system cc
-s: F  330   -1 4 f_de_oil_vol_pot_voltage_max volts
-s: F  331   -1 4 f_de_oil_vol_pot_voltage_min volts
-s: F  332   -1 4 f_de_oil_vol_safety_max cc
-s: F  333   -1 4 f_digifin_movement_retry_max nodim
-s: F  334   -1 1 f_enable_picozoom bool
-s: F  335   -1 4 f_fin_cal_b rad
-s: F  336   -1 4 f_fin_cal_m rad/Volt
-s: F  337   -1 4 f_fin_db_frac_dz nodim
-s: F  338   -1 4 f_fin_deadzone_width rad
-s: F  339   -1 4 f_fin_nominal_vel rad/sec
-s: F  340   -1 4 f_fin_offset rad
-s: F  341   -1 4 f_fin_reqd_vel_frac nodim
-s: F  342   -1 4 f_fin_safety_max rad
-s: F  343   -1 4 f_fluid_pumped_cal_b cc
-s: F  344   -1 4 f_fluid_pumped_cal_m cc/Volt
-s: F  345   -1 4 f_fluid_pumped_db_frac_dz nodim
-s: F  346   -1 4 f_fluid_pumped_deadzone_width cc
-s: F  347   -1 4 f_fluid_pumped_nominal_vel cc/sec
-s: F  348   -1 4 f_fluid_pumped_reqd_vel_frac nodim
-s: F  349   -1 4 f_fluid_pumped_safety_max cc
-s: F  350   -1 4 f_fluid_pumped_voltage_offset volts
-s: F  351   -1 4 f_ignore_console_cd_time sec
-s: F  352   -1 4 f_leakdetect_threshold volts
-s: F  353   -1 4 f_max_ballast X
-s: F  354   -1 4 f_max_time_per_device_ctrl msec
-s: F  355   -1 4 f_max_working_depth m
-s: F  356   -1 4 f_min_ballast X
-s: F  357   -1 4 f_min_pump X
-s: F  358   -1 4 f_motor_analyze_deadband nodim
-s: F  359   -1 4 f_neutral_ballast cc
-s: F  360   -1 4 f_neutral_oil_volume cc
-s: F  361   -1 4 f_noise_floor volts
-s: F  362   -1 4 f_nominal_dive_rate m/s
-s: F  363   -1 4 f_nominal_pitch rad
-s: F  364   -1 4 f_ocean_pressure_full_scale bar
-s: F  365   -1 4 f_ocean_pressure_max volts
-s: F  366   -1 4 f_ocean_pressure_min volts
-s: F  367   -1 4 f_pitch_battpos_cal_b in
-s: F  368   -1 4 f_pitch_battpos_cal_m rad/in
-s: F  369   -1 4 f_pitch_fluid_pumped_cal_b cc
-s: F  370   -1 4 f_pitch_fluid_pumped_cal_m rad/cc
-s: F  371   -1 4 f_scale_pitch X
-s: F  372   -1 4 f_sci_max_input_process_time msec
-s: F  373   -1 4 f_speed_min m/s
-s: F  374   -1 1 f_suna_firmware_cfg enum
-s: F  375   -1 4 f_tcm3_cal_points nodim
-s: F  376   -1 4 f_thermal_acc_pres_full_scale bar
-s: F  377   -1 4 f_thermal_acc_pres_max volts
-s: F  378   -1 4 f_thermal_acc_pres_min volts
-s: F  379   -1 4 f_thermal_acc_vol_cal_p0 bar
-s: F  380   -1 4 f_thermal_acc_vol_cal_v0 cc
-s: F  381   -1 4 f_thermal_reqd_acc_pres bar
-s: F  382   -1 4 f_thermal_valve_time_over_slot msec
-s: F  383   -1 4 f_thruster_i0 m-s
-s: F  384   -1 4 f_thruster_i1 m/s-amp
-s: F  385   -1 4 f_thruster_i2 m/s-amp-amp
-s: F  386   -1 4 f_thruster_max_v volts
-s: F  387   -1 4 f_thruster_min_v volts
-s: F  388   -1 4 f_thruster_power_max watt
-s: F  389   -1 4 f_thruster_power_min watt
-s: F  390   -1 4 f_thruster_v0 m/s
-s: F  391   -1 4 f_thruster_v1 m/s-volts
-s: F  392   -1 4 f_time_to_burn_wire sec
-s: F  393   -1 4 f_veh_temp_threshold c
-s: F  394   -1 1 m_1meg_persistor bool
-s: F  395   -1 4 m_aground_water_depth m
-s: F  396   -1 1 m_air_fill bool
-s: F  397   -1 1 m_air_pump bool
-s: F  398   -1 1 m_altimeter_status enum
-s: F  399   -1 4 m_altimeter_voltage volts
-s: T  400    2 4 m_altitude m
-s: F  401   -1 4 m_altitude_rate m/s
-s: F  402   -1 1 m_appear_to_be_at_surface bool
-s: F  403   -1 1 m_argos_is_xmitting bool
-s: F  404   -1 1 m_argos_on bool
-s: F  405   -1 1 m_argos_sent_data bool
-s: F  406   -1 8 m_argos_timestamp timestamp
-s: F  407   -1 4 m_at_risk_depth m
-s: F  408   -1 4 m_avg_climb_rate m/s
-s: F  409   -1 4 m_avg_depth_rate m/s
-s: F  410   -1 4 m_avg_dive_rate m/s
-s: F  411   -1 4 m_avg_downward_inflection_time sec
-s: F  412   -1 4 m_avg_speed m/s
-s: F  413   -1 4 m_avg_system_clock_lags_gps sec
-s: F  414   -1 4 m_avg_thruster_depth m
-s: F  415   -1 4 m_avg_thruster_power watt
-s: F  416   -1 4 m_avg_thruster_power_drift watt
-s: F  417   -1 4 m_avg_thruster_speed m/s
-s: F  418   -1 4 m_avg_upward_inflection_time sec
-s: F  419   -1 4 m_avg_yo_time sec
-s: F  420   -1 4 m_ballast_pumped cc
-s: F  421   -1 4 m_ballast_pumped_energy joules
-s: F  422   -1 4 m_ballast_pumped_vel cc/sec
-s: F  423   -1 4 m_battery volts
-s: F  424   -1 4 m_battery_inst volts
-s: T  425    3 4 m_battpos in
-s: F  426   -1 4 m_battpos_vel in/sec
-s: F  427   -1 4 m_battroll rad
-s: F  428   -1 4 m_battroll_vel rad/sec
-s: F  429   -1 1 m_bpump_fault_bit bool
-s: F  430   -1 1 m_certainly_at_surface bool
-s: F  431   -1 4 m_chars_tossed_by_abend nodim
-s: F  432   -1 4 m_chars_tossed_with_cd_off nodim
-s: F  433   -1 4 m_chars_tossed_with_power_off nodim
-s: F  434   -1 4 m_climb_tot_time s
-s: F  435   -1 1 m_console_cd bool
-s: F  436   -1 1 m_console_on bool
-s: F  437   -1 1 m_cop_tickle bool
-s: F  438   -1 4 m_coulomb_amphr amp-hrs
-s: F  439   -1 4 m_coulomb_amphr_raw nodim
-s: F  440   -1 4 m_coulomb_amphr_total amp-hrs
-s: F  441   -1 4 m_coulomb_current amp
-s: F  442   -1 4 m_coulomb_current_raw nodim
-s: F  443   -1 4 m_cycle_number nodim
-s: T  444    4 4 m_depth m
-s: F  445   -1 4 m_depth_derror m/s
-s: F  446   -1 4 m_depth_error m
-s: F  447   -1 4 m_depth_ierror m-s
-s: F  448   -1 4 m_depth_rate m/s
-s: F  449   -1 4 m_depth_rate_avg_final m/s
-s: F  450   -1 4 m_depth_rate_running_avg m/s
-s: F  451   -1 1 m_depth_rate_running_avg_n enum
-s: F  452   -1 4 m_depth_rate_subsampled m/s
-s: F  453   -1 4 m_depth_rate_thr_avg_final m/s
-s: F  454   -1 1 m_depth_rejected bool
-s: F  455   -1 1 m_depth_state enum
-s: F  456   -1 4 m_depth_subsampled m
-s: F  457   -1 4 m_device_drivers_called_abnormally nodim
-s: F  458   -1 4 m_device_error nodim
-s: F  459   -1 4 m_device_oddity nodim
-s: F  460   -1 4 m_device_warning nodim
-s: F  461   -1 4 m_de_oil_vol cc
-s: F  462   -1 4 m_de_oil_vol_pot_voltage volts
-s: F  463   -1 4 m_de_pump_fault_count nodim
-s: F  464   -1 4 m_digifin_cmd_done nodim
-s: F  465   -1 4 m_digifin_cmd_error nodim
-s: F  466   -1 4 m_digifin_leakdetect_reading nodim
-s: F  467   -1 4 m_digifin_motorstep_counter nodim
-s: F  468   -1 4 m_digifin_resp_data nodim
-s: F  469   -1 4 m_digifin_status nodim
-s: F  470   -1 4 m_disk_free Mbytes
-s: F  471   -1 4 m_disk_usage Mbytes
-s: F  472   -1 4 m_dist_to_wpt m
-s: F  473   -1 4 m_dive_depth m
-s: F  474   -1 4 m_dive_tot_time s
-s: F  475   -1 4 m_dr_fix_time sec
-s: F  476   -1 4 m_dr_postfix_time sec
-s: F  477   -1 4 m_dr_surf_x_lmc m
-s: F  478   -1 4 m_dr_surf_y_lmc m
-s: F  479   -1 4 m_dr_time sec
-s: F  480   -1 4 m_dr_x_actual_err m
-s: F  481   -1 4 m_dr_x_ini_err m
-s: F  482   -1 4 m_dr_x_postfix_drift m
-s: F  483   -1 4 m_dr_x_ta_postfix_drift m
-s: F  484   -1 4 m_dr_y_actual_err m
-s: F  485   -1 4 m_dr_y_ini_err m
-s: F  486   -1 4 m_dr_y_postfix_drift m
-s: F  487   -1 4 m_dr_y_ta_postfix_drift m
-s: F  488   -1 4 m_est_time_to_surface sec
-s: F  489   -1 4 m_fin rad
-s: F  490   -1 4 m_final_water_vx m/s
-s: F  491   -1 4 m_final_water_vy m/s
-s: F  492   -1 4 m_fin_vel rad/sec
-s: F  493   -1 4 m_fluid_pumped cc
-s: F  494   -1 4 m_fluid_pumped_aft_hall_voltage volts
-s: F  495   -1 4 m_fluid_pumped_fwd_hall_voltage volts
-s: F  496   -1 4 m_fluid_pumped_vel cc/sec
-s: F  497   -1 4 m_free_heap bytes
-s: F  498   -1 4 m_gps_dist_from_dr m
-s: F  499   -1 4 m_gps_fix_x_lmc m
-s: F  500   -1 4 m_gps_fix_y_lmc m
-s: F  501   -1 1 m_gps_full_status enum
-s: F  502   -1 4 m_gps_heading rad
-s: F  503   -1 8 m_gps_ignored_lat lat
-s: F  504   -1 8 m_gps_ignored_lon lon
-s: F  505   -1 8 m_gps_invalid_lat lat
-s: F  506   -1 8 m_gps_invalid_lon lon
-s: T  507    5 8 m_gps_lat lat
-s: T  508    6 8 m_gps_lon lon
-s: F  509   -1 4 m_gps_mag_var rad
-s: F  510   -1 4 m_gps_num_satellites nodim
-s: F  511   -1 1 m_gps_on bool
-s: F  512   -1 4 m_gps_postfix_x_lmc m
-s: F  513   -1 4 m_gps_postfix_y_lmc m
-s: F  514   -1 4 m_gps_speed m/s
-s: F  515   -1 1 m_gps_status enum
-s: F  516   -1 8 m_gps_toofar_lat lat
-s: F  517   -1 8 m_gps_toofar_lon lat
-s: F  518   -1 4 m_gps_uncertainty nodim
-s: F  519   -1 1 m_gps_utc_day byte
-s: F  520   -1 1 m_gps_utc_hour byte
-s: F  521   -1 1 m_gps_utc_minute byte
-s: F  522   -1 1 m_gps_utc_month byte
-s: F  523   -1 4 m_gps_utc_second nodim
-s: F  524   -1 1 m_gps_utc_year byte
-s: F  525   -1 4 m_gps_x_lmc m
-s: F  526   -1 4 m_gps_y_lmc m
-s: F  527   -1 4 m_hdg_derror rad/sec
-s: F  528   -1 4 m_hdg_error rad
-s: F  529   -1 4 m_hdg_ierror rad-sec
-s: F  530   -1 4 m_hdg_rate rad/sec
-s: F  531   -1 4 m_heading rad
-s: F  532   -1 4 m_initial_water_vx m/s
-s: F  533   -1 4 m_initial_water_vy m/s
-s: F  534   -1 4 m_iridium_attempt_num nodim
-s: F  535   -1 4 m_iridium_call_num nodim
-s: F  536   -1 1 m_iridium_connected bool
-s: F  537   -1 1 m_iridium_console_on enum
-s: F  538   -1 4 m_iridium_dialed_num nodim
-s: F  539   -1 1 m_iridium_on bool
-s: F  540   -1 4 m_iridium_redials nodim
-s: F  541   -1 4 m_iridium_signal_strength nodim
-s: F  542   -1 1 m_iridium_status enum
-s: F  543   -1 1 m_iridium_waiting_redial_delay bool
-s: F  544   -1 1 m_iridium_waiting_registration bool
-s: F  545   -1 1 m_is_ballast_pump_moving bool
-s: F  546   -1 1 m_is_battpos_moving bool
-s: F  547   -1 1 m_is_battroll_moving bool
-s: F  548   -1 1 m_is_de_pump_moving bool
-s: F  549   -1 1 m_is_fin_moving bool
-s: F  550   -1 1 m_is_fpitch_pump_moving bool
-s: F  551   -1 1 m_is_speed_estimated bool
-s: F  552   -1 1 m_is_thermal_valve_moving bool
-s: F  553   -1 4 m_last_yo_time sec
-s: T  554    7 8 m_lat lat
-s: F  555   -1 1 m_leak bool
-s: F  556   -1 4 m_leakdetect_voltage volts
-s: F  557   -1 4 m_leakdetect_voltage_forward volts
-s: F  558   -1 1 m_leak_forward bool
-s: F  559   -1 4 m_lithium_battery_relative_charge %
-s: F  560   -1 4 m_lithium_battery_status nodim
-s: F  561   -1 4 m_lithium_battery_time_to_charge mins
-s: F  562   -1 4 m_lithium_battery_time_to_discharge mins
-s: T  563    8 8 m_lon lon
-s: F  564   -1 4 m_min_free_heap bytes
-s: F  565   -1 4 m_min_spare_heap bytes
-s: F  566   -1 4 m_mission_avg_speed_climbing m/s
-s: F  567   -1 4 m_mission_avg_speed_diving m/s
-s: F  568   -1 8 m_mission_start_time timestamp
-s: F  569   -1 4 m_num_half_yos_in_segment nodim
-s: T  570    9 4 m_pitch rad
-s: F  571   -1 4 m_pitch_derror rad/s
-s: F  572   -1 4 m_pitch_energy joules
-s: F  573   -1 4 m_pitch_error rad
-s: F  574   -1 4 m_present_secs_into_mission sec
-s: T  575   10 8 m_present_time timestamp
-s: F  576   -1 4 m_pressure bar
-s: F  577   -1 4 m_pressure_raw_voltage_sample0 volts
-s: F  578   -1 4 m_pressure_raw_voltage_sample19 volts
-s: F  579   -1 4 m_pressure_voltage volts
-s: F  580   -1 4 m_raw_altitude m
-s: F  581   -1 1 m_raw_altitude_rejected bool
-s: F  582   -1 4 m_roll rad
-s: F  583   -1 4 m_science_clothesline_lag s
-s: F  584   -1 1 m_science_on bool
-s: F  585   -1 1 m_science_ready_for_consci bool
-s: F  586   -1 4 m_science_sent_some_data nodim
-s: F  587   -1 8 m_science_sync_time timestamp
-s: F  588   -1 1 m_science_unreadiness_for_consci enum
-s: F  589   -1 4 m_spare_heap bytes
-s: F  590   -1 4 m_speed m/s
-s: F  591   -1 1 m_stable_comms bool
-s: F  592   -1 1 m_strobe_ctrl bool
-s: F  593   -1 1 m_surface_depth_reached bool
-s: F  594   -1 4 m_surface_est_cmd nodim
-s: F  595   -1 4 m_surface_est_ctd nodim
-s: F  596   -1 4 m_surface_est_fw nodim
-s: F  597   -1 4 m_surface_est_gps nodim
-s: F  598   -1 4 m_surface_est_irid nodim
-s: F  599   -1 4 m_surface_est_total nodim
-s: F  600   -1 4 m_system_clock_lags_gps sec
-s: F  601   -1 1 m_tcm3_is_calibrated bool
-s: F  602   -1 4 m_tcm3_magbearth uT
-s: F  603   -1 4 m_tcm3_poll_time ms
-s: F  604   -1 4 m_tcm3_recv_start_time ms
-s: F  605   -1 4 m_tcm3_recv_stop_time ms
-s: F  606   -1 4 m_tcm3_stddeverr uT
-s: F  607   -1 4 m_tcm3_xcoverage %
-s: F  608   -1 4 m_tcm3_ycoverage %
-s: F  609   -1 4 m_tcm3_zcoverage %
-s: F  610   -1 4 m_thermal_acc_pres bar
-s: F  611   -1 4 m_thermal_acc_pres_voltage volts
-s: F  612   -1 4 m_thermal_acc_vol cc
-s: F  613   -1 1 m_thermal_enuf_acc_vol bool
-s: F  614   -1 1 m_thermal_pump enum
-s: F  615   -1 1 m_thermal_updown enum
-s: F  616   -1 1 m_thermal_valve enum
-s: F  617   -1 4 m_thruster_amphr amp-hrs
-s: F  618   -1 4 m_thruster_current amp
-s: F  619   -1 4 m_thruster_est_speed m/s
-s: F  620   -1 4 m_thruster_power watt
-s: F  621   -1 4 m_thruster_power_error watt
-s: F  622   -1 1 m_thruster_power_spike enum
-s: F  623   -1 4 m_thruster_raw int
-s: F  624   -1 4 m_thruster_voltage volts
-s: F  625   -1 4 m_thruster_watthr watt-hrs
-s: F  626   -1 4 m_time_til_wpt s
-s: F  627   -1 4 m_tot_ballast_pumped_energy kjoules
-s: F  628   -1 4 m_tot_horz_dist km
-s: F  629   -1 4 m_tot_num_inflections nodim
-s: F  630   -1 4 m_tot_on_time days
-s: T  631   11 4 m_vacuum inHg
-s: F  632   -1 4 m_vacuum_air_bag_inflated inHg
-s: F  633   -1 4 m_vacuum_air_pump_on inHg
-s: F  634   -1 4 m_vacuum_change_since_air_pump_on inHg
-s: F  635   -1 4 m_vehicle_temp degC
-s: F  636   -1 1 m_veh_overheat bool
-s: F  637   -1 4 m_veh_temp c
-s: F  638   -1 4 m_vmg_to_wpt m/s
-s: F  639   -1 4 m_vx_lmc m/s
-s: F  640   -1 4 m_vy_lmc m/s
-s: F  641   -1 4 m_water_cond S/m
-s: F  642   -1 4 m_water_delta_vx m/s
-s: F  643   -1 4 m_water_delta_vy m/s
-s: T  644   12 4 m_water_depth m
-s: F  645   -1 4 m_water_pressure bar
-s: F  646   -1 4 m_water_temp degC
-s: T  647   13 4 m_water_vx m/s
-s: T  648   14 4 m_water_vy m/s
-s: F  649   -1 1 m_why_started enum
-s: F  650   -1 4 m_x_lmc m
-s: F  651   -1 4 m_y_lmc m
-s: F  652   -1 4 sci_array_heading1 deg
-s: F  653   -1 4 sci_array_heading2 deg
-s: F  654   -1 4 sci_array_heading3 deg
-s: F  655   -1 4 sci_array_pitch1 deg
-s: F  656   -1 4 sci_array_pitch2 deg
-s: F  657   -1 4 sci_array_pitch3 deg
-s: F  658   -1 4 sci_array_roll1 deg
-s: F  659   -1 4 sci_array_roll2 deg
-s: F  660   -1 4 sci_array_roll3 deg
-s: F  661   -1 1 sci_auvb_is_installed bool
-s: F  662   -1 4 sci_auvb_ref nodim
-s: F  663   -1 4 sci_auvb_sig nodim
-s: F  664   -1 1 sci_auvb_sim_is_installed bool
-s: F  665   -1 4 sci_auvb_therm nodim
-s: F  666   -1 8 sci_auvb_timestamp timestamp
-s: F  667   -1 4 sci_badd_error nodim
-s: F  668   -1 4 sci_badd_error_rate %
-s: F  669   -1 1 sci_badd_finished bool
-s: F  670   -1 1 sci_badd_is_installed bool
-s: F  671   -1 1 sci_badd_mmp_is_installed bool
-s: F  672   -1 4 sci_badd_n_tries_to_connect nodim
-s: F  673   -1 1 sci_badd_power_on bool
-s: F  674   -1 4 sci_badd_remote_stored_bytes nodim
-s: F  675   -1 4 sci_badd_retrieved_bytes nodim
-s: F  676   -1 1 sci_badd_state enum
-s: F  677   -1 4 sci_badd_target_range m
-s: F  678   -1 1 sci_bam_is_installed bool
-s: F  679   -1 4 sci_bam_rcvd_chars_since_last_report nodim
-s: F  680   -1 4 sci_bam_rcvd_chars_since_last_surfacing nodim
-s: F  681   -1 1 sci_bam_science_on bool
-s: F  682   -1 4 sci_bb2c_beta532 nodim
-s: F  683   -1 4 sci_bb2c_beta532_eng_units nodim
-s: F  684   -1 4 sci_bb2c_beta660 nodim
-s: F  685   -1 4 sci_bb2c_beta660_eng_units nodim
-s: F  686   -1 4 sci_bb2c_cdom nodim
-s: F  687   -1 1 sci_bb2c_is_installed bool
-s: F  688   -1 4 sci_bb2c_ref1 nodim
-s: F  689   -1 4 sci_bb2c_ref2 nodim
-s: F  690   -1 4 sci_bb2c_ref3 nodim
-s: F  691   -1 4 sci_bb2c_temp nodim
-s: F  692   -1 8 sci_bb2c_timestamp timestamp
-s: F  693   -1 4 sci_bb2flsV2_b470_ref nodim
-s: F  694   -1 4 sci_bb2flsV2_b470_scaled nodim
-s: F  695   -1 4 sci_bb2flsV2_b470_sig nodim
-s: F  696   -1 4 sci_bb2flsV2_b532_ref nodim
-s: F  697   -1 4 sci_bb2flsV2_b532_scaled nodim
-s: F  698   -1 4 sci_bb2flsV2_b532_sig nodim
-s: F  699   -1 4 sci_bb2flsV2_chl_ref nodim
-s: F  700   -1 4 sci_bb2flsV2_chl_scaled ug/l
-s: F  701   -1 4 sci_bb2flsV2_chl_sig nodim
-s: F  702   -1 1 sci_bb2flsV2_is_installed bool
-s: F  703   -1 4 sci_bb2flsV2_therm nodim
-s: F  704   -1 8 sci_bb2flsV2_timestamp timestamp
-s: F  705   -1 4 sci_bb2flsV3_b715_ref nodim
-s: F  706   -1 4 sci_bb2flsV3_b715_scaled nodim
-s: F  707   -1 4 sci_bb2flsV3_b715_sig nodim
-s: F  708   -1 4 sci_bb2flsV3_b880_ref nodim
-s: F  709   -1 4 sci_bb2flsV3_b880_scaled nodim
-s: F  710   -1 4 sci_bb2flsV3_b880_sig nodim
-s: F  711   -1 1 sci_bb2flsV3_is_installed bool
-s: F  712   -1 4 sci_bb2flsV3_pe_ref nodim
-s: F  713   -1 4 sci_bb2flsV3_pe_scaled ppb
-s: F  714   -1 4 sci_bb2flsV3_pe_sig nodim
-s: F  715   -1 4 sci_bb2flsV3_therm nodim
-s: F  716   -1 8 sci_bb2flsV3_timestamp timestamp
-s: F  717   -1 4 sci_bb2flsV4_b412_ref nodim
-s: F  718   -1 4 sci_bb2flsV4_b412_scaled nodim
-s: F  719   -1 4 sci_bb2flsV4_b412_sig nodim
-s: F  720   -1 4 sci_bb2flsV4_b470_ref nodim
-s: F  721   -1 4 sci_bb2flsV4_b470_scaled nodim
-s: F  722   -1 4 sci_bb2flsV4_b470_sig nodim
-s: F  723   -1 4 sci_bb2flsV4_chl_ref nodim
-s: F  724   -1 4 sci_bb2flsV4_chl_scaled ug/l
-s: F  725   -1 4 sci_bb2flsV4_chl_sig nodim
-s: F  726   -1 1 sci_bb2flsV4_is_installed bool
-s: F  727   -1 4 sci_bb2flsV4_therm nodim
-s: F  728   -1 8 sci_bb2flsV4_timestamp timestamp
-s: F  729   -1 4 sci_bb2flsV5_b532_ref nodim
-s: F  730   -1 4 sci_bb2flsV5_b532_scaled nodim
-s: F  731   -1 4 sci_bb2flsV5_b532_sig nodim
-s: F  732   -1 4 sci_bb2flsV5_b660_ref nodim
-s: F  733   -1 4 sci_bb2flsV5_b660_scaled nodim
-s: F  734   -1 4 sci_bb2flsV5_b660_sig nodim
-s: F  735   -1 4 sci_bb2flsV5_cdom_ref nodim
-s: F  736   -1 4 sci_bb2flsV5_cdom_scaled ppb
-s: F  737   -1 4 sci_bb2flsV5_cdom_sig nodim
-s: F  738   -1 1 sci_bb2flsV5_is_installed bool
-s: F  739   -1 4 sci_bb2flsV5_therm nodim
-s: F  740   -1 8 sci_bb2flsV5_timestamp timestamp
-s: F  741   -1 4 sci_bb2flsV6_b532_ref nodim
-s: F  742   -1 4 sci_bb2flsV6_b532_scaled nodim
-s: F  743   -1 4 sci_bb2flsV6_b532_sig nodim
-s: F  744   -1 4 sci_bb2flsV6_b880_ref nodim
-s: F  745   -1 4 sci_bb2flsV6_b880_scaled nodim
-s: F  746   -1 4 sci_bb2flsV6_b880_sig nodim
-s: F  747   -1 4 sci_bb2flsV6_cdom_ref nodim
-s: F  748   -1 4 sci_bb2flsV6_cdom_scaled ppb
-s: F  749   -1 4 sci_bb2flsV6_cdom_sig nodim
-s: F  750   -1 1 sci_bb2flsV6_is_installed bool
-s: F  751   -1 4 sci_bb2flsV6_therm nodim
-s: F  752   -1 8 sci_bb2flsV6_timestamp timestamp
-s: F  753   -1 4 sci_bb2flsV7_b532_ref nodim
-s: F  754   -1 4 sci_bb2flsV7_b532_scaled nodim
-s: F  755   -1 4 sci_bb2flsV7_b532_sig nodim
-s: F  756   -1 4 sci_bb2flsV7_b650_ref nodim
-s: F  757   -1 4 sci_bb2flsV7_b650_scaled nodim
-s: F  758   -1 4 sci_bb2flsV7_b650_sig nodim
-s: F  759   -1 4 sci_bb2flsV7_chl_ref nodim
-s: F  760   -1 4 sci_bb2flsV7_chl_scaled ug/l
-s: F  761   -1 4 sci_bb2flsV7_chl_sig nodim
-s: F  762   -1 1 sci_bb2flsV7_is_installed bool
-s: F  763   -1 4 sci_bb2flsV7_therm nodim
-s: F  764   -1 8 sci_bb2flsV7_timestamp timestamp
-s: F  765   -1 4 sci_bb2fls_b660_ref nodim
-s: F  766   -1 4 sci_bb2fls_b660_scaled nodim
-s: F  767   -1 4 sci_bb2fls_b660_sig nodim
-s: F  768   -1 4 sci_bb2fls_b880_ref nodim
-s: F  769   -1 4 sci_bb2fls_b880_scaled nodim
-s: F  770   -1 4 sci_bb2fls_b880_sig nodim
-s: F  771   -1 4 sci_bb2fls_cdom_ref nodim
-s: F  772   -1 4 sci_bb2fls_cdom_scaled ppb
-s: F  773   -1 4 sci_bb2fls_cdom_sig nodim
-s: F  774   -1 1 sci_bb2fls_is_installed bool
-s: F  775   -1 4 sci_bb2fls_therm nodim
-s: F  776   -1 8 sci_bb2fls_timestamp timestamp
-s: F  777   -1 4 sci_bb2fV2_b470_ref nodim
-s: F  778   -1 4 sci_bb2fV2_b470_scaled nodim
-s: F  779   -1 4 sci_bb2fV2_b470_sig nodim
-s: F  780   -1 4 sci_bb2fV2_b700_ref nodim
-s: F  781   -1 4 sci_bb2fV2_b700_scaled nodim
-s: F  782   -1 4 sci_bb2fV2_b700_sig nodim
-s: F  783   -1 4 sci_bb2fV2_chlor nodim
-s: F  784   -1 4 sci_bb2fV2_chlor_scaled ug/l
-s: F  785   -1 1 sci_bb2fV2_is_installed bool
-s: F  786   -1 4 sci_bb2fV2_therm nodim
-s: F  787   -1 8 sci_bb2fV2_timestamp timestamp
-s: F  788   -1 4 sci_bb2f_b470 nodim
-s: F  789   -1 4 sci_bb2f_b470_ref nodim
-s: F  790   -1 4 sci_bb2f_b700 nodim
-s: F  791   -1 4 sci_bb2f_b700_ref nodim
-s: F  792   -1 4 sci_bb2f_counter nodim
-s: F  793   -1 4 sci_bb2f_fluor nodim
-s: F  794   -1 1 sci_bb2f_is_installed bool
-s: F  795   -1 4 sci_bb2f_therm nodim
-s: F  796   -1 8 sci_bb2f_timestamp timestamp
-s: F  797   -1 4 sci_bb2lss_beta880 nodim
-s: F  798   -1 4 sci_bb2lss_beta880_eng_units nodim
-s: F  799   -1 1 sci_bb2lss_is_installed bool
-s: F  800   -1 4 sci_bb2lss_lss nodim
-s: F  801   -1 4 sci_bb2lss_ref1 nodim
-s: F  802   -1 4 sci_bb2lss_ref2 nodim
-s: F  803   -1 4 sci_bb2lss_temp nodim
-s: F  804   -1 8 sci_bb2lss_timestamp timestamp
-s: F  805   -1 4 sci_bb3sloV2_b532_ref nodim
-s: F  806   -1 4 sci_bb3sloV2_b532_scaled nodim
-s: F  807   -1 4 sci_bb3sloV2_b532_sig nodim
-s: F  808   -1 4 sci_bb3sloV2_b660_ref nodim
-s: F  809   -1 4 sci_bb3sloV2_b660_scaled nodim
-s: F  810   -1 4 sci_bb3sloV2_b660_sig nodim
-s: F  811   -1 4 sci_bb3sloV2_b880_ref nodim
-s: F  812   -1 4 sci_bb3sloV2_b880_scaled nodim
-s: F  813   -1 4 sci_bb3sloV2_b880_sig nodim
-s: F  814   -1 1 sci_bb3sloV2_is_installed bool
-s: F  815   -1 4 sci_bb3sloV2_temp nodim
-s: F  816   -1 8 sci_bb3sloV2_timestamp timestamp
-s: F  817   -1 4 sci_bb3sloV3_b532_ref nodim
-s: F  818   -1 4 sci_bb3sloV3_b532_scaled nodim
-s: F  819   -1 4 sci_bb3sloV3_b532_sig nodim
-s: F  820   -1 4 sci_bb3sloV3_b630_ref nodim
-s: F  821   -1 4 sci_bb3sloV3_b630_scaled nodim
-s: F  822   -1 4 sci_bb3sloV3_b630_sig nodim
-s: F  823   -1 4 sci_bb3sloV3_b880_ref nodim
-s: F  824   -1 4 sci_bb3sloV3_b880_scaled nodim
-s: F  825   -1 4 sci_bb3sloV3_b880_sig nodim
-s: F  826   -1 1 sci_bb3sloV3_is_installed bool
-s: F  827   -1 4 sci_bb3sloV3_temp nodim
-s: F  828   -1 8 sci_bb3sloV3_timestamp timestamp
-s: F  829   -1 4 sci_bb3slo_b470_ref nodim
-s: F  830   -1 4 sci_bb3slo_b470_scaled nodim
-s: F  831   -1 4 sci_bb3slo_b470_sig nodim
-s: F  832   -1 4 sci_bb3slo_b532_ref nodim
-s: F  833   -1 4 sci_bb3slo_b532_scaled nodim
-s: F  834   -1 4 sci_bb3slo_b532_sig nodim
-s: F  835   -1 4 sci_bb3slo_b660_ref nodim
-s: F  836   -1 4 sci_bb3slo_b660_scaled nodim
-s: F  837   -1 4 sci_bb3slo_b660_sig nodim
-s: F  838   -1 1 sci_bb3slo_is_installed bool
-s: F  839   -1 4 sci_bb3slo_temp nodim
-s: F  840   -1 8 sci_bb3slo_timestamp timestamp
-s: F  841   -1 4 sci_bbam_beam_c 1/m
-s: F  842   -1 4 sci_bbam_corr_sig nodim
-s: F  843   -1 1 sci_bbam_is_installed bool
-s: F  844   -1 4 sci_bbam_raw_ref nodim
-s: F  845   -1 4 sci_bbam_raw_sig nodim
-s: F  846   -1 1 sci_bbam_sim_is_installed bool
-s: F  847   -1 4 sci_bbam_therm nodim
-s: F  848   -1 8 sci_bbam_timestamp timestamp
-s: F  849   -1 4 sci_bbfl2sV2_bb_ref nodim
-s: F  850   -1 4 sci_bbfl2sV2_bb_scaled nodim
-s: F  851   -1 4 sci_bbfl2sV2_bb_sig nodim
-s: F  852   -1 4 sci_bbfl2sV2_fl1_ref nodim
-s: F  853   -1 4 sci_bbfl2sV2_fl1_scaled nodim
-s: F  854   -1 4 sci_bbfl2sV2_fl1_sig nodim
-s: F  855   -1 4 sci_bbfl2sV2_fl2_ref nodim
-s: F  856   -1 4 sci_bbfl2sV2_fl2_scaled nodim
-s: F  857   -1 4 sci_bbfl2sV2_fl2_sig nodim
-s: F  858   -1 1 sci_bbfl2sV2_is_installed bool
-s: F  859   -1 4 sci_bbfl2sV2_therm nodim
-s: F  860   -1 8 sci_bbfl2sV2_timestamp timestamp
-s: F  861   -1 4 sci_bbfl2s_bb_ref nodim
-s: F  862   -1 4 sci_bbfl2s_bb_scaled nodim
-s: F  863   -1 4 sci_bbfl2s_bb_sig nodim
-s: F  864   -1 4 sci_bbfl2s_cdom_ref nodim
-s: F  865   -1 4 sci_bbfl2s_cdom_scaled ppb
-s: F  866   -1 4 sci_bbfl2s_cdom_sig nodim
-s: F  867   -1 4 sci_bbfl2s_chlor_ref nodim
-s: F  868   -1 4 sci_bbfl2s_chlor_scaled ug/l
-s: F  869   -1 4 sci_bbfl2s_chlor_sig nodim
-s: F  870   -1 1 sci_bbfl2s_is_installed bool
-s: F  871   -1 4 sci_bbfl2s_temp nodim
-s: F  872   -1 8 sci_bbfl2s_timestamp timestamp
-s: F  873   -1 1 sci_bsipar_is_installed bool
-s: F  874   -1 4 sci_bsipar_par uE/m^2sec
-s: F  875   -1 4 sci_bsipar_sensor_volts volts
-s: F  876   -1 4 sci_bsipar_supply_volts volts
-s: F  877   -1 4 sci_bsipar_temp degC
-s: F  878   -1 8 sci_bsipar_timestamp timestamp
-s: F  879   -1 4 sci_c3sfl_cdom rfu
-s: F  880   -1 4 sci_c3sfl_chlorophyll rfu
-s: F  881   -1 4 sci_c3sfl_depth m
-s: F  882   -1 1 sci_c3sfl_is_installed bool
-s: F  883   -1 4 sci_c3sfl_phycoerythrin rfu
-s: F  884   -1 4 sci_c3sfl_temp degC
-s: F  885   -1 8 sci_c3sfl_timestamp timestamp
-s: F  886   -1 4 sci_c3sfl_turbidity rfu
-s: F  887   -1 1 sci_ctd41cp2_is_installed bool
-s: F  888   -1 8 sci_ctd41cp2_timestamp timestamp
-s: F  889   -1 1 sci_ctd41cp_is_installed bool
-s: F  890   -1 1 sci_ctd41cp_sim_is_installed bool
-s: F  891   -1 8 sci_ctd41cp_timestamp timestamp
-s: F  892   -1 1 sci_ctd41_is_installed bool
-s: F  893   -1 1 sci_ctd_is_installed bool
-s: F  894   -1 4 sci_depth m
-s: F  895   -1 1 sci_dmon_is_installed bool
-s: F  896   -1 4 sci_dmon_msg_byte_count nodim
-s: F  897   -1 4 sci_dvl_bd_range_to_bottom m
-s: F  898   -1 4 sci_dvl_bd_time_since_last_good_vel sec
-s: F  899   -1 4 sci_dvl_bd_u_dist m
-s: F  900   -1 4 sci_dvl_bd_v_dist m
-s: F  901   -1 4 sci_dvl_bd_w_dist m
-s: F  902   -1 4 sci_dvl_be_u_vel mm/s
-s: F  903   -1 1 sci_dvl_be_vel_good bool
-s: F  904   -1 4 sci_dvl_be_v_vel mm/s
-s: F  905   -1 4 sci_dvl_be_w_vel mm/s
-s: F  906   -1 4 sci_dvl_bi_err_vel mm/s
-s: F  907   -1 1 sci_dvl_bi_vel_good bool
-s: F  908   -1 4 sci_dvl_bi_x_vel mm/s
-s: F  909   -1 4 sci_dvl_bi_y_vel mm/s
-s: F  910   -1 4 sci_dvl_bi_z_vel mm/s
-s: F  911   -1 4 sci_dvl_bs_longitudinal_vel mm/s
-s: F  912   -1 4 sci_dvl_bs_normal_vel mm/s
-s: F  913   -1 4 sci_dvl_bs_transverse_vel mm/s
-s: F  914   -1 1 sci_dvl_bs_vel_good bool
-s: F  915   -1 4 sci_dvl_ensemble_offset nodim
-s: F  916   -1 4 sci_dvl_error nodim
-s: F  917   -1 1 sci_dvl_is_installed bool
-s: F  918   -1 4 sci_dvl_sa_heading deg
-s: F  919   -1 4 sci_dvl_sa_pitch deg
-s: F  920   -1 4 sci_dvl_sa_roll deg
-s: F  921   -1 4 sci_dvl_ts_bit nodim
-s: F  922   -1 4 sci_dvl_ts_depth m
-s: F  923   -1 4 sci_dvl_ts_sal ppt
-s: F  924   -1 4 sci_dvl_ts_sound_speed m/s
-s: F  925   -1 4 sci_dvl_ts_temp degC
-s: F  926   -1 8 sci_dvl_ts_timestamp timestamp
-s: F  927   -1 4 sci_dvl_wd_range_to_water_mass_center m
-s: F  928   -1 4 sci_dvl_wd_time_since_last_good_vel sec
-s: F  929   -1 4 sci_dvl_wd_u_dist m
-s: F  930   -1 4 sci_dvl_wd_v_dist m
-s: F  931   -1 4 sci_dvl_wd_w_dist m
-s: F  932   -1 4 sci_dvl_we_u_vel mm/s
-s: F  933   -1 1 sci_dvl_we_vel_good bool
-s: F  934   -1 4 sci_dvl_we_v_vel mm/s
-s: F  935   -1 4 sci_dvl_we_w_vel mm/s
-s: F  936   -1 4 sci_dvl_wi_err_vel mm/s
-s: F  937   -1 1 sci_dvl_wi_vel_good bool
-s: F  938   -1 4 sci_dvl_wi_x_vel mm/s
-s: F  939   -1 4 sci_dvl_wi_y_vel mm/s
-s: F  940   -1 4 sci_dvl_wi_z_vel mm/s
-s: F  941   -1 4 sci_dvl_ws_longitudinal_vel mm/s
-s: F  942   -1 4 sci_dvl_ws_normal_vel mm/s
-s: F  943   -1 4 sci_dvl_ws_transverse_vel mm/s
-s: F  944   -1 1 sci_dvl_ws_vel_good bool
-s: F  945   -1 1 sci_echosndr853_is_installed bool
-s: F  946   -1 4 sci_echosndr853_ping_count nodim
-s: F  947   -1 4 sci_FIRe_battery volts
-s: F  948   -1 4 sci_FIRe_error nodim
-s: F  949   -1 4 sci_FIRe_Fm nodim
-s: F  950   -1 4 sci_FIRe_Fo nodim
-s: F  951   -1 4 sci_FIRe_frame_count nodim
-s: F  952   -1 4 sci_FIRe_FvFm nodim
-s: F  953   -1 1 sci_FIRe_is_installed bool
-s: F  954   -1 4 sci_FIRe_p nodim
-s: F  955   -1 4 sci_FIRe_par nodim
-s: F  956   -1 4 sci_FIRe_s nodim
-s: F  957   -1 4 sci_FIRe_temp degC
-s: F  958   -1 8 sci_FIRe_timestamp timestamp
-s: F  959   -1 4 sci_fl3sloV2_cdom_ref nodim
-s: F  960   -1 4 sci_fl3sloV2_cdom_sig nodim
-s: F  961   -1 4 sci_fl3sloV2_cdom_units ppb
-s: F  962   -1 4 sci_fl3sloV2_chlor_ref nodim
-s: F  963   -1 4 sci_fl3sloV2_chlor_sig nodim
-s: F  964   -1 4 sci_fl3sloV2_chlor_units ug/l
-s: F  965   -1 1 sci_fl3sloV2_is_installed bool
-s: F  966   -1 4 sci_fl3sloV2_rhod_ref nodim
-s: F  967   -1 4 sci_fl3sloV2_rhod_sig nodim
-s: F  968   -1 4 sci_fl3sloV2_rhod_units ppb
-s: F  969   -1 4 sci_fl3sloV2_temp nodim
-s: F  970   -1 8 sci_fl3sloV2_timestamp timestamp
-s: F  971   -1 4 sci_fl3slo_cdom_ref nodim
-s: F  972   -1 4 sci_fl3slo_cdom_sig nodim
-s: F  973   -1 4 sci_fl3slo_cdom_units QSDE
-s: F  974   -1 4 sci_fl3slo_chlor_ref nodim
-s: F  975   -1 4 sci_fl3slo_chlor_sig nodim
-s: F  976   -1 4 sci_fl3slo_chlor_units ug/l
-s: F  977   -1 1 sci_fl3slo_is_installed bool
-s: F  978   -1 4 sci_fl3slo_phyco_ref nodim
-s: F  979   -1 4 sci_fl3slo_phyco_sig nodim
-s: F  980   -1 4 sci_fl3slo_phyco_units ppb
-s: F  981   -1 4 sci_fl3slo_temp nodim
-s: F  982   -1 8 sci_fl3slo_timestamp timestamp
-s: F  983   -1 4 sci_flbbcd_bb_ref nodim
-s: F  984   -1 4 sci_flbbcd_bb_sig nodim
-s: F  985   -1 4 sci_flbbcd_bb_units nodim
-s: F  986   -1 4 sci_flbbcd_cdom_ref nodim
-s: F  987   -1 4 sci_flbbcd_cdom_sig nodim
-s: F  988   -1 4 sci_flbbcd_cdom_units ppb
-s: F  989   -1 4 sci_flbbcd_chlor_ref nodim
-s: F  990   -1 4 sci_flbbcd_chlor_sig nodim
-s: F  991   -1 4 sci_flbbcd_chlor_units ug/l
-s: F  992   -1 1 sci_flbbcd_is_installed bool
-s: F  993   -1 4 sci_flbbcd_therm nodim
-s: F  994   -1 8 sci_flbbcd_timestamp timestamp
-s: F  995   -1 4 sci_flbbrh_bb_ref nodim
-s: F  996   -1 4 sci_flbbrh_bb_sig nodim
-s: F  997   -1 4 sci_flbbrh_bb_units nodim
-s: F  998   -1 4 sci_flbbrh_chlor_ref nodim
-s: F  999   -1 4 sci_flbbrh_chlor_sig nodim
-s: F 1000   -1 4 sci_flbbrh_chlor_units ug/l
-s: F 1001   -1 1 sci_flbbrh_is_installed bool
-s: F 1002   -1 4 sci_flbbrh_rhod_ref nodim
-s: F 1003   -1 4 sci_flbbrh_rhod_sig nodim
-s: F 1004   -1 4 sci_flbbrh_rhod_units ppb
-s: F 1005   -1 4 sci_flbbrh_temp nodim
-s: F 1006   -1 8 sci_flbbrh_timestamp timestamp
-s: F 1007   -1 4 sci_flbb_bb_ref nodim
-s: F 1008   -1 4 sci_flbb_bb_sig nodim
-s: F 1009   -1 4 sci_flbb_bb_units nodim
-s: F 1010   -1 4 sci_flbb_chlor_ref nodim
-s: F 1011   -1 4 sci_flbb_chlor_sig nodim
-s: F 1012   -1 4 sci_flbb_chlor_units ug/l
-s: F 1013   -1 1 sci_flbb_is_installed bool
-s: F 1014   -1 4 sci_flbb_therm nodim
-s: F 1015   -1 8 sci_flbb_timestamp timestamp
-s: F 1016   -1 4 sci_flntu_chlor_ref nodim
-s: F 1017   -1 4 sci_flntu_chlor_sig nodim
-s: F 1018   -1 4 sci_flntu_chlor_units ug/l
-s: F 1019   -1 1 sci_flntu_is_installed bool
-s: F 1020   -1 4 sci_flntu_temp nodim
-s: F 1021   -1 8 sci_flntu_timestamp timestamp
-s: F 1022   -1 4 sci_flntu_turb_ref nodim
-s: F 1023   -1 4 sci_flntu_turb_sig nodim
-s: F 1024   -1 4 sci_flntu_turb_units NTU
-s: F 1025   -1 1 sci_flrh_is_installed bool
-s: F 1026   -1 4 sci_flrh_ref nodim
-s: F 1027   -1 4 sci_flrh_sig nodim
-s: F 1028   -1 4 sci_flrh_temp nodim
-s: F 1029   -1 8 sci_flrh_timestamp timestamp
-s: F 1030   -1 4 sci_flrh_units ppb
-s: F 1031   -1 1 sci_flur_is_installed bool
-s: F 1032   -1 4 sci_flur_ref nodim
-s: F 1033   -1 4 sci_flur_sig nodim
-s: F 1034   -1 4 sci_flur_temp nodim
-s: F 1035   -1 8 sci_flur_timestamp timestamp
-s: F 1036   -1 4 sci_flur_units ppb
-s: F 1037   -1 1 sci_gamma_rad5_error enum
-s: F 1038   -1 4 sci_gamma_rad5_file_count nodim
-s: F 1039   -1 1 sci_gamma_rad5_is_installed bool
-s: F 1040   -1 4 sci_generic_a nodim
-s: F 1041   -1 4 sci_generic_b nodim
-s: F 1042   -1 4 sci_generic_c nodim
-s: F 1043   -1 4 sci_generic_d nodim
-s: F 1044   -1 4 sci_generic_e nodim
-s: F 1045   -1 4 sci_generic_f nodim
-s: F 1046   -1 4 sci_generic_g nodim
-s: F 1047   -1 4 sci_generic_h nodim
-s: F 1048   -1 4 sci_generic_i nodim
-s: F 1049   -1 4 sci_generic_j nodim
-s: F 1050   -1 4 sci_generic_k nodim
-s: F 1051   -1 4 sci_generic_l nodim
-s: F 1052   -1 4 sci_generic_m nodim
-s: F 1053   -1 4 sci_generic_n nodim
-s: F 1054   -1 4 sci_generic_o nodim
-s: F 1055   -1 4 sci_generic_p nodim
-s: F 1056   -1 4 sci_generic_q nodim
-s: F 1057   -1 4 sci_generic_r nodim
-s: F 1058   -1 4 sci_generic_s nodim
-s: F 1059   -1 4 sci_generic_t nodim
-s: F 1060   -1 4 sci_generic_u nodim
-s: F 1061   -1 4 sci_generic_v nodim
-s: F 1062   -1 4 sci_generic_w nodim
-s: F 1063   -1 4 sci_generic_x nodim
-s: F 1064   -1 4 sci_generic_y nodim
-s: F 1065   -1 4 sci_generic_z nodim
-s: F 1066   -1 4 sci_glbps_day nodim
-s: F 1067   -1 4 sci_glbps_hour nodim
-s: F 1068   -1 4 sci_glbps_hundreds_of_second nodim
-s: F 1069   -1 1 sci_glbps_is_installed bool
-s: F 1070   -1 4 sci_glbps_minute nodim
-s: F 1071   -1 4 sci_glbps_month nodim
-s: F 1072   -1 4 sci_glbps_persistance nodim
-s: F 1073   -1 4 sci_glbps_ping_number nodim
-s: F 1074   -1 4 sci_glbps_round_trip_time nodim
-s: F 1075   -1 4 sci_glbps_second nodim
-s: F 1076   -1 4 sci_glbps_target_count nodim
-s: F 1077   -1 8 sci_glbps_timestamp timestamp
-s: F 1078   -1 4 sci_glbps_year nodim
-s: F 1079   -1 1 sci_hard_disk_is_installed bool
-s: F 1080   -1 4 sci_heading rad
-s: F 1081   -1 4 sci_hydrophone_collecting nodim
-s: F 1082   -1 1 sci_hydrophone_is_installed bool
-s: F 1083   -1 1 sci_logger_is_installed bool
-s: F 1084   -1 1 sci_logger_status enum
-s: F 1085   -1 4 sci_moteopd_absorb_a nodim
-s: F 1086   -1 4 sci_moteopd_absorb_b nodim
-s: F 1087   -1 4 sci_moteopd_cdomref nodim
-s: F 1088   -1 4 sci_moteopd_corr0 nodim
-s: F 1089   -1 4 sci_moteopd_corr1 nodim
-s: F 1090   -1 4 sci_moteopd_corr10 nodim
-s: F 1091   -1 4 sci_moteopd_corr11 nodim
-s: F 1092   -1 4 sci_moteopd_corr2 nodim
-s: F 1093   -1 4 sci_moteopd_corr3 nodim
-s: F 1094   -1 4 sci_moteopd_corr4 nodim
-s: F 1095   -1 4 sci_moteopd_corr5 nodim
-s: F 1096   -1 4 sci_moteopd_corr6 nodim
-s: F 1097   -1 4 sci_moteopd_corr7 nodim
-s: F 1098   -1 4 sci_moteopd_corr8 nodim
-s: F 1099   -1 4 sci_moteopd_corr9 nodim
-s: F 1100   -1 4 sci_moteopd_int_time nodim
-s: F 1101   -1 1 sci_moteopd_is_installed bool
-s: F 1102   -1 4 sci_moteopd_logout nodim
-s: F 1103   -1 4 sci_moteopd_press nodim
-s: F 1104   -1 4 sci_moteopd_sn nodim
-s: F 1105   -1 8 sci_moteopd_start_time timestamp
-s: F 1106   -1 4 sci_moteopd_status nodim
-s: F 1107   -1 8 sci_moteopd_stop_time timestamp
-s: F 1108   -1 4 sci_moteopd_volt nodim
-s: F 1109   -1 4 sci_m_disk_free Mbytes
-s: F 1110   -1 4 sci_m_disk_usage Mbytes
-s: F 1111   -1 4 sci_m_free_heap bytes
-s: F 1112   -1 4 sci_m_min_free_heap bytes
-s: F 1113   -1 4 sci_m_min_spare_heap bytes
-s: F 1114   -1 4 sci_m_present_secs_into_mission sec
-s: F 1115   -1 8 sci_m_present_time timestamp
-s: F 1116   -1 1 sci_m_science_on bool
-s: F 1117   -1 4 sci_m_spare_heap bytes
-s: F 1118   -1 1 sci_nbctd_is_installed bool
-s: F 1119   -1 8 sci_nbctd_timestamp timestamp
-s: F 1120   -1 1 sci_obsolete_is_installed bool
-s: F 1121   -1 4 sci_obsolete_var nodim
-s: F 1122   -1 4 sci_ocr504I_channel1 nodim
-s: F 1123   -1 4 sci_ocr504I_channel2 nodim
-s: F 1124   -1 4 sci_ocr504I_channel3 nodim
-s: F 1125   -1 4 sci_ocr504I_channel4 nodim
-s: F 1126   -1 4 sci_ocr504I_cksum nodim
-s: F 1127   -1 4 sci_ocr504I_delay msec
-s: F 1128   -1 4 sci_ocr504I_fcount nodim
-s: F 1129   -1 4 sci_ocr504I_irrad1 uW/cm^2/nm
-s: F 1130   -1 4 sci_ocr504I_irrad2 uW/cm^2/nm
-s: F 1131   -1 4 sci_ocr504I_irrad3 uW/cm^2/nm
-s: F 1132   -1 4 sci_ocr504I_irrad4 uW/cm^2/nm
-s: F 1133   -1 1 sci_ocr504I_is_installed bool
-s: F 1134   -1 4 sci_ocr504I_itemp Celsius
-s: F 1135   -1 4 sci_ocr504I_itemp_raw nodim
-s: F 1136   -1 4 sci_ocr504I_timer sec
-s: F 1137   -1 4 sci_ocr504I_Vin volts
-s: F 1138   -1 4 sci_ocr504I_Vin_raw nodim
-s: F 1139   -1 4 sci_ocr504R_channel1 nodim
-s: F 1140   -1 4 sci_ocr504R_channel2 nodim
-s: F 1141   -1 4 sci_ocr504R_channel3 nodim
-s: F 1142   -1 4 sci_ocr504R_channel4 nodim
-s: F 1143   -1 4 sci_ocr504R_cksum nodim
-s: F 1144   -1 4 sci_ocr504R_delay msec
-s: F 1145   -1 4 sci_ocr504R_fcount nodim
-s: F 1146   -1 1 sci_ocr504R_is_installed bool
-s: F 1147   -1 4 sci_ocr504R_itemp Celsius
-s: F 1148   -1 4 sci_ocr504R_itemp_raw nodim
-s: F 1149   -1 4 sci_ocr504R_rad1 uW/cm^2/nm
-s: F 1150   -1 4 sci_ocr504R_rad2 uW/cm^2/nm
-s: F 1151   -1 4 sci_ocr504R_rad3 uW/cm^2/nm
-s: F 1152   -1 4 sci_ocr504R_rad4 uW/cm^2/nm
-s: F 1153   -1 4 sci_ocr504R_timer sec
-s: F 1154   -1 4 sci_ocr504R_Vin volts
-s: F 1155   -1 4 sci_ocr504R_Vin_raw nodim
-s: F 1156   -1 4 sci_ocr507I_channel1 nodim
-s: F 1157   -1 4 sci_ocr507I_channel2 nodim
-s: F 1158   -1 4 sci_ocr507I_channel3 nodim
-s: F 1159   -1 4 sci_ocr507I_channel4 nodim
-s: F 1160   -1 4 sci_ocr507I_channel5 nodim
-s: F 1161   -1 4 sci_ocr507I_channel6 nodim
-s: F 1162   -1 4 sci_ocr507I_channel7 nodim
-s: F 1163   -1 4 sci_ocr507I_cksum nodim
-s: F 1164   -1 4 sci_ocr507I_delay msec
-s: F 1165   -1 4 sci_ocr507I_fcount nodim
-s: F 1166   -1 4 sci_ocr507I_irrad1 uW/cm^2/nm
-s: F 1167   -1 4 sci_ocr507I_irrad2 uW/cm^2/nm
-s: F 1168   -1 4 sci_ocr507I_irrad3 uW/cm^2/nm
-s: F 1169   -1 4 sci_ocr507I_irrad4 uW/cm^2/nm
-s: F 1170   -1 4 sci_ocr507I_irrad5 uW/cm^2/nm
-s: F 1171   -1 4 sci_ocr507I_irrad6 uW/cm^2/nm
-s: F 1172   -1 4 sci_ocr507I_irrad7 uW/cm^2/nm
-s: F 1173   -1 1 sci_ocr507I_is_installed bool
-s: F 1174   -1 4 sci_ocr507I_itemp Celsius
-s: F 1175   -1 4 sci_ocr507I_itemp_raw nodim
-s: F 1176   -1 4 sci_ocr507I_timer sec
-s: F 1177   -1 4 sci_ocr507I_Va volts
-s: F 1178   -1 4 sci_ocr507I_Va_raw nodim
-s: F 1179   -1 4 sci_ocr507I_Vin volts
-s: F 1180   -1 4 sci_ocr507I_Vin_raw nodim
-s: F 1181   -1 4 sci_ocr507R_channel1 nodim
-s: F 1182   -1 4 sci_ocr507R_channel2 nodim
-s: F 1183   -1 4 sci_ocr507R_channel3 nodim
-s: F 1184   -1 4 sci_ocr507R_channel4 nodim
-s: F 1185   -1 4 sci_ocr507R_channel5 nodim
-s: F 1186   -1 4 sci_ocr507R_channel6 nodim
-s: F 1187   -1 4 sci_ocr507R_channel7 nodim
-s: F 1188   -1 4 sci_ocr507R_cksum nodim
-s: F 1189   -1 4 sci_ocr507R_delay msec
-s: F 1190   -1 4 sci_ocr507R_fcount nodim
-s: F 1191   -1 1 sci_ocr507R_is_installed bool
-s: F 1192   -1 4 sci_ocr507R_itemp Celsius
-s: F 1193   -1 4 sci_ocr507R_itemp_raw nodim
-s: F 1194   -1 4 sci_ocr507R_rad1 uW/cm^2/nm
-s: F 1195   -1 4 sci_ocr507R_rad2 uW/cm^2/nm
-s: F 1196   -1 4 sci_ocr507R_rad3 uW/cm^2/nm
-s: F 1197   -1 4 sci_ocr507R_rad4 uW/cm^2/nm
-s: F 1198   -1 4 sci_ocr507R_rad5 uW/cm^2/nm
-s: F 1199   -1 4 sci_ocr507R_rad6 uW/cm^2/nm
-s: F 1200   -1 4 sci_ocr507R_rad7 uW/cm^2/nm
-s: F 1201   -1 4 sci_ocr507R_timer sec
-s: F 1202   -1 4 sci_ocr507R_Va volts
-s: F 1203   -1 4 sci_ocr507R_Va_raw nodim
-s: F 1204   -1 4 sci_ocr507R_Vin volts
-s: F 1205   -1 4 sci_ocr507R_Vin_raw nodim
-s: F 1206   -1 1 sci_oxy3835_is_installed bool
-s: F 1207   -1 4 sci_oxy3835_oxygen nodim
-s: F 1208   -1 4 sci_oxy3835_saturation nodim
-s: F 1209   -1 4 sci_oxy3835_temp nodim
-s: F 1210   -1 8 sci_oxy3835_timestamp timestamp
-s: F 1211   -1 4 sci_oxy3835_wphase_bamp nodim
-s: F 1212   -1 4 sci_oxy3835_wphase_bphase nodim
-s: F 1213   -1 4 sci_oxy3835_wphase_bpot nodim
-s: F 1214   -1 4 sci_oxy3835_wphase_dphase nodim
-s: F 1215   -1 1 sci_oxy3835_wphase_is_installed bool
-s: F 1216   -1 4 sci_oxy3835_wphase_oxygen nodim
-s: F 1217   -1 4 sci_oxy3835_wphase_ramp nodim
-s: F 1218   -1 4 sci_oxy3835_wphase_rawtemp nodim
-s: F 1219   -1 4 sci_oxy3835_wphase_rphase nodim
-s: F 1220   -1 4 sci_oxy3835_wphase_saturation nodim
-s: F 1221   -1 4 sci_oxy3835_wphase_temp nodim
-s: F 1222   -1 8 sci_oxy3835_wphase_timestamp timestamp
-s: F 1223   -1 4 sci_oxy4_c1amp mV
-s: F 1224   -1 4 sci_oxy4_c1rph deg
-s: F 1225   -1 4 sci_oxy4_c2amp mV
-s: F 1226   -1 4 sci_oxy4_c2rph deg
-s: F 1227   -1 4 sci_oxy4_calphase deg
-s: F 1228   -1 1 sci_oxy4_is_installed bool
-s: F 1229   -1 4 sci_oxy4_oxygen uM
-s: F 1230   -1 4 sci_oxy4_rawtemp mV
-s: F 1231   -1 4 sci_oxy4_saturation %
-s: F 1232   -1 4 sci_oxy4_tcphase deg
-s: F 1233   -1 4 sci_oxy4_temp degC
-s: F 1234   -1 8 sci_oxy4_timestamp timestamp
-s: F 1235   -1 4 sci_ping_sci_to_glider nodim
-s: F 1236   -1 4 sci_reqd_heartbeat secs
-s: F 1237   -1 4 sci_rinkoII_DO %
-s: F 1238   -1 1 sci_rinkoII_is_installed bool
-s: F 1239   -1 4 sci_rinkoII_temp degC
-s: F 1240   -1 8 sci_rinkoII_timestamp timestamp
-s: F 1241   -1 4 sci_rinkoII_voltage volts
-s: F 1242   -1 4 sci_sam_c_mix nodim
-s: F 1243   -1 4 sci_sam_filter_age sec
-s: F 1244   -1 1 sci_sam_is_installed bool
-s: F 1245   -1 4 sci_sam_ref nodim
-s: F 1246   -1 4 sci_sam_s1 nodim
-s: F 1247   -1 4 sci_sam_s1_filtered nodim
-s: F 1248   -1 4 sci_sam_s2 nodim
-s: F 1249   -1 4 sci_sam_s2_filtered nodim
-s: F 1250   -1 4 sci_sam_temp nodim
-s: F 1251   -1 4 sci_sam_vis nodim
-s: F 1252   -1 1 sci_satpar_is_installed bool
-s: F 1253   -1 4 sci_satpar_par umol-photons/m^2/s
-s: F 1254   -1 4 sci_satpar_raw_counts nodim
-s: F 1255   -1 4 sci_satpar_timer sec
-s: F 1256   -1 8 sci_satpar_timestamp timestamp
-s: F 1257   -1 4 sci_software_ver nodim
-s: F 1258   -1 1 sci_sscsd_is_installed bool
-s: F 1259   -1 4 sci_sscsd_test nodim
-s: F 1260   -1 1 sci_suna_is_installed bool
-s: F 1261   -1 4 sci_suna_nitrate_mg mg/L
-s: F 1262   -1 4 sci_suna_nitrate_um uMol/L
-s: F 1263   -1 4 sci_suna_record_offset bytes
-s: F 1264   -1 4 sci_suna_timestamp sec
-s: F 1265   -1 4 sci_tarr_error nodim
-s: F 1266   -1 1 sci_tarr_is_installed bool
-s: F 1267   -1 4 sci_tarr_track_count nodim
-s: F 1268   -1 4 sci_uModem_error nodim
-s: F 1269   -1 1 sci_uModem_is_installed bool
-s: F 1270   -1 1 sci_viper_collecting bool
-s: F 1271   -1 4 sci_viper_collect_time sec
-s: F 1272   -1 4 sci_viper_error nodim
-s: F 1273   -1 1 sci_viper_finished bool
-s: F 1274   -1 1 sci_viper_is_installed bool
-s: F 1275   -1 1 sci_viper_power_on bool
-s: F 1276   -1 1 sci_viper_target enum
-s: F 1277   -1 1 sci_vr2c_is_installed bool
-s: F 1278   -1 4 sci_vr2c_state nodim
-s: F 1279   -1 4 sci_vsf_100_scaled nodim
-s: F 1280   -1 4 sci_vsf_100_sig nodim
-s: F 1281   -1 4 sci_vsf_125_scaled nodim
-s: F 1282   -1 4 sci_vsf_125_sig nodim
-s: F 1283   -1 4 sci_vsf_150_scaled nodim
-s: F 1284   -1 4 sci_vsf_150_sig nodim
-s: F 1285   -1 1 sci_vsf_is_installed bool
-s: F 1286   -1 4 sci_vsf_therm nodim
-s: F 1287   -1 8 sci_vsf_timestamp timestamp
-s: F 1288   -1 1 sci_wants_comms bool
-s: F 1289   -1 1 sci_wants_depth enum
-s: F 1290   -1 1 sci_wants_quiet bool
-s: F 1291   -1 1 sci_wants_surface enum
-s: F 1292   -1 1 sci_wants_turn enum
-s: F 1293   -1 1 sci_wants_wpt enum
-s: F 1294   -1 4 sci_water_cond S/m
-s: F 1295   -1 4 sci_water_cond2 S/m
-s: F 1296   -1 4 sci_water_pressure bar
-s: F 1297   -1 4 sci_water_pressure2 bar
-s: F 1298   -1 4 sci_water_temp degC
-s: F 1299   -1 4 sci_water_temp2 degC
-s: F 1300   -1 1 sci_wetlabs_sim_is_installed bool
-s: F 1301   -1 4 sci_whfctd_elap_time nodim
-s: F 1302   -1 1 sci_whfctd_is_installed bool
-s: F 1303   -1 4 sci_whfctd_raw_con1 nodim
-s: F 1304   -1 4 sci_whfctd_raw_con2 nodim
-s: F 1305   -1 4 sci_whfctd_raw_pres nodim
-s: F 1306   -1 4 sci_whfctd_raw_temp nodim
-s: F 1307   -1 4 sci_whfctd_ref_hi nodim
-s: F 1308   -1 4 sci_whfctd_ref_lo nodim
-s: F 1309   -1 4 sci_whfctd_ref_mid nodim
-s: F 1310   -1 1 sci_wpt_units enum
-s: F 1311   -1 4 sci_wpt_x m
-s: F 1312   -1 4 sci_wpt_y m
-s: F 1313   -1 4 sci_x_disk_files_removed nodim
-s: F 1314   -1 4 sci_x_sent_data_files nodim
-s: F 1315   -1 1 s_corrupted_altitude bool
-s: F 1316   -1 1 s_corrupted_bpump_overheated bool
-s: F 1317   -1 1 s_corrupted_bpump_stalled bool
-s: F 1318   -1 1 s_corrupted_gps bool
-s: F 1319   -1 1 s_corrupted_gps_error bool
-s: F 1320   -1 1 s_corrupted_memory_leak bool
-s: F 1321   -1 1 s_corrupted_pitch_stalled bool
-s: F 1322   -1 1 s_corrupted_pressure_drift bool
-s: F 1323   -1 1 s_corrupted_pressure_noise bool
-s: F 1324   -1 1 s_corrupted_pressure_spike bool
-s: F 1325   -1 1 s_corrupted_watchdog_oddity bool
-s: F 1326   -1 4 s_coulomb_relative_charge %
-s: F 1327   -1 4 s_de_oil_pot_volt_flux volts/sec
-s: F 1328   -1 1 s_hardware_cop_jumper bool
-s: F 1329   -1 4 s_hardware_ver nodim
-s: F 1330   -1 4 s_ini_lat deg
-s: F 1331   -1 4 s_ini_lon deg
-s: F 1332   -1 4 s_mag_var rad
-s: F 1333   -1 4 s_ocean_pressure_min volts
-s: F 1334   -1 4 s_vehicle_temp_tc 1/sec
-s: F 1335   -1 4 s_water_cond S/m
-s: F 1336   -1 4 s_water_depth_avg m
-s: F 1337   -1 4 s_water_depth_delta m
-s: F 1338   -1 4 s_water_depth_wavelength m
-s: F 1339   -1 4 s_water_direction rad
-s: F 1340   -1 4 s_water_speed m/s
-s: F 1341   -1 4 s_water_temp_bottom degc
-s: F 1342   -1 4 s_water_temp_depth_infb m
-s: F 1343   -1 4 s_water_temp_depth_inft m
-s: F 1344   -1 4 s_water_temp_surface degc
-s: F 1345   -1 4 s_wax_freeze_temp degC
-s: F 1346   -1 4 s_wind_direction rad
-s: F 1347   -1 4 s_wind_speed m/s
-s: F 1348   -1 4 u_abort_max_burn_time sec
-s: F 1349   -1 4 u_abort_min_burn_time sec
-s: F 1350   -1 4 u_abort_turn_time sec
-s: F 1351   -1 4 u_allowable_cycle_overrun msec
-s: F 1352   -1 4 u_alpha_system_clock_lags_gps nodim
-s: F 1353   -1 1 u_alt_filter_enabled bool
-s: F 1354   -1 4 u_alt_measure_fraction nodim
-s: F 1355   -1 4 u_alt_measure_secs_prior_inflection sec
-s: F 1356   -1 4 u_alt_min_depth m
-s: F 1357   -1 4 u_alt_min_post_inflection_time sec
-s: F 1358   -1 1 u_alt_reduced_usage_mode bool
-s: F 1359   -1 4 u_alt_reqd_good_in_a_row nodim
-s: F 1360   -1 4 u_angle_of_attack rad
-s: F 1361   -1 4 u_ap_thruster_delta_cmd %
-s: F 1362   -1 4 u_ap_thruster_depth_rate_deadband m/s
-s: F 1363   -1 4 u_ap_thruster_power_deadband watt
-s: F 1364   -1 4 u_ap_thruster_power_p_gain nodim
-s: F 1365   -1 1 u_att_rev_ignore_warnings bool
-s: F 1366   -1 1 u_autoballast_abort bool
-s: F 1367   -1 1 u_autoballast_end_on_converge bool
-s: F 1368   -1 4 u_avg_depth_pitch_battpos_alpha nodim
-s: F 1369   -1 4 u_avg_depth_pitch_battpos_deadband m
-s: F 1370   -1 4 u_avg_depth_rate_alpha nodim
-s: F 1371   -1 4 u_avg_hover_ballast_alpha nodim
-s: F 1372   -1 4 u_avg_msecs_of_post_ds_processing_alpha nodim
-s: F 1373   -1 4 u_avg_speed_alpha nodim
-s: F 1374   -1 4 u_avg_thruster_power_num nodim
-s: F 1375   -1 1 u_avg_thruster_speed_num enum
-s: F 1376   -1 1 u_ballast_pumped_microposition bool
-s: F 1377   -1 4 u_ballast_pumped_micropos_dc nodim
-s: F 1378   -1 4 u_ballast_pumped_micropos_rt msec
-s: F 1379   -1 4 u_ballast_pumped_micropos_wp nodim
-s: F 1380   -1 4 u_ballast_pumped_stop_distance cc
-s: F 1381   -1 4 u_bar_per_meter bar/m
-s: F 1382   -1 4 u_battery_alpha nodim
-s: F 1383   -1 4 u_battery_recall msecs
-s: F 1384   -1 4 u_battery_time sec
-s: F 1385   -1 4 u_battpos_ap_deadband inches
-s: F 1386   -1 1 u_battpos_avg_num_min enum
-s: F 1387   -1 1 u_battpos_microposition bool
-s: F 1388   -1 4 u_battpos_micropos_dc nodim
-s: F 1389   -1 4 u_battpos_micropos_rt msec
-s: F 1390   -1 4 u_battpos_micropos_wp nodim
-s: F 1391   -1 4 u_battpos_stop_distance in
-s: F 1392   -1 1 u_battroll_microposition bool
-s: F 1393   -1 4 u_battroll_micropos_dc nodim
-s: F 1394   -1 4 u_battroll_micropos_rt msec
-s: F 1395   -1 4 u_battroll_micropos_wp nodim
-s: F 1396   -1 4 u_bb2c_beta532_factor Mnodim
-s: F 1397   -1 4 u_bb2c_beta532_offset nodim
-s: F 1398   -1 4 u_bb2c_beta660_factor Mnodim
-s: F 1399   -1 4 u_bb2c_beta660_offset nodim
-s: F 1400   -1 1 u_bb2c_is_calibrated bool
-s: F 1401   -1 4 u_bb2flsV2_b470_cwo nodim
-s: F 1402   -1 4 u_bb2flsV2_b470_sf Mnodim
-s: F 1403   -1 4 u_bb2flsV2_b532_cwo nodim
-s: F 1404   -1 4 u_bb2flsV2_b532_sf Mnodim
-s: F 1405   -1 4 u_bb2flsV2_chl_cwo nodim
-s: F 1406   -1 4 u_bb2flsV2_chl_sf ug/l/nodim
-s: F 1407   -1 1 u_bb2flsV2_is_calibrated bool
-s: F 1408   -1 4 u_bb2flsV3_b715_cwo nodim
-s: F 1409   -1 4 u_bb2flsV3_b715_sf Mnodim
-s: F 1410   -1 4 u_bb2flsV3_b880_cwo nodim
-s: F 1411   -1 4 u_bb2flsV3_b880_sf Mnodim
-s: F 1412   -1 1 u_bb2flsV3_is_calibrated bool
-s: F 1413   -1 4 u_bb2flsV3_pe_cwo nodim
-s: F 1414   -1 4 u_bb2flsV3_pe_sf ppb/nodim
-s: F 1415   -1 4 u_bb2flsV4_b412_cwo nodim
-s: F 1416   -1 4 u_bb2flsV4_b412_sf Mnodim
-s: F 1417   -1 4 u_bb2flsV4_b470_cwo nodim
-s: F 1418   -1 4 u_bb2flsV4_b470_sf Mnodim
-s: F 1419   -1 4 u_bb2flsV4_chl_cwo nodim
-s: F 1420   -1 4 u_bb2flsV4_chl_sf ug/l/nodim
-s: F 1421   -1 1 u_bb2flsV4_is_calibrated bool
-s: F 1422   -1 4 u_bb2flsV5_b532_cwo nodim
-s: F 1423   -1 4 u_bb2flsV5_b532_sf Mnodim
-s: F 1424   -1 4 u_bb2flsV5_b660_cwo nodim
-s: F 1425   -1 4 u_bb2flsV5_b660_sf Mnodim
-s: F 1426   -1 4 u_bb2flsV5_cdom_cwo nodim
-s: F 1427   -1 4 u_bb2flsV5_cdom_sf ppb/nodim
-s: F 1428   -1 1 u_bb2flsV5_is_calibrated bool
-s: F 1429   -1 4 u_bb2flsV6_b532_cwo nodim
-s: F 1430   -1 4 u_bb2flsV6_b532_sf Mnodim
-s: F 1431   -1 4 u_bb2flsV6_b880_cwo nodim
-s: F 1432   -1 4 u_bb2flsV6_b880_sf Mnodim
-s: F 1433   -1 4 u_bb2flsV6_cdom_cwo nodim
-s: F 1434   -1 4 u_bb2flsV6_cdom_sf ppb/nodim
-s: F 1435   -1 1 u_bb2flsV6_is_calibrated bool
-s: F 1436   -1 4 u_bb2flsV7_b532_cwo nodim
-s: F 1437   -1 4 u_bb2flsV7_b532_sf Mnodim
-s: F 1438   -1 4 u_bb2flsV7_b650_cwo nodim
-s: F 1439   -1 4 u_bb2flsV7_b650_sf Mnodim
-s: F 1440   -1 4 u_bb2flsV7_chl_cwo nodim
-s: F 1441   -1 4 u_bb2flsV7_chl_sf ug/l/nodim
-s: F 1442   -1 1 u_bb2flsV7_is_calibrated bool
-s: F 1443   -1 4 u_bb2fls_b660_cwo nodim
-s: F 1444   -1 4 u_bb2fls_b660_sf Mnodim
-s: F 1445   -1 4 u_bb2fls_b880_cwo nodim
-s: F 1446   -1 4 u_bb2fls_b880_sf Mnodim
-s: F 1447   -1 4 u_bb2fls_cdom_cwo nodim
-s: F 1448   -1 4 u_bb2fls_cdom_sf ppb/nodim
-s: F 1449   -1 1 u_bb2fls_is_calibrated bool
-s: F 1450   -1 4 u_bb2fV2_b470_cwo nodim
-s: F 1451   -1 4 u_bb2fV2_b470_sf Mnodim
-s: F 1452   -1 4 u_bb2fV2_b700_cwo nodim
-s: F 1453   -1 4 u_bb2fV2_b700_sf Mnodim
-s: F 1454   -1 4 u_bb2fV2_chlor_cwo nodim
-s: F 1455   -1 4 u_bb2fV2_chlor_sf ug/l/nodim
-s: F 1456   -1 1 u_bb2fV2_is_calibrated bool
-s: F 1457   -1 4 u_bb2lss_beta880_factor Mnodim
-s: F 1458   -1 4 u_bb2lss_beta880_offset nodim
-s: F 1459   -1 1 u_bb2lss_is_calibrated bool
-s: F 1460   -1 4 u_bb3sloV2_b532_do nodim
-s: F 1461   -1 4 u_bb3sloV2_b532_sf Mnodim
-s: F 1462   -1 4 u_bb3sloV2_b660_do nodim
-s: F 1463   -1 4 u_bb3sloV2_b660_sf Mnodim
-s: F 1464   -1 4 u_bb3sloV2_b880_do nodim
-s: F 1465   -1 4 u_bb3sloV2_b880_sf Mnodim
-s: F 1466   -1 1 u_bb3sloV2_is_calibrated bool
-s: F 1467   -1 4 u_bb3sloV3_b532_do nodim
-s: F 1468   -1 4 u_bb3sloV3_b532_sf Mnodim
-s: F 1469   -1 4 u_bb3sloV3_b630_do nodim
-s: F 1470   -1 4 u_bb3sloV3_b630_sf Mnodim
-s: F 1471   -1 4 u_bb3sloV3_b880_do nodim
-s: F 1472   -1 4 u_bb3sloV3_b880_sf Mnodim
-s: F 1473   -1 1 u_bb3sloV3_is_calibrated bool
-s: F 1474   -1 4 u_bb3slo_b470_do nodim
-s: F 1475   -1 4 u_bb3slo_b470_sf Mnodim
-s: F 1476   -1 4 u_bb3slo_b532_do nodim
-s: F 1477   -1 4 u_bb3slo_b532_sf Mnodim
-s: F 1478   -1 4 u_bb3slo_b660_do nodim
-s: F 1479   -1 4 u_bb3slo_b660_sf Mnodim
-s: F 1480   -1 1 u_bb3slo_is_calibrated bool
-s: F 1481   -1 4 u_bbfl2sV2_bb_cwo nodim
-s: F 1482   -1 4 u_bbfl2sV2_bb_sf Mnodim
-s: F 1483   -1 4 u_bbfl2sV2_fl1_cwo nodim
-s: F 1484   -1 4 u_bbfl2sV2_fl1_sf nodim
-s: F 1485   -1 4 u_bbfl2sV2_fl2_cwo nodim
-s: F 1486   -1 4 u_bbfl2sV2_fl2_sf nodim
-s: F 1487   -1 1 u_bbfl2sV2_is_calibrated bool
-s: F 1488   -1 4 u_bbfl2s_bb_cwo nodim
-s: F 1489   -1 4 u_bbfl2s_bb_sf Mnodim
-s: F 1490   -1 4 u_bbfl2s_cdom_cwo nodim
-s: F 1491   -1 4 u_bbfl2s_cdom_sf ppb/nodim
-s: F 1492   -1 4 u_bbfl2s_chlor_cwo nodim
-s: F 1493   -1 4 u_bbfl2s_chlor_sf ug/l/nodim
-s: F 1494   -1 1 u_bbfl2s_is_calibrated bool
-s: F 1495   -1 4 u_bsipar_dark_offset volts
-s: F 1496   -1 1 u_bsipar_is_calibrated bool
-s: F 1497   -1 4 u_bsipar_scale_factor Mnodim
-s: F 1498   -1 1 u_calc_angle_of_attack bool
-s: F 1499   -1 4 u_coast_time s
-s: F 1500   -1 4 u_comatose_deadband_mult nodim
-s: F 1501   -1 1 u_comatose_enabled bool
-s: F 1502   -1 4 u_console_announce_time sec
-s: F 1503   -1 1 u_console_off_if_mission_iridium bool
-s: F 1504   -1 4 u_console_reqd_cd_off_time sec
-s: F 1505   -1 4 u_coulomb_debug nodim
-s: F 1506   -1 4 u_cycle_time sec
-s: F 1507   -1 1 u_dbd_sensor_list_xmit_control enum
-s: F 1508   -1 4 u_depth_rate_filter_factor nodim
-s: F 1509   -1 4 u_depth_rate_filter_sub_sur_dep m
-s: F 1510   -1 1 u_depth_rate_thr_avg_num enum
-s: F 1511   -1 4 u_de_avg_oil_vol_err_alpha nodim
-s: F 1512   -1 4 u_de_oil_vol_check_time sec
-s: F 1513   -1 4 u_digifin_debug nodim
-s: F 1514   -1 4 u_dmon_ctd_msg_period sec
-s: F 1515   -1 1 u_dvl_bk_water_mass_layer_mode enum
-s: F 1516   -1 4 u_dvl_ensemble_timeout sec
-s: F 1517   -1 4 u_dvl_es_expected_salinity ppt
-s: F 1518   -1 4 u_dvl_num_errors_before_restart nodim
-s: F 1519   -1 1 u_dvl_pd_data_stream_select enum
-s: F 1520   -1 1 u_dvl_single_pd0_file bool
-s: F 1521   -1 4 u_exp_alt_correction m
-s: F 1522   -1 4 u_exp_alt_pwr_stb_time s
-s: F 1523   -1 1 u_fin_microposition bool
-s: F 1524   -1 4 u_fin_micropos_dc nodim
-s: F 1525   -1 4 u_fin_micropos_rt msec
-s: F 1526   -1 4 u_fin_micropos_wp nodim
-s: F 1527   -1 4 u_FIRe_num_errors_before_restart nodim
-s: F 1528   -1 4 u_fl3sloV2_cdom_cwo nodim
-s: F 1529   -1 4 u_fl3sloV2_cdom_sf ppb/nodim
-s: F 1530   -1 4 u_fl3sloV2_chlor_cwo nodim
-s: F 1531   -1 4 u_fl3sloV2_chlor_sf ug/l/nodim
-s: F 1532   -1 1 u_fl3sloV2_is_calibrated bool
-s: F 1533   -1 4 u_fl3sloV2_rhod_cwo nodim
-s: F 1534   -1 4 u_fl3sloV2_rhod_sf ppb/nodim
-s: F 1535   -1 4 u_fl3slo_cdom_cwo nodim
-s: F 1536   -1 4 u_fl3slo_cdom_sf ppb/l/nodim
-s: F 1537   -1 4 u_fl3slo_chlor_cwo nodim
-s: F 1538   -1 4 u_fl3slo_chlor_sf ug/l/nodim
-s: F 1539   -1 1 u_fl3slo_is_calibrated bool
-s: F 1540   -1 4 u_fl3slo_phyco_cwo nodim
-s: F 1541   -1 4 u_fl3slo_phyco_sf ppb/l/nodim
-s: F 1542   -1 4 u_flbbcd_bb_cwo nodim
-s: F 1543   -1 4 u_flbbcd_bb_sf Mnodim
-s: F 1544   -1 4 u_flbbcd_cdom_cwo nodim
-s: F 1545   -1 4 u_flbbcd_cdom_sf ppb/nodim
-s: F 1546   -1 4 u_flbbcd_chlor_cwo nodim
-s: F 1547   -1 4 u_flbbcd_chlor_sf ug/l/nodim
-s: F 1548   -1 1 u_flbbcd_is_calibrated bool
-s: F 1549   -1 4 u_flbbrh_bb_cwo nodim
-s: F 1550   -1 4 u_flbbrh_bb_sf Mnodim
-s: F 1551   -1 4 u_flbbrh_chlor_cwo nodim
-s: F 1552   -1 4 u_flbbrh_chlor_sf ug/l/nodim
-s: F 1553   -1 1 u_flbbrh_is_calibrated bool
-s: F 1554   -1 4 u_flbbrh_rhod_cwo nodim
-s: F 1555   -1 4 u_flbbrh_rhod_sf ppb/nodim
-s: F 1556   -1 4 u_flbb_bb_do nodim
-s: F 1557   -1 4 u_flbb_bb_sf Mnodim
-s: F 1558   -1 4 u_flbb_chlor_do nodim
-s: F 1559   -1 4 u_flbb_chlor_sf ug/l/nodim
-s: F 1560   -1 1 u_flbb_is_calibrated bool
-s: F 1561   -1 4 u_flntu_chlor_do nodim
-s: F 1562   -1 4 u_flntu_chlor_sf ug/l/nodim
-s: F 1563   -1 1 u_flntu_is_calibrated bool
-s: F 1564   -1 4 u_flntu_turb_do nodim
-s: F 1565   -1 4 u_flntu_turb_sf NTU/nodim
-s: F 1566   -1 4 u_flrh_cwo nodim
-s: F 1567   -1 1 u_flrh_is_calibrated bool
-s: F 1568   -1 4 u_flrh_sf ppb/nodim
-s: F 1569   -1 4 u_flur_cwo nodim
-s: F 1570   -1 1 u_flur_is_calibrated bool
-s: F 1571   -1 4 u_flur_sf ppb/nodim
-s: F 1572   -1 1 u_fly_deep_in_shallow bool
-s: F 1573   -1 4 u_freewave_data_rate KBps
-s: F 1574   -1 4 u_gamma_rad5_files_before_surfacing nodim
-s: F 1575   -1 4 u_gamma_rad5_status_period sec
-s: F 1576   -1 4 u_gliderbus_debug nodim
-s: F 1577   -1 4 u_gps_reasonable_factor nodim
-s: F 1578   -1 4 u_gps_reqd_valid_fixes nodim
-s: F 1579   -1 4 u_gps_uncertainity m
-s: F 1580   -1 4 u_hd_broll_abort_after_y_misses nodim
-s: F 1581   -1 1 u_hd_broll_ap_deadband_reset bool
-s: F 1582   -1 4 u_hd_broll_ap_dgain 1/rad-sec
-s: F 1583   -1 4 u_hd_broll_ap_gain 1/rad
-s: F 1584   -1 4 u_hd_broll_ap_hardover_holdoff sec
-s: F 1585   -1 4 u_hd_broll_ap_igain 1/rad-sec
-s: F 1586   -1 4 u_hd_broll_ap_inflection_holdoff sec
-s: F 1587   -1 4 u_hd_broll_ap_limit_absolute rad
-s: F 1588   -1 4 u_hd_broll_ap_limit_gain_x_error rad
-s: F 1589   -1 4 u_hd_broll_ap_run_time secs
-s: F 1590   -1 1 u_hd_broll_ap_scale_by_max bool
-s: F 1591   -1 4 u_hd_fin_abort_after_y_misses nodim
-s: F 1592   -1 1 u_hd_fin_ap_deadband_reset bool
-s: F 1593   -1 4 u_hd_fin_ap_dgain sec/rad
-s: F 1594   -1 4 u_hd_fin_ap_gain 1/rad
-s: F 1595   -1 4 u_hd_fin_ap_hardover_holdoff sec
-s: F 1596   -1 4 u_hd_fin_ap_igain 1/rad-sec
-s: F 1597   -1 4 u_hd_fin_ap_inflection_holdoff sec
-s: F 1598   -1 4 u_hd_fin_ap_limit_absolute rad
-s: F 1599   -1 4 u_hd_fin_ap_limit_gain_x_error rad
-s: F 1600   -1 1 u_hd_fin_ap_pause_hardover bool
-s: F 1601   -1 4 u_hd_fin_ap_run_time secs
-s: F 1602   -1 1 u_hd_fin_ap_scale_by_max bool
-s: F 1603   -1 4 u_heading_deadband rad
-s: F 1604   -1 4 u_heading_rate_deadband rad/s
-s: F 1605   -1 4 u_heap_required_for_1meg_persistor bytes
-s: F 1606   -1 4 u_hovering_frac_nom_dive_rate nodim
-s: F 1607   -1 4 u_hover_bpump_ap_dgain_deep cc-s/m
-s: F 1608   -1 4 u_hover_bpump_ap_dgain_shallow cc-s/m
-s: F 1609   -1 4 u_hover_bpump_ap_gain_deep cc/m
-s: F 1610   -1 4 u_hover_bpump_ap_gain_shallow cc/m
-s: F 1611   -1 4 u_hover_depth_abort_after_y_misses nodim
-s: F 1612   -1 1 u_hover_depth_deadband_reset bool
-s: F 1613   -1 4 u_hover_depth_gain_scale_b X
-s: F 1614   -1 4 u_hover_depth_gain_scale_m X
-s: F 1615   -1 4 u_hover_depth_hardover_holdoff sec
-s: F 1616   -1 4 u_hover_depth_inflection_holdoff sec
-s: F 1617   -1 4 u_hover_depth_limit_absolute rad
-s: F 1618   -1 4 u_hover_depth_limit_gain_x_error rad
-s: F 1619   -1 1 u_hover_depth_pause_hardover bool
-s: F 1620   -1 4 u_hover_depth_pitch_deadband X
-s: F 1621   -1 4 u_hover_depth_pitch_rate_deadband X
-s: F 1622   -1 4 u_hover_depth_p_gain_min X
-s: F 1623   -1 4 u_hover_depth_run_time sec
-s: F 1624   -1 1 u_hover_depth_scale_by_max bool
-s: F 1625   -1 4 u_increase_vacuum_time sec
-s: F 1626   -1 4 u_iridium_data_rate KBps
-s: F 1627   -1 4 u_iridium_failover_retries nodim
-s: F 1628   -1 1 u_iridium_force_port bool
-s: F 1629   -1 4 u_iridium_max_time_til_callback sec
-s: F 1630   -1 4 u_lithium_battery_debug nodim
-s: F 1631   -1 4 u_low_power_cycle_time sec
-s: F 1632   -1 4 u_low_power_hd_fin_ap_dgain sec/rad
-s: F 1633   -1 4 u_low_power_hd_fin_ap_gain 1/rad
-s: F 1634   -1 4 u_low_power_hd_fin_ap_igain 1/rad-sec
-s: F 1635   -1 4 u_max_allowed_lastgasp_aborts nodim
-s: F 1636   -1 4 u_max_altimeter m
-s: F 1637   -1 4 u_max_bottom_slope m/m
-s: F 1638   -1 4 u_max_clothesline_lag_for_consci s
-s: F 1639   -1 4 u_max_depth_for_air_pump_est m
-s: F 1640   -1 4 u_max_lag_before_syncing_time sec
-s: F 1641   -1 4 u_max_num_files_to_xmit_at_once nodim
-s: F 1642   -1 4 u_max_pitch_ap_period sec
-s: F 1643   -1 4 u_max_sensor_logs_per_cycle nodim
-s: F 1644   -1 4 u_max_sequence_repetitions nodim
-s: F 1645   -1 4 u_max_thruster_speed m/s
-s: F 1646   -1 4 u_max_time_in_gliderdos sec
-s: F 1647   -1 4 u_max_total_sequenced_missions nodim
-s: F 1648   -1 4 u_max_water_depth m
-s: F 1649   -1 4 u_max_water_depth_lifetime yos
-s: F 1650   -1 4 u_max_water_speed m/s
-s: F 1651   -1 4 u_min_altimeter m
-s: F 1652   -1 4 u_min_de_oil_flux cc/sec
-s: F 1653   -1 4 u_min_pitch_ap_period sec
-s: F 1654   -1 4 u_min_thruster_abort_ascent_rate m/s
-s: F 1655   -1 4 u_min_water_depth m
-s: F 1656   -1 4 u_motor_debug nodim
-s: F 1657   -1 4 u_motor_fs_travel_mult nodim
-s: F 1658   -1 4 u_ocr504I_cal_coeff_c1 Tnodim
-s: F 1659   -1 4 u_ocr504I_cal_coeff_c2 Tnodim
-s: F 1660   -1 4 u_ocr504I_cal_coeff_c3 Tnodim
-s: F 1661   -1 4 u_ocr504I_cal_coeff_c4 Tnodim
-s: F 1662   -1 4 u_ocr504I_dark_counts_c1 nodim
-s: F 1663   -1 4 u_ocr504I_dark_counts_c2 nodim
-s: F 1664   -1 4 u_ocr504I_dark_counts_c3 nodim
-s: F 1665   -1 4 u_ocr504I_dark_counts_c4 nodim
-s: F 1666   -1 4 u_ocr504I_immersion_coeff_c1 nodim
-s: F 1667   -1 4 u_ocr504I_immersion_coeff_c2 nodim
-s: F 1668   -1 4 u_ocr504I_immersion_coeff_c3 nodim
-s: F 1669   -1 4 u_ocr504I_immersion_coeff_c4 nodim
-s: F 1670   -1 1 u_ocr504I_is_calibrated bool
-s: F 1671   -1 4 u_ocr504I_itemp_a0 nodim
-s: F 1672   -1 4 u_ocr504I_itemp_a1 nodim
-s: F 1673   -1 4 u_ocr504I_Vin_a0 nodim
-s: F 1674   -1 4 u_ocr504I_Vin_a1 nodim
-s: F 1675   -1 4 u_ocr504R_cal_coeff_c1 Tnodim
-s: F 1676   -1 4 u_ocr504R_cal_coeff_c2 Tnodim
-s: F 1677   -1 4 u_ocr504R_cal_coeff_c3 Tnodim
-s: F 1678   -1 4 u_ocr504R_cal_coeff_c4 Tnodim
-s: F 1679   -1 4 u_ocr504R_dark_counts_c1 nodim
-s: F 1680   -1 4 u_ocr504R_dark_counts_c2 nodim
-s: F 1681   -1 4 u_ocr504R_dark_counts_c3 nodim
-s: F 1682   -1 4 u_ocr504R_dark_counts_c4 nodim
-s: F 1683   -1 4 u_ocr504R_immersion_coeff_c1 nodim
-s: F 1684   -1 4 u_ocr504R_immersion_coeff_c2 nodim
-s: F 1685   -1 4 u_ocr504R_immersion_coeff_c3 nodim
-s: F 1686   -1 4 u_ocr504R_immersion_coeff_c4 nodim
-s: F 1687   -1 1 u_ocr504R_is_calibrated bool
-s: F 1688   -1 4 u_ocr504R_itemp_a0 nodim
-s: F 1689   -1 4 u_ocr504R_itemp_a1 nodim
-s: F 1690   -1 4 u_ocr504R_Vin_a0 nodim
-s: F 1691   -1 4 u_ocr504R_Vin_a1 nodim
-s: F 1692   -1 4 u_ocr507I_cal_coeff_c1 Tnodim
-s: F 1693   -1 4 u_ocr507I_cal_coeff_c2 Tnodim
-s: F 1694   -1 4 u_ocr507I_cal_coeff_c3 Tnodim
-s: F 1695   -1 4 u_ocr507I_cal_coeff_c4 Tnodim
-s: F 1696   -1 4 u_ocr507I_cal_coeff_c5 Tnodim
-s: F 1697   -1 4 u_ocr507I_cal_coeff_c6 Tnodim
-s: F 1698   -1 4 u_ocr507I_cal_coeff_c7 Tnodim
-s: F 1699   -1 4 u_ocr507I_dark_counts_c1 nodim
-s: F 1700   -1 4 u_ocr507I_dark_counts_c2 nodim
-s: F 1701   -1 4 u_ocr507I_dark_counts_c3 nodim
-s: F 1702   -1 4 u_ocr507I_dark_counts_c4 nodim
-s: F 1703   -1 4 u_ocr507I_dark_counts_c5 nodim
-s: F 1704   -1 4 u_ocr507I_dark_counts_c6 nodim
-s: F 1705   -1 4 u_ocr507I_dark_counts_c7 nodim
-s: F 1706   -1 4 u_ocr507I_immersion_coeff_c1 nodim
-s: F 1707   -1 4 u_ocr507I_immersion_coeff_c2 nodim
-s: F 1708   -1 4 u_ocr507I_immersion_coeff_c3 nodim
-s: F 1709   -1 4 u_ocr507I_immersion_coeff_c4 nodim
-s: F 1710   -1 4 u_ocr507I_immersion_coeff_c5 nodim
-s: F 1711   -1 4 u_ocr507I_immersion_coeff_c6 nodim
-s: F 1712   -1 4 u_ocr507I_immersion_coeff_c7 nodim
-s: F 1713   -1 1 u_ocr507I_is_calibrated bool
-s: F 1714   -1 4 u_ocr507I_itemp_a0 nodim
-s: F 1715   -1 4 u_ocr507I_itemp_a1 nodim
-s: F 1716   -1 4 u_ocr507I_Va_a0 nodim
-s: F 1717   -1 4 u_ocr507I_Va_a1 nodim
-s: F 1718   -1 4 u_ocr507I_Vin_a0 nodim
-s: F 1719   -1 4 u_ocr507I_Vin_a1 nodim
-s: F 1720   -1 4 u_ocr507R_cal_coeff_c1 Tnodim
-s: F 1721   -1 4 u_ocr507R_cal_coeff_c2 Tnodim
-s: F 1722   -1 4 u_ocr507R_cal_coeff_c3 Tnodim
-s: F 1723   -1 4 u_ocr507R_cal_coeff_c4 Tnodim
-s: F 1724   -1 4 u_ocr507R_cal_coeff_c5 Tnodim
-s: F 1725   -1 4 u_ocr507R_cal_coeff_c6 Tnodim
-s: F 1726   -1 4 u_ocr507R_cal_coeff_c7 Tnodim
-s: F 1727   -1 4 u_ocr507R_dark_counts_c1 nodim
-s: F 1728   -1 4 u_ocr507R_dark_counts_c2 nodim
-s: F 1729   -1 4 u_ocr507R_dark_counts_c3 nodim
-s: F 1730   -1 4 u_ocr507R_dark_counts_c4 nodim
-s: F 1731   -1 4 u_ocr507R_dark_counts_c5 nodim
-s: F 1732   -1 4 u_ocr507R_dark_counts_c6 nodim
-s: F 1733   -1 4 u_ocr507R_dark_counts_c7 nodim
-s: F 1734   -1 4 u_ocr507R_immersion_coeff_c1 nodim
-s: F 1735   -1 4 u_ocr507R_immersion_coeff_c2 nodim
-s: F 1736   -1 4 u_ocr507R_immersion_coeff_c3 nodim
-s: F 1737   -1 4 u_ocr507R_immersion_coeff_c4 nodim
-s: F 1738   -1 4 u_ocr507R_immersion_coeff_c5 nodim
-s: F 1739   -1 4 u_ocr507R_immersion_coeff_c6 nodim
-s: F 1740   -1 4 u_ocr507R_immersion_coeff_c7 nodim
-s: F 1741   -1 1 u_ocr507R_is_calibrated bool
-s: F 1742   -1 4 u_ocr507R_itemp_a0 nodim
-s: F 1743   -1 4 u_ocr507R_itemp_a1 nodim
-s: F 1744   -1 4 u_ocr507R_Va_a0 nodim
-s: F 1745   -1 4 u_ocr507R_Va_a1 nodim
-s: F 1746   -1 4 u_ocr507R_Vin_a0 nodim
-s: F 1747   -1 4 u_ocr507R_Vin_a1 nodim
-s: F 1748   -1 1 u_oxy4_slow_surface_mode bool
-s: F 1749   -1 4 u_pinger_max_depth m
-s: F 1750   -1 4 u_pinger_rep_rate sec
-s: F 1751   -1 1 u_ping_n_enabled bool
-s: F 1752   -1 4 u_pitch_ap_deadband rad
-s: F 1753   -1 4 u_pitch_ap_deadband_thruster rad
-s: F 1754   -1 4 u_pitch_ap_dgain s/rad
-s: F 1755   -1 4 u_pitch_ap_dgain_thruster s/rad
-s: F 1756   -1 4 u_pitch_ap_gain 1/rad
-s: F 1757   -1 4 u_pitch_ap_gain_thruster 1/rad
-s: F 1758   -1 4 u_pitch_correction_time_mult nodim
-s: F 1759   -1 4 u_pitch_deadband_time_mult nodim
-s: F 1760   -1 4 u_pitch_energy_cal_b volts
-s: F 1761   -1 4 u_pitch_energy_cal_m nodim
-s: F 1762   -1 4 u_pitch_max_delta_battpos in
-s: F 1763   -1 4 u_pitch_max_delta_fluid_pumped cc
-s: F 1764   -1 4 u_pitch_surface rad
-s: F 1765   -1 4 u_pressure_autocal_deadband bar
-s: F 1766   -1 1 u_pressure_autocal_enabled bool
-s: F 1767   -1 4 u_pressure_autocal_max_allowed bar
-s: F 1768   -1 4 u_pressure_autocal_min_time_between secs
-s: F 1769   -1 1 u_pressure_autocal_performed bool
-s: F 1770   -1 1 u_pressure_median bool
-s: F 1771   -1 1 u_pressure_median_debug enum
-s: F 1772   -1 4 u_pressure_median_iter nodim
-s: F 1773   -1 4 u_pressure_median_k nodim
-s: F 1774   -1 1 u_pressure_median_median bool
-s: F 1775   -1 4 u_print_engine_status sec
-s: F 1776   -1 4 u_reqd_depth_at_surface m
-s: F 1777   -1 4 u_reqd_disk_space Mbytes
-s: F 1778   -1 4 u_sam_a nodim
-s: F 1779   -1 4 u_sam_do1 nodim
-s: F 1780   -1 4 u_sam_do2 nodim
-s: F 1781   -1 4 u_sam_eff_pathlength nodim
-s: F 1782   -1 4 u_sam_exp1coeff nodim
-s: F 1783   -1 4 u_sam_exp2coeff nodim
-s: F 1784   -1 1 u_sam_is_calibrated bool
-s: F 1785   -1 4 u_sam_median_window nodim
-s: F 1786   -1 4 u_sam_offset nodim
-s: F 1787   -1 4 u_sam_transition_val nodim
-s: F 1788   -1 4 u_satpar_dark_offset nodim
-s: F 1789   -1 4 u_satpar_immersion_coeff nodim
-s: F 1790   -1 1 u_satpar_is_calibrated bool
-s: F 1791   -1 4 u_satpar_slope Mnodim
-s: F 1792   -1 1 u_science_logging_error bool
-s: F 1793   -1 4 u_science_max_power_off_time s
-s: F 1794   -1 4 u_science_power_off_delay s
-s: F 1795   -1 4 u_science_send_time_limit_adjustment_factor nodim
-s: F 1796   -1 4 u_sci_cmd_max_ack_wait_time s
-s: F 1797   -1 4 u_sci_cmd_max_consci_time s
-s: F 1798   -1 4 u_sci_cycle_time sec
-s: F 1799   -1 1 u_sci_dbd_sensor_list_xmit_control enum
-s: F 1800   -1 4 u_secs_for_oil_vol_stabilization secs
-s: F 1801   -1 4 u_secs_surface_from_airpump sec
-s: F 1802   -1 4 u_sequence_max_time_in_gliderdos s
-s: F 1803   -1 4 u_sequence_start_delay s
-s: F 1804   -1 4 u_sound_speed m/s
-s: F 1805   -1 4 u_stable_comms_reqd_secs sec
-s: F 1806   -1 4 u_stale_gps_msg_period s
-s: F 1807   -1 4 u_stale_gps_msg_time s
-s: F 1808   -1 4 u_suna_bootup_time sec
-s: F 1809   -1 4 u_suna_num_errors_before_restart nodim
-s: F 1810   -1 4 u_surface_est_threshold nodim
-s: F 1811   -1 4 u_surface_est_time_constant secs
-s: F 1812   -1 4 u_tarr_dsp_power_on_delay sec
-s: F 1813   -1 4 u_tarr_num_errors_before_restart nodim
-s: F 1814   -1 4 u_test_driver_errors_per_min nodim
-s: F 1815   -1 4 u_test_driver_oddities_per_min nodim
-s: F 1816   -1 4 u_test_driver_warnings_per_min nodim
-s: F 1817   -1 4 u_thermal_min_time_in_esc_pos s
-s: F 1818   -1 4 u_thermal_pump_reqd_pitch rad
-s: F 1819   -1 4 u_thermal_valve_check_time sec
-s: F 1820   -1 4 u_thermal_valve_time_in_down_pos s
-s: F 1821   -1 4 u_thermal_valve_time_in_up_pos s
-s: F 1822   -1 4 u_thruster_abort_inflection_holdoff sec
-s: F 1823   -1 4 u_thruster_ap_period s
-s: F 1824   -1 4 u_thruster_burst_secs sec
-s: F 1825   -1 4 u_thruster_burst_volts volts
-s: F 1826   -1 4 u_thruster_cmd_change_min %
-s: F 1827   -1 4 u_thruster_delta_max %
-s: F 1828   -1 4 u_thruster_hd_fin_ap_dgain sec/rad
-s: F 1829   -1 4 u_thruster_hd_fin_ap_gain 1/rad
-s: F 1830   -1 4 u_thruster_hd_fin_ap_igain 1/rad-sec
-s: F 1831   -1 4 u_thruster_inflection_holdoff_deep sec
-s: F 1832   -1 4 u_thruster_inflection_holdoff_shal sec
-s: F 1833   -1 4 u_thruster_power_delta_max %
-s: F 1834   -1 4 u_thruster_power_limit_cmd %
-s: F 1835   -1 1 u_tickle_on_console_cd bool
-s: F 1836   -1 1 u_tickle_on_gps bool
-s: F 1837   -1 1 u_uModem_BND enum
-s: F 1838   -1 1 u_uModem_CST bool
-s: F 1839   -1 4 u_uModem_DTO sec
-s: F 1840   -1 4 u_uModem_FML nodim
-s: F 1841   -1 4 u_uModem_hes_secs sec
-s: F 1842   -1 4 u_uModem_num_errors_before_restart nodim
-s: F 1843   -1 4 u_uModem_SRC nodim
-s: F 1844   -1 1 u_use_ctd_depth_for_flying bool
-s: F 1845   -1 4 u_use_current_correction nodim
-s: F 1846   -1 1 u_use_pitch_servo_memory bool
-s: F 1847   -1 4 u_vacuum_air_bag_inflated inHg
-s: F 1848   -1 4 u_vacuum_air_bag_inflating inHg
-s: F 1849   -1 4 u_vacuum_cal_b inHg
-s: F 1850   -1 4 u_vacuum_cal_m inHg/Volt
-s: F 1851   -1 4 u_vacuum_recall msec
-s: F 1852   -1 4 u_vacuum_time sec
-s: F 1853   -1 4 u_vsf_100_dc nodim
-s: F 1854   -1 4 u_vsf_100_sf Mnodim
-s: F 1855   -1 4 u_vsf_125_dc nodim
-s: F 1856   -1 4 u_vsf_125_sf Mnodim
-s: F 1857   -1 4 u_vsf_150_dc nodim
-s: F 1858   -1 4 u_vsf_150_sf Mnodim
-s: F 1859   -1 1 u_vsf_is_calibrated bool
-s: F 1860   -1 4 u_wetlabs_sim_num_eng_units nodim
-s: F 1861   -1 4 u_zmodem_verbosity nodim
-s: F 1862   -1 4 xs_altitude m
-s: F 1863   -1 4 xs_ballast_pumped cc
-s: F 1864   -1 4 xs_battpos in
-s: F 1865   -1 4 xs_battroll rad
-s: F 1866   -1 4 xs_depth m
-s: F 1867   -1 4 xs_fin rad
-s: F 1868   -1 4 xs_fluid_pumped cc
-s: F 1869   -1 4 xs_hdg_rate rad/sec
-s: F 1870   -1 4 xs_heading rad
-s: F 1871   -1 4 xs_lat deg
-s: F 1872   -1 4 xs_lon deg
-s: F 1873   -1 4 xs_pitch rad
-s: F 1874   -1 4 xs_pressure_drift volts
-s: F 1875   -1 4 xs_pressure_noise bar
-s: F 1876   -1 4 xs_roll rad
-s: F 1877   -1 4 xs_speed m/s
-s: F 1878   -1 4 xs_speed_error m/s
-s: F 1879   -1 4 xs_thermal_acc_oil_vol cc
-s: F 1880   -1 4 xs_thermal_aft_oil_vol cc
-s: F 1881   -1 4 xs_thermal_int_oil_vol cc
-s: F 1882   -1 4 xs_thermal_tube_oil_vol cc
-s: F 1883   -1 4 xs_vehicle_temp degC
-s: F 1884   -1 4 xs_vert_speed m/s
-s: F 1885   -1 4 xs_vx_lmc m/s
-s: F 1886   -1 4 xs_vy_lmc m/s
-s: F 1887   -1 4 xs_water_depth m
-s: F 1888   -1 4 xs_water_temp degC
-s: F 1889   -1 4 xs_wax_frac_frozen nodim
-s: F 1890   -1 4 xs_wax_temp degC
-s: F 1891   -1 4 xs_x_lmc m
-s: F 1892   -1 4 xs_x_lmc_error m
-s: F 1893   -1 4 xs_y_lmc m
-s: F 1894   -1 4 xs_y_lmc_error m
-s: F 1895   -1 4 x_alt_time sec
-s: F 1896   -1 1 x_are_in_lab bool
-s: F 1897   -1 1 x_are_running_onetime_sequence bool
-s: F 1898   -1 1 x_are_simulating enum
-s: F 1899   -1 1 x_argos_type enum
-s: F 1900   -1 4 x_avg_depth_pitch_battpos_offset in
-s: F 1901   -1 4 x_avg_hover_ballast cc
-s: F 1902   -1 4 x_avg_hover_depth m
-s: F 1903   -1 4 x_avg_msecs_of_post_ds_processing_reqd msec
-s: F 1904   -1 4 x_ballast_passive_retraction_count int
-s: F 1905   -1 4 x_ballast_pumped_deadband cc
-s: F 1906   -1 4 x_ballast_pumped_max cc
-s: F 1907   -1 4 x_ballast_pumped_passive_retraction_depth m
-s: F 1908   -1 1 x_battpos_achieved enum
-s: F 1909   -1 4 x_battpos_deadband in
-s: F 1910   -1 4 x_battpos_max in
-s: F 1911   -1 4 x_battroll_deadband rad
-s: F 1912   -1 4 x_battroll_max rad
-s: F 1913   -1 1 x_clothesline_state enum
-s: F 1914   -1 4 x_console_announcement_made nodim
-s: F 1915   -1 4 x_current_target_altitude m
-s: F 1916   -1 4 x_cycle_overrun_in_ms msec
-s: F 1917   -1 4 x_cycle_time sec
-s: F 1918   -1 4 x_dbd_mission_number nodim
-s: F 1919   -1 4 x_dbd_segment_number nodim
-s: F 1920   -1 4 x_dc_time msec
-s: F 1921   -1 1 x_deactivate_hover bool
-s: F 1922   -1 4 x_dead_time msec
-s: F 1923   -1 4 x_de_avg_oil_vol_ierr_on_ascent cc
-s: F 1924   -1 4 x_de_avg_oil_vol_ierr_on_descent cc
-s: F 1925   -1 1 x_de_ignore_tvalve_oddity bool
-s: F 1926   -1 4 x_de_oil_flux cc/sec
-s: F 1927   -1 4 x_de_oil_vol_deadband cc
-s: F 1928   -1 4 x_de_oil_vol_ierr_on_ascent cc
-s: F 1929   -1 4 x_de_oil_vol_ierr_on_descent cc
-s: F 1930   -1 4 x_de_oil_vol_max cc
-s: F 1931   -1 1 x_de_pump_disable bool
-s: F 1932   -1 4 x_disk_files_removed nodim
-s: F 1933   -1 1 x_dr_state enum
-s: F 1934   -1 4 x_ds_time msec
-s: F 1935   -1 1 x_enable_steering_during_hover bool
-s: F 1936   -1 4 x_fin_deadband rad
-s: F 1937   -1 4 x_fin_max rad
-s: F 1938   -1 4 x_fluid_pumped_deadband cc
-s: F 1939   -1 4 x_fluid_pumped_max cc
-s: F 1940   -1 4 x_gps_reasonable_radius m
-s: F 1941   -1 4 x_hardware_cop_timeout hours
-s: F 1942   -1 4 x_hardware_ver nodim
-s: F 1943   -1 1 x_hd_broll_ap_is_hardover bool
-s: F 1944   -1 1 x_hd_broll_ap_ran bool
-s: F 1945   -1 4 x_hd_fin_ap_dgain sec/rad
-s: F 1946   -1 4 x_hd_fin_ap_gain 1/rad
-s: F 1947   -1 4 x_hd_fin_ap_igain 1/rad-sec
-s: F 1948   -1 1 x_hd_fin_ap_is_hardover bool
-s: F 1949   -1 1 x_hd_fin_ap_ran bool
-s: F 1950   -1 4 x_heading_reversal rad
-s: F 1951   -1 1 x_hit_a_waypoint bool
-s: F 1952   -1 1 x_hover_active bool
-s: F 1953   -1 4 x_hover_ballast cc
-s: F 1954   -1 4 x_hover_ballast_deep cc
-s: F 1955   -1 4 x_hover_ballast_shallow cc
-s: F 1956   -1 1 x_hover_depth_ap_ran bool
-s: F 1957   -1 4 x_hover_depth_deep m
-s: F 1958   -1 4 x_hover_depth_d_gain X
-s: F 1959   -1 4 x_hover_depth_i_gain X
-s: F 1960   -1 1 x_hover_depth_pitch_is_maxed bool
-s: F 1961   -1 4 x_hover_depth_pitch_limit rad
-s: F 1962   -1 4 x_hover_depth_p_gain X
-s: F 1963   -1 4 x_hover_depth_shallow m
-s: F 1964   -1 1 x_increase_vacuum_time bool
-s: F 1965   -1 1 x_inflecting bool
-s: F 1966   -1 1 x_in_gliderdos bool
-s: F 1967   -1 4 x_in_surface_dialog nodim
-s: F 1968   -1 4 x_last_commanded_fin_pos rad
-s: F 1969   -1 8 x_last_wpt_lat lat
-s: F 1970   -1 8 x_last_wpt_lon lon
-s: F 1971   -1 4 x_last_wpt_x_lmc m
-s: F 1972   -1 4 x_last_wpt_y_lmc m
-s: F 1973   -1 4 x_lc_time msec
-s: F 1974   -1 4 x_lmc_utm_veh_easting_correction m
-s: F 1975   -1 4 x_lmc_utm_veh_northing_correction m
-s: F 1976   -1 1 x_lmc_utm_veh_zone_char byte
-s: F 1977   -1 1 x_lmc_utm_veh_zone_digit byte
-s: F 1978   -1 1 x_lmc_utm_zone_char byte
-s: F 1979   -1 1 x_lmc_utm_zone_digit byte
-s: F 1980   -1 1 x_lmc_xy_source enum
-s: F 1981   -1 4 x_log_time msec
-s: F 1982   -1 4 x_low_power_status nodim
-s: F 1983   -1 4 x_measured_depth m
-s: F 1984   -1 4 x_mission_num nodim
-s: F 1985   -1 1 x_mission_status enum
-s: F 1986   -1 4 x_num_bang_cmds_done nodim
-s: F 1987   -1 1 x_old_mission_status_1 enum
-s: F 1988   -1 1 x_old_mission_status_2 enum
-s: F 1989   -1 1 x_old_mission_status_3 enum
-s: F 1990   -1 4 x_ping_glider_to_sci nodim
-s: F 1991   -1 4 x_pitch_ap_deadband rad
-s: F 1992   -1 4 x_pitch_ap_dgain s/rad
-s: F 1993   -1 4 x_pitch_ap_gain 1/rad
-s: F 1994   -1 4 x_pitch_ap_period sec
-s: F 1995   -1 1 x_pitch_ap_ran bool
-s: F 1996   -1 1 x_pressure_manual_cal_now bool
-s: F 1997   -1 4 x_prior_seg_water_vx m/s
-s: F 1998   -1 4 x_prior_seg_water_vy m/s
-s: F 1999   -1 1 x_reset_depth_rate_thr bool
-s: F 2000   -1 1 x_science_logging_state enum
-s: F 2001   -1 1 x_science_on bool
-s: F 2002   -1 1 x_sci_cmd_mode_state enum
-s: F 2003   -1 4 x_secs_surface_depth_reached sec
-s: F 2004   -1 4 x_sent_data_files nodim
-s: F 2005   -1 4 x_simdrvr_ran out
-s: F 2006   -1 1 x_simulated_position_moved bool
-s: F 2007   -1 4 x_software_ver nodim
-s: F 2008   -1 4 x_sp_time msec
-s: F 2009   -1 4 x_surface_active nodim
-s: F 2010   -1 4 x_system_clock_adjusted sec
-s: F 2011   -1 4 x_target_hover_depth m
-s: F 2012   -1 4 x_thermal_pump_start_in sec
-s: F 2013   -1 4 x_thermal_reqd_acc_vol cc
-s: F 2014   -1 1 x_thermal_valve_move_backwards bool
-s: F 2015   -1 4 x_thruster_ap_period s
-s: F 2016   -1 1 x_thruster_has_current_sense bool
-s: F 2017   -1 4 x_thruster_inflection_holdoff sec
-s: F 2018   -1 1 x_thruster_state enum
-s: F 2019   -1 1 x_use_thruster_for_abort_ascent bool
-s: F 2020   -1 4 x_utm_to_lmc_00 nodim
-s: F 2021   -1 4 x_utm_to_lmc_01 nodim
-s: F 2022   -1 4 x_utm_to_lmc_10 nodim
-s: F 2023   -1 4 x_utm_to_lmc_11 nodim
-s: F 2024   -1 4 x_utm_to_lmc_x0 nodim
-s: F 2025   -1 4 x_utm_to_lmc_y0 nodim
-s: F 2026   -1 4 x_why_lens_completed nodim
-sa4BöéyAo4T~i­dªªª¨@¨kw$tSÀ¿xÖð¹@¿ñ?hä•?w1^@¨k*0U2aÀ¿yTÉ…ð@¨k8g0;~À¿yÆ1½ãOAÕú»6Ó€@à(¿€  ½Ãj¼¿U]dP•H >å¿¤AÕú»K˜( d € <«ÑVAÕú»Y@œ€d € =˜uAÕú»_Bê d € =Ï6AAÕú»cb} d € >0›ûAÕú»e d ªˆ @¨k’-VÀ¿xùÞ Ñ=¡•¸@¨k„g8~À¿yZ6âë@¨k„g9B™À¿yZ6âëAÕú»fHî€d € >^<ƒAÕú»gqÀ d € >ŒÆšAÕú»h­@ d € ?ØAÕú»içê d € ?!AÕú»k"î€d € ?1œŽAÕú»l]š d € ?zhAÕú»mŠÂ€d € ?ÎÝ¨AÕú»n·¢€d € @3AÕú»oàE d € @8kÆAÕú»q	k d € @PòAÕú»r'u€d € @u)|AÕú»sFY€d € @ˆÖéAÕú»teÿ d € @•‡AÕú»u„% d € @žÌ*AÕú»v¢{ d € @­ WAÕú»wÀ‰ d –ˆ @½…@¨k…¨L,À¿yY PAÕú»xßé€d € @Ìþ´AÕú»yþm d € @ÖùÒAÕú»{@€d € @æ` AÕú»|;, d € @ô4ªAÕú»}Yr d € @ÿÁLAÕú»~vö d € A¸>AÕú»•8€d € AHKAÕú»€´( d € AiaAÕú»Òú d € ASµAÕú»‚ðé€d € A ¬AÕú»„Ä€d € A%ò˜AÕú»…/€d € A.É²AÕú»†MO€d € A4"‚AÕú»‡lÆ d € A:h•AÕú»ˆ‹‹ d € AARêAÕú»‰«,€d € AH½ AÕú»ŠÊ#€d ‚ˆ AO'“@¨k†Ä…À¿yVR±‡øAÕú»‹éƒ d € AV6hAÕú»ð d € A\ üAÕú»Ž&Ò€d € AcÏAÕú»F€d € Aiã£AÕú»mu€d € AnÎòAÕú»‘’ë€d € Au”ÆAÕú»’¸q d € At:AÕú»“ÞT d € ApÍøAÕú»•Ã d € AjdAÕú»–%€d € Ac0AÕú»—D4€d € AZ}uAÕú»˜cq€d € ASîbAÕú»™‚H€d € AJòÇAÕú»š¡, d € ABö¯AÕú»›ÀP€d € A:h•AÕú»œßO€d ‚ˆ A/€5@¨k†Š^rÀ¿yTÇ×ÍgAÕú»þC d € A%àXAÕú»Ÿž d € A‰|AÕú» <Ð d € AWAÕú»¡\ d € A\ýAÕú»¢zì d € @ù{:AÕú»£™æ€d € @âÏvAÕú»¤¸û€d € @Ê’-AÕú»¥×Î€d € @¶wqAÕú»¦öþ€d € @ž:)AÕú»¨@€d € @ˆigAÕú»©5+€d € @c2FAÕú»ªT<€d € @3I·AÕú»«s"€d € @	9AÕú»¬Ÿ d € ?°LAÕú»­Êí€d € ?0xŠAÕú»®õ d ‚ˆ ?`a@¨k‡k:©kÀ¿yR•ûøíAÕú»°0õ d € ?ŽjçAÕú»±e €d € ?ØÅAÕú»²”Ÿ d € @]?AÕú»³ÚR€d € @A‹âAÕú»µz d € @`=AÕú»¶>!€d € @w(‚AÕú»·]€d € @‡EdAÕú»¸|M€d € @‘÷AÕú»¹šÇ€d € @¡ï4AÕú»º¹€d € @°UßAÕú»»Ø€d € @½½AÕú»¼öÍ€d € @ÊÛ.AÕú»¾€d € @ÖÕRAÕú»¿3‰ d € @å„þAÕú»ÀRÃ€d € @ô4ªAÕú»ÁqM d ‚ˆ @ÿSË@¨k†²	gÀ¿yPI ÓAÕú»Âp d € AÝ;AÕú»Ã® d € AÙSAÕú»ÄËÕ€d € A×_AÕú»Åêž d € AS8AÕú»Ç|€d € Aä@AÕú»È&X€d € A'[AÕú»ÉD	 d € A-8.AÕú»Êa¾ d € A3þAÕú»Ë€ d € A8ŽAÕú»Ìÿ d € AAwjAÕú»Í½€d € AEâøAÕú»ÎÜ† d € AQÊÛAÕú»Ïû* d € ATI£AÕú»Ñg€d € A[¡yAÕú»Ò:m d € AbÂŽAÕú»ÓXÜ€d € AicâAÕú»Ôw³€d ‚ˆ Ao`ô@¨k‡Gã8–À¿yN 5AÕú»ÕŸ	€d € Au‚†AÕú»ÖÅ€d € Au§AÕú»×ë‹€d € Ay ÐAÕú»ÙX€d € Apr·AÕú»Ú7 d € Am˜®AÕú»ÛV1 d € AdŠÓAÕú»Üu_€d € A[3÷AÕú»Ý”Ó€d € ATÛ¤AÕú»Þ³Ê d € AK»‰AÕú»ßÒ…€d € ACˆ±AÕú»àñs d € A8iAÕú»â‚ d € A0ÚùAÕú»ã/Ü d € A%<AÕú»äO d € A­AÕú»ån0€d € Aj[AÕú»æ+ d € A¸>AÕú»ç¬%€d ‚ˆ @ûz?@¨kˆigÀ¿yLž³ï¦AÕú»èÊ× d € @ç;AÕú»éê€d € @Ðj¿AÕú»ë	F d € @¹,ùAÕú»ì(] d € @¥¤?AÕú»íGi€d € @ŒùuAÕú»îfž€d € @gÂTAÕú»ï…á€d € @7GÃAÕú»ð¤Ï d € @
-Ë>AÕú»ñÐ/€d € ?Á¿AÕú»òúò€d € ?2À‘AÕú»ô%[€d € ?:¼©AÕú»õb—€d € ?‹ßAÕú»ö•€d € ?ØÅAÕú»÷ÄX€d € @?AÕú»ù	½€d € @@gÞAÕú»úNð€d ‚ˆ @YÉ*@¨kˆgÀýÀ¿yJýÈÓAÕú»ûmá d € @m-dAÕú»ü- d € @‡ûæAÕú»ý¬—€d € @“dAÕú»þÊá€d € @¢Ê6AÕú»ÿéu€d € @±aAÕú¼¨ d € @¿sAÕú¼(¿ d € @Ìµ´AÕú¼G€d € @Û@ßAÕú¼e`€d € @ç_ƒAÕú¼ƒ1 d € @÷²AÕú¼ Ê€d € AƒqAÕú¼¾¥€d € A\€AÕú¼ÞM d € A³ØAÕú¼	ü¡€d € AhäAÕú¼š d € AS8AÕú¼9ª€d € A!IAÕú¼YC d ‚ˆ A+Kh@¨k‡ïõQ4À¿yGe±ë…AÕú¼x d € A. ðAÕú¼–` d € A6ØAÕú¼´þ€d € A;úAÕú¼ÓØ d € AE,uAÕú¼óg d € AI¼ƒAÕú¼ë d € AR]AÕú¼1¡€d € AW#«AÕú¼Oò€d € A^{AÕú¼nŸ€d € AeÁAÕú¼ŒV€d € Al½¬AÕú¼´Œ d € Aq¨úAÕú¼Ú €d € At•CAÕú¼ÿi€d € AsL¿AÕú¼%K€d € ArƒýAÕú¼K¼€d € Al†ëAÕú¼k€d ‚ˆ Adx“@¨kˆ˜¹À¿yE{‰<ÞAÕú¼ Š d € A[XxAÕú¼!ª,€d € ATI£AÕú¼"É
-€d € AL;KAÕú¼#çê€d € AB-ìAÕú¼% d € A92RAÕú¼&'= d € A/ÛvAÕú¼'F`€d € A%ÎAÕú¼(e\€d € A-¾AÕú¼)„M€d € A¡AÕú¼*£h d € AîþAÕú¼+Ãk€d € @ûÃ@AÕú¼,â^€d € @å©~AÕú¼.C d € @Ïý=AÕú¼/ _ d € @¼+‚AÕú¼0?A€d € @§~ÄAÕú¼1^± d € @Š}AÕú¼2}ž€d ‚ˆ @u)|@¨kˆãºÞÀ¿yCj¨t!AÕú¼3œ–€d € @A‹âAÕú¼4»x€d € @3`AÕú¼5æÇ d € ?ä‰éAÕú¼7_€d € ? ìAÕú¼8<—€d € ?“Œ÷AÕú¼9xw€d € ?Å½AÕú¼:ª¸ d € @…+AÕú¼;ÚK€d € @9ÊAÕú¼= 8 d € @Xî'AÕú¼>?b€d € @pmAÕú¼?]ï d € @…_AÕú¼@}§ d € @‘÷AÕú¼A›Á€d € @£7¸AÕú¼Bº`€d € @¯ÃÝAÕú¼CØ€d € @¾AÕú¼DöÂ d ‚ˆ @ËH¯@¨kˆ²'èÀ¿yA\pÙAÕú¼F· d € @ØBVAÕú¼G2²€d € @åÍÿAÕú¼HQñ d € @ö¡1AÕú¼Ip†€d € AL°AÕú¼J— d € A	 ÁAÕú¼K­Õ d € A}AÕú¼LÌq€d € Aè(AÕú¼MêA€d € Aw<AÕú¼OÌ d € A#áRAÕú¼P'€d € A)'âAÕú¼QDò€d € A1#ùAÕú¼Rbã€d € A8iAÕú¼S€m d € A>`AÕú¼TŸÕ€d € ADc³AÕú¼U¿€d € AL¨ÌAÕú¼VÝÂ d € AR&AÕú¼Wûå d ‚ˆ A[8@¨kˆ»'Ö¾À¿y>úûR…AÕú¼YÅ€d € AbBÌAÕú¼Z;9 d € AfœAÕú¼[Z€d € AnpAÕú¼\yŽ€d € Aw]AÕú¼]™€d € Az¶ÖAÕú¼^¿] d € AvAÕú¼_å= d € Ak·AÕú¼a
-a€d € APWAÕú¼b1‰€d € A€#3AÕú¼cX€d € Ay\AÕú¼dvë d € AtpÃAÕú¼e•ÿ d € AjÐæAÕú¼fµ d € AažŠAÕú¼gÔ- d € A[j¸AÕú¼hó d € AR¥ÞAÕú¼j d ‚ˆ AGt|@¨k‰[†>À¿y=NU_dAÕú¼k1< d € A@÷©AÕú¼lPg€d € A5F†AÕú¼moØ€d € A+Ë)AÕú¼nŽÁ€d € A#*ÐAÕú¼o­É d € A0/AÕú¼pÌ‚ d € ARAÕú¼qëŠ€d € Aº2AÕú¼s
-Ä d € @ó¢¨AÕú¼t)Ñ€d € @ÞèAÕú¼uHÝ d € @Ê$¬AÕú¼vgÏ€d € @²0dAÕú¼w†n€d € @œñ¥AÕú¼x¥G€d € @…!ÞAÕú¼yÄ/€d € @Z[,AÕú¼zã€d € @/ªAÕú¼| d € @„1AÕú¼}-s€d ‚ˆ ?É»™@¨k‰ÜÄ¡À¿y;
-lÄºAÕú¼~X d € ?A”¾AÕú¼„" d € ?TøøAÕú¼€¿o€d € ?¤©*AÕú¼ó† d € ?ä‰éAÕú¼ƒ#!€d € @ÄhAÕú¼„gr d € @DeêAÕú¼…¬ d € @`=AÕú¼†ËÛ€d € @|“’AÕú¼‡ê« d € @‹wAÕú¼‰	² d € @–ÐAÕú¼Š( d € @§ZDAÕú¼‹G¨ d € @±çcAÕú¼Œg d € @ÁrAÕú¼…á€d € @Ð³ÀAÕú¼Ž¤Ú d € @Ý?åAÕú¼Ã-€d ‚ˆ @ìÊ”@¨k‰IùŽ
-À¿y7¾É9AÕú¼â7€d € @ùè»AÕú¼’º d € A§tAÕú¼“ ²€d € A
-ÛGAÕú¼”?”€d € A×ÜAÕú¼•^µ d € A/²AÕú¼–~}€d € AˆAÕú¼—µ d € A&òAÕú¼˜¼€d € A.ÛóAÕú¼™ÛV€d € A5ýAÕú¼šú d € A<ùAÕú¼œ¤ d € AD²AÕú¼8U d € AKAÕú¼žWh d € AQKAÕú¼Ÿv_€d € A[¡yAÕú¼ •Ú d € A^Ä‚AÕú¼¡´¾€d € Aju¥AÕú¼¢Ôo d ‚ˆ Ao³@¨k‰³¯=À¿y4F©ŒAÕú¼£ûï d € At^ƒAÕú¼¥"€d € Au§AÕú¼¦H d € Asƒ€AÕú¼§mù€d € Aq¨úAÕú¼¨”7 d € AlP*AÕú¼©³R d € AbçAÕú¼ªÒ;€d € A\Å|AÕú¼«ñn€d € ATíåAÕú¼­d€d € AJ©ÆAÕú¼®/‘€d € AB¬AÕú¼¯Nç€d € A9²AÕú¼°mÙ€d € A-Ê/AÕú¼±Œµ d € A&»ZAÕú¼²«„€d € AÁ7AÕú¼³ÊQ€d € A²ÞAÕú¼´é”€d € A8AÕú¼¶¡€d ‚ˆ @ú1¼@¨kŠ_?À¿y2—Z­‡AÕú¼·'³ d € @ãÎùAÕú¼¸Fõ€d € @Ï¼AÕú¼¹e÷ d € @¸-vAÕú¼º„·€d € @ ®AÕú¼»£á€d € @‹ÕrAÕú¼¼Âž€d € @ngAÕú¼½á† d € @A‹âAÕú¼¿ ´ d € @ÅbAÕú¼À,) d € ?å­ìAÕú¼ÁX d € ?‰ÚÚAÕú¼Â‚0 d € ?‡’ÓAÕú¼Ã¿¤€d € ?Âã„AÕú¼Äñ÷ d € @ >AÕú¼Æ!K d € @9FÉAÕú¼Çg‚€d € @R¨AÕú¼È…ç d ‚ˆ @jS\@¨kŠ›³ªÛÀ¿y0–WAÕú¼É¤g€d € @…F^AÕú¼ÊÄ€d € @‘eAÕú¼Ëâz€d € @£\8AÕú¼Íæ€d € @­ WAÕú¼Î! d € @¼™AÕú¼Ï@H€d € @Æ”!AÕú¼Ð^¹€d € @ÔKAÕú¼Ñ|½ d € @á=ñAÕú¼Ò›¿ d € @ðÈ AÕú¼Óº d € @þIAÕú¼ÔØ@ d € AÞ5AÕú¼Õö d € AþPAÕú¼×r d € A{¡AÕú¼Ø2H d € A1AÕú¼ÙPì d € A >‡AÕú¼Úoè d € A'(ÜAÕú¼ÛŽé€d ‚ˆ A-¥¯@¨kŠ|©dÀ¿y-·áÌhAÕú¼Ü­Q d € A4¢DAÕú¼ÝË“ d € A92RAÕú¼ÞëB d € AA.iAÕú¼à
-Š€d € AHsÿAÕú¼á)x d € AM¨OAÕú¼âH‘€d € AUI&AÕú¼ãh* d € A\úAÕú¼ä†ÿ€d € AdŠÓAÕú¼å¦Ò€d € Akâ©AÕú¼æÅ° d € At‚AÕú¼çìú d € AwŒAÕú¼éÒ€d € AxîAÕú¼ê8K d € Ax“OAÕú¼ë`€d € At•CAÕú¼ì†H d € Ao¼5AÕú¼í¥@€d ‚ˆ Ai¬ã@¨kŠ–{w“À¿y+qÀÔAÕú¼îÄ1 d € AaùÌAÕú¼ïãy d € AYYrAÕú¼ñÂ d € AOðVAÕú¼ò!Å€d € AI<ÂAÕú¼ó@â d € A?f$AÕú¼ô_î€d € A4}ÄAÕú¼õ~Õ€d € A,Ê¬AÕú¼öè d € A!âLAÕú¼÷¼Û€d € A3AÕú¼øÛÌ d € ARAÕú¼ùú· d € A•4AÕú¼ûÀ€d € @ö3°AÕú¼ü8ú d € @ß‡ìAÕú¼ýXn€d € @È“'AÕú¼þwa€d € @²0dAÕú¼ÿ–A d € @ 9/AÕú½ µ  d ‚ˆ @ˆûi@¨k‹lp§»À¿y)e¼è¾AÕú½Ô€d € @fçQAÕú½óW€d € @3’¸AÕú½Š d € @?AÕú½>:€d € ?ÖG¾AÕú½hå€d € ?i5AÕú½“€d € ?nCAÕú½Ï¤ d € ?©Ë9AÕú½
-6 d € ?ò:AÕú½2• d € @ê_AÕú½xH€d € @D÷ìAÕú½¼Å d € @dVJAÕú½Ün€d € @€ÚÑAÕú½û€d € @‹ùòAÕú½_€d € @™AÕú½:p€d € @ªXÍAÕú½YG€d ‚ˆ @¶wq@¨k‹fHU.À¿y&2oÁøAÕú½w€d € @ÂAÕú½—Ç€d € @ÑŽÂAÕú½¶Â€d € @ßÐíAÕú½Õ´ d € @ëŽAÕú½ó÷ d € @ü0ÂAÕú½<€d € AµAÕú½1ö€d € A6ˆAÕú½QÍ€d € AêAÕú½pÁ d € A¯ðAÕú½™ d € A âÉAÕú½®Ñ d € A)LbAÕú½ Íí d € A-¥¯AÕú½!ì d € A3Ù‚AÕú½#2€d € A;ÃYAÕú½$+Þ d € ACd0AÕú½%Jý d € AHáAÕú½&k€d ‚ˆ AR\Ý@¨kŠÊV(À¿y"] 46AÕú½'‰ d € AW£mAÕú½(¨Ú d € A^ÖÂAÕú½)ÇÔ d € AeÓWAÕú½*çT€d € AmªïAÕú½,€d € As_ AÕú½-,š d € Ay7‘AÕú½.R;€d € A{[AÕú½/w\€d € A|lÛAÕú½0€d € AxJNAÕú½1Â¢€d € AtLBAÕú½2â¤€d € Al*AÕú½4¾ d € AdŠÓAÕú½5!€d € A\³<AÕú½6@ d € ARîßAÕú½7_A€d € AJòÇAÕú½8~b d ‚ˆ A@wç@¨k‹Tí#•À¿y ÷M }AÕú½95€d € A6HAÕú½:¼M€d € A-JnAÕú½;Ûg€d € A$óAÕú½<ú; d € AŠóAÕú½>º€d € AAÕú½?9
- d € AK¶AÕú½@X2€d € @÷²AÕú½Aw=€d € @âôAÕú½B–J€d € @Ì‘3AÕú½Cµ²€d € @·-óAÕú½DÔ‚ d € @žð«AÕú½EóF€d € @ˆèAÕú½G>€d € @fOAÕú½H1N€d € @9ÊAÕú½IPZ d € @£RAÕú½J} d ‚ˆ ?âAâ@¨kŒ*;ÛÀ¿yÝñéAÕú½K§» d € ?²îAÕú½LÒ¿€d € ?²îAÕú½Nš€d € ?Ä™‰AÕú½O@ã d € @	9AÕú½Pp¦€d € @;ŽÐAÕú½Qµ“€d € @X¥'AÕú½RÔ/€d € @r˜tAÕú½Sò2 d € @ŠlAÕú½Uà d € @˜ÏAÕú½V1m€d € @£€¸AÕú½WPˆ€d € @°UßAÕú½XnÜ d € @¾O	AÕú½YŽ˜€d € @Ë‘°AÕú½Z­‡ d € @ÚÓ^AÕú½[Ì6€d € @ìAÕú½\êY€d ‚ˆ @ù¸@¨k‹suãÀ¿yž‘AÕú½^	ª€d € Aß/AÕú½_(í€d € A¤	AÕú½`G½ d € AØÖAÕú½af%€d € A¨AÕú½b†0€d € AvBAÕú½c¥ d € A%•AÕú½dÃ$€d € A*‚¦AÕú½eáB€d € A25½AÕú½g u€d € A73LAÕú½h R d € A>bAÕú½i?y d € AD²AÕú½j_T€d € AM:ÎAÕú½k~€d € AR&AÕú½ll€d € AY}òAÕú½m¼¦€d € A`ÃˆAÕú½nÜA d € Ah^AÕú½oû d ‚ˆ Aq)9@¨k‹ú]'ÊÀ¿ysõJŒAÕú½q
- d € AuKÅAÕú½rA®€d € A|ZšAÕú½shÛ€d € A}þ_AÕú½tŽ: d € A}~žAÕú½u³Ñ€d € Az[”AÕú½vÚ€d € Arß>AÕú½wøâ d € Am­AÕú½y d € Ac‹PAÕú½z7¿€d € A]×?AÕú½{Væ d € ATÛ¤AÕú½|u›€d € AL)
-AÕú½}”~€d € ADQsAÕú½~³e d € A9“AÕú½ÒŽ d € A0‘øAÕú½€ñ[ d € A'_œAÕú½‚`€d ‚ˆ Ad~@¨kŒ¯ÈnVÀ¿yWFøAÕú½ƒ/P d € AV£AÕú½„NŒ d € A
-’FAÕú½…m× d € @ÿåÍAÕú½†Œ¤€d € @ë]AÕú½‡«o€d € @×SAÕú½ˆÊl€d € @ÀrAÕú½‰é)€d € @­Ä×AÕú½‹¹€d € @–ô“AÕú½Œ'Ö€d € @€$OAÕú½Fõ d € @TðAÕú½Žeî d € @$¾‹AÕú½„Å d € ?ü~1AÕú½¯þ€d € ?„&ÉAÕú½‘Û{€d € ?R°ñAÕú½“< d € ?PhêAÕú½”TQ€d ‚ˆ ?˜¯@¨km…;À¿yÊq¬¬AÕú½•†/€d € ?Ú×ÌAÕú½–µÕ d € @¥FAÕú½—û>€d € @DéAÕú½™@*€d € @^7AÕú½š_¸€d € @zK‹AÕú½›~Ê d € @ŽxAÕú½œža€d € @˜ª˜AÕú½¼î€d € @«|ÐAÕú½žÜ[ d € @¸vwAÕú½ŸûC€d € @Æ AÕú½¡€d € @ÕMAÕú½¢9l d € @äòüAÕú½£X! d € @ó~(AÕú½¤vÒ€d € A N'AÕú½¥•Ù d € A¥ýAÕú½¦´, d ‚ˆ AY‘@¨kŒy÷&À¿y.4ÎAÕú½§Òî d € A2 AÕú½¨ðû€d € ASµAÕú½ª d € A"½NAÕú½«0' d € A(¨ AÕú½¬OG€d € A0í9AÕú½­m›€d € A73LAÕú½®Œ’ d € AA	éAÕú½¯¬O€d € AE,uAÕú½°Ê‘€d € ALñÍAÕú½±éY€d € AR¥ÞAÕú½³u d € AXYïAÕú½´%â€d € A`CÆAÕú½µEJ d € Ag›œAÕú½¶e(€d € AmªïAÕú½·ƒ=€d € AtLBAÕú½¸ª‡€d € Az7AÕú½¹ÐO€d ‚ˆ A}@¨k (ÕÀ¿yf_kìAÕú½ºöÏ d € A|Ú\AÕú½¼€d € AzITAÕú½½C™€d € AsÞÁAÕú½¾bÇ d € Aku(AÕú½¿Ô d € AcÂAÕú½À Á d € A\³<AÕú½Á¿ë€d € AR“žAÕú½ÂÞÙ d € AKAÕú½Ãýä€d € AAwjAÕú½Å€d € A92RAÕú½Æ<€d € A.€²AÕú½Ç[h€d € A%»×AÕú½Èz}€d € A­üAÕú½É™R d € AE]AÕú½Ê¸%€d € AÊ~AÕú½Ë×!€d € @ù{:AÕú½Ìö3€d ‚ˆ @åò@¨kŽ¾÷°À¿y¾ð¼ÞAÕú½Îc d € @ÐF>AÕú½Ï4u d € @¼+‚AÕú½ÐS–€d € @¢5AÕú½Ñr’€d € @ûAÕú½Ò‘Þ d € @tyAÕú½Ó°µ€d € @EÒîAÕú½ÔÏ¾€d € @èkAÕú½ÕûG€d € ?ì†AÕú½×%ß d € ?”øAÕú½ØP%€d € ?¡= AÕú½ÙŒê d € ?Í'£AÕú½Ú¾k€d € @`.AÕú½ÛíÌ€d € @>hØAÕú½Ý3³ d € @X\&AÕú½ÞR_€d € @qtqAÕú½ßq d ‚ˆ @†Eá@¨kŽv¥ÂvÀ¿y
-)ZÿæAÕú½àŸ d € @’ÒAÕú½á®ð d € @ ¦°AÕú½âÎo d € @¬ ÔAÕú½ãì  d € @¼tƒAÕú½åØ d € @É’ªAÕú½æ+B d € @ÖùÒAÕú½çI©€d € @åòAÕú½ègË d € @¨lÝ/ŸÀ¿y Ë)^@ô)AÕú½é†Û d € Aß¬AÕú½ê§o€d € A}AÕú½ëÅ– d € A¢’AÕú½ìäJ d € A3AÕú½î?€d € A
-7AÕú½ï" d € A"ÏAÕú½ðA€d € A)LbAÕú½ña d € A06AÕú½ò€d ‚ˆ A6|É@¨k•ybÀ¿y1BÀAÕú½óâ d € A>TaAÕú½ô½8€d € AD¾ôAÕú½õÜ(€d € AL;KAÕú½öûÕ d € AUæAÕú½ø¸ d € A[8AÕú½ù9 d € AagÊAÕú½úX®€d € Aj>äAÕú½ûx/€d € AoòõAÕú½ü—W€d € AxÊAÕú½ý¶3 d € A|ZšAÕú½þÜ–€d € AëxAÕú¾ ? d € A‚k:AÕú¾'e d € A‚´;AÕú¾N^ d € A#AÕú¾t d € A|AÕú¾’ÿ€d ‚ˆ Arƒý@¨k’~WDÀ¿y‹X±}AÕú¾±Ù€d € AjQ%AÕú¾ÐÞ€d € AdAÕú¾ï–€d € AZ}uAÕú¾	¾ d € AQ&™AÕú¾
--é d € AHóÁAÕú¾Lö d € AA)AÕú¾ký d € A7EŒAÕú¾Šì€d € A-JnAÕú¾ª d € A#†AÕú¾È×€d € A
-´AÕú¾ç¤ d € A²ÞAÕú¾~€d € AJ?AÕú¾%H€d € @ýÂFAÕú¾Dp d € @êAÕú¾cV€d € @ÚeÝAÕú¾‚( d € @Æ& AÕú¾ ô€d ‚ˆ @´
-ê@¨k•×
-S§À¿y˜P­ãAÕú¾¿° d € @¡]2AÕú¾Þ‡€d € @®€AÕú¾ýù€d € @t—zAÕú¾ñ d € @K=ÿAÕú¾< d € @&½‘AÕú¾g¢€d € @:6AÕú¾‘õ d € ?î<AÕú¾ ½@€d € ?½ÁuAÕú¾!çI d € ?ò:AÕú¾#€d € @ dAÕú¾$JÞ€d € @O…AÕú¾%‘‡ d € @läcAÕú¾&±€d € @ƒ"ØAÕú¾'Ï-€d € @‘‰ƒAÕú¾(îw€d € @¡8²AÕú¾*h d ‚ˆ @¯è]@¨kšRQÅ'À¿yŠB±AÕú¾+,3 d € @¼½„AÕú¾,JÉ€d € @Î9AÕú¾-jq€d € @Û@ßAÕú¾.‰S d € @çÍAÕú¾/§n€d € @ö¡1AÕú¾0Åƒ€d € AðAÕú¾1ä¢€d € A	%BAÕú¾3L d € A}AÕú¾4#ú d € AgêAÕú¾5C0€d € A¿¿AÕú¾6c d € A#ó’AÕú¾7à d € A,]+AÕú¾8¡ d € A3AÕú¾9¿ø d € A:h•AÕú¾:ÞÈ€d € AAÀkAÕú¾;ýõ d € AGáþAÕú¾= d ‚ˆ AO^T@¨k¡	¢1qÀ¿yãN‹žAÕú¾><ã€d € AU6åAÕú¾?[a€d € A`z‡AÕú¾@zß d € Ae®×AÕú¾A™Í€d € Ans±AÕú¾B¸¤ d € AsÌAÕú¾CÖÿ d € A{mXAÕú¾Dþ=€d € A~"àAÕú¾F$ d € A™WAÕú¾GIÕ€d € A}¤AÕú¾Ho© d € A|µÜAÕú¾I–€d € As:AÕú¾J¶W d € Amá¯AÕú¾KÕ(€d € Af@ØAÕú¾Lô€d € A\ü=AÕú¾Nè d € AVH©AÕú¾O2€d ‚ˆ AL„K@¨k¤KÃ¥ÊÀ¿yì…AÕú¾PR$ d € AE¬7AÕú¾Qq# d € A:h•AÕú¾Rþ d € A2ì?AÕú¾S®í d € A*peAÕú¾TÍÊ€d € AšEAÕú¾Uì¸€d € A+AÕú¾W¦€d € A£ŒAÕú¾X*•€d € A‚ôAÕú¾YIr€d € @ø{·AÕú¾Zhz€d € @æ AÕú¾[‡o€d € @ÕMAÕú¾\¦/€d € @Á–’AÕú¾]Å(€d € @¯[AÕú¾^ä(€d € @™Î›AÕú¾`€d € @ˆigAÕú¾a!ö d € @ráuAÕú¾bAZ€d ‚ˆ @B¯å@¨k§³•MÆÀ¿yë³ÒAÕú¾c`C€d € @ wAÕú¾d‹¼€d € ?ù¤(AÕú¾e¶+ d € ?¥Í-AÕú¾fàb€d € ?¶W_AÕú¾hœ d € ?íªAÕú¾iOô€d
-€*€@Ár=‹c˜@X]¾N~žAÕú¾jÛ @¨ A£3ñd€( =¥-4@Gˆó¾·ØAÕú¾kÅÃ d€( =—lX@bWD¾/ÎÀAÕú¾läŠ d€( =¡*I@}%”¾O{AÕú¾nf d€( =£u@Bv¾F ŸAÕú¾o#% d€* =¡*I@œ;#¾<¸ AÕú¾pA… @ª
-d€( = â@¬Ò¾.üAÕú¾q`´€d
-€(€Al­Ë=žLÆ@·Rt¾/4ðAÕú¾r~»€A¤+‚d€( =¦åP@Á»¾ffòAÕú¾sY d€( @ÑjB¾me3AÕú¾t¼ï€d‚¨ @ßõm@¨k¬nÄÒÀ¿yr†µ¾^¿aAÕú¾uÜ d€( @î\¾R•¸AÕú¾vû!€d€( =£u@þÁÉ¾V»tAÕú¾xv€d€( A¸»¾LàmAÕú¾y9À d€( =¡¼ýAHK¾RX„AÕú¾zY‰€d€( =¦åPA ž¾XÕ/AÕú¾{y d
-€(€A1=£uAæ4¾v!PAÕú¾|˜  A¥u"d€( =¢O±A ¾H¾Yê”AÕú¾}·æ€d€( = âA)a¾;X
-AÕú¾~Ö÷€d€( =¡¼ýA/³¾NvòAÕú¾õ¦ d€( = âA7ü¾XQáAÕú¾€d€( A:zÕ¾o÷AÕú¾‚4b€d€( =šIÛAFtù¾eðïAÕú¾ƒTN€d
-€(€A 
-=¡*IAI¾DªAÕú¾„t A¤ˆd€( =ºAVi¾P"'AÕú¾…“„€d
-€(€@åð_=£uAY´³¾7ÍAÕú¾†²Ï A¦Vqd€( = âA`±H¾PÛAÕú¾‡ÑÔ€d
-‚¨€@ÊÜ®=£uAf‰Ù@¨k³kœóõÀ¿yªz”Å¾D*AÕú¾ˆðÛ A¥üd€( =žßzAnÎò¾OMðAÕú¾Š2€d€( =´¦,AuKÅ¾YM›AÕú¾‹/s€d€( =¦åPAy¥¾ž;AÕú¾ŒWq d€( =›oCA>=Y'AÕú¾}0 d€* =te	A€uT>”¸AÕú¾Ž¢Ã€@¤xÍd€( =c3öAb—>ýbXAÕú¾É…€d€( =m„›A}Ùß?"ótAÕú¾ïs€d€( =UsAwŒ?-1AÕú¾’e€d€( =bŽApà8?#šDAÕú¾“.Ä€d€( =_Ã¿AgÀ?
-êAÕú¾”N	€d€( =bŽA`V?%4SAÕú¾•m+€d€( =_Ã¿AXYï?$¬EAÕú¾–Œ€d€( =f¤-APp?$­ÕAÕú¾—«r€d€( =\SˆAG+{?&¶ûAÕú¾˜Ês d€( =c3öA?Sä?$Q?AÕú¾™é~ d‚¨ =f¤-A63É@¨k¶r‡ÜÀ¿y®þü?²¹AÕú¾›« d€( =_Ã¿A,*?5ÜAÕú¾œ(!€d€( =XãQA%r×?!}AÕú¾G† d€( =te	AÀº?%ÌÞAÕú¾žfÂ d€( =f¤-Aúå?.U0AÕú¾Ÿ…â€d€( =c3öAî? /AÕú¾ ¤þ d€( =_Ã¿@þæJ?IAÕú¾¡Ä3 d€( =f¤-@ð6ž?"+8AÕú¾¢ã:€d€( =k9Ì@Ü‰c? ,AÕú¾¤š d€( =XãQ@Ìµ´?)*šAÕú¾¥!ô€d€( ={Ew@¸¿x?qÛAÕú¾¦A d€( =Us@©YJ?\GAÕú¾§`p d€( =XãQ@˜†?$9AÕú¾¨ž d€( =]xï@ˆÖé?,ÇýAÕú¾©Ÿ%€d€( =f¤-@iÁZ?+]ÑAÕú¾ª¾€d€( =†Íù@@ùà? ,~AÕú¾«Ý€d‚ª =f¤-@h@¨k¹£ÐFqÀ¿y·?£!AÕú¾­’ @¥ï9d € ?ú6*AÕú¾®3Ú d € ?ªï=AÕú¾¯^d€d € ?¬¥BAÕú¾°™Ë d € ?ÒÛ´AÕú¾±Ì2€d € @8BAÕú¾²û d € @JbüAÕú¾´@[ d € @[È0AÕú¾µ_b d €@rOsAÕú¾¶}P d € @ˆ fAÕú¾·œÞ€d € @´xkAÕú¾¸»À€d € @¿àAÕú¾¼<Ç d € @Ìµ´AÕú¾½\€d € @Ùø[AÕú¾¾| d ‚ˆ @èñ@¨k¾j*ö‚À¿yÔ[ AÕú¾¿šÿ€d € @ô4ªAÕú¾À¹ö€d € A_nAÕú¾ÁØÐ€d € A	 ÁAÕú¾Â÷€d € AØYAÕú¾Äõ€d € Aæ±AÕú¾Å5þ€d € AÑAÕú¾ÆUŽ€d € A'„AÕú¾Çt`€d € A/ItAÕú¾È“Ì d € A4ëEAÕú¾É²<€d € A>ø£AÕú¾ÊÑ]€d € AC/AÕú¾Ëð;€d € ALÍLAÕú¾Íò d € AQÝAÕú¾Î.ò d € A[³¹AÕú¾ÏN	€d € A`VAÕú¾Ðl8 d € Ah?ÞAÕú¾Ñ‹Ý€d ‚ˆ Ans±@¨kÅ6¾9À¿yjQAÕú¾Òª›€d € AxMAÕú¾ÓÊC€d € A{˜AÕú¾Ôð®€d € A€ÙµAÕú¾Ön€d € A‡AÕú¾×;¨€d € AëxAÕú¾Øa•€d € A}µ_AÕú¾Ù‡ d € AyAÕú¾Ú¥Ý€d € ArƒýAÕú¾ÛÅA€d € Ahö`AÕú¾ÜäH d € AbAÕú¾Þ€d € A]}AÕú¾ß"
-€d € AS€àAÕú¾àA5€d € AK—	AÕú¾á`‘€d € AB	lAÕú¾âD€d € A8éQAÕú¾ãž, d ‚ˆ A/mô@¨kÇk±+À¿y!kAÕú¾ä¼è€d € A&©AÕú¾åÛ¿€d € AÀ=AÕú¾æúÀ€d € A2#AÕú¾èí d € A
- DAÕú¾é8ó d € A:pAÕú¾êX d € @óÇ(AÕú¾ëw€d € @ä…{AÕú¾ì•È€d € @Ï";AÕú¾í´è d € @½…AÕú¾îÓ° d € @©ÆËAÕú¾ïòs d € @•‡AÕú¾ñK d € @~Û™AÕú¾ò0$€d € @W8"AÕú¾óO‹€d € @3I·AÕú¾ôzÿ€d € @¡^AÕú¾õ¥† d ‚ˆ @ ‡@¨kÊ½üÝÀ¿y÷~¶AÕú¾öÏ³€d € @Î,AÕú¾÷ù] d € @tAÕú¾ù d € @BãAÕú¾ú=U d € @\£3AÕú¾û\—€d € @y¹ŠAÕú¾ü{V d € @‹ùòAÕú¾ý™X d € @œñ¥AÕú¾þ¹!€d € @¥¾AÕú¾ÿ×T d € @¶äòAÕú¿ ö€d € @ÅAÕú¿0€d € @ÓÈAÕú¿45 d € @ßckAÕú¿SV d € @ðAÕú¿rË€d € @ÿåÍAÕú¿‘² d € A”:AÕú¿±0€d € A#NAÕú¿ÏØ d ‚ˆ A1¦@¨kÑ¶œ“À¿ySLà9AÕú¿	î€d € A@øAÕú¿  d € A!PJAÕú¿.:€d € A(AÕú¿MK d € A/[´AÕú¿lV d € A7EŒAÕú¿‹€d € A<yÛAÕú¿ªÒ d € AD²AÕú¿É¯€d € AJà†AÕú¿é; d € ASAÕú¿@€d € AZêöAÕú¿'Ä€d € A`èAÕú¿Fß d € Ah­`AÕú¿f[€d € Ao³AÕú¿…
-€d € AuÝÇAÕú¿¬J d € Ay¥AÕú¿Ò»€d ‚ˆ A~"à@¨kÖ†?åÏÀ¿yÝ¾¯áAÕú¿ø d € A}£AÕú¿õ€d € Az€AÕú¿E€d € At'ÂAÕú¿d! d € Al+ªAÕú¿ ‚ì€d € AdfSAÕú¿!¡ó d € A\éüAÕú¿"Á& d € AT ¢AÕú¿#à€d € AM:ÎAÕú¿$þÕ€d € AB¿îAÕú¿&ô d € A:TAÕú¿'<ò€d € A1µûAÕú¿(\>€d € A'qÜAÕú¿){ d € AšEAÕú¿*™ð€d € AúhAÕú¿+¸¶€d € AÙÐAÕú¿,×™ d € AðuAÕú¿-ö]€d ‚ˆ @õ¡®@¨kÙ_IÍÀ¿yá’2AÕú¿/Ž€d € @âªõAÕú¿04£ d € @ÓÈAÕú¿1S« d € @¾˜	AÕú¿2r² d € @­UAÕú¿3‘¿€d € @–ÐAÕú¿4°å€d € @‡²åAÕú¿5Ï˜ d € @e1LAÕú¿6îp d € @;EÏAÕú¿8t d € @1lAÕú¿98Ú d € ?îÎAÕú¿:dê€d € ? AÕú¿;Ž×€d € ?§ƒ2AÕú¿<Ê0 d € ?ÛiÎAÕú¿=ü_ d € @
-‚=AÕú¿?+Å d € @=ÖÖAÕú¿@r d ‚ˆ @X¥'@¨kÝM+ànÀ¿yß lAÕú¿Aw€d € @p™nAÕú¿B®Ñ d € @ˆDçAÕú¿CÎ0 d € @”õAÕú¿Dì< d € @¥[>AÕú¿F
-ñ d € @´/jAÕú¿G*V d € @Ã(AÕú¿HJ€d € @Ðj¿AÕú¿Ihm€d € @Þ¬éAÕú¿J†„ d € @ë]AÕú¿K¥¥ d € @ýæÇAÕú¿LÄÀ d € A”·AÕú¿Mã²€d € AµÍAÕú¿Oà d € AãAÕú¿P"w d € AÀºAÕú¿QA± d € A#OAÕú¿Ra$ d € A&Í›AÕú¿S1€d ‚ˆ A0$w@¨kãcÜI-À¿y$3ùÊAÕú¿Tž" d € A7³AÕú¿U½T d € A=y^AÕú¿VÜX d € AFâ{AÕú¿Wûñ d € AKGAÕú¿Y€d € AT’£AÕú¿Z:Ÿ d € AZØ¶AÕú¿[Y­€d € Aa°ËAÕú¿\y d € AiˆbAÕú¿]—å d € Ap©wAÕú¿^·r d € AvˆAÕú¿_Þ‘€d € A}~žAÕú¿ab d € A~5 AÕú¿b)å d € A|ÈAÕú¿cOÊ€d € A}µ_AÕú¿dwA€d € AtÌAÕú¿e•Ä€d ‚ˆ Am­@¨kè“ß<À¿yóMYÛAÕú¿f´¤€d € AgÀAÕú¿gÓÝ d € A]Ž>AÕú¿hò± d € AU¶§AÕú¿j€d € AMqŽAÕú¿k1 d € AF+øAÕú¿lOë d € A;zXAÕú¿mnØ d € A5´AÕú¿n€d € @¨lrþÅm]À¿yÐ©*A(AÕú¿o¬>€d € A"tNAÕú¿pÌš d € A°AÕú¿qëw d € AAÕú¿s
-u€d € A&<AÕú¿t)Œ d € @þGAÕú¿uH\ d € @êðAÕú¿vhf€d € @Ù¯ZAÕú¿w‡@ d € @Å”žAÕú¿x¦5€d ‚ˆ @µwî@¨kë@ý¿»À¿ySÇ¸AÕú¿yÄì d € @¢5AÕú¿zãí€d € @õAÕú¿|4 d € @u)|AÕú¿}"E€d € @M†AÕú¿~A€d € @'á•AÕú¿l§€d € @?AÕú¿€— d € ?ñAÕú¿ÁÏ d € ?È”AÕú¿‚ë$ d € @ >AÕú¿„²€d € @;×ÐAÕú¿…NŸ€d € @]Ç6AÕú¿†mß d € @yp‰AÕú¿‡Œ d € @õAÕú¿ˆ¬€d € @™aAÕú¿‰Éø€d € @ª4LAÕú¿Šè	€d ‚ˆ @¸Q÷@¨kî”ºFÉÀ¿yµ6›&AÕú¿Œô€d € @ÅÝŸAÕú¿$¦ d € @Ñ³CAÕú¿ŽD€d € @äúAÕú¿cJ€d € @ðAÕú¿‚@ d € AêAÕú¿‘¡J€d € A8AÕú¿’À#€d € A"ÑAÕú¿“ßü€d € AûßAÕú¿”þÚ€d € AˆÿAÕú¿–x d € A#OAÕú¿—=Í d € A+KhAÕú¿˜]€d € A0È¸AÕú¿™{	€d € A7éÎAÕú¿š™x€d € A?/dAÕú¿›¸ä€d € AEõ8AÕú¿œ×·€d € ANƒQAÕú¿÷ d ‚ˆ ATn#@¨kõ0±Ò™À¿y¡j.9AÕú¿Ÿ
- d € A^iAAÕú¿ 5ù d € Ab‹ÍAÕú¿¡TA d € Am˜®AÕú¿¢s@€d € As¿AÕú¿£šm d € Ay€’AÕú¿¤À2€d € A{[AÕú¿¥æ˜ d € A{íAÕú¿§â d € AxÊAÕú¿¨2ë d € AtÌAÕú¿©QÕ€d € Akâ©AÕú¿ªpÝ€d € AeÁAÕú¿«þ d € A^iAAÕú¿¬®Ô€d € ASîbAÕú¿­Ín d € AKNAÕú¿®ì€d € AC?°AÕú¿°#€d ‚ˆ A9èÔ@¨k÷ó[ÓÀ¿y,|¾AÕú¿±*D d € A2ì?AÕú¿²Iá d € A*^%AÕú¿³hî€d € A!+ÊAÕú¿´‡× d € AïAÕú¿µ¦ d € A¢’AÕú¿¶Åy€d € AËõAÕú¿·ä¾ d € @ø 7AÕú¿¹ª d € @èñAÕú¿º"Å€d € @Ò×FAÕú¿»A€d € @½½AÕú¿¼`z€d € @¬éÕAÕú¿½–€d € @%AÕú¿¾žš€d € @‹°ñAÕú¿¿½€d € @qtqAÕú¿ÀÜk€d € @O<
-AÕú¿ÁûB d € @+– AÕú¿Ã'Ç d ‚ˆ @?@¨kûJäŒmÀ¿y”j{qAÕú¿ÄR” d € ?ëóÿAÕú¿Å}"€d € ?ÂQƒAÕú¿Æ¦K d € ?ÿê;AÕú¿ÇÙõ d € @ÁyAÕú¿É	}€d € @Zí-AÕú¿ÊOa d € @zK‹AÕú¿ËmÎ d € @†³bAÕú¿Ì‹‹€d € @—bAÕú¿Í©°€d € @£É¹AÕú¿ÎÇL€d € @³xèAÕú¿Ïå‰ d € @ÂAÕú¿Ñ€d € @ÎG8AÕú¿Ò#‡€d € @Û‰àAÕú¿ÓAÍ d € @éÌAÕú¿Ô`Ü€d € @ø5AÕú¿Õ­€d ‚ˆ AM-@¨kÿm@DÀ¿yu•AÕú¿Öú€d € A”:AÕú¿×¼ d € A"ÑAÕú¿ØÛ— d € A‹íAÕú¿Ùúu d € A-AAÕú¿ÛA d € A%•AÕú¿Ü8õ€d € A)§£AÕú¿ÝW!€d € A1ì¼AÕú¿Þuñ d € A:zÕAÕú¿ß”×€d € ACšñAÕú¿à´D€d € AGt|AÕú¿áÓ“€d € AVÈjAÕú¿âòH€d € AX#.AÕú¿äŠ€d € Aaç‹AÕú¿å/I d € AfåAÕú¿æNc d € Aná2AÕú¿çv/€d € AtLBAÕú¿èœÎ€d ‚ˆ Atƒ@¨l,4ÛÀ¿y¼TAAÕú¿éÂ d € AupFAÕú¿êè& d € Arq½AÕú¿ì d € Ak>gAÕú¿í,Ö€d € AfÀšAÕú¿îL4 d € A[¡yAÕú¿ïkL€d € AW#«AÕú¿ðŠ0 d € AO§UAÕú¿ñ©€d € AF«ºAÕú¿òÇè d € A?/dAÕú¿óæâ€d € A7WÌAÕú¿õá d € A0¸AÕú¿ö$â d € A&;™AÕú¿÷D€d € AÒ AÕú¿øc€d € A¢AÕú¿ùÝ d € AmIAÕú¿ú¡€d € Aº¯AÕú¿û¿Ý d ‚ˆ @ò#@¨lÇ£jøÀ¿yrDHAÕú¿üÞ d € @à‡oAÕú¿ýý“ d € @Ò ÄAÕú¿ÿ€d € @Âº–AÕúÀ ;“ d € @¯zÜAÕúÀZ“ d € @ƒ¦AÕúÀyV€d € @ŽfyAÕúÀ˜0 d € @o,jAÕúÀ¶ú€d € @B¯åAÕúÀÖ' d € @èkAÕúÀï€d € ?ý¢4AÕúÀ,æ d € ?ÑAÕúÀ	Vÿ€d € ?ªï=AÕúÀ
-’~ d € ?ÞÕØAÕúÀÄA d € @ÉJAÕúÀôš d € @OÎAÕúÀ:C€d ‚ˆ @m¿f@¨l
-n¹ò²À¿y’ÎéÓAÕúÀXÍ€d € @€ÚÑAÕúÀw0€d € @”¬ŒAÕúÀ–Ó d € @§ìFAÕúÀ¶J d € @³/çAÕúÀÕ€d € @¿sAÕúÀó6€d € @ÎýºAÕúÀ d € @ßckAÕúÀ2I d € @ðAÕúÀQ• d € @þxÈAÕúÀoÛ€d € A}AÕúÀŽ× d € AkUAÕúÀ­Ý€d € A1)AÕúÀÍg€d € A›?AÕúÀëÐ€d € A$—ÔAÕúÀ¢ d € A+gAÕúÀ *é€d € A3ëÂAÕúÀ!J d ‚ˆ A;Œ™@¨lg%½À¿y‰•!AÕúÀ"i( d € AC­1AÕúÀ#ˆñ€d € AI<ÂAÕúÀ$§$ d € AN§ÒAÕúÀ%Åã d € AW5ëAÕúÀ&äÑ d € A]éAÕúÀ(N€d € Ag	›AÕúÀ)#7 d € AkP§AÕúÀ*Jû€d € Aqß»AÕúÀ+pm d € At•CAÕúÀ,•a d € At¹ÄAÕúÀ-»î€d € Apà8AÕúÀ.á± d € AljAÕúÀ0 ð€d € AdÓÔAÕúÀ1ó€d € A]ûÀAÕúÀ2? €d € AVÿ+AÕúÀ3^€d ‚ˆ ANÞ’@¨l…XoÀ¿yå'GBAÕúÀ4|Ñ€d € AHáAÕúÀ5›ø d € A?SäAÕúÀ6ºÑ d € A3ÇAAÕúÀ7Ù¥€d € A,*AÕúÀ8øX d € A!ôŒAÕúÀ:G€d € A1AÕúÀ;6m€d € A´UAÕúÀ<U— d € AïøAÕúÀ=tc d € @üAAÕúÀ>“0 d € @çÍAÕúÀ?±ñ d € @ÖŒQAÕúÀ@Ð´ d € @¿*AÕúÀAïÏ d € @®2XAÕúÀC¼€d € @•AÕúÀD-œ d € @†EáAÕúÀEL¯ d € @e1LAÕúÀFk«€d ‚ˆ @6þÂ@¨lkï&äÀ¿yO÷‰wAÕúÀG‹t d € @hAÕúÀH¶ñ d € ?êÏüAÕúÀIá” d € ?˜AÕúÀKÒ d € ? AÕúÀLGy€d € ?×kÂAÕúÀMyg d € @Ì8AÕúÀN©½ d € @D÷ìAÕúÀOîi d € @\1AÕúÀQ+€d € @yp‰AÕúÀR,¡€d € @ŒrAÕúÀSKr€d € @˜ó™AÕúÀTiô€d € @©IAÕúÀUˆ!€d € @´/jAÕúÀV¥Þ d € @Â(”AÕúÀWÄ€d € @Ïk<AÕúÀXá€d ‚ˆ @Û@ß@¨lÞˆËwÀ¿yªú"êAÕúÀZ€d € @í\•AÕúÀ[ H€d € @úÃ½AÕúÀ\>“€d € Aß/AÕúÀ]\Ò d € A	IÂAÕúÀ^|€d € AXAÕúÀ_šM€d € AŒçAÕúÀ`¹i d € A®yAÕúÀaØu d € A"bAÕúÀb÷y d € A'¨AÕúÀdÙ€d € A/ItAÕúÀe41€d € A5}GAÕúÀfTB d € A;zXAÕúÀgs d € AB¿îAÕúÀh‘ç€d € AJ*AÕúÀi°€d € AOAÕúÀjÎ{ d € AVìëAÕúÀkìJ€d ‚ˆ A^ @¨lÄxAÀ¿y	eÓ¶¢AÕúÀm
-Õ d € Af÷ZAÕúÀn(® d € Aj¬fAÕúÀoNÔ d € ArÌþAÕúÀpsù d € AqÍ{AÕúÀq˜ñ€d € Asq@AÕúÀrÁ* d € Ao¼5AÕúÀsç¬€d € Aiš¢AÕúÀuÂ d € AdRAÕúÀv%å€d € A[êyAÕúÀwDý d € AS\`AÕúÀxdl d € AL;KAÕúÀyƒS€d € ACãòAÕúÀz¢€d € A;1XAÕúÀ{ÀÖ€d € A3l AÕúÀ|ß¬€d € A+”iAÕúÀ}þˆ€d ‚ˆ A#O@¨l i÷­ÇÀ¿y	ˆðq´AÕúÀ¼ d € A÷÷AÕúÀ€<×€d € AØYAÕúÀ[Þ€d € A¥ýAÕúÀ‚z–€d € @ûÃ@AÕúÀƒ™L€d € @ç;AÕúÀ„¸H€d € @Ó GAÕúÀ…×" d € @Âº–AÕúÀ†õû€d € @°ÞAÕúÀˆà d € @ž§ªAÕúÀ‰3´ d € @‹ŒqAÕúÀŠS d € @q+pAÕúÀ‹r d € @O<
-AÕúÀŒì d € @#ã‰AÕúÀ¼;€d € @`.AÕúÀŽæÊ€d € ?ð„AÕúÀ*€d ‚ˆ ?¾Sw@¨l#œ+À¿y	üínJAÕúÀ‘;¶ d € ?ù&AÕúÀ’o> d € @tAÕúÀ“žÝ€d € @[/AÕúÀ”ä^€d € @wº„AÕúÀ–€d € @‹ùòAÕúÀ—!ã€d € @:¦AÕúÀ˜A¢ d € @©ÆËAÕúÀ™_ù€d € @¹uúAÕúÀš~‹ d € @ÈJ&AÕúÀ›e€d € @Õ±NAÕúÀœ¼U€d € @áqAÕúÀÚK€d € @ì¦AÕúÀžø€d € @üUBAÕúÀ &€d € AÊûAÕúÀ¡66 d € A
-ÛGAÕúÀ¢Tt d ‚ˆ AX@¨l(väßÀ¿y
-ÀÛAÕúÀ£s„ d € Ay0AÕúÀ¤‘€d € Ad~AÕúÀ¥±B d € A%…AÕúÀ¦Ï— d € A*$AÕúÀ§í €d € A06·AÕúÀ©å€d € A7éÎAÕúÀª+u€d € A<CAÕúÀ«IÁ d € AEc6AÕúÀ¬hÀ d € AJN…AÕúÀ­‡¿ d € AQ]ZAÕúÀ®¦Ò d € AU6åAÕúÀ¯Ä× d € A^ÖÂAÕúÀ°ãj d € AcyAÕúÀ²
-Ž d € AjõfAÕúÀ³0S d € ApN6AÕúÀ´Vç d ‚ˆ Ans±@¨l,Eáê™À¿y$ùôÑAÕúÀµ|Ê€d € Alâ,AÕúÀ¶£> d € AeÁAÕúÀ·Â€d € A`èAÕúÀ¸àú d € AX#.AÕúÀº €d € AR&AÕúÀ»á€d € AEÐ·AÕúÀ¼? €d € A?A¤AÕúÀ½^4€d € A5ØˆAÕúÀ¾}€d € A+ïªAÕúÀ¿›ð€d € A"OÍAÕúÀÀºå€d € A.¸AÕúÀÁÙ— d € AûbAÕúÀÂø} d € A
-…AÕúÀÄ™€d € A^ñAÕúÀÅ6¬ d € @ôY*AÕúÀÆUÒ d € @ã…øAÕúÀÇtÐ d ‚ˆ @ÓDÇ@¨l/3oÀ¿ybáA¤AÕúÀÈ“ €d € @Á»AÕúÀÉ²³ d € @¯ÃÝAÕúÀÊÑ£ d € @œ;#AÕúÀËð± d € @ŒBóAÕúÀÍ­ d € @pmAÕúÀÎ.€d € @LbAÕúÀÏM€ d € @ wAÕúÀÐy d € @ >AÕúÀÑ£m€d € ?ãeåAÕúÀÒÎœ€d € ?ÂQƒAÕúÀÓ÷´ d € ?ëóÿAÕúÀÕ*›€d € @S{AÕúÀÖZ)€d € @`X>AÕúÀ×Ÿ» d € @$šAÕúÀØ¾u€d € @÷þAÕúÀÙÜ¯€d ‚ˆ @ž^©@¨l2y¼NÐÀ¿yÚsÒµAÕúÀÚû d € @¯Ÿ]AÕúÀÜý€d € @»™€AÕúÀÝ7ƒ d € @Ê’-AÕúÀÞUN d € @Ø¯×AÕúÀßt d € @éÌAÕúÀà“G€d € @ùè»AÕúÀá±b€d € AMªAÕúÀâÏ† d € A·ÁAÕúÀãíU d € AGQAÕúÀåò d € A‹íAÕúÀæ+Ú d € A›?AÕúÀçJ@€d € A'[AÕúÀèi€d € A+9(AÕúÀé†© d € A3µAÕúÀê¤É€d € A7 ÍAÕúÀëÄI d € A@®¨AÕúÀìâq€d ‚ˆ AE¬7@¨l5·è¨À¿yXý·tAÕúÀît€d € ALßŒAÕúÀï ç d € AViAÕúÀð?Ô d € A^Ä‚AÕúÀñ^ã€d € AbçAÕúÀò….€d € Ah^AÕúÀóªQ d € Amá¯AÕúÀôÏW d € AiõãAÕúÀõôé d € AgwAÕúÀ÷y€d € AbUAÕúÀø;™ d € AYý´AÕúÀùZ‡€d € ASÜ!AÕúÀúya d € AL–ŒAÕúÀû˜ d € ABäoAÕúÀü·! d € A:zÕAÕúÀýÕî€d € A2<AÕúÀþôš d ‚ˆ A(_@¨l7pÊÁ€À¿y}gö’AÕúÁ Ò d € AˆAÕúÁ2þ€d € Aç«AÕúÁR  d € A¶JAÕúÁqq€d € A•4AÕúÁI d € @ðÈ AÕúÁ®ò d € @Ý?åAÕúÁÍÑ d € @Èn§AÕúÁìy d € @¸ãøAÕúÁ	æ d € @¤É<AÕúÁ
-,€d € @®€AÕúÁK0 d € @zŠAÕúÁj0 d € @M†AÕúÁ‰&€d € @%PAÕúÁµŒ d € @ò/AÕúÁßí€d € ?ïòAÕúÁ
-7 d ‚ˆ ?·{b@¨l:½(¢À¿yæ¡AÕúÁ3Î d € ?òÌAÕúÁg%€d € @3`AÕúÁ–Ò€d € @P`AÕúÁÜ†€d € @oukAÕúÁû €d € @„ý]AÕúÁ} d € @‘®AÕúÁ9n d € @Ì§AÕúÁWÜ d € @ª¡ÎAÕúÁvè€d € @µœoAÕúÁ”— d € @Êÿ®AÕúÁ´?€d € @Ò×FAÕúÁÒ‰ d € @à‡oAÕúÁð• d € @îÉšAÕúÁ!÷€d € @ýÆAÕúÁ". d € AsAÕúÁ#LE€d ‚ˆ A$H@¨l>Ëçw_À¿y¥Î§AÕúÁ$jî d € A3AÕúÁ%ˆÇ€d € ABìAÕúÁ&§\€d € A@{AÕúÁ'Å+€d € A#ª‘AÕúÁ(ä; d € A*‚¦AÕúÁ*Z€d € A25½AÕúÁ+"ó€d € A92RAÕúÁ,AR d € A?SäAÕúÁ-`q d € AGÏ½AÕúÁ.~&€d € AO^TAÕúÁ/œh d € AT%"AÕúÁ0¹î d € A]}AÕúÁ1Ø d € A`ÕÈAÕúÁ2þì d € AiˆbAÕúÁ4$c d € Alt«AÕúÁ5IK d ‚ˆ Amí@¨l@N@ˆÀ¿yÓûAÕúÁ6nì d € AjdAÕúÁ7”½€d € Ac¯ÑAÕúÁ8³i d € A_±ÅAÕúÁ9Ò¬ d € AUÿ¨AÕúÁ:ñn€d € AO^TAÕúÁ< d € AHÏ@AÕúÁ=/À€d € A=°AÕúÁ>N× d € A6j‰AÕúÁ?mÿ d € A.ÛóAÕúÁ@ŒÚ€d € A%NVAÕúÁA«  d € AˆÿAÕúÁBÊ¨ d € A¢AÕúÁCéq d € AmIAÕúÁEŸ d € Ap´AÕúÁF'ˆ d € @÷|4AÕúÁGF†€d € @ç_ƒAÕúÁHeh d ‚ˆ @ÔK@¨lC'7À¿yÑ†AÕúÁI„<€d € @Á‘AÕúÁJ£ d € @®ŸÚAÕúÁKÂc d € @›©!AÕúÁLáE€d € @…³ßAÕúÁN  d € @g0RAÕúÁO0 d € @?CÛAÕúÁP>p d € @/xAÕúÁQl© d € ?ï`	AÕúÁR—2€d € ?š÷AÕúÁSÁ5€d € ?ÂQƒAÕúÁTü¾€d € ?öÊAÕúÁV.„ d € @tAÕúÁW^ d € @M†AÕúÁX£F€d € @läcAÕúÁYÁÛ€d € @„"[AÕúÁZàó€d ‚ˆ @ŽÓû@¨lGP)ÇíÀ¿yÁ/]VAÕúÁ\ ž€d € @ ¦°AÕúÁ]S€d € @«¡QAÕúÁ^?W d € @¹šzAÕúÁ_]ë d € @ËH¯AÕúÁ`|Ã€d € @ÔÖLAÕúÁaš‘ d € @ç„AÕúÁb¹v€d € @ù¸AÕúÁcØæ d € A‚ôAÕúÁdöÿ d € A¤	AÕúÁfD d € A `AÕúÁg5 d € AÀ=AÕúÁhT d € A!‡AÕúÁis\€d € A)•cAÕúÁj‘k€d € A1ZºAÕúÁk¯9 d € A8EAÕúÁlÎ= d € A>bAÕúÁmìÒ€d ‚ˆ AD¬´@¨lLwn1ßÀ¿y3óAÕúÁo4€d € AL¨ÌAÕúÁp+:€d € AQÝAÕúÁqJM d € A]W~AÕúÁri d € A^éAÕúÁso€d € AgäAÕúÁt´Ø€d @ AÕúÁuÜF d € AfÒÚAÕúÁw d € Aaz
-AÕúÁx'ä d € A\ üAÕúÁyFÒ€d € AQKAÕúÁzfD d € ALñÍAÕúÁ{…³€d € AFxAÕúÁ|¤ d € A@A'AÕúÁ}Ã† d € A7³AÕúÁ~â–€d € A/ÿöAÕúÁ€p€d ‚ˆ A'ñž@¨lNÞoî(À¿yëî#qAÕúÁ ·€d € AˆAÕúÁ‚?ý€d € AAòAÕúÁƒ_ d € AkÒAÕúÁ„}×€d € Aï{AÕúÁ…œœ d € @ûz?AÕúÁ†» d € @ê‚AÕúÁ‡ÚŒ€d € @Øf×AÕúÁˆù. d € @Ç¸%AÕúÁŠ€d € @¶.pAÕúÁ‹77 d € @£\8AÕúÁŒV€d € @‘÷AÕúÁu;€d € @zK‹AÕúÁŽ”(€d € @Z¤-AÕúÁ²Ï d € @2%³AÕúÁÝñ d € @ëYAÕúÁ’¿ d ‚ˆ @?@¨lQöQÀ¿yI^hçAÕúÁ“4Y€d € @8BAÕúÁ”^€d
-€*€@·ó=´¦,@%P¾‚JøAÕúÁ•} @¨Z¹A–ëmd€( =£u@Lô¾p…òAÕúÁ– õ d€( = â@k.^¾‰GAÕúÁ—À d€( =¥-4@…Ø`¾)´AÕúÁ˜Þü€d€( =œ”«@“ˆ‰¾>ºAÕúÁ™þ €d€( =žßz@œÍ$¾WfäAÕúÁ›€d
-€(€A[±= â@¯ÃÝ¾vŠrAÕúÁœ<g€A™zÐd€( =£u@¿à¾Vç«AÕúÁ\ƒ€d€( @ÑjB¾+ŒØAÕúÁž{f€d€( = â@Ü@b¾B?bAÕúÁŸ™È d€( =¤š€@í”¾V™'AÕúÁ ·å d€( = â@úz½¾DIZAÕúÁ¡× d€( =£uA^t¾NÍAÕúÁ¢õt d€( =žßzAþÍ¾c`AÕúÁ¤' d
-€(€A ‚=¤š€Ahä¾J7AÕúÁ¥4³€A–D³d‚¨ = âAå·@¨lX	wB6À¿yx²Ú¾AWAÕúÁ¦Tá€d€( =¡*IA!PJ¾V¸¨AÕúÁ§sŸ d¢€* @¨lÞ5?|îÀ¿y-Vlô = âA)•c¾l¦öAÕúÁ¨’å @ž÷d€( =£uA/í¶¾Z÷ÏAÕúÁ©²¦€d€( =¦åPA8N¾R/tAÕúÁªÓ²€d
-€(€@æi=¢O±A<g›¾S•AÕúÁ«òÞ A—×èd€( = âAF™z¾TcAÕúÁ­ì€d
-€(€@¹—™=¦åPAKòJ¾hKAÕúÁ®2P A”_d€( =¶ðûAV‘©¾E 5AÕúÁ¯Rc€d€( =¦åPA[3÷¾%¤§AÕúÁ°yŸ€d€( =¥¿èA_V„;éj³AÕúÁ±¡# d€( =m„›A_ÖE>lñ²AÕúÁ²Æ€d€( =f¤-A_è…>ötôAÕúÁ³ìƒ d€( =dY]A] ½?%QhAÕúÁµu d€( =6+AVìë?1»ØAÕúÁ¶1¡€d€( =hîüANÞ’?Ö|AÕúÁ·Q;€d‚¨ =_Ã¿AG˜ý@¨l[¼äîNÀ¿yÃ<yg?=AÕúÁ¸pŽ d€( AA.i?ÙEAÕúÁ¹’€d€( A9²?-çAÕúÁº®k d€( =f¤-A2þ?'^yAÕúÁ»Í\€d€( A'_œ?FAÕúÁ¼ì† d€( =[. A!+Ê?$ï˜AÕúÁ¾°€d€( =hîüAÃ+?"=bAÕúÁ¿*½€d€( =\SˆAþP?"‹ãAÕúÁÀIÕ€d€( =]xïAö? ÿÎAÕúÁÁhò d€( =_Ã¿@øW6?"iœAÕúÁÂ‡Ï d€( =Rã@àÐp?%±îAÕúÁÃ§6€d€( =_Ã¿@Ïý=?%q©AÕúÁÄÆ2 d€( @»? nAÕúÁÅå!€d€* @¤í½? Ð(AÕúÁÇ= @¨o%d€( =wÕ@@Žx?!ËAÕúÁÈ#q€d€( =jd@xÞ‡?ÎwAÕúÁÉBÑ€d€( =‰«|@L?àgAÕúÁÊaï€d‚¨ =hîü@#ã‰@¨l_
-µeÀ¿yiÉ:? öËAÕúÁËH€d€( =_Ã¿@'>¸oAÕúÁÌ·í d € ?è‡õAÕúÁÍâ?€d € ?¶é`AÕúÁÏ€d € ?íAÕúÁÐ@ß€d € @ZQAÕúÁÑpK d € @M†AÕúÁÒµ˜€d € @g0RAÕúÁÓÔ€d € @}n•AÕúÁÔòH€d € @ŠÕïAÕúÁÖ€d € @˜ó™AÕúÁ×09 d € @§~ÄAÕúÁØOµ d € @²ææAÕúÁÙmÆ€d € @¾á
-AÕúÁÚA d € @ÓDÇAÕúÁÛ¬ª€d € @Ü­ãAÕúÁÜËj€d ‚ˆ @ïÉ@¨lcòQ%À¿y]+ÞAÕúÁÝéX€d € @ü0ÂAÕúÁß” d € A·ÁAÕúÁà%ä€d € AAÕúÁáD d € AhgAÕúÁâbz€d € AÀºAÕúÁã€-€d € A%UAÕúÁäŸº€d € A+Ë)AÕúÁå¾¼ d € A4¢DAÕúÁæÝ­€d € A9“AÕúÁçü) d € AB@-AÕúÁéÍ€d € AFô»AÕúÁêBB d € AM_NAÕúÁëhJ d € APÝ˜AÕúÁì¥ d € ANAÕúÁíµÎ€d € AJsAÕúÁîÜ®€d ‚ˆ AEõ@¨lfFÅÀ¿y«}äAÕúÁïû• d € A=‹ŸAÕúÁñ d € A6j‰AÕúÁò;-€d € A0È¸AÕúÁó[d€d € A(AÕúÁôz d € A PÇAÕúÁõ˜Ú€d € A1AÕúÁö·ƒ€d € A!×AÕúÁ÷Ö[€d € AJ?AÕúÁøõ€d € @ýÂFAÕúÁú/€d € @ð6žAÕúÁû3% d € @ÜÒdAÕúÁüR3 d € @Îk¹AÕúÁýq!€d € @Á)AÕúÁþò d € @­éWAÕúÁÿ®ê d € @Ì§AÕúÂ Íæ d € @‘AÕúÂìŠ€d ‚ˆ @wqƒ@¨lhý°3>À¿y Š©+AÕúÂ¯€d € @Vï"AÕúÂ+ d € @/”¬AÕúÂWÉ€d € @ dAÕúÂ‚‰ d € @	^:AÕúÂ¬Ñ€d € @X]AÕúÂÖM d € @!äƒAÕúÂ	úu€d € @HõøAÕúÂ—€d € @ezMAÕúÂ9 d € @lÒAÕúÂX- d € @“ˆ‰AÕúÂvU€d € @¦ZÁAÕúÂ”› d € @°UßAÕúÂ²˜ d € @½˜†AÕúÂÑ/€d € @ÉÛ«AÕúÂîø€d € @ØÔXAÕúÂ€d ‚ˆ @æ„@¨lld€ÇgÀ¿y*¨‡AÕúÂ-€d € @÷ ´AÕúÂKp€d € AM-AÕúÂk€d € A
-ÛGAÕúÂ‰Í€d € AÆ–AÕúÂ¨™ d € A3AÕúÂÇ˜€d € A-AAÕúÂæñ€d € A&;™AÕúÂX€d € A,*AÕúÂ%v€d € A4¢DAÕúÂDw d € A<šAÕúÂ da€d € A?œåAÕúÂ!‚„ d € AEõ8AÕúÂ"© d € AI*AÕúÂ#Ð÷€d € APËXAÕúÂ$ök€d € AKAÕúÂ&d€d ‚ˆ AK»‰@¨lpÃýÅBÀ¿yz½yNAÕúÂ'BÈ€d € AFtùAÕúÂ(aÆ d € A=ù AÕúÂ)€ü d € A7WÌAÕúÂ*ŸÙ€d € A/ItAÕúÂ+¾Ÿ€d € A(:ŸAÕúÂ,ÝW€d € Aä@AÕúÂ-ü,€d € AÃ+AÕúÂ/O€d € AÙÐAÕúÂ0:x€d € A]zAÕúÂ1Y^€d € @ùV¹AÕúÂ2x# d € @êðAÕúÂ3–Ö€d € @ÖÕRAÕúÂ4µˆ d € @Ä'šAÕúÂ5ÔŠ€d € @¯[AÕúÂ6ó-€d € @ ï±AÕúÂ8€d € @®ýAÕúÂ91€d ‚ˆ @z”Œ@¨lsÂz
-+À¿yn<äAÕúÂ:Oç€d € @V¦!AÕúÂ;oC€d € @6þÂAÕúÂ<šw€d € @zmAÕúÂ=Äû€d € @ƒ7AÕúÂ>ï@ d € @¤LAÕúÂ@Ô€d € @+ß¡AÕúÂA<Ï d € @JôþAÕúÂB\E d € @l	aAÕúÂC{" d € @ƒýÚAÕúÂD™á d € @Š AÕúÂE·ò€d € @¢î·AÕúÂFÖN d € @«|ÐAÕúÂGô,€d € @¼AÕúÂIé€d € @ÍÙ·AÕúÂJ2R€d € @ÕŒÎAÕúÂKP†€d ‚ˆ @äòü@¨lw96ôÀ¿y½ãäAAÕúÂLnf d € @ñ6!AÕúÂMÀ d € A N'AÕúÂN¬T d € A”:AÕúÂOËz d € AÆ–AÕúÂPên€d € AÖâAÕúÂRç€d € A÷÷AÕúÂS)J d € A"=AÕúÂTG–€d € A%NVAÕúÂUf¤€d € A.7±AÕúÂV…½€d € A6ØAÕúÂW¥Y d € A;C˜AÕúÂXÌ£ d € AAÒ«AÕúÂYô^ d € A@A'AÕúÂ[Æ d € AARêAÕúÂ\@;€d € A=æàAÕúÂ]f,€d ‚ˆ A82Ï@¨lzá(@À¿y»D^ËAÕúÂ^„è€d € A.%qAÕúÂ_¤€d € A(_AÕúÂ`ÃÚ€d € A?AÕúÂaâ¼€d € Az§AÕúÂcî€d € AAÕúÂd!6 d € Aß/AÕúÂe@q d € @ò#AÕúÂf_£ d € @ãóyAÕúÂg~Ÿ€d € @Ï";AÕúÂh¢€d € @¹QzAÕúÂi¼w d € @¦ÀAÕúÂjÛ¡ d € @@ÿAÕúÂkú|€d € @}·–AÕúÂmƒ d € @]54AÕúÂn8Ÿ d € @5Ú¿AÕúÂodu d ‚ˆ @zm@¨l~C<ÂÀ¿yÎî‰AÕúÂp d € @]?AÕúÂq¾f€d € @|aAÕúÂrè
- d € @1J±AÕúÂt
-* d € @S:AÕúÂu)a€d € @€¶PAÕúÂvH d € @‘AÕúÂwgß€d € @ ]¯AÕúÂx† €d € @²0dAÕúÂy¤œ d € @À»AÕúÂzÃÁ€d € @Ò²ÆAÕúÂ{ã}€d € @ßckAÕúÂ}@ d € @ò#AÕúÂ~!“ d € @úÃ½AÕúÂ@ð d € AñoAÕúÂ€_¶€d € AÊAÕúÂ~ d € A AÕúÂ‚ž® d ‚ˆ Aœ¶@¨lƒŸ¨?DÀ¿yvÀ…)AÕúÂƒ½| d € A!ÐAÕúÂ„Üz d € A$sTAÕúÂ…ú“€d € A1lúAÕúÂ‡¢ d € A35@AÕúÂˆB!€d € A8éQAÕúÂ‰hÜ€d € A8û‘AÕúÂŠŽ7 d € A92RAÕúÂ‹´§ d € A5}GAÕúÂŒÚi d € A-·ïAÕúÂù=€d € A%•AÕúÂÜ d € A¿BAÕúÂ8€d € Aè(AÕúÂ‘W6 d € A~AÕúÂ’vr€d € A^tAÕúÂ“•`€d € @ø{·AÕúÂ”´€d ‚ˆ @ä<z@¨l†”f¦À¿yã ênAÕúÂ•Óœ d € @ÓÖÉAÕúÂ–ò„ d € @½˜†AÕúÂ˜« d € @¬WÓAÕúÂ™0Ý d € @–‡AÕúÂšPV€d € @„"[AÕúÂ›oM€d € @`¡?AÕúÂœŽ8 d € @0&®AÕúÂ­d€d € @
-‚=AÕúÂžØÏ d € ?Ì•¡AÕúÂ y€d € ?yyeAÕúÂ¡.J€d € ?-vAÕúÂ¢lQ€d € ?¾åxAÕúÂ£œ[ d € @ >AÕúÂ¤Ë¾ d € @8"ÅAÕúÂ¦Œ€d € @^¢9AÕúÂ§0« d ‚ˆ @tNy@¨lŠ[’ŠÀ¿y‚#RâAÕúÂ¨O9€d € @…jÞAÕúÂ©mØ€d € @‘®AÕúÂª‹¿€d € @¨¢ÈAÕúÂ««G d € @°UßAÕúÂ¬Éä d € @¿*AÕúÂ­èÃ€d € @Ä¹œAÕúÂ¯" d € @ØBVAÕúÂ°&~ d € @åÍÿAÕúÂ±E² d € @ï¤œAÕúÂ²dÇ d € @úz½AÕúÂ³ƒn d € A9óAÕúÂ´¡Z€d € A	\AÕúÂµÀö d € AÅœAÕúÂ¶à d € AÃ+AÕúÂ·ÿ€d € Ad~AÕúÂ¹º€d € A$*SAÕúÂº=¬ d ‚ˆ A)Lb@¨lŽ;º›ÏÀ¿yíÅ`nAÕúÂ»\,€d € A2Z=AÕúÂ¼|% d € A7éÎAÕúÂ½£a€d € A;×AÕúÂ¾ÉŽ€d € A>bAÕúÂ¿îÿ d € A=ÝAÕúÂÁü€d € A:”AÕúÂÂ;ƒ d € A1‘{AÕúÂÃZ² d € A(º`AÕúÂÄz€d € A"bAÕúÂÅ™€d € AS8AÕúÂÆ·ý€d € AÆ–AÕúÂÇÖ÷ d € A\ýAÕúÂÈö d € @ÿœÌAÕúÂÊ‹ d € @êðAÕúÂË4¤€d € @×‹ÔAÕúÂÌS²€d ‚ˆ @Ã•˜@¨lýÊÍÀ¿yVh^¤AÕúÂÍrê€d € @®VÙAÕúÂÎ’# d € @™<šAÕúÂÏ± d € @ƒýÚAÕúÂÐÐ( d € @`ê?AÕúÂÑï. d € @5H½AÕúÂÓe d € @¥FAÕúÂÔ: d € ?ÖÙÀAÕúÂÕdÙ d € ?-vAÕúÂÖ& d € ?’hóAÕúÂ×Êª€d € ?»ynAÕúÂØû¨€d € ?ü~1AÕúÂÚ+-€d € @ wAÕúÂÛp¥€d € @SƒAÕúÂÜµä€d € @nQgAÕúÂÝÔ‡ d € @‚GÕAÕúÂÞòe€d ‚ˆ @øø@¨l”îÊ!À¿ya'ZAÕúÂàA€d € @™óAÕúÂá0ì d € @¨ÇHAÕúÂâP?€d € @³iAÕúÂãnn d € @Á–’AÕúÂäŽ. d € @ÑüCAÕúÂå¬ €d € @Ùø[AÕúÂæÊÏ€d € @êðAÕúÂçè‡€d € @ÿ/KAÕúÂé
-€d € AÁ´AÕúÂê'Õ d € AšÂAÕúÂíæ d € A$Î•AÕúÂïc d € A)aAÕúÂð#”€d € A0[7AÕúÂñB]€d ‚ˆ A4}Ä@¨l˜û¤ÚÎÀ¿ySÆ8AÕúÂòiè€d € A9iAÕúÂóÊ d € A:AÕúÂô¶€d € A<ž\AÕúÂõÛå d € A7üAÕúÂ÷€d € A2ì?AÕúÂø!@ d € A+¸éAÕúÂù@w d € A"áÏAÕúÂú_”€d € AR»AÕúÂû~R€d € A×_AÕúÂü= d € A	%BAÕúÂý¼¨ d € @þxÈAÕúÂþÛt d € @ëï‘AÕúÂÿúB€d € @ÚÜAÕúÃt€d € @ÄÞAÕúÃ8q d € @±0áAÕúÃW  d € @ž¨AÕúÃvf€d ‚ˆ @ˆè@¨l›†8$ŒÀ¿yÏVz²AÕúÃ•0€d € @pPmAÕúÃ´ d € @CÓèAÕúÃÒô d € @ÄhAÕúÃþº€d € ?é«øAÕúÃ
-)’€d € ?’úõAÕúÃSÞ d € ?¡Ï!AÕúÃ¢ d € ?ÆOŽAÕúÃÀµ€d € @«"AÕúÃð d € @.'¨AÕúÃ5. d € @LôAÕúÃSØ d € @cÄHAÕúÃr&€d € @€$OAÕúÃœ d € @‹ÕrAÕúÃ®v€d € @šÎAÕúÃÍA d € @§ìFAÕúÃêÎ d ‚ˆ @´Së@¨lœ0ºÅÀ¿y "šhüAÕúÃ	q€d € @¾˜	AÕúÃ'P d € @Í¶AÕúÃF}€d € @ÞˆiAÕúÃe€d € @ë]AÕúÃƒu d € @úV<AÕúÃ¡¾€d € AsAÕúÃÀå d € A6ˆAÕúÃßÛ d € A×_AÕúÃ þ d € Ax³AÕúÃ"€d € A!PJAÕúÃ#:ù€d € A&rZAÕúÃ$Y† d € A-ÜpAÕúÃ%w d € A2<AÕúÃ&œø€d € A;UØAÕúÃ'Ãª d € A9èÔAÕúÃ(é€d ‚ˆ A;Œ™@¨lŸ®]EEÀ¿y ÂÞ*ZAÕúÃ*Š€d € A5êÈAÕúÃ+5š€d € A1#ùAÕúÃ,TÑ d € A(Ì¡AÕúÃ-t&€d € A PÇAÕúÃ.“¶ d € AÔîAÕúÃ/²­€d € A3AÕúÃ0Ñ¥€d € A»AÕúÃ1ða€d € @ø 7AÕúÃ3œ€d € @ê9ŒAÕúÃ4.Ú€d € @ÔDJAÕúÃ5Mé€d € @ÂßAÕúÃ6lç d € @­ WAÕúÃ7‹ó€d € @™Î›AÕúÃ8« d € @…F^AÕúÃ9Ê €d € @]54AÕúÃ:èÛ€d € @6þÂAÕúÃ<) d ‚ˆ @€I@¨l£.*ýÀ¿y!ˆÂ³AÕúÃ=3ä d € ?Ú×ÌAÕúÃ>^â d € ?ƒÅAÕúÃ?‰W€d € ?ØæAÕúÃ@Æû€d € ?Á¿AÕúÃA÷ð d € ?þ46AÕúÃC'©€d € @ÁyAÕúÃDmo d € @UËAÕúÃE²€d € @p™nAÕúÃFÑ€d € @ƒÙZAÕúÃGð6 d € @•>ŽAÕúÃIJ€d € @žƒ)AÕúÃJ-Ñ€d € @­UAÕúÃKLj€d € @¶	ðAÕúÃLkÆ d € @Ço$AÕúÃM‹¯ d € @Ó²IAÕúÃNª¢€d ‚ˆ @ãóy@¨l§i>B(À¿y"/œ AÕúÃOÈè€d € @ëŽAÕúÃPç4€d € @ýyEAÕúÃRa d € AðuAÕúÃS& d € A[AÕúÃTEˆ d € A³[AÕúÃUd d € ArAÕúÃVƒ×€d € AvBAÕúÃW£  d € A'„AÕúÃXÂ€d € A-JnAÕúÃYé¥€d € A1‘{AÕúÃ[­€d € A2<AÕúÃ\59 d € A1£»AÕúÃ][Þ d € A.’òAÕúÃ^û€d € A'(ÜAÕúÃ_ Ù d € AšÂAÕúÃ`¿×€d ‚ˆ A‹í@¨l«$”O<À¿y#d¶²AÕúÃaÞü d € AHKAÕúÃbþ# d € A^ñAÕúÃd«€d € @ñì£AÕúÃe<Â d € @ÜÒdAÕúÃf[Î d € @Ê’-AÕúÃgzÁ€d € @²0dAÕúÃh™¿ d € @¡¦3AÕúÃi¸Û€d € @ÔxAÕúÃj×± d € @vßAÕúÃköq€d € @D®ëAÕúÃm³€d € @!›‚AÕúÃnAv d € ?ù&AÕúÃol— d € ?£…&AÕúÃp–º d € ?´¡ZAÕúÃqÒa€d € ?âÓäAÕúÃs\€d ‚ˆ @ìS@¨l®æ?„ŽÀ¿y#´‰FÂAÕúÃt3í d € @HõAÕúÃuyF€d € @\Z2AÕúÃv˜^ d € @pmAÕúÃw¶\€d € @‰±ëAÕúÃxÖ  d € @”õAÕúÃyôU d € @¡1AÕúÃ{.€d € @­WVAÕúÃ|1_ d € @º¾~AÕúÃ}P d € @ÈJ&AÕúÃ~o d € @Õ±NAÕúÃC€d € @ábqAÕúÃ€«ƒ d € @ò#AÕúÃÉr€d € @üyÂAÕúÃ‚èË€d € AðòAÕúÃ„D d € A
-ÿÇAÕúÃ…&$€d € A}AÕúÃ†E> d ‚ˆ Aç.@¨l² aj„À¿y$›½áÌAÕúÃ‡d0 d € Aä@AÕúÃˆ‚š€d € A((_AÕúÃ‰¢ d € A+oèAÕúÃŠÉ€d € A2<AÕúÃ‹îé€d € A0‘øAÕúÃ¤€d € A/’uAÕúÃŽ;¯ d € A+¦©AÕúÃaý d € A$óAÕúÃ d € Aœ9AÕúÃ‘ b€d € Aè¥AÕúÃ’¿O d € AÈAÕúÃ“Þ…€d € Ap7AÕúÃ”ýI€d € @ôY*AÕúÃ–o€d € @å;ýAÕúÃ—;m d € @Ðj¿AÕúÃ˜ZŸ€d ‚ˆ @¾O	@¨lµÂ÷ö)À¿y%ÎHAÕúÃ™y³ d € @ªÌAÕúÃš˜Þ€d € @”?AÕúÃ›·Ð d € @{oAÕúÃœÖ¨€d € @R¨AÕúÃõ^€d € @)N™AÕúÃŸ Û€d € @	ð;AÕúÃ Kõ d € ?ïòAÕúÃ¡v—€d € ?Í'£AÕúÃ¢ŸÂ€d € ?÷î#AÕúÃ£Ñ=€d € @zmAÕúÃ¥€d € @Vï"AÕúÃ¦F€ d € @rOsAÕúÃ§eG€d € @ˆDçAÕúÃ¨ƒ1 d € @—AÕúÃ©¢ž€d € @¥6½AÕúÃªÀê d ‚ˆ @¯ÃÝ@¨l¹nÆºÀ¿y%íJ9ÓAÕúÃ«ßË€d € @ÂßAÕúÃ¬ÿ!€d € @Ð³ÀAÕúÃ®Ñ€d € @âôAÕúÃ¯=;€d € @ðAÕúÃ°[† d € @÷éµAÕúÃ±y0 d € A”·AÕúÃ²˜÷ d € A
-ÿÇAÕúÃ³·Ï d € A2 AÕúÃ´Ö¬ d € AžªAÕúÃµôü d € AãÃAÕúÃ·Ì€d € A!>
-AÕúÃ¸20€d € A'(ÜAÕúÃ¹Z d € A/74AÕúÃº€— d € A0¤8AÕúÃ»¦= d € A.0AÕúÃ¼Ì¸ d ‚ˆ A*$@¨l¼W¸m`À¿y&²SAÕúÃ½ô_ d € A"áÏAÕúÃ¿§€d € AAuAÕúÃÀ2Ó€d € AÖeAÕúÃÁR€d € A
-ÉAÕúÃÂpü€d € AªAÕúÃÃÔ d € @ï[›AÕúÃÄ®ê d € @ÜöäAÕúÃÅÍ¹€d € @ÃqAÕúÃÆì` d € @´
-êAÕúÃÈ}€d € @ž^©AÕúÃÉ*² d € @ŠŒîAÕúÃÊJ€d € @lRaAÕúÃËi# d € @;ŽÐAÕúÃÌˆ d € @ÇVAÕúÃÍ³Y€d € ?ÛiÎAÕúÃÎÝý€d ‚ˆ ?ÞÂ@¨l¿º$#ÉÀ¿y'/´#XAÕúÃÐµ d € ?’úõAÕúÃÑD¤ d € ?ÎK¦AÕúÃÒv’ d € @«"AÕúÃÓ¥Ø€d € @6#¿AÕúÃÔëq€d € @SÌAÕúÃÖ
-€d € @lRaAÕúÃ×(ü€d € @ƒkØAÕúÃØG{€d € @Ó AÕúÃÙez€d € @ž¨AÕúÃÚ„ï d € @«OAÕúÃÛ£÷ d € @¼tƒAÕúÃÜÃ€d € @Èn§AÕúÃÝâ d € @Ü­ãAÕúÃßN d € @ãÎùAÕúÃàï€d € @õ4-AÕúÃá>Ú€d ‚ˆ @¨mHðŽÀ¿yG§†Â&@ü0Â@¨lÄO‚_À¿y(YÓÏpAÕúÃâ^R€d € A‚wAÕúÃã~ d € A	É„AÕúÃäv d € ABìAÕúÃå¼î d € Aä½AÕúÃæÛ×€d € A#sÑAÕúÃè:€d € A&Í›AÕúÃé)9 d € A)¹ãAÕúÃêN¥ d € A(AÕúÃëte€d € A%ò˜AÕúÃìšz d € AöýAÕúÃí¹Ÿ€d € AúhAÕúÃîØ‡€d € AÇAÕúÃï÷“€d € Aï{AÕúÃñÚ€d € @ùè»AÕúÃò5î€d € @ë9AÕúÃóU.€d ‚ˆ @ÔúÌ@¨lÇÊ¢¯À¿y)±/lAÕúÃôt¿ d € @ÃL—AÕúÃõ” d € @¯[AÕúÃö³ d € @›„ AÕúÃ÷Ò	 d € @„FÛAÕúÃøðë d € @béEAÕúÃún d € @/Ý­AÕúÃû/Â€d € @	^:AÕúÃü[‘€d € ?ÊMšAÕúÃý…ü d € ?kÉ<AÕúÃþ°,€d € ?‚pÃAÕúÃÿì d € ?´¡ZAÕúÄc d € ?þÆ7AÕúÄM€d
-€*€@Ù™=•´=@S{¾ªÖAÕúÄ‘Ú @¨SêAvPd€( =¦åP@Vï"¾\¤€AÕúÄÖæ d€( =º@{¸¾Xß#AÕúÄöó d‚¨ =£u@‹Œq@¨lËß%çÀ¿y)æÃ¾ÄkAÕúÄj d€( = â@˜=½ü·¼AÕúÄ5 €d€( =£u@¢\µ¾VçvAÕúÄ	Sÿ d€( @®2X¾nñ9AÕúÄ
-só€d
-€(€Aá®=«zî@»u ¾LöMAÕúÄ“
-€Axœ.d€( =œ”«@È·¨¾a„(AÕúÄ³o€d€* =¡*I@Ô±Ë¾kÖ¯AÕúÄÒ± @ª
-d€( =žLÆ@ê^¾_¬RAÕúÄò&€d€( =¦åP@ôY*¾@{BAÕúÄÄ€d€( = âAƒî¾'4|AÕúÄ0ð d
-€(€@çq=£uA'6¾=AÕúÄOº€Ax«nd€( A£Œ¾^±AÕúÄn¹€d	€(€@Ñ	AÅœ¾ƒ¨ÉAÕúÄÄ AzJ$d€( =¦åPAAu¾u¢RAÕúÄ­— d
-€(€@¶Ÿj=­Å¾A"˜Î¾BAÕúÄÌ¿ A}èƒd€( =»†šA+]¨¾?îWAÕúÄì d€( =ªU‡A0È¸¾AAÕúÄß d‚¨ =ºA5´@¨lÐC@ØÀ¿y+C5à½=TÂAÕúÄ8À d€( =jdA8×>¦íAÕúÄ_€d€( =f¤-A:T?:EAÕúÄ…3 d€( =dY]A8i?(ÒAÕúÄ«Ï€d€( =]xïA.É²?*8„AÕúÄÊæ d€( =k9ÌA*§&?$ ùAÕúÄéì d€( =_Ã¿A uH?AÕúÄ!	v d€( =te	Aùn?!S–AÕúÄ"(é d€( =dY]A"Ñ?‘úAÕúÄ#HO€d€( =_Ã¿Aïø?GAÕúÄ$gÇ€d€( =dY]@÷éµ?°´AÕúÄ%†ç d€( =_Ã¿@èƒ‡?'U|AÕúÄ&¥ø€d€( =XãQ@ÒûÆ?0”¼AÕúÄ'ÄÐ d€( =_Ã¿@À»?+JAÕúÄ(ãÕ€d€( @§C?žóAÕúÄ* d€( =f¤-@“?ˆ??•AÕúÄ+"E d€* =_Ã¿@~Û™?&å,AÕúÄ,Ay @§ñ4d‚¨ =‡ó`@Tð@¨lÒž1ZPÀ¿y+ØÏ?&}»AÕúÄ-`ð d€( =m„›@+ž?þªAÕúÄ.Œž d€( =hîü@„1>¸UÚAÕúÄ/·ã d € ?ô‚AÕúÄ0â d € ?À	|AÕúÄ2 d € ?ù&AÕúÄ3>]€d € @#šˆAÕúÄ4n€d € @\1AÕúÄ5²” d € @y¹ŠAÕúÄ6Ñv€d € @ŠúoAÕúÄ7ð— d € @ƒ¦AÕúÄ9Ò€d € @ªXÍAÕúÄ:.N€d € @¸Q÷AÕúÄ;Læ€d € @ÅKAÕúÄ<k€d € @Ðj¿AÕúÄ=‰5 d € @àbîAÕúÄ>¦Ì€d ‚ˆ @ì]@¨lÕQ™s°À¿y,Š:ô¶AÕúÄ?Ä… d € @ù¸AÕúÄ@â? d € A;jAÕúÄB f€d € AïøAÕúÄC“€d € AÚMAÕúÄD>U d € AhäAÕúÄE]˜ d € AdûAÕúÄF}^€d € A!âLAÕúÄG›¶ d € A*¹fAÕúÄHºï€d € A/É5AÕúÄIâX d € A4´„AÕúÄKÿ€d € A6ü‹AÕúÄL.Æ€d € A9 AÕúÄMTÎ d € A1lúAÕúÄN{G€d € A/ItAÕúÄOšY€d € A#sÑAÕúÄP¹y€d ‚ˆ Aœ9@¨lØ0Ð–À¿y-5ãW8AÕúÄQØ‚ d € AþPAÕúÄR÷¬ d € A]zAÕúÄTÿ d € @ýyEAÕúÄU6€d € @èAÕúÄVUV d € @ÖÐAÕúÄWtZ d € @¿àAÕúÄX“R€d € @­2ÕAÕúÄY²S€d € @—ôAÕúÄZÑH€d € @‚#UAÕúÄ[ð€d € @\ì3AÕúÄ]€d € @3Û¹AÕúÄ^.A€d € @îGAÕúÄ_Z d € ?Óm¶AÕúÄ`„è d € ?dñ'AÕúÄa¯
-€d € ?†nÏAÕúÄbê±€d ‚ˆ ?µÅ]@¨lÛ¹å>À¿y-ºR¡AÕúÄd< d € ?è‡õAÕúÄeKô€d € @ dAÕúÄf‘:€d € @P`AÕúÄgÕü€d € @jS\AÕúÄhõy d € @ƒýÚAÕúÄj d € @Ó~AÕúÄk3, d € @™Î›AÕúÄlQŽ d € @ªXÍAÕúÄmqG€d € @¸vwAÕúÄn? d € @Ã(AÕúÄo¯:€d € @ÐüÀAÕúÄpÍT d € @ÝdfAÕúÄqë€d € @é:	AÕúÄs
-œ€d € @ø 7AÕúÄt*D d € AL°AÕúÄuH±€d ‚ˆ A	¥@¨lß¼¿ÉÀ¿y/[AÕúÄvg” d € AX—AÕúÄw…Š€d € AŸ¤AÕúÄx¤# d € A‰|AÕúÄyÁÿ€d € A >‡AÕúÄzáÎ€d € A)•cAÕúÄ| d € A-\®AÕúÄ}'½ d € A5ÆGAÕúÄ~Mð€d € A5ýAÕúÄrû d € A6¡JAÕúÄ€˜ª d € A2l}AÕúÄ¾Ì d € A+¸éAÕúÄ‚Ý¸€d € A"«AÕúÄƒü° d € AõAÕúÄ…A d € A!×AÕúÄ†;;€d € A\ýAÕúÄ‡Za€d ‚ˆ A à)@¨lâ
-i~À¿y/{æâAÕúÄˆyV€d € @ê§AÕúÄ‰˜u d € @Ø‹WAÕúÄŠ·´ d € @Â–AÕúÄ‹Ö¬€d € @³æiAÕúÄŒõ€d € @ž:)AÕúÄŽ·€d € @†³bAÕúÄ3ß€d € @fUPAÕúÄS€d € @8kÆAÕúÄ‘r€d € @£RAÕúÄ’‡€d € ?ÞÕØAÕúÄ“È5€d € ?²îAÕúÄ”òn€d € ?˜AÕúÄ–.ñ d € ?Çs’AÕúÄ—`ê d € ?ù&AÕúÄ˜? d € @ÁyAÕúÄ™Õ€ d ‚ˆ @bC@¨læ,}2OÀ¿y0S ¼5AÕúÄ›| d € @v–€AÕúÄœ:9€d € @…³ßAÕúÄY€d € @“ö
-AÕúÄžwn€d € @¢î·AÕúÄŸ• d € @³gAÕúÄ ´u€d € @ÃL—AÕúÄ¡Ò© d € @ÍÙ·AÕúÄ¢ñ© d € @Ø¯×AÕúÄ¤Ä d € @éƒ
-AÕúÄ¥.ó d € @ø2¶AÕúÄ¦Mÿ€d € Aß/AÕúÄ§lî€d € A8|AÕúÄ¨‹] d € A¢AÕúÄ©ªþ€d € AžªAÕúÄªÉø d € AÁ´AÕúÄ«è×€d € A!«‹AÕúÄ­j€d ‚ˆ A';@¨lê§¼fÀ¿y1µ&áØAÕúÄ®'ß d € A0mwAÕúÄ¯OŽ d € A7|LAÕúÄ°ur€d € A8iAÕúÄ±šÀ€d € A8NAÕúÄ²ÀX d € A4¢DAÕúÄ³æ‰€d € A.ÛóAÕúÄµÿ d € A#˜QAÕúÄ¶% d € AöýAÕúÄ·Dr€d € AÕkAÕúÄ¸cy d € AÙÐAÕúÄ¹‚€€d € Ap´AÕúÄº¡ë€d € @õ}.AÕúÄ»Àé€d € @âÏvAÕúÄ¼ßç d € @Ï¼AÕúÄ½þÝ€d € @¹QzAÕúÄ¿Ý d ‚ˆ @¦A@¨lì„ÏìIÀ¿y25KÚFAÕúÄÀ=(€d € @‘÷AÕúÄÁ\| d € @€‘ÐAÕúÄÂ{T d € @Z[,AÕúÄÃš d € @(s–AÕúÄÄ¸Ý d € @ò/AÕúÄÅäæ d € ?É»™AÕúÄÇà€d € ?KØÜAÕúÄÈ: d € ?f+AÕúÄÉv! d € ?™AAÕúÄÊ¨e€d € ?áßAÕúÄË×® d € @}[AÕúÄÍ‰ d € @CŠèAÕúÄÎb«€d € @ezMAÕúÄÏ€d € @|J‘AÕúÄÐ "€d € @Š}AÕúÄÑ¾Þ€d ‚ˆ @—b@¨lðmRûÀ¿y3	<ŠßAÕúÄÒÝ2 d € @¨¢ÈAÕúÄÓû¦ d € @µœoAÕúÄÕý d € @Äp›AÕúÄÖ:ü€d € @Ö°ÑAÕúÄ×Y[ d € @áÏóAÕúÄØwé d € @î\AÕúÄÙ— d € @ý0EAÕúÄÚ¶¶€d € A	îAÕúÄÛÕË d € A´ÒAÕúÄÜôº d € AéAÕúÄÞ°€d € Aä@AÕúÄß3Ã d € A!‡AÕúÄàRU€d € A(q_AÕúÄáqQ€d € A1#ùAÕúÄâ˜ƒ d € A4ý…AÕúÄã¾©€d ‚ˆ A8E@¨lô¼HdÀ¿y4-¯¤ÖAÕúÄää9 d € A7üAÕúÄæ
-A d € A3"ÿAÕúÄç0£ d € A-“oAÕúÄèOÒ€d € A$ªAÕúÄénï d € A®öAÕúÄêŽF€d € AéŸAÕúÄë­U€d € A%¿AÕúÄìÌE d € @ûçÁAÕúÄíë€d € @æ„AÕúÄï
-!€d € @ÕÕÏAÕúÄð)¼€d € @½á‡AÕúÄñHÅ d € @¨5FAÕúÄòh€d € @’d…AÕúÄó‡, d € @~ –AÕúÄô¦ d € @L«AÕúÄõÅ± d ‚ˆ @%Œ@¨l÷Âò+À¿y4£L(AÕúÄöñ_ d € @ ‡AÕúÄø% d € ?Óÿ·AÕúÄùF² d € ?¨4AÕúÄúpY d € ?è‡õAÕúÄû£ñ d € @	§:AÕúÄüÓs d € @BãAÕúÄþE€d € @\£3AÕúÄÿ6ë d € @ráuAÕúÅ VJ€d € @‡ ãAÕúÅu€d € @’d…AÕúÅ“~ d € @¥í@AÕúÅ±¼€d € @­2ÕAÕúÅÏ‰€d € @¼AÕúÅíø€d € @ÈJ&AÕúÅ= d € @ÖgÑAÕúÅ,±€d ‚ˆ @ãóy@¨lûxyß§À¿y5f)ÄAÕúÅ	K-€d € @ëï‘AÕúÅ
-i®€d € @û¾AÕúÅ‰D d € A:íAÕúÅ¨>€d € A
-¶ÇAÕúÅÇÇ d € A´ÒAÕúÅæs€d € A‹íAÕúÅb d € AxAÕúÅ$~€d € A%…AÕúÅDd d € A+”iAÕúÅc‡€d € A4AÕúÅ‹  d € A:”AÕúÅ±Š d € A>‹"AÕúÅÖþ d € A<ÕAÕúÅü™€d € A>æcAÕúÅ#: d € A5F†AÕúÅB/ d ‚ˆ A1£»@¨lþÒÜ:À¿y6£¼³AÕúÅax€d € A(•àAÕúÅ€­€d € A!½ËAÕúÅŸÄ€d € AÁ´AÕúÅ¾§ d € A¡AÕúÅÞ d € AÝ;AÕúÅ ý d € @ûžÀAÕúÅ"D€d € @æ„AÕúÅ#;Q€d € @Ó²IAÕúÅ$Zk d € @¿*AÕúÅ%yL d € @¬ÅTAÕúÅ&˜Â d € @—=”AÕúÅ'·˜ d € @‚Ù×AÕúÅ(Öz d € @^¢9AÕúÅ)õƒ€d € @4ÿ¼AÕúÅ+‚ d € @\EAÕúÅ,@?€d ‚ˆ ?ÒI²@¨m.Â	êÀ¿y7?UDÒAÕúÅ-jÿ€d € ?„¸ÊAÕúÅ.•V d € ?†nÏAÕúÅ/Ðè€d € ?À›}AÕúÅ1Å d € @`.AÕúÅ21¡ d € @;EÏAÕúÅ3ví d € @Y€)AÕúÅ4•‹ d € @pPmAÕúÅ5³Ž€d € @ˆDçAÕúÅ6Ñ­€d € @“ˆ‰AÕúÅ7ï@ d € @¢î·AÕúÅ9Ú d € @°Ã`AÕúÅ:+Ç d € @¼tƒAÕúÅ;J8 d € @Êÿ®AÕúÅ<h d € @ÖCPAÕúÅ=…‡ d € @éˆAÕúÅ>£¤€d ‚ˆ @ñ"@¨m8N|[À¿y7ÀJ`«AÕúÅ?ÂÐ d € AK¶AÕúÅ@áè d € AoºAÕúÅB? d € AÙSAÕúÅC “ d € AûbAÕúÅD>á€d € ArAÕúÅE]Ò€d € AvBAÕúÅF|ï€d € A%`–AÕúÅG›Ã€d € A*^%AÕúÅHÂ€d € A.%qAÕúÅIç§€d € A3YÀAÕúÅKõ d € A2GýAÕúÅL3Þ€d € A1È;AÕúÅMZF€d € A*^%AÕúÅNy!€d € A"ôAÕúÅO˜€d € A
-7AÕúÅP·r€d ‚ˆ A|@¨m††qÀ¿y8pè»AÕúÅQÖv€d € AïøAÕúÅRõÃ€d € @ûçÁAÕúÅTé€d € @ä…{AÕúÅU4€d € @ÑüCAÕúÅVS³ d € @ÀàAÕúÅWr³€d € @¬ÒAÕúÅX‘€d € @˜=AÕúÅY°x d € @…_AÕúÅZÏq€d € @Zí-AÕúÅ[îI€d € @-¤AÕúÅ]‰ d € @ª(AÕúÅ^8ý€d € ?Á-AÕúÅ_c‘ d € ?`aAÕúÅ`¨ d € ?q}MAÕúÅaÉ€d € ?©Ë9AÕúÅbú… d ‚ˆ ?é÷@¨m
-[ï<À¿y8ñHIAÕúÅd*9€d € @}[AÕúÅeoÄ€d € @L«AÕúÅf´›€d € @l	aAÕúÅgÓ2 d € @HRAÕúÅhñu d € @øøAÕúÅj% d € @™ªAÕúÅk/X€d € @¦ìÃAÕúÅlO d € @´SëAÕúÅmmb€d € @¼tƒAÕúÅnŒ«€d € @Ëm0AÕúÅoª™ d € @Ò×FAÕúÅpÈc€d € @âÏvAÕúÅqçq d € @î€™AÕúÅs™€d € @úŸ=AÕúÅt%{€d € Aq1AÕúÅuDò d ‚ˆ A	nC@¨mÔè3	À¿y:÷r×AÕúÅvdÊ d € AŽ^AÕúÅwƒï€d € A‹íAÕúÅx£¦ d € AR>AÕúÅyÁÍ€d € A$NÓAÕúÅzáË d € A-Ê/AÕúÅ| ë d € A2Ç¾AÕúÅ}'Š d € A9ÄSAÕúÅ~M*€d € A;zXAÕúÅrD d € A;±AÕúÅ€˜8€d € A8ÄÐAÕúÅ½¬ d € A4´„AÕúÅ‚ÜŽ€d € A,JëAÕúÅƒû¦ d € A$Î•AÕúÅ…ß d € Ac„AÕúÅ†9ò€d € A±äAÕúÅ‡Y{ d ‚ˆ A£@¨m·¤½¹À¿y:¯@vòAÕúÅˆxž€d € AËõAÕúÅ‰—¹€d € @ö¡1AÕúÅŠ¶‘€d € @á†òAÕúÅ‹Õ[€d € @ÏØ½AÕúÅŒôk€d € @¹ã{AÕúÅŽs€d € @£\8AÕúÅ2š d € @÷þAÕúÅQ¨€d € @x•†AÕúÅ‘pÉ d € @OÎAÕúÅ’ó d € @'’AÕúÅ“»~ d € @Í2AÕúÅ”æZ d € ?ò:AÕúÅ– d € ?ÂQƒAÕúÅ—:e d € ?ý2AÕúÅ˜mü d € @3`AÕúÅ™˜ d ‚ˆ @R_@¨mf s¿À¿y;G­æ¬AÕúÅšâ€d € @l	aAÕúÅœ «€d € @HRAÕúÅî€d € @”ŠAÕúÅž=d d € @œ„#AÕúÅŸ[Ø€d € @«êRAÕúÅ z d € @³ThAÕúÅ¡—æ d € @ÄÞAÕúÅ¢¶8 d € @Ìµ´AÕúÅ£Õ= d € @ÙAÙAÕúÅ¤ôl€d € @á=ñAÕúÅ¦À€d € @ô)AÕúÅ§2b€d € A à)AÕúÅ¨Q¥ d € A3AÕúÅ©p´€d € A	 ÁAÕúÅª2 d € A2#AÕúÅ«®ñ d € A°AÕúÅ¬Íú€d ‚ˆ A!+Ê@¨m“fáÀ¿y<s  –AÕúÅ­ìÏ d € A&ßÛAÕúÅ¯. d € A,ï-AÕúÅ°1¿€d € A2GýAÕúÅ±Y¡ d € A5}GAÕúÅ²¼ d € A4¢DAÕúÅ³¥è d € A1HzAÕúÅ´Ì1 d € A*äAÕúÅµêõ€d € A#aAÕúÅ·
-R d € ArAÕúÅ¸)ª d € AÆ–AÕúÅ¹Hã€d € A¹8AÕúÅºgê d € @û¾AÕúÅ»†ù€d € @è:†AÕúÅ¼¦ d € @ÔÖLAÕúÅ½Äÿ d € @¼™AÕúÅ¾ãà d ‚ˆ @ª¡Î@¨mëš¹À¿y<ü.2€AÕúÅÀ€d € @–ô“AÕúÅÁ"x d € @zÝAÕúÅÂAc d € @W#AÕúÅÃ`‡ d € @0o®AÕúÅÄŒ€d € @ÃnAÕúÅÅ¶ª€d € @\EAÕúÅÆàì d € @ïAAÕúÅÈ
-½ d € @å}AÕúÅÉ-­ d € @D÷ìAÕúÅÊLâ€d € @dVJAÕúÅËl€d € @y'ˆAÕúÅÌŠã d € @ŽŠúAÕúÅÍ©€d € @ž:)AÕúÅÎÈþ€d € @¬éÕAÕúÅÏçY d € @ºüAÕúÅÑI€d ‚ˆ @Ìµ´@¨m{O@iÀ¿y=æc€úAÕúÅÒ%„€d € @ÖÕRAÕúÅÓD d € @å;ýAÕúÅÔcE€d € @ð[AÕúÅÕp d € AñìAÕúÅÖ¡ d € A·ÁAÕúÅ×ÀX d € A}AÕúÅØà4 d € AfAÕúÅÙþ{€d € AˆÿAÕúÅÛê d € A"†ŽAÕúÅÜ=#€d € A)ð¤AÕúÅÝ\Ô€d € A1µûAÕúÅÞ„* d € A6
-AÕúÅßª	 d € A<0ÛAÕúÅàÏº€d € A:h•AÕúÅáõŽ€d € A9èÔAÕúÅã d ‚ˆ A1þü@¨m!å€F—À¿y?"¨0AÕúÅä;K€d € A(º`AÕúÅå[h d € A!™KAÕúÅæ{µ€d € AžªAÕúÅçš¬€d € AAÕúÅè¹  d € Aï{AÕúÅéØ¤ d € @úÃ½AÕúÅê÷… d € @æ;€AÕúÅìÜ d € @ÐüÀAÕúÅí5â€d € @¼âAÕúÅîTù€d € @¨ÇHAÕúÅït€d € @’„AÕúÅð“ d € @y¹ŠAÕúÅñ² d € @OÎAÕúÅòÑ2 d € @-¤AÕúÅóý]€d € @¥FAÕúÅõ(½ d ‚ˆ ?ø€%@¨m%CÔC%À¿y?‹°þAÕúÅöSY€d € ?ÂQƒAÕúÅ÷}‹€d € ?óðAÕúÅø°Ä€d € @
-zAÕúÅùà`€d € @P©AÕúÅû%€d € @jå]AÕúÅüC¸€d € @¶›AÕúÅýa½€d € @‹°ñAÕúÅþ³€d € @—AÕúÅÿŸì d € @¥í@AÕúÆ ¾m€d € @´SëAÕúÆÜj€d € @Á)AÕúÆúí€d € @ÌÚ4AÕúÆK d € @Û@ßAÕúÆ7 d € @å„þAÕúÆTë d € @ôY*AÕúÆr£€d ‚ˆ Am@¨m'Êƒ„>À¿y@2.7–AÕúÆ’	 d € A AÕúÆ	°…€d € AýÓAÕúÆ
-Ï™€d € AÄ¢AÕúÆíƒ€d € AAòAÕúÆF€d € A uHAÕúÆ,„€d € A&òAÕúÆK…€d € A-mAÕúÆj$ d € A25½AÕúÆU€d € A4ý…AÕúÆµ^€d € A8û‘AÕúÆÚ·€d € A7×ŽAÕúÆ “€d € A6ÅÊAÕúÆ'> d € A1#ùAÕúÆFñ€d € A)pâAÕúÆf$ d € A ¾HAÕúÆ…Q d ‚ˆ Aœ¶@¨m)d¯v•À¿y@ ŠýAÕúÆ¤ d € A ÝAÕúÆÃ-€d € A]zAÕúÆâ[ d € A `hAÕúÆX€d € @èñAÕúÆ Š d € @Øf×AÕúÆ ?×€d € @ÁM‘AÕúÆ!^õ d € @ªXÍAÕúÆ"~ €d € @•cAÕúÆ#€d € @„ØÝAÕúÆ$»â d € @\ì3AÕúÆ%ÚŽ€d € @0o®AÕúÆ&ùn d € @`.AÕúÆ(%'€d € ?Í'£AÕúÆ)O½ d € ?v[AÕúÆ*z< d € ?LÀAÕúÆ+µ® d ‚ˆ ?®íI@¨m,Ö°GÀ¿yA1ê¡AÕúÆ,æ³ d € ?óðAÕúÆ.p€d € @ŸjAÕúÆ/\ d € @R¨AÕúÆ0 ó€d € @l	aAÕúÆ1Àr d € @¨m±A [ÀÀ¿ybÐå`A@†ŽâAÕúÆ2ßw€d € @•¬AÕúÆ3þÓ d € @£7AÕúÆ5j d € @²äAÕúÆ6< d € @¾AÕúÆ7[= d € @Ê$¬AÕúÆ8zF d € @Û_AÕúÆ9˜`€d € @à>nAÕúÆ:¶W€d € @èÌˆAÕúÆ;Ô0€d € @û1?AÕúÆ<ó‚€d € A8AÕúÆ>¿€d ‚ˆ A£Œ@¨m1Y À¿yBEòY<AÕúÆ?1ä€d € A `AÕúÆ@PT€d € AŠvAÕúÆApK d € A$óAÕúÆBL d € A)ÞdAÕúÆC®$ d € A35@AÕúÆDÌ„ d € A9Ö”AÕúÆEóä d € AARêAÕúÆG%€d € AF+øAÕúÆH?©€d € AE¬7AÕúÆIe£ d € AE>¶AÕúÆJ‹÷ d € A@åiAÕúÆKªÖ d € A7ÅMAÕúÆLÊ€d € A06·AÕúÆMé¨ d € A(q_AÕúÆOå€d € A­AÕúÆP(-€d ‚ˆ Ahg@¨m3Î·š¬À¿yCO¹LAÕúÆQGN d € A‹AÕúÆRg€d € @úÃ½AÕúÆS…é€d € @éÌAÕúÆT¥ d € @ÒûÆAÕúÆUÄ5 d € @½½AÕúÆVã= d € @©IAÕúÆX” d € @–ÐAÕúÆY!² d € @„k[AÕúÆZ@Û€d € @\1AÕúÆ[`, d € @/Ý­AÕúÆ\€d € @ƒ7AÕúÆ]ª†€d € ?ÆOŽAÕúÆ^ÖŽ€d € ?h]2AÕúÆ` ¯€d € ?nCAÕúÆa=µ€d € ??AÕúÆbn{€d ‚ˆ ?ã÷ç@¨m7v`,ZÀ¿yCÄòGAÕúÆcÆ d
-€*€@É~˜=‹c˜@]?¾!eŽAÕúÆdâ* @¨MA„Ù0d€( =›oC@I‡ù¾.t1AÕúÆf'µ d€( =™$t@Zí-¾Kg AÕúÆgFc€d€( = â@ráu¾xUAÕúÆheÙ d€( =¢O±@Šl¾S¼PAÕúÆi…w€d€( @™ó¾SeAÕúÆj¤Ê€d€( = â@¦ìÃ½ö]¹AÕúÆkÃ¦€d
-€(€A,bÆ=£u@°1^¾iûEAÕúÆlâ€A‚=»d€( =¥¿è@½O†¾pŠœAÕúÆnW d€( =£u@Ê$¬¾-´:AÕúÆo!½ d€( @ÚeÝ¾!—UAÕúÆp@° d€( =¤š€@ä…{¾BnAÕúÆq_I d€( =¢O±@õ4-¾I?ìAÕúÆr}Q€d€* =ªU‡A ©h¾:mAÕúÆs›Ö€@i^d
-€(€@ÿÃü=¡*IAK¶¾?AÕúÆt¹Ó€A‚–Úd‚¨ =©0AþP@¨m:ÎÞÃoÀ¿yDqÚñÒ¾PÕ‰AÕúÆuØ}€d
-€(€@è€=¡¼ýADà¾$å±AÕúÆvøQ Aƒ£d€( = âAS8¾)ø¿AÕúÆx•€d
-€(€@Ë¹=¡¼ýA?¾[EAÕúÆy6) A‚ïd€( =›oCA'(Ü¾‹åPAÕúÆzV\ d€( =»†šA/’u¾9l€AÕúÆ{u›€d€( =¥¿èA5"¾.-IAÕúÆ|œ› d€( =£uA:ŸV<¡lÍAÕúÆ}Âw d€( =xú¨A?#>ñÆAÕúÆ~è€d€( =hîüA@A'?)¯AÕúÆ€F€d€( =f¤-A;ÃY?'£qAÕúÆ4r d€( =XãQA5ý?0AÕúÆ‚T€d€( =_Ã¿A-“o?#4'AÕúÆƒse€d€( =XãQA$NÓ?$AÕúÆ„’“€d€( =_Ã¿Aœ9? *ßAÕúÆ…±ã€d€( =UsA!Z?!lAÕúÆ†Ðÿ€d‚¨ =[. A¸>@¨m=7B"(À¿yEH‰ ?* ¿AÕúÆ‡ðQ d€( @úz½?-‘3AÕúÆ‰€d€( =k9Ì@â=t?"áAÕúÆŠ/n€d€( =[. @Ì‘3?#=lAÕúÆ‹Nß€d€( =Rã@¸-v?$‹YAÕúÆŒn d€( =bŽ@Ÿ^,?z–AÕúÆT€d€( =f¤-@ˆ²h?5¬AÕúÆŽ¬õ€d€( @j
-[? áDAÕúÆÌ€d€( =„ƒ)@Bfä?+ÆAÕúÆë€d€* =f¤-@èk?$›AÕúÆ’Û @¦~/d € ?æ?îAÕúÆ“A¿€d € ?“Œ÷AÕúÆ”lT d € ?¦ñ1AÕúÆ•¨!€d € ?Ð«AÕúÆ–Ø€ d € @ÉJAÕúÆ˜€d € @FdðAÕúÆ™MZ d ‚ˆ @aÅB@¨m@ÏHwÀ¿yE®@¯!AÕúÆšlc d € @wqƒAÕúÆ›Š¤€d € @‰ÖlAÕúÆœªP d € @“?ˆAÕúÆÉ^€d € @Ÿ§-AÕúÆžè€d € @ªêÏAÕúÆ  €d € @¶äòAÕúÆ¡%Ã d € @ÇJ£AÕúÆ¢E d € @ÖÕRAÕúÆ£cv d € @àÐpAÕúÆ¤•€d € @ò~¥AÕúÆ¥Ÿ› d € AMªAÕúÆ¦¿• d € Aï{AÕúÆ§ÝÄ€d € AìAÕúÆ¨ü¯ d € AãAÕúÆª× d € A@øAÕúÆ«:Ö€d € A%•AÕúÆ¬ZJ d ‚ˆ A*§&@¨mDÃt*^À¿yG&GÏAÕúÆ­y" d € A-nîAÕúÆ®—• d € A63ÉAÕúÆ¯·g€d € A9èÔAÕúÆ°Öz€d € ABRmAÕúÆ±ýj d € AEõ8AÕúÆ³#L€d € AJòÇAÕúÆ´HŽ d € AK„ÈAÕúÆµn± d € AH*þAÕúÆ¶”u€d € AC/AÕúÆ·³ˆ d € A9{RAÕúÆ¸Òí d € A4´„AÕúÆ¹ñë d € A(º`AÕúÆ»+ d € AÑƒAÕúÆ¼0_ d € AÖeAÕúÆ½Oy€d € A
-[…AÕúÆ¾nã€d ‚ˆ @úè>@¨mG	‘ñÀ¿yG§a"óAÕúÆ¿¯€d € @æ;€AÕúÆÀ¬ó d € @ÔÊAÕúÆÁËò d € @¼™AÕúÆÂêé€d € @¥È¿AÕúÆÄ
-4€d € @‘AÕúÆÅ)o d € @}%”AÕúÆÆH™ d € @RñAÕúÆÇgà d € @&½‘AÕúÆÈ“I d € @†%AÕúÆÉ¾ d € ?á¯àAÕúÆÊèJ d € ?±ÇQAÕúÆÌÛ€d € ?âAâAÕúÆÍEd d € @ViAÕúÆÎtÜ d € @K=ÿAÕúÆÏ¹€d € @jœ\AÕúÆÐØ8 d ‚ˆ @ÿœ@¨mJ ©n/À¿yHHú`AÕúÆÑöo d € @Žø{AÕúÆÓm d € @›©!AÕúÆÔ5€d € @ªÆNAÕúÆÕT€d € @´xkAÕúÆÖrm d € @Ã(AÕúÆ×Ì€d € @ÓÈAÕúÆØ¯Ò€d € @àôðAÕúÆÙÎë€d € @ñÈ"AÕúÆÚíB d € @öê2AÕúÆÜ> d € Aq®AÕúÆÝ*ø d € A	·DAÕúÆÞJ d € A²ÞAÕúÆßj%€d € ACiAÕúÆàˆc€d € AvBAÕúÆá§ d € A'ÍAÕúÆâÆ‡€d € A+ÝjAÕúÆãæO d ‚ˆ A3ëÂ@¨mN‰ñÀ¿yIòv8±AÕúÆåñ€d € A;±AÕúÆæ$8 d € A?ø&AÕúÆçKÍ€d € AFPyAÕúÆèrÏ€d € AIOAÕúÆé˜- d € AI*AÕúÆê¾ d € AF«ºAÕúÆëäU d € ABRmAÕúÆíx d € A9ÄSAÕúÆî#K€d € A1HzAÕúÆïB d € A)aAÕúÆðaÏ€d € A?AÕúÆñ€€d € Aé"AÕúÆòŸ d € A	·DAÕúÆó¾ d € @ÿSËAÕúÆôÝx d € @ê^AÕúÆõü$ d ‚ˆ @ÓûI@¨mQ?BÀ¿yJ•½ì?AÕúÆ÷x€d € @¾¼ŠAÕúÆø:¶ d € @«3ÏAÕúÆùZ' d € @“­	AÕúÆúy,€d € @‚#UAÕúÆû˜B€d € @NAÕúÆü· d € @#šˆAÕúÆýÕþ€d € ?ûì/AÕúÆÿI€d € ?v[AÕúÇ ,É d € ?&4lAÕúÇk‰€d € ?/T‡AÕúÇ§X€d € ?ØæAÕúÇ×Z€d € ?Ì•¡AÕúÇ7€d € @3AÕúÇL€d € @<ûÔAÕúÇ’ d € @Z[,AÕúÇ±P€d ‚ˆ @rs@¨mUéµæèÀ¿yKŠùÛ AÕúÇ	Ï¬ d € @‡²åAÕúÇ
-îf€d € @”ˆAÕúÇš d € @¡Ê³AÕúÇ,c€d € @¯ÃÝAÕúÇJÚ€d € @¼AÕúÇjÒ€d € @Ê¶®AÕúÇ‰¨ d € @ÚŠ]AÕúÇ¨ð d € @ë]AÕúÇÈ
-€d € @ûU¿AÕúÇæP€d € AÌïAÕúÇl€d € A6ˆAÕúÇ$¸ d € AÅAÕúÇD’€d € AfrAÕúÇcP d € A"AÕúÇ‚ö d € A(º`AÕúÇ¡å€d € A0$wAÕúÇÀÞ€d ‚ˆ ADõµ@¨m[øo•À¿yM¤ƒÒêAÕúÇßì d € AI¼ƒAÕúÇË¯€d € AN:PAÕúÇ ò€d € ATÛ¤AÕúÇ"4€d € ATI£AÕúÇ#={€d @ AÕúÇ$d!€d € AQ¸›AÕúÇ%‰g€d € AK—	AÕúÇ&¨R€d € AG†¼AÕúÇ'Ç3€d € A> AÕúÇ(æD€d € A6XIAÕúÇ*S€d € A,¸lAÕúÇ+$Ô€d € A#=AÕúÇ,Có€d € Aœ¶AÕúÇ-c4 d € A"TAÕúÇ.‚! d € A'6AÕúÇ/ ÷€d ‚ˆ @÷W³@¨m]ÛuácÀ¿yN)]ºAÕúÇ0À€d € @ä`úAÕúÇ1ß}€d € @Ðj¿AÕúÇ2þr€d € @ºu}AÕúÇ4ž d € @£É¹AÕúÇ5<ð d € @ŽfyAÕúÇ6\(€d € @nšhAÕúÇ7{’ d € @@ùàAÕúÇ8šd d € @èkAÕúÇ9Åå€d € ?ëaýAÕúÇ:ðo d € ?‰ÚÚAÕúÇ<æ d € ?„¸ÊAÕúÇ=W d € ?¹ÃiAÕúÇ>ˆ¬€d € @b"AÕúÇ?·ý€d € @8´ÇAÕúÇ@ý d € @Y7(AÕúÇBG d ‚ˆ @ssw@¨mbtîgîÀ¿yN™ýA0AÕúÇC<& d € @ˆigAÕúÇD\€d € @–b‘AÕúÇEzo€d € @¢5AÕúÇF™&€d € @«ÅÑAÕúÇG·& d € @³æiAÕúÇHÕ© d € @Â(”AÕúÇIóÅ d € @Ëÿ1AÕúÇK d € @ÙŠÚAÕúÇL2R€d € @å;ýAÕúÇMQ† d € @ûžÀAÕúÇNqN d € AL°AÕúÇO±€d € AµÍAÕúÇP¯°€d € AŽÛAÕúÇQÍþ d € Aœ¶AÕúÇRí¨€d € A#†AÕúÇTÛ€d € A.\1AÕúÇU- d ‚ˆ A1lú@¨mg(ýÿÐÀ¿yO˜á%?AÕúÇVKœ d € A8WOAÕúÇWjÙ d € A<0ÛAÕúÇX÷ d € A@ÀèAÕúÇY¶_€d € ABd­AÕúÇZÛ€ d € AAÒ«AÕúÇ\_€d € A?/dAÕúÇ]'×€d € A7 ÍAÕúÇ^G€d € A,¦,AÕúÇ_fY d € A&;™AÕúÇ`…b€d € A	ºAÕúÇa¤|€d € A{$AÕúÇbÃ} d € A
-í‡AÕúÇcâ  d € Ar+AÕúÇe×€d € @í8AÕúÇf þ d € @ÝdfAÕúÇg@“€d ‚ˆ @ÆK @¨mhÜ#JTÀ¿yP1öAAÕúÇh_é d € @³/çAÕúÇi€d € @™…›AÕúÇjû€d € @‡²åAÕúÇk¼Û d € @fžPAÕúÇlÛÔ€d € @;ŽÐAÕúÇmú²€d € @WAÕúÇo&P€d € ?åëAÕúÇpQz€d € ?žcAÕúÇq{ù€d € ?™AAÕúÇr¸
- d € ?ÊßœAÕúÇsê0€d € ?õ¦AÕúÇuÚ€d € @"-„AÕúÇv^x€d € @W8"AÕúÇw¤Œ€d € @u»~AÕúÇxÄ€d € @†jaAÕúÇyâm d ‚ˆ @•>Ž@¨mm@7îÀ¿yQ)Ó{^AÕúÇ{N d € @Ÿ9¬AÕúÇ|¡€d € @ª}MAÕúÇ}>€d € @ºPýAÕúÇ~]m€d € @ÅAÕúÇ|É€d € @ÒûÆAÕúÇ€šÿ d € @ÞcèAÕúÇ¸Å€d € @ç_ƒAÕúÇ‚Ö±€d € @÷33AÕúÇƒõ¬ d € @ÿxKAÕúÇ… d € AJ?AÕúÇ†4‘ d € A‹AÕúÇ‡SÛ€d € AéŸAÕúÇˆs €d € A
-´AÕúÇ‰’ d € AÑAÕúÇŠ°` d € A(AÕúÇ‹Ï	€d € A+§AÕúÇŒìÄ€d ‚ˆ A2Ç¾@¨mpd‘dÀ¿yR@¤eÔAÕúÇŽ^ d € A9ŸÓAÕúÇ*©€d € AA÷,AÕúÇIž d € AGb<AÕúÇ‘p_€d € AK»‰AÕúÇ’•Ü€d € AMÌÏAÕúÇ“º¿ d € AM:ÎAÕúÇ”àÈ€d € AH˜€AÕúÇ–)€d € A?#AÕúÇ—&Ù€d € A5ÆGAÕúÇ˜F1€d € A.0AÕúÇ™eŠ d € A%NVAÕúÇš„_€d € A?AÕúÇ›£e d € AfAÕúÇœÂ­€d € AHÈAÕúÇáÂ d € AÍlAÕúÇŸ «€d ‚ˆ @î@¨mrf´KÇÀ¿yRy~óAÕúÇ Á€d € @ÖÐAÕúÇ¡>ò d € @ÃÞ™AÕúÇ¢^€d € @®ØAÕúÇ£}$ d € @šòŸAÕúÇ¤œ7 d € @„k[AÕúÇ¥»€d € @a3@AÕúÇ¦Ú d € @7ÙÅAÕúÇ§øç d € @?AÕúÇ©%V d € ?Ñ·±AÕúÇªP€d € ?…JÌAÕúÇ«zˆ€d € ?‹ßAÕúÇ¬¸€d € ?É»™AÕúÇ­é– d € @;0AÕúÇ¯× d € @<iÒAÕúÇ°^÷€d € @SÌAÕúÇ±}¤ d ‚ˆ @pPm@¨mvmo… À¿yS63)AÕúÇ²œá€d € @‰±ëAÕúÇ³¼¼ d € @•¬AÕúÇ´Ûí€d € @¡¦3AÕúÇµúÒ€d € @±yâAÕúÇ·? d € @½½AÕúÇ¸:0 d € @É’ªAÕúÇ¹X¡€d € @×BÓAÕúÇºw d € @ä©ûAÕúÇ»–+ d € @ô¢+AÕúÇ¼µ d € A)*AÕúÇ½Óê€d € A&<AÕúÇ¾ò d € A4”AÕúÇÀã€d € Aç«AÕúÇÁ1t d € A¬…AÕúÇÂP€d € A%»×AÕúÇÃo° d € A.¥2AÕúÇÄŽº d ‚ˆ A7|L@¨m|«ïEÀ¿yUu°JÝAÕúÇÅ®o d € A=gAÕúÇÆÎ d € AE¾wAÕúÇÇìÄ€d € AJ¼AÕúÇÉU d € AQ”AÕúÇÊ:€d € AUíhAÕúÇË_­ d € AR¸AÕúÇÌ†Ž€d € AP–AÕúÇÍ¬Ñ d € AIOAÕúÇÎËŒ d € A?œåAÕúÇÏê>€d € A7EŒAÕúÇÑ	E d € A.’òAÕúÇÒ(l€d € A$sTAÕúÇÓGj d € A­AÕúÇÔf…€d € AW AÕúÇÕ‡ d € A	7‚AÕúÇÖ¦€d ‚ˆ A `h@¨m~yèUÀ¿yV‰(AÕúÇ×Å  d € @å}AÕúÇØæÙ€d € @Ï";AÕúÇÚÏ d € @¹uúAÕúÇÛ% d € @ ï±AÕúÇÜD# d € @ˆÖéAÕúÇÝcS d € @t—zAÕúÇÞ‚Ë d € @D÷ìAÕúÇß¡Ñ d € @ÂtAÕúÇàÍG€d € ?òÌAÕúÇá÷Î€d € ?šeAÕúÇã"N€d € ?š÷AÕúÇä_E€d € ?Í¹¥AÕúÇåê d € @ó)AÕúÇæ¿I d € @9ØËAÕúÇè€d € @RñAÕúÇé"¨€d ‚ˆ @m¿f@¨m‚”Ÿö@À¿yVébÒGAÕúÇêBe d € @‹CpAÕúÇëb d € @—ôAÕúÇì€ð€d € @§~ÄAÕúÇíŸ– d € @·	sAÕúÇî½à d € @Âº–AÕúÇïÝ× d € @Ò×FAÕúÇðý3€d € @ÚÜAÕúÇòì€d € @æÍ‚AÕúÇó:l d € @òì&AÕúÇôYÛ d € @þæJAÕúÇõy4 d € A(0AÕúÇö—é d € A
-¶ÇAÕúÇ÷¶â d € AŸ¤AÕúÇøÕð d € A÷zAÕúÇùôþ€d € A$*SAÕúÇû d € A*‚¦AÕúÇü2²€d ‚ˆ A0H÷@¨m‡–?Ú›À¿yX®Û±¾AÕúÇýR…€d € A6j‰AÕúÇþqÎ d € A>f¡AÕúÇÿ‘‘ d € AEõAÕúÈ °“€d € AHOAÕúÈØ„€d € AMÌÏAÕúÈþ d € AO9ÓAÕúÈ#Ÿ€d € AMMAÕúÈIo€d € AK`HAÕúÈp€d € AFtùAÕúÈ1€d € A<°œAÕúÈ® d € A54FAÕúÈ	Í+ d € A*ÝçAÕúÈ
-ì  d € A#†AÕúÈ9€d € AøñAÕúÈ*`€d € AÚMAÕúÈIØ€d ‚ˆ A:p@¨mŠ´. XÀ¿yYSÜ&3AÕúÈhé€d € @óë©AÕúÈ‡Ý d € @ÞcèAÕúÈ¦²€d € @Ìµ´AÕúÈÅ¥€d € @¸š÷AÕúÈäà d € @£î:AÕúÈÿ€d € @föAÕúÈ## d € @rOsAÕúÈB] d € @GÑôAÕúÈaŒ€d € @ÁyAÕúÈ¨€d € ?úÈ+AÕúÈ¸' d € ??AÕúÈâv d € ?©97AÕúÈ` d € ?Ù!ÇAÕúÈPZ d € @íMAÕúÈ€$€d € @T§AÕúÈ Æ;€d ‚ˆ @l	a@¨mŽ V¸À¿yZÝÝAÕúÈ!äõ d € @ƒ´ÙAÕúÈ#‚ d € @Œ°tAÕúÈ$"J d € @›AÕúÈ%@> d € @«3ÏAÕúÈ&_ d € @·vôAÕúÈ'|© d € @ÇJ£AÕúÈ(šþ€d € @ÑjBAÕúÈ)¸×€d € @ßÐíAÕúÈ*×ô d € @ìïAÕúÈ+ö‰ d € @û¾AÕúÈ-€d € AÌïAÕúÈ.3~€d € A%¿AÕúÈ/QG d € A"ÑAÕúÈ0q5 d € AV&AÕúÈ15 d € AdûAÕúÈ2®¨ d € A$sTAÕúÈ3ÌÑ d ‚ˆ A-%î@¨m‘ÂÎÀ¿yZõUî±AÕúÈ4ìD d € A2ÙÿAÕúÈ6 d € A:DAÕúÈ7)ñ€d € A=ÔŸAÕúÈ8HJ d € AD²AÕúÈ9h d € AK©IAÕúÈ:†ä d € AQ”AÕúÈ;­‡€d € AX~oAÕúÈ<Ó d € AWþ®AÕúÈ=ø¨ d € AZôAÕúÈ?=€d € ASîbAÕúÈ@EN€d € AMßAÕúÈAdÅ€d € AF¸AÕúÈBƒ´€d € A=0^AÕúÈC¢Î d € A44ÃAÕúÈDÃ,€d € A-mAÕúÈEá÷€d ‚ˆ A#Ï@¨m“^rTÀ¿y[ià DAÕúÈG1 d € AÃ+AÕúÈH •€d € A£AÕúÈI?£ d € AÞ²AÕúÈJ_&€d € @÷33AÕúÈK~ d € @ßkAÕúÈLœø€d € @Ìµ´AÕúÈM»Ô€d € @¸öAÕúÈNÚë d € @¥È¿AÕúÈOú d € @÷AÕúÈQM€d € @wº„AÕúÈR8U d € @PòAÕúÈSW¡€d € @$¾‹AÕúÈT„ d € @Í2AÕúÈU¯/ d € ?æÑðAÕúÈVÙ} d € ?¢ó%AÕúÈXþ€d ‚ˆ ?ßùÛ@¨m–ûÔÞ|À¿y[ìªÅ\AÕúÈY6• d € @}[AÕúÈZf¡€d € @Nª	AÕúÈ[¬H d € @läcAÕúÈ\Ë €d € @¨n–¼À¿y~vÈ´:@‘SAÕúÈ]éœ€d € @®€AÕúÈ_	Æ d € @¢î·AÕúÈ`)€d € @¯Ÿ]AÕúÈaH d € @ÁM‘AÕúÈbf¡€d € @Ò²ÆAÕúÈc†K d € @ß>ëAÕúÈd¤® d € @èAÕúÈeÂÌ d € @ó¢¨AÕúÈfà« d € A§ñAÕúÈgÿé€d € A
-€AÕúÈi4€d € A×_AÕúÈj>.€d ‚ˆ Ahg@¨m›2° |À¿y]Œvê–AÕúÈk\±€d € Av¿AÕúÈl|ª d € A%ÎAÕúÈmœ€d € A+ïªAÕúÈnº!€d € A5ÆGAÕúÈoÙ„ d € A=BžAÕúÈpøª d € A>¯¢AÕúÈrÕ d € AARêAÕúÈs6h d € AKAÕúÈtV6 d € AQ8ÙAÕúÈuu$€d € AViAÕúÈv›® d € AYÆóAÕúÈwÁ: d € A\!:AÕúÈxæ†€d € A\×¼AÕúÈzÄ d € AZÆvAÕúÈ{2–€d € ASJ AÕúÈ|Q§€d ‚ˆ AM(@¨mžSþWMÀ¿y^¤~
-ÞAÕúÈ}p´ d € ACãòAÕúÈ~ €d € A<šAÕúÈ¯M d € A3¿AÕúÈ€ÎN€d € A(AÕúÈí d € AÀ=AÕúÈƒ€d € A²ÞAÕúÈ„++€d € AAÕúÈ…JÎ d € @ùV¹AÕúÈ†iÝ d € @æ AÕúÈ‡ˆÇ d € @ÐF>AÕúÈˆ§³€d € @¿‹AÕúÈ‰Æƒ€d € @ªXÍAÕúÈŠå d € @”?AÕúÈŒ¶€d € @|“’AÕúÈ#å€d € @TAÕúÈŽC d € @0&®AÕúÈn‹ d ‚ˆ @	^:@¨m¡þ\P›À¿y_\þ[AÕúÈ™G d € ?îÎAÕúÈ‘Ä€d € ?¶W_AÕúÈ’íu€d € ?æ?îAÕúÈ” ¿€d € @WcAÕúÈ•P’€d € @Vï"AÕúÈ––- d € @tà{AÕúÈ—´Ü d € @‡iäAÕúÈ˜ÓU d € @“AÕúÈ™ñÂ€d € @Ÿ+AÕúÈ›  d € @¯zÜAÕúÈœ-ø€d € @ºüAÕúÈLs€d € @Æ”!AÕúÈžk d € @Ïý=AÕúÈŸˆÐ d € @Ü@bAÕúÈ ¦“€d € @êËŽAÕúÈ¡ÄQ d ‚ˆ @ú1¼@¨m¤K±Ë’À¿y`üÖ~AÕúÈ¢ãc€d € AL3AÕúÈ¤ d € AAÕúÈ¥"4€d € A³ØAÕúÈ¦Az d € AAòAÕúÈ§aT d € AQDAÕúÈ¨€i d € A$¼TAÕúÈ©žÞ d € A*ÝçAÕúÈª¼Ñ d € A4"‚AÕúÈ«ÛÝ€d € A9Ö”AÕúÈ¬úË€d € A>æcAÕúÈ®] d € AE,uAÕúÈ¯9Š€d € AK—	AÕúÈ°Xë d € AS·¡AÕúÈ±x“ d € A\j;AÕúÈ²ŸÔ d € AbyAÕúÈ³ÅÈ d ‚ˆ AgdÜ@¨m¨q8ÅÀ¿yaKØÊ4AÕúÈ´ëI€d € Ah­`AÕúÈ¶ü€d € AgöÝAÕúÈ·7á€d € AcTAÕúÈ¸VÎ€d € A]E=AÕúÈ¹vI d € AX~oAÕúÈº•+€d € AOAÕúÈ»´] d € AG;AÕúÈ¼ÓZ d € A>B!AÕúÈ½òl€d € A3þAÕúÈ¿¥ d € A*äAÕúÈÀ0ê d € AãÃAÕúÈÁP^€d € AÖeAÕúÈÂoa d € AÚÊAÕúÈÃŽX€d € A ÍéAÕúÈÄ­T€d € @í¥–AÕúÈÅÌb€d € @Ø¯×AÕúÈÆë€d ‚ˆ @Ä'š@¨m«;ºDÀ¿ya¦Š®AÕúÈÈ
-À d € @¯Ÿ]AÕúÈÉ*1 d € @ž^©AÕúÈÊIG€d € @…³ßAÕúÈËhi€d € @c2FAÕúÈÌ‡p€d € @1°AÕúÈÍ¦® d € @¨4AÕúÈÎÒ	€d € ?ÏoªAÕúÈÏü±€d € ?dñ'AÕúÈÑ&õ d € ?xUaAÕúÈÒbì€d € ?¦_/AÕúÈÓ”_€d € ?á¯àAÕúÈÔÃ£ d € @	9AÕúÈÖÜ d € @<iÒAÕúÈ×M,€d € @^¢9AÕúÈØlµ d € @x„AÕúÈÙŽK€d ‚ˆ @†Eá@¨m¯\Ð>'À¿ybÿ ZÜAÕúÈÚ­0 d € @”?AÕúÈÛË€d € @¢¥¶AÕúÈÜêù€d € @°çàAÕúÈÞ
- d € @¿sAÕúÈß*R€d € @Íþ7AÕúÈàHÏ€d € @×°TAÕúÈág€d € @ì]AÕúÈâ†€d € @øé8AÕúÈã¥€d € AñoAÕúÈäÃo€d € AÿJAÕúÈåâƒ€d € A—AÕúÈç …€d € AùnAÕúÈè d€d € AˆÿAÕúÈé?«€d € A$óAÕúÈê^A€d € A)LbAÕúÈë~ d € A-/AÕúÈì›ñ d ‚ˆ A6ÅÊ@¨m³ÛÓÙÀ¿yd”ãþ1AÕúÈí»€d € A>TaAÕúÈîÚº d € AEÐ·AÕúÈïù  d € AMMAÕúÈñ> d € ARîßAÕúÈò7( d € AV‘©AÕúÈó]X€d € A\3zAÕúÈô‚¦€d € A\WûAÕúÈõ§…€d € A\!:AÕúÈöÏÕ€d € AWkAÕúÈ÷ö€d € APÖAÕúÈù_€d € AFPyAÕúÈú4±€d € A>TaAÕúÈûS¬ d € A1lúAÕúÈürˆ d € A)¹ãAÕúÈý’!€d € AãÃAÕúÈþ±- d ‚ˆ Aúå@¨mµÌŽÀÕÀ¿ye¢ßAÕúÈÿÐ d € A	É„AÕúÉ î÷€d € @üUBAÕúÉ€d € @çñ…AÕúÉ-U d € @Ô±ËAÕúÉLk d € @ºPýAÕúÉk‹€d € @¥¤?AÕúÉŠ† d € @Š}AÕúÉ©u€d € @pâoAÕúÉÈ¤€d € @E@íAÕúÉ	çº€d € @ÃnAÕúÉc d € ?ì†AÕúÉ> d € ?šeAÕúÉhL d € ?§ƒ2AÕúÉ¤u d € ?ÏoªAÕúÉÖq d
-€*€@² =‘ž@ÊD¾4ó²AÕúÉ1 @¨Ä=A“'Od‚¨ =£u@Bã@¨m¹¦…šúÀ¿ye°KBq¾X‘AÕúÉKŽ€d€( = â@a3@¾/^iAÕúÉjL d€( @xÞ‡¾I)ßAÕúÉˆ” d€( =¡¼ý@‰é¾;ŒÝAÕúÉ§‰€d€* @–¾>ÊàAÕúÉÅ`€@žÅd€( =£u@¤[»¾NSdAÕúÉã° d
-€(€AD@= â@±a¾J£rAÕúÉÕ AŽC¸d€( =¢O±@¾O	¾>ÊAÕúÉ#
-€d€( @Ë$/¾6¼}AÕúÉAç d€( =£u@ØøØ¾]ðFAÕúÉ`B d€( =œ”«@å`}¾USþAÕúÉb d€( =£u@ø2¶¾RðÔAÕúÉž™ d€( A–«¾6ñÈAÕúÉ¾ d	€(€AÝNA	7‚¾E¨çAÕúÉ ÜK A
-hd€( =™$tAë¾Y†7AÕúÉ!ût€d€( = âAgm¾QÆAÕúÉ#€d€( =©0Aö¾4=FAÕúÉ$: d‚¨ =›oCA&Ø@¨m¾<ï¥À¿yfî¹yæ¾YAÕúÉ%Y2 d€( =’DA,ï-¾e¼ÂAÕúÉ&y¨ d
-€(€@ÕKU=—ÿA7éÎ¾TAÕúÉ'™7 A‘G¼d€( =£uA<yÛ¾ÊôAÕúÉ(¹W d
-€(€@´@= âAB-ì¾&vAÕúÉ)×Á€AŽFd€( =»†šAL¨Ì¾]é]AÕúÉ*ö»€d€( =£uAR¥Þ¾¡†AÕúÉ,œ€d€( =™$tAXëð=†¢ÏAÕúÉ-FK€d€( =te	A[w>¢¢AÕúÉ.ld d€( =r:AZFµ?YeAÕúÉ/’m d€( =f¤-AVÿ+?nAÕúÉ0¸ß d€( AQ&™?/…PAÕúÉ1ØG d€( =RãAI*?'AÕúÉ2÷»€d€( =]xïA@Ó(?TzAÕúÉ46€d€* =c3öA4ÆÄ?½rAÕúÉ56£€@¨^ d€( =XãQA-8.?"âóAÕúÉ6V.€d‚¨ =_Ã¿A!âL@¨mÁj“²VÀ¿yh_j?®AÕúÉ7uS d€( =bŽA‹í?ùÐAÕúÉ8•€d€( =f¤-A~?$ñAÕúÉ9´7 d€( =dY]Año?*¡ÓAÕúÉ:Ó| d€( =_Ã¿@ò#?}mAÕúÉ;ò d€( =hîü@Ý­f?…÷AÕúÉ=Ã€d€( =\Sˆ@Ëm0?,âùAÕúÉ>1 d€( =_Ã¿@±yâ?&ƒçAÕúÉ?P© d€( @™ó?
-^AÕúÉ@p d€( =te	@‰é?ÃlAÕúÉAW d€( =Rã@nQg?%çaAÕúÉB®Š d€( =‰È@J«ý?6‰ AÕúÉCÍß d€( =bŽ@|a?#ðfAÕúÉDú d € ?ã÷çAÕúÉF%% d € ?¤(AÕúÉGO\€d € ? «AÕúÉH‹3€d ‚ˆ ?×kÂ@¨mÅ!ñ±2À¿yh‡ÎpFAÕúÉI¼ù d € @
-9<AÕúÉJìÖ d € @>úÚAÕúÉL2Ì€d € @]~5AÕúÉMQ­ d € @m¿fAÕúÉNpf d € @…jÞAÕúÉOŽÛ€d € @“AÕúÉP® d € @¢´AÕúÉQÍ€d € @¨ÇHAÕúÉRëU d € @³ÁéAÕúÉT
-6 d € @Ã—AÕúÉU)o d € @Ð!¾AÕúÉVHz€d € @Ý­fAÕúÉWg"€d € @çƒAÕúÉX…C€d € @øÄ·AÕúÉY¤» d € A'6AÕúÉZÃÈ€d ‚ˆ A	ÛÄ@¨mÉ§øÍÀ¿yi@‰«ÀAÕúÉ[âå d € AV£AÕúÉ]÷€d € AùnAÕúÉ^!n€d € AQÁAÕúÉ_@ €d € A#ÏAÕúÉ``€d € A-“oAÕúÉa€d € A/í¶AÕúÉbž2 d € A:1ÕAÕúÉc¼s€d € A@åiAÕúÉdÛð d € AEÐ·AÕúÉf— d € AIAAÕúÉg(…€d € ALÊAÕúÉhN d € AKGAÕúÉisä€d € AKà	AÕúÉjšI d € ABÒ.AÕúÉk¸½ d € A<0ÛAÕúÉl×¼ d ‚ˆ A2Gý@¨mÌÀe±ÜÀ¿yj– •ªAÕúÉm÷T€d € A)ð¤AÕúÉo“€d € A ¾HAÕúÉp5ª d € A0/AÕúÉqTË€d € AýÓAÕúÉrs¥€d € A]÷AÕúÉs’ d € @ù{:AÕúÉt² d € @ä©ûAÕúÉuÐä€d € @Ðj¿AÕúÉvï„€d € @¹QzAÕúÉxª€d € @¤[»AÕúÉy-Â€d € @®€AÕúÉzM d € @v–€AÕúÉ{lC d € @FöòAÕúÉ|‹J d € @!RAÕúÉ}¶±€d € ?ú6*AÕúÉ~á7 d ‚ˆ ?¨§6@¨mÐ!ñµÚÀ¿yk0AÕúÉ€â d € ?©Ë9AÕúÉH5 d € ?å­ìAÕúÉ‚y d € @\EAÕúÉƒ¨é d € @HõøAÕúÉ„îÒ d € @gySAÕúÉ†€d € @µÓAÕúÉ‡,€€d € @®€AÕúÉˆK€d € @›©!AÕúÉ‰i) d € @¦AAÕúÉŠˆÇ€d € @µ
-mAÕúÉ‹§Æ d € @¿*AÕúÉŒÇ" d € @ÍÙ·AÕúÉå– d € @ÙfZAÕúÉÚ d € @ï7AÕúÉ$1€d € @üyÂAÕúÉ‘CZ d ‚ˆ A‚ô@¨mÔJÑ¤À¿yloÀÐ$AÕúÉ’bç d € AHKAÕúÉ“€d € ACiAÕúÉ” Î€d € AÓwAÕúÉ•¿¾€d € A$<“AÕúÉ–Þ d € A)¹ãAÕúÉ—üØ€d € A1;AÕúÉ™› d € A:”AÕúÉš;Ë€d € A?SäAÕúÉ›b€d € ABö¯AÕúÉœ‡û€d € AE¾wAÕúÉ­" d € AD¬´AÕúÉžÓÍ d € AD?3AÕúÉŸú d € A=æàAÕúÉ¡C€d € A7×ŽAÕúÉ¢8D€d € A/74AÕúÉ£Wb d ‚ˆ A):"@¨m×|™ÈÀ¿ym6}Ž§AÕúÉ¤vú d € A Ð‰AÕúÉ¥–€d € ABìAÕúÉ¦´ý d € AìAÕúÉ§Óê€d € AöAÕúÉ¨òÁ€d € @òZ$AÕúÉª. d € @ÞõêAÕúÉ«1)€d € @ÈÜ(AÕúÉ¬P,€d € @²äAÕúÉ­oq d € @—†•AÕúÉ®Ž{ d € @‚GÕAÕúÉ¯­Ä d € @^7AÕúÉ°Ì¬ d € @3I·AÕúÉ±ë€d € @`.AÕúÉ³ë€d € ?ÏoªAÕúÉ´A™€d € ?XeAÕúÉµkü d ‚ˆ ?f+@¨mÚø£NÜÀ¿ymÊù÷ÁAÕúÉ¶§ã€d € ?«>AÕúÉ·Ú?€d € ?ñAÕúÉ¹	á€d € @éeAÕúÉºOM d € @TAÕúÉ»”€d € @läcAÕúÉ¼³€d € @‚ÖAÕúÉ½Ðÿ€d € @’ö‡AÕúÉ¾ïJ d € @žð«AÕúÉÀ‹ d € @®VÙAÕúÉÁ/¥€d € @¹¾ûAÕúÉÂO d € @È“'AÕúÉÃm¤€d € @ÕCÍAÕúÉÄŒ¬€d € @ãwAÕúÉÅ«É d € @ð¤AÕúÉÆÉü€d € @ýÄAÕúÉÇé d ‚ˆ A	IÂ@¨mßTÚ>À¿yo “p&AÕúÉÉÞ d € A´UAÕúÉÊ'‘ d € Aè¥AÕúÉËF‹€d € AdûAÕúÉÌf€d € A$¼TAÕúÉÍ… d € A+]¨AÕúÉÎ¤4 d € A1£»AÕúÉÏÃ d € A7WÌAÕúÉÐê:€d € A;×AÕúÉÒ d € AB­®AÕúÉÓ6”€d € A>TaAÕúÉÔ\ð d € A=ßAÕúÉÕƒ* d € A5´AÕúÉÖ¢ d € A/í¶AÕúÉ×Á€d € A%NVAÕúÉØà0€d € AˆAÕúÉÙÿ;€d ‚ˆ Ažª@¨máè¯OÿÀ¿yoÌ¡îAÕúÉÛi€d € AZAÕúÉÜ=Ì d € A¨nAÕúÉÝ\Ô d € @÷W³AÕúÉÞ{Š€d € @ãÎùAÕúÉßš8 d € @Ï¼AÕúÉà¹x d € @¸-vAÕúÉáØa d € @¢´AÕúÉâ÷/ d € @ŠlAÕúÉäN€d € @c{GAÕúÉå5€ d € @8kÆAÕúÉæTÐ d € @6NAÕúÉç€~ d € ?ÛiÎAÕúÉè«(€d € ?~	rAÕúÉéÕw d € ?ÞÂAÕúÉë# d € ?¸ŸfAÕúÉìCŒ€d ‚ˆ ?ê=ú@¨må£éÃôÀ¿yp¦‚˜AÕúÉís€d € @ÇVAÕúÉî·å€d € @K=ÿAÕúÉïü| d € @^Y8AÕúÉñµ d € @vßAÕúÉò8Ä€d € @ˆûiAÕúÉóW¨€d € @—bAÕúÉôu> d € @Ÿ9¬AÕúÉõ“ƒ€d € @«OAÕúÉö±? d € @·¿õAÕúÉ÷Ðô€d € @Ã•˜AÕúÉøïD d € @ÕCÍAÕúÉú€€d € @æ` AÕúÉû+ d € @óY§AÕúÉüK d € AñìAÕúÉýk' d € AÊûAÕúÉþ‰Ñ€d ‚ˆ Aì@¨mèHÉµÀ¿yqc+C›AÕúÉÿ¨´ d € A|AÕúÊ Çü d € AÒúAÕúÊç¨ d € A"áÏAÕúÊæ d € A(:ŸAÕúÊ%û€d € A-mAÕúÊDä€d € A3þAÕúÊl„€d € A:zÕAÕúÊ’Ò€d € A>f¡AÕúÊ¸ø d € A=AÕúÊ	ßM€d € A:1ÕAÕúÊ€d € A1Ú|AÕúÊ%4 d € A*Ë§AÕúÊDx d € A#OAÕúÊc¤€d € A@{AÕúÊ‚’ d € AiÞAÕúÊ¡¬ d ‚ˆ A
-¶Ç@¨mëõ¸À¿yr8³ßAÕúÊÀ½€d € A)*AÕúÊßË d € @ñ AÕúÊþž d € @ÙŠÚAÕúÊ»€d € @Èn§AÕúÊ=M€d € @°UßAÕúÊ\t d € @ ®AÕúÊ{L€d € @‹ŒqAÕúÊš€d € @m¿fAÕúÊ¸ç€d € @>hØAÕúÊ×Ó€d € @ dAÕúÊË€d € ?áßAÕúÊ.‘€d € ?‘ÖòAÕúÊXó d € ?žõAÕúÊ ”¢ d € ?Óm¶AÕúÊ!ÅG€d € @©.AÕúÊ"ôÂ€d ‚ˆ @5H½@¨mï)µ8æÀ¿ys/UÒþAÕúÊ$9Æ d € @RAÕúÊ%YC d € @kw_AÕúÊ&x´€d € @„k[AÕúÊ'—™ d € @ŒgsAÕúÊ(¶€d € @›©!AÕúÊ)Ôg€d € @©¢KAÕúÊ*ò€d € @¸vwAÕúÊ,Ö d € @Å”žAÕúÊ-1€d € @Ó²IAÕúÊ.Ol€d € @å;ýAÕúÊ/n:€d € @ðí AÕúÊ0Œ€d € @ùŸºAÕúÊ1ª_€d € A•±AÕúÊ2É[€d € A
-¶ÇAÕúÊ3èb€d € A¡AÕúÊ5 d € AÂ1AÕúÊ6(€d ‚ˆ Aä@@¨mó=ÞÉ„À¿ytGélŽAÕúÊ7F]€d € A(_AÕúÊ8eu€d € A,JëAÕúÊ9ƒL€d € A/¶õAÕúÊ:©£ d € A6F	AÕúÊ;ÎÜ d € A7EŒAÕúÊ<óÁ d € A6!ˆAÕúÊ>æ€d € A63ÉAÕúÊ?@>€d € A,*AÕúÊ@^þ€d € A#=AÕúÊA~m€d € A-¾AÕúÊBd d € A3AÕúÊC¼$ d € A
-¤†AÕúÊDÚï d € Aº¯AÕúÊEùÉ d € @ï€AÕúÊG€d € @Û@ßAÕúÊH8I€d ‚ˆ @Ç¸%@¨môãŸÀ¿yt¤®ˆ«AÕúÊIWz d € @´SëAÕúÊJvœ€d € @œ¨¤AÕúÊK•‰ d € @ŒBóAÕúÊLµ¡ d € @rsAÕúÊMÔ¬ d € @DeêAÕúÊNón€d € @0rAÕúÊP:€d € ?ö8AÕúÊQI¾€d € ?–fÿAÕúÊRt‚€d € ?˜¯AÕúÊS°l d € ?´XAÕúÊTáý€d € @b"AÕúÊV¯€d € @4mºAÕúÊWVŽ d € @FdðAÕúÊXtì d € @`=AÕúÊY“t€d € @}n•AÕúÊZ³€d ‚ˆ @‰±ë@¨mø˜n)MÀ¿yur¨LRAÕúÊ[Ò4 d € @˜=AÕúÊ\ðõ€d € @¤7:AÕúÊ^] d € @²ææAÕúÊ_.9 d € @ÀAÕúÊ`L€d € @ËH¯AÕúÊaiÖ€d € @ÙYAÕúÊb‡ d € @å„þAÕúÊc¥I d € @ì¦AÕúÊdÃ£€d € @û1?AÕúÊeáá€d € A§ñAÕúÊg¢€d € AZ‹AÕúÊh ñ d € A !AÕúÊi@²€d € AAòAÕúÊj_€d € A!IAÕúÊk1 d € A+”iAÕúÊlž d € A1#ùAÕúÊmÄÉ d ‚ˆ A6j‰@¨mûJAÞBÀ¿yvrÅ&AÕúÊnêW€d € A8û‘AÕúÊpä d € A8×AÕúÊq6" d € A4ÆÄAÕúÊr\€d € A.¥2AÕúÊs{ƒ d € A'ºÝAÕúÊtšo d € A„AÕúÊu¹¨ d € Aæ±AÕúÊvØÊ€d € A}•AÕúÊw÷z d € AöAÕúÊyŸ€d € @û¾AÕúÊz5Ë€d € @ç„AÕúÊ{U€d € @ÔDJAÕúÊ|t€d € @¼âAÕúÊ}“D d € @«ÅÑAÕúÊ~²€d € @–ô“AÕúÊÐö d € @„FÛAÕúÊ€ïµ€d ‚ˆ @[6.@¨mý×†–À¿yvø½ðtAÕúÊ‚Ë€d € @0¸¯AÕúÊƒ.3 d € @Ì8AÕúÊ„Yã€d € ?Ä™‰AÕúÊ…„v€d € ?dñ'AÕúÊ†®ª€d € ?téWAÕúÊ‡êj d € ?¦_/AÕúÊ‰Î d € ?âÓäAÕúÊŠK€ d € @¡^AÕúÊ‹ë€d € @>±ÙAÕúÊŒÕŠ d € @[/AÕúÊóå d € @{oAÕúÊ d € @¨n‚\(öÀ¿yšqÞi®@ŒrAÕúÊ2A€d € @–ÐAÕúÊ‘Pù€d € @¢\µAÕúÊ’op€d € @°çàAÕúÊ“Ž_€d ‚ˆ @Á)@¨nÑ’êêÀ¿yx·-ÊAÕúÊ”­) d € @Êÿ®AÕúÊ•Ì€d € @Ú÷ÞAÕúÊ–éê€d € @æ©AÕúÊ˜	D d € @õÆ.AÕúÊ™(ñ d € A ©hAÕúÊšG?€d € AJ?AÕúÊ›f°€d € AY‘AÕúÊœ„}€d € ACiAÕúÊ£î d € AdûAÕúÊžÁð€d € A#ÏAÕúÊŸà×€d € A(ñ!AÕúÊ þÛ€d € A/€5AÕúÊ¢%€d € A6|ÉAÕúÊ£K© d € A6XIAÕúÊ¤qT€d € A82ÏAÕúÊ¥—Ö€d ‚ˆ A5"@¨nbnËŠÀ¿yxâÒzÄAÕúÊ¦½Â€d € A/¶õAÕúÊ§Ý"€d € A&òAÕúÊ¨ü9€d € A¿BAÕúÊªp d € A¨AÕúÊ«: d € A£ŒAÕúÊ¬Y¦€d € A'6AÕúÊ­y d € @÷|4AÕúÊ®—Ê d € @âaôAÕúÊ¯¶—€d € @ÑEÁAÕúÊ°Õ³ d € @»u AÕúÊ±ô‡€d € @ªêÏAÕúÊ³Â€d € @–AÕúÊ´3€d € @þÔAÕúÊµR3 d € @[È0AÕúÊ¶qS€d € @.'¨AÕúÊ·|€d € ?þ46AÕúÊ¸¼ d ‚ˆ ?„¸Ê@¨nøÆñÀ¿yyªóa-AÕúÊ¹æn d € ??L·AÕúÊ»#} d € ?LüàAÕúÊ¼_Z d € ?‘ÖòAÕúÊ½Ž‡ d € ?Õ#»AÕúÊ¾¾€d € @¤LAÕúÊÀ¼ d € @<iÒAÕúÊÁH«€d € @[È0AÕúÊÂg®€d € @z”ŒAÕúÊÃ†Ê d € @‰ÖlAÕúÊÄ¥‹ d € @”¬ŒAÕúÊÅÄV d € @¤¤¼AÕúÊÆâÉ€d € @°Ã`AÕúÊÈí€d € @Á)AÕúÊÉ!Ã d € @Íþ7AÕúÊÊ@^ d € @Û÷aAÕúÊË^ô d ‚ˆ @ê9Œ@¨n„3@À¿yzë_•íAÕúÊÌ|Ö d € @÷W³AÕúÊÍœY€d € A–«AÕúÊÎº€d € A	IÂAÕúÊÏÙ} d € AÇAÕúÊÐ÷n€d € A !AÕúÊÒD d € AexAÕúÊÓ4 d € A!«‹AÕúÊÔR¨€d € A(LßAÕúÊÕz€d € A+”iAÕúÊÖŸã d € A-8.AÕúÊ×Å˜ d € A*9¥AÕúÊØëp d € A)'âAÕúÊÚü d € A"tNAÕúÊÛ1( d € ArAÕúÊÜPJ d € AFWAÕúÊÝp d ‚ˆ Aï{@¨n³ÇÉÀ¿y{x4($AÕúÊÞŽë d € @üçDAÕúÊß­ô d € @ï¤œAÕúÊàÌï€d € @Ö°ÑAÕúÊáë³ d € @ÂßAÕúÊã
-Û€d € @³xèAÕúÊä*e d € @%AÕúÊåIh d € @‹ŒqAÕúÊæh d € @l	aAÕúÊç‡“ d € @@ùàAÕúÊè¦€€d € @WcAÕúÊéÓR d € ?õAÕúÊêýº d € ?–ùAÕúÊì(€d € ?›‰AÕúÊíd d € ?ØÅAÕúÊî•*€d € @;0AÕúÊïÅ€d ‚ˆ @>úÚ@¨n…¸àÀ¿y|ÍZAÕúÊñ	ÿ€d € @SƒAÕúÊò(¯ d € @rOsAÕúÊóH!€d € @‹°ñAÕúÊôgÈ€d € @“ö
-AÕúÊõ†`€d € @ Ë0AÕúÊö¥ d € @®ØAÕúÊ÷Ä d € @»âAÕúÊøââ d € @Ç“¤AÕúÊúE€d € @Ó²IAÕúÊûy€d € @ÚÜAÕúÊü=“ d € @í8AÕúÊý\ d € @ø5AÕúÊþzÔ d € A‚wAÕúÊÿšV d € A$HAÕúË ¸†€d € AéŸAÕúË×­€d € Aæ4AÕúËö£ d ‚ˆ A!PJ@¨n²ª@¬À¿y}pJxšAÕúËÉ€d € A'ÍAÕúË49€d € A+]¨AÕúËZ‘€d € A2GýAÕúË€ d € A3ÇAAÕúË¥€d € A5¡ÇAÕúË	ÊÒ d € A2µ~AÕúË
-ñX€d € A/[´AÕúËQ d € A#*ÐAÕúË/€ d € AˆÿAÕúËOR€d € Aé"AÕúËnd€d € A#NAÕúËe d € A_nAÕúË¬a€d € @öX0AÕúËË d € @â†uAÕúËêe d € @Í#5AÕúË	` d ‚ˆ @ºPý@¨nb£¶¼À¿y}Æ+OÜAÕúË(— d € @£¥9AÕúËGµ€d € @÷AÕúËfÊ€d € @w(‚AÕúË†' d € @NAÕúË¥' d € @ .~AÕúËÐ’ d € @!AÕúËû €d € ?æÑðAÕúË%¢ d € ?µÅ]AÕúËO' d € ?ñAÕúË É€d € @ysAÕúË!±3 d € @UËAÕúË"õ× d € @läcAÕúË$Å d € @†×ãAÕúË%3ó€d € @—ôAÕúË&T€d € @¦AAÕúË'rM d ‚ˆ @³Áé@¨n^¡‹!À¿y~¡ÛïÜAÕúË(Ý d € @ÁrAÕúË)®Ò€d € @Ðj¿AÕúË*ÍF d € @ÜÒdAÕúË+êÿ d € @ìÊ”AÕúË-°€d € @ùÄ:AÕúË.&£ d € A¹µAÕúË/Dì€d € A‘LAÕúË0bÜ€d € A×_AÕúË1€d € A
-7AÕúË2Ÿ€d € A!‡AÕúË3½y€d € A+9(AÕúË4Ük d € A/ÿöAÕúË6ž d € A5kAÕúË7)I d € A7|LAÕúË8O€d € A7ÅMAÕúË9u d ‚ˆ A6ÅÊ@¨nñ£l³À¿y =ÑÉAÕúË:šò d € A/³AÕúË;¹ñ€d € A'–]AÕúË<Ù€d € A!½ËAÕúË=÷ø€d € AùëAÕúË?€ d € AµPAÕúË@6”€d € AÝ¸AÕúËAU~ d € @ø5AÕúËBtq d € @å`}AÕúËC“>€d € @ÐF>AÕúËD²@ d € @¹yAÕúËEÐõ€d € @¨~GAÕúËFï¥€d € @—=”AÕúËHÎ d € @‚µVAÕúËI.4€d € @Z¤-AÕúËJM’ d € @0¸¯AÕúËKlˆ d € @]?AÕúËL—þ d ‚ˆ ?Õ#»@¨nx>’À¿y“áqAÕúËMÂ–€d € ?Óÿ·AÕúËQpÊ€d € @'AÕúËRŸ€d € @8"ÅAÕúËSä/ d € @SÌAÕúËUß€d € @s¼xAÕúËV"Z€d € @…üàAÕúËWB'€d € @“ˆ‰AÕúËXag€d € @ ®AÕúËY€ d € @®2XAÕúËZž– d € @¾O	AÕúË[¾N d € @ÊÛ.AÕúË\Ýx d € @ÚÜAÕúË]ûÏ d € @ß¬lAÕúË_§€d € @ð¤AÕúË`:a d € @ùV¹AÕúËaX¼€d ‚ˆ A;j@¨n"³ùçÀ¿y€Ì‰¶ÈAÕúËbwp€d € A
-IEAÕúËc–l€d € AÆ–AÕúËd¶ d € AÄ%AÕúËeÔ> d € A.¸AÕúËfóÈ d € A"bAÕúËhã€d € A,JëAÕúËi2“ d € A16:AÕúËjYŒ€d € A6ü‹AÕúËkR€d € A8 PAÕúËl¥€d € A9²AÕúËmÊ·€d € A7ÅMAÕúËnð:€d € A0í9AÕúËpO d € A'ºÝAÕúËq.ü d € A"+MAÕúËrN7€d € AAòAÕúËsmt d ‚ˆ AØÖ@¨n%ª¥kMÀ¿y™µF@AÕúËtŒD d € AÊ~AÕúËu«z€d € @ýyEAÕúËvÊ} d € @é^‰AÕúËwéA d € @ØÖAÕúËyj€d € @Âº–AÕúËz' d € @¯Ÿ]AÕúË{F€d € @˜ª˜AÕúË|e¸ d € @„"[AÕúË}„¤€d € @_4:AÕúË~£b€d € @7ÄAÕúËÂH d € @X]AÕúË€í­ d € ?æÑðAÕúË‚? d € ?œ­AÕúËƒB·€d € ?¬¥BAÕúË„~…€d € ?ÚEÊAÕúË…¯g€d
-‚ª€@²…(=‰«|@/x@¨n)ÖbÀ¿y‚ŒGÃ¾'à¬AÕúË†ß& @¨I´A{¤¢d€( =£u@R¨¾	þ×AÕúËˆ$õ€d€( @l›b¾$'&AÕúË‰D`€d€( = â@‚þW¾9ü{AÕúËŠbÇ€d€( =¡¼ý@’@¾E±AÕúË‹'€d€( =¥¿è@›„ ¾L{ÎAÕúËŒŸ d€( @­éW¾?É_AÕúË¾– d
-€(€A
-ñ= â@·äu¾0×þAÕúËŽßj€Azý+d€( =ªU‡@È“'¾2ÕaAÕúËþp d€( =¦åP@ÓûI¾:ÑAÕúË‘Ã€d€( @ãªx¾>°kAÕúË’:³€d€( =¢O±@ëË¾/'ƒAÕúË“X½ d€( =œ”«@üUB¾N‰TAÕúË”w1 d
-€(€@ñ	=™$tA3¾*·“AÕúË•–… A|‡»d€( =¡¼ýA‘É¾=âAÕúË–µ­ d
-€(€@Öwg=ºAØÖ¾2>ìAÕúË—Ô A{Šd€( = âAžª¾3VrAÕúË˜ó€d
-‚¨€@¾á=¤š€Aœ¶@¨n*¼#ÒäÀ¿yƒ4ô—¾7ÜìAÕúËš. Ay¢¦d€* =¸cA#O¾4©AÕúË›0I€@ãèd€( =£uA&„š¾L`AÕúËœV®€d€( = âA,Jë<ÁqvAÕúË|Q d€( =pôÒA+Ýj>xVüAÕúËž¡e d€( =k9ÌA-¥¯>ûekAÕúËŸÈ’ d€( =_Ã¿A,¬?7ËAÕúË î† d€( A#†?9g,AÕúË¢€d€( =?¬hA@ø?S
-AÕúË£.i€d€( =bŽA ?ºOAÕúË¤Mê€d€( =_Ã¿A?3íAÕúË¥mQ d€( =r:A-?-;AÕúË¦ŒO d€( =bŽ@ñ"?§AÕúË§«¾€d€( =_Ã¿@Þè?<?AÕúË¨Ë	€d€( =]xï@Êm­?#jöAÕúË©ê( d€( =f¤-@³g?´¹AÕúË«	~€d‚¨ =oÏj@£É¹@¨n,¢EµéÀ¿yƒ‡h?!tpAÕúË¬(Ö€d€( =_Ã¿@Žx?#u–AÕúË­H[€d€( =f¤-@wqƒ?+'œAÕúË®gÆ€d€( =‰È@Hõø?*=ÂAÕúË¯‡€d€( =Rã@ .~?ðAÕúË°²Â€d€( =_Ã¿@ >>¬$AÕúË±Þs€d € ?å­ìAÕúË³
-N d € ?±ÇQAÕúË´3Í d € ?ßùÛAÕúËµeØ d € @\AÕúË¶•ˆ d € @Nª	AÕúË·Û.€d € @läcAÕúË¸ùÅ€d € @‡EdAÕúËºš d € @“­	AÕúË»9‰€d € @ Ë0AÕúË¼X0 d € @¬ ÔAÕúË½w'€d ‚ˆ @¶Rñ@¨n0øÔDÀ¿y„ýH‰“AÕúË¾–= d € @ÉI©AÕúË¿¶:€d € @ØøØAÕúËÀÕD€d € @éÌAÕúËÁól€d € @ö3°AÕúËÃæ d € A¨ëAÕúËÄ0€d € A AÕúËÅN¸€d € AµPAÕúËÆm€d € AAÕúËÇŠÍ d € AfrAÕúËÈ©a d € A#aAÕúËÉÈX€d € A*¹fAÕúËÊçû€d € A3µAÕúËÌ™€d € A6|ÉAÕúËÍ6»€d € A:±–AÕúËÎ\	€d € A8²AÕúËÏÞ d ‚ˆ A5XÆ@¨n3IŽv«À¿y…¢Ö~‰AÕúËÐ¨C d € A0H÷AÕúËÑÇ“€d € A'(ÜAÕúËÒæq d € A¿BAÕúËÔ¼€d € AV&AÕúËÕ$î€d € A¤	AÕúËÖD2 d € @ÿ/KAÕúË×cˆ d € @ñ"AÕúËØ‚‰ d € @ß‡ìAÕúËÙ¡d d € @Ïý=AÕúËÚÀa€d € @·¿õAÕúËÛß@ d € @§£EAÕúËÜþ3 d € @•¬AÕúËÞ·€d € @{¸AÕúËß<ð€d € @L«AÕúËà\€d € @ .~AÕúËá‡x d ‚ˆ ?ÿê;@¨n6™VäºÀ¿y†%¢AÕúËâ±í€d € ?ªï=AÕúËãÜy d € ?µÅ]AÕúËå€ d € ?Ý±ÔAÕúËæJ€d € @WAÕúËçyÄ€d € @=ÖÖAÕúËè¾| d € @X%AÕúËéÞ} d € @xÞ‡AÕúËêýÉ€d € @‰kAÕúËìÌ d € @˜†AÕúËí;G d € @¤ºAÕúËîZ€d € @¶›òAÕúËïyL d € @Å¹AÕúËð™€d € @ÏØ½AÕúËñ·u€d € @Øf×AÕúËòÕÀ€d € @å}AÕúËóóŠ€d ‚ˆ @é§Š@¨n:Žm¸À¿y‡lz¹EAÕúËõï€d € @ù¸AÕúËö2û d € AL3AÕúË÷R'€d € A‹AÕúËøqï€d € A !AÕúËù‘€d € Ad~AÕúËú°€d € A"áÏAÕúËûÎ‡ d € A+gAÕúËüìÞ€d € A0¶xAÕúËþÓ€d € A6ØAÕúËÿ8C d € A8EAÕúÌ ]} d € A9Ö”AÕúÌ„0 d € A4ÆÄAÕúÌª€d € A/¶õAÕúÌÈõ€d € A%»×AÕúÌè- d € A÷÷AÕúÌZ€d ‚ˆ AÄ¢@¨n<ãWWÀ¿yˆ)øìAÕúÌ&Ð€d € AJ?AÕúÌF; d € @ýÂFAÕúÌ	e9 d € @èAÕúÌ
-„2€d € @Î"¸AÕúÌ£=€d € @¶wqAÕúÌÂU d € @Ÿð.AÕúÌáˆ d € @ŒÔõAÕúÌ b€d € @mveAÕúÌ™€d € @:jÌAÕúÌ>Ü d € @ëYAÕúÌje€d € ?õ¦AÕúÌ–' d € ?²îAÕúÌÀ d € ?ªï=AÕúÌü+€d € ?Í¹¥AÕúÌ-¤ d € @ò/AÕúÌ]T€d ‚ˆ @B¯å@¨n@‚+ú¶À¿yˆÏëAÕúÌ¢€d € @^¢9AÕúÌÁa€d € @qtqAÕúÌßƒ d € @‡ ãAÕúÌýÇ d € @–‡AÕúÌ¿€d € @§ìFAÕúÌ;h d € @³xèAÕúÌ Z9 d € @½…AÕúÌ!y€d € @Ë$/AÕúÌ"— d € @Ú÷ÞAÕúÌ#µç€d € @ëËAÕúÌ$Ô¹€d € @ï¤œAÕúÌ%òæ d € @ÿxKAÕúÌ'Ü€d € A¸»AÕúÌ(0ý€d € A~AÕúÌ)Pã d € AÄ%AÕúÌ*o_€d € AexAÕúÌ+ŽŸ€d ‚ˆ A"=@¨nD0ÀElÀ¿y‰ã¢ÜAÕúÌ,¬h d € A+&èAÕúÌ-Ì_ d € A5ýAÕúÌ.ë< d € A92RAÕúÌ0ƒ d € A?ÁeAÕúÌ18Ò€d € AD?3AÕúÌ2^I d € A@÷©AÕúÌ3ƒØ d € AC­1AÕúÌ4« d € A;Õ™AÕúÌ5Ée€d € A4GAÕúÌ6èf d € A-Ê/AÕúÌ8r d € A&rZAÕúÌ9' d € AûAÕúÌ:F¤ d € AŽ^AÕúÌ;eÜ€d € A¥€AÕúÌ<„É d € AñìAÕúÌ=£÷ d ‚ˆ @ì¦@¨nFG®ôÀ¿yŠ¢bƒ¹AÕúÌ>ÂÁ d € @×SAÕúÌ?áù d € @Á–’AÕúÌA ñ d € @®2XAÕúÌB 2 d € @—Ï•AÕúÌC?¾ d € @ƒýÚAÕúÌD^Ø d € @^7AÕúÌE}¶ d € @5Ú¿AÕúÌFœ¢ d € @	9AÕúÌGÈJ d € ?ÎK¦AÕúÌHôf d € ?q}MAÕúÌJõ€d € ?„¸ÊAÕúÌK[ÿ d € ?ªï=AÕúÌLa€d € ?õAÕúÌM¼Í€d € @TuAÕúÌO¶ d € @RñAÕúÌPH'€d ‚ˆ @tNy@¨nJuÏ:ZÀ¿y‹`)kGAÕúÌQfò€d € @†ücAÕúÌR†f d € @š…AÕúÌS¥Å€d € @«XPAÕúÌTÄ£ d € @¾˜	AÕúÌUã›€d € @ÅKAÕúÌWÑ€d € @Ï";AÕúÌX ´ d € @ÝögAÕúÌY?ß d € @èƒ‡AÕúÌZ^J d € @÷²AÕúÌ[| €d € AêAÕúÌ\œ] d € A¦zAÕúÌ]»m d € A´UAÕúÌ^Û d € AŒjAÕúÌ_ú&€d € A?AÕúÌa’ d € A%©—AÕúÌb9& d € A+¦©AÕúÌcXH d ‚ˆ A2Ùÿ@¨nNè3W¬À¿yŒ~‘"AÕúÌd~E d € A82ÏAÕúÌe£¶€d € A<U[AÕúÌfÈÄ d € A;Œ™AÕúÌgîõ d € A6ü‹AÕúÌi• d € A.nqAÕúÌj4Á€d € A)¡AÕúÌkT! d € ACAÕúÌls` d € A‹pAÕúÌm’—€d € AûbAÕúÌn±g€d € A>AÕúÌoÐk d € @ü0ÂAÕúÌpï= d € @çƒAÕúÌr[ d € @ÒiÅAÕúÌs-¿ d € @½+AÕúÌtLß d € @¬ÅTAÕúÌul@ d € @’‰AÕúÌv‹ €d ‚ˆ @‚lU@¨nQ0Øu*À¿y²q!AÕúÌw©ã d € @WÊ$AÕúÌxÈ¬€d € @-•¦AÕúÌyçì€d € ?ûZ-AÕúÌ{B d € ?lí?AÕúÌ|=ß€d € ?B¸ÁAÕúÌ}z d € ?7PŸAÕúÌ~¶O€d € ?ŽjçAÕúÌæj d € ?ÄˆAÕúÌó d € @
-Ë>AÕúÌ‚[8 d € @<ûÔAÕúÌƒŸ¥€d € @W8"AÕúÌ„½÷ d € @lRaAÕúÌ…Ü. d € @ƒGXAÕúÌ†ûá€d € @’@AÕúÌˆ€d € @£7¸AÕúÌ‰9é€d ‚ˆ @°Þ@¨nU-Ù¼âÀ¿yŽõÓAÕúÌŠX)€d € @ºâþAÕúÌ‹vþ d € @ÊI,AÕúÌŒ–@ d € @ØøØAÕúÌµ5 d € @çñ…AÕúÌŽÓŒ€d € @ö¡1AÕúÌñ•€d € A:pAÕúÌ‘#€d € A“@AÕúÌ’0
- d € A"TAÕúÌ“Ní d € AùëAÕúÌ”n€d € AAÕúÌ• €d € A$…”AÕúÌ–«ò d € A+&èAÕúÌ—Ë5 d € A2ÙÿAÕúÌ˜é6€d € A9D’AÕúÌšv d € A>f¡AÕúÌ›4µ d € ABd­AÕúÌœY¼ d ‚ˆ AA®+@¨nXE°6*À¿y9ÔåAÕúÌ{€d € A?/dAÕúÌž¦' d € A8 ŽAÕúÌŸÅ€d € A0¶xAÕúÌ ãñ€d € A)¹ãAÕúÌ¢P€d € A$¼TAÕúÌ£"p d € AT¯AÕúÌ¤Aý d € AØYAÕúÌ¥a5 d € AoºAÕúÌ¦€: d € @ûžÀAÕúÌ§Ÿ€d € @äòüAÕúÌ¨¾8 d € @Ï";AÕúÌ©Ý´ d € @¹,ùAÕúÌªü´ d € @¨ÆAÕúÌ¬Â d € @‘÷AÕúÌ­:Ò d € @wqƒAÕúÌ®Yî€d € @P`AÕúÌ¯y'€d ‚ˆ @'˜”@¨n[…Uö“À¿yreÝAÕúÌ°¤Ÿ€d € @ô#AÕúÌ±ÏZ€d € ?âÓäAÕúÌ²ùÛ€d € ?­ÉEAÕúÌ´$! d € ?é÷AÕúÌµUå d € @bAÕúÌ¶†Ñ€d € @P`AÕúÌ·Ë+€d € @l›bAÕúÌ¸é‘ d € @…Ø`AÕúÌº	€d € @“AÕúÌ»(€d € @šÎAÕúÌ¼FÊ d € @¦ìÃAÕúÌ½ec d € @´åìAÕúÌ¾„X d € @¾AÕúÌ¿£@ d € @Íµ7AÕúÌÀÁY€d € @ÙAÙAÕúÌÁß² d ‚ˆ @éÌ@¨n^Ÿað À¿yŠÚ8AÕúÌÂý€d € @öê2AÕúÌÄ£€d € A¨nAÕúÌÅ;j€d € AÝ¸AÕúÌÆZº d € AÇAÕúÌÇyÚ d € ACæAÕúÌÈ˜Ø€d € Aw<AÕúÌÉ¸v€d € A!«‹AÕúÌÊÖ¨ d € A(ƒ AÕúÌËõu€d € A0¸AÕúÌÍ“€d € A;žÙAÕúÌÎ4‚ d € AAwjAÕúÌÏ\#€d € AJ¼AÕúÌÐ‚ d € AIóDAÕúÌÑ§›€d € AKNAÕúÌÒÎ% d € AI*AÕúÌÓô;€d ‚ˆ AD²@¨nb–~˜êÀ¿y‘þÚ(AÕúÌÕe€d € A<šAÕúÌÖ2Ö d € A5ÅAÕúÌ×Qí€d € A-î°AÕúÌØq- d € A$AÕúÌÙŽ d € A.¸AÕúÌÚ¯†€d € A !AÕúÌÛÎ2€d € A
-€AÕúÌÜí4€d € A;jAÕúÌÞB€d € @îÉšAÕúÌß,I d € @Ú®ÝAÕúÌàKr d € @Æ& AÕúÌájŸ d € @¯è]AÕúÌâ‰m€d € @:¦AÕúÌã¨Š€d € @‡EdAÕúÌäÇv€d € @e1LAÕúÌåæë d € @BøæAÕúÌç d ‚ˆ @{g@¨neà^ÊRÀ¿y’šo^çAÕúÌè1Ÿ€d € ?ý2AÕúÌé\« d € ?™AAÕúÌê†Õ d € ?¬¥BAÕúÌëÃ€d € ?ÞCÖAÕúÌìôÂ€d € @KAÕúÌî$ß€d € @DeêAÕúÌïj*€d € @a3@AÕúÌð‰j d € @ÚTAÕúÌñ¨õ d € @ÔxAÕúÌòÇÉ d € @™Î›AÕúÌóæ d € @ª}MAÕúÌõ¸ d € @¨nêÀƒnÀ¿y¶Â&€@ºüAÕúÌö%* d € @ÆK AÕúÌ÷Dà d € @ÑjBAÕúÌøcp d € @ábqAÕúÌùK€d ‚ˆ @ñ"@¨niêÕðåÀ¿y“Þ0%AÕúÌúŸ d € @÷éµAÕúÌû¼ò€d € AL°AÕúÌüÛ'€d € A7ÿAÕúÌýú8 d € AþÍAÕúÌÿy d € AÅœAÕúÍ 7½ d € AT¯AÕúÍW d € Ac„AÕúÍv” d € A(LßAÕúÍ–x€d € A.0AÕúÍ´Ì d € A5kAÕúÍÓ«€d € A=AÕúÍòw€d € ACïAÕúÍ+€d € AJ„AÕúÍ	?A€d € AL¨ÌAÕúÍ
-e6 d € AN^ÑAÕúÍ‹Þ d ‚ˆ AK»‰@¨nlí,­òÀ¿y”Æ8AÕúÍ±Ž€d € AFô»AÕúÍÐ¤ d € A@e§AÕúÍïò€d € A8ÄÐAÕúÍ"€d € A0$wAÕúÍ.F d € A'M\AÕúÍMP€d € AšEAÕúÍlÜ€d € ACiAÕúÍ‹Ì d € Aí
-AÕúÍ« d € AµAÕúÍÊ €d € @óY§AÕúÍèï€d € @Ü­ãAÕúÍæ€d € @Ë$/AÕúÍ'€d € @±0áAÕúÍFk d € @ž§ªAÕúÍef€d € @ˆigAÕúÍ„6€d € @béEAÕúÍ¢ú d ‚ˆ @4¶»@¨np&Y2À¿y•dlXAÕúÍÁ¼€d € @ïAAÕúÍ íÃ d € ?ÞCÖAÕúÍ"¨ d € ?|åoAÕúÍ#Bâ€d € ?‰HØAÕúÍ$û€d € ?Å½AÕúÍ%±o€d € ?ûì/AÕúÍ&á?€d € @!RAÕúÍ(%ö d € @WÊ$AÕúÍ)j´ d € @tyAÕúÍ*Š€d € @„ý]AÕúÍ+©m€d € @”c‹AÕúÍ,È8 d € @ŸË­AÕúÍ-æŒ d € @±žcAÕúÍ/!€d € @½+AÕúÍ0#, d € @ÇÜ¥AÕúÍ1AÚ€d ‚ˆ @ÔúÌ@¨ns|S›]À¿y–ÀkåAÕúÍ2_Ì d € @ãóyAÕúÍ3  d € @ò£%AÕúÍ4]€d € A „èAÕúÍ5»‘ d € A]÷AÕúÍ6Ùï d € AÏAÕúÍ7øê€d € AlAÕúÍ9L€d € Aå·AÕúÍ:7¯€d € A!IAÕúÍ;V«€d € A):"AÕúÍ<uó d € A.%qAÕúÍ=”ë d € A3"ÿAÕúÍ>³- d € A:ÃÖAÕúÍ?Ó€d € AC?°AÕúÍ@ñ< d € AG«=AÕúÍB d € AMßAÕúÍC=Š d ‚ˆ AM¨O@¨nv£0™ÚÀ¿y—ÔüÊLAÕúÍDb„€d € AQï\AÕúÍE‰;€d € AO¹•AÕúÍF¯A d € AK©IAÕúÍGÎ" d € AB›nAÕúÍHí d € A9ŸÓAÕúÍJZ d € A/ÿöAÕúÍK+î d € A(ñ!AÕúÍLK€d € A >‡AÕúÍMjE€d € AÕkAÕúÍN‰A€d € A¶JAÕúÍO¨€d € A:íAÕúÍPÇc€d € @òÇ¥AÕúÍQæt d € @ß¬lAÕúÍSŒ d € @ÊI,AÕúÍT$Ÿ€d € @·vôAÕúÍUCÇ d € @¡1AÕúÍVbã d ‚ˆ @Œgs@¨ny{‹M„À¿y˜ÚX;AÕúÍWå€d € @nšhAÕúÍX Ø€d € @B¯åAÕúÍY¿á d € @éeAÕúÍZëH€d € ?è‡õAÕúÍ\# d € ?ŽüéAÕúÍ]@ d € ?“Œ÷AÕúÍ^|n€d € ?¸dAÕúÍ_­ì€d € @b"AÕúÍ`Ý d € @9ÊAÕúÍb#b€d € @U‚AÕúÍcB‡ d € @gySAÕúÍdaE€d € @~’˜AÕúÍeÊ€d € @‹gðAÕúÍfžú€d € @ ‚/AÕúÍg¾k€d € @ª4LAÕúÍhÜ¡ d ‚ˆ @µœo@¨n}0¿³À¿y™]3ë3AÕúÍiûÜ€d € @ÃL—AÕúÍk7€d € @ÓiHAÕúÍl9Ÿ d € @Ý­fAÕúÍmX3€d € @êAÕúÍnuý€d € @ø2¶AÕúÍo•ò d € AMªAÕúÍp´D€d € AËxAÕúÍqÓ€d € AÈŠAÕúÍrðò€d € A|›AÕúÍtï d € Ay0AÕúÍu-* d € A?þAÕúÍvK® d € A"«AÕúÍwiž d € A&AÕúÍx‡÷€d € A.nqAÕúÍy¥› d € A4}ÄAÕúÍzÃþ€d € A:zÕAÕúÍ{áö€d ‚ˆ AA›ë@¨n~þCÙÜÀ¿yš!B£9AÕúÍ}	™ d € AFÐ:AÕúÍ~/€d € AG†¼AÕúÍUL d € AHáAÕúÍ€{W€d € ADõµAÕúÍ¡ d € A>xáAÕúÍ‚À‹ d € A7ÅMAÕúÍƒßg€d € A1#ùAÕúÍ„þŠ€d € A(LßAÕúÍ†° d € AdAÕúÍ‡=(€d € Az§AÕúÍˆ\^€d € A	·DAÕúÍ‰{^€d € AMªAÕúÍŠšZ€d € @é§ŠAÕúÍ‹¹0 d € @ÜÒdAÕúÍŒØP d € @Ëÿ1AÕúÍ÷‚ d € @ºu}AÕúÍ€d ‚ˆ @¡8²@¨n‡å×:À¿yšlAYAÕúÍ5Í d € @÷þAÕúÍ‘U d € @¶›AÕúÍ’t d € @Xî'AÕúÍ““1 d € @.p¨AÕúÍ”¾ª€d € @	^:AÕúÍ•éj€d € @ ‡AÕúÍ—5€d € @_4AÕúÍ˜>€d € @ÁyAÕúÍ™c d € @?CÛAÕúÍš‚r€d € @]Ç6AÕúÍ›¡€d € @€HÏAÕúÍœÀ\€d € @‹wAÕúÍßY d € @Ÿ§-AÕúÍžÿ d € @°Ã`AÕúÍ ‰€d € @¹QzAÕúÍ¡<» d ‚ˆ @Æ @¨n…Áb¶YÀ¿y›»cAÕúÍ¢[à d € @Ø¯×AÕúÍ£zÜ€d € @æÍ‚AÕúÍ¤š3€d € @ò#AÕúÍ¥¸› d € Aº¯AÕúÍ¦×j d € A¹8AÕúÍ§õ d € A	îAÕúÍ©á d € AêAÕúÍª3 d € AúhAÕúÍ«R©€d € Aˆ‚AÕúÍ¬r]€d € A$¼TAÕúÍ­¦ d € A+”iAÕúÍ®¯š€d € A4ý…AÕúÍ¯ÎÂ d € A<ç]AÕúÍ°îÏ d € AC¿qAÕúÍ² d € AHóÁAÕúÍ³5ô d € AN^ÑAÕúÍ´\›€d ‚ˆ AS·¡@¨n‰Â'»†À¿yœýäxHAÕúÍµ‚»€d € AQ&™AÕúÍ¶ªœ d € AOðVAÕúÍ·Ñt d € AK„ÈAÕúÍ¸ðc d € A@
-fAÕúÍºŽ€d € A92RAÕúÍ».é€d € A1lúAÕúÍ¼Nö€d € A(ÞAÕúÍ½nl€d € AvBAÕúÍ¾-€d € AXAÕúÍ¿«í€d € Aï{AÕúÍÀÊ™€d € @ôë,AÕúÍÁéƒ€d € @ä<zAÕúÍÃœ€d € @É%)AÕúÍÄ'»€d € @´xkAÕúÍÅFÂ€d € @ ]¯AÕúÍÆeÃ d € @Œ‹ôAÕúÍÇ„¨€d ‚ˆ @kÀ`@¨nŒÓLrBÀ¿yÁ1ËzAÕúÍÈ¤€d € @BãAÕúÍÉÂÔ€d € @
-zAÕúÍÊî
- d € ?ö8AÕúÍÌÁ d € ?ÑAÕúÍÍC! d € ?²YSAÕúÍÎó d € ?à‹ÝAÕúÍÏ°ò€d € @5TAÕúÍÐàA€d € @HõAÕúÍÒ%9€d € @]~5AÕúÍÓD&€d € @#ÒAÕúÍÔcÃ d € @‘‰ƒAÕúÍÕƒ¬ d € @ ®AÕúÍÖ¡ñ€d € @®ØAÕúÍ×À€d € @½½AÕúÍØß± d € @ÌH2AÕúÍÙÿj d ‚ˆ @Ú÷Þ@¨n‘?BŒÀ¿yŸX.AÕúÍÛM d € @æ„AÕúÍÜ<¥ d € @úŸ=AÕúÍÝ[´€d € A•4AÕúÍÞyê€d € A¶JAÕúÍß˜° d € A ÝAÕúÍà·€d € A®öAÕúÍáÕ… d € A­üAÕúÍâó* d € A#AÕúÍäû d € A(ƒ AÕúÍå0é€d € A0È¸AÕúÍæP›€d € A5kAÕúÍço%€d € A82ÏAÕúÍèé€d € AB-ìAÕúÍé¬à€d € AL)
-AÕúÍêÌA€d € AQ&™AÕúÍëò¤ d € ATI£AÕúÍí÷ d ‚ˆ AWl¬@¨n“ß!­jÀ¿yŸÓy&AÕúÍî>m€d € AV6hAÕúÍïdŸ d € AR\ÝAÕúÍðŠå€d € AJ¼AÕúÍñ©Å d € AC­1AÕúÍòÉE€d € A9Ö”AÕúÍóèM€d € A0¸AÕúÍõ4€d € A%»×AÕúÍö&G€d € A	ºAÕúÍ÷ES d € AEÚAÕúÍødª€d € A%¿AÕúÍùƒi d € @ø{·AÕúÍú¢/€d € @ÝögAÕúÍûÁ5€d € @Æ”!AÕúÍüà€d € @¯ÃÝAÕúÍýþÐ d € @›` AÕúÍÿ*€d € @ƒYAÕúÎ =b€d ‚ˆ @\ì3@¨n—ßÀ:À¿y µqž	AÕúÎ\Š€d € @,q¢AÕúÎ{w d € @
-9<AÕúÎ¦Í d € ?ÄˆAÕúÎÑŠ€d € ?VûAÕúÎüN d € ?Y‰AÕúÎ8#€d € ?¡= AÕúÎi d € ?îÎAÕúÎ	˜ d
-€*€@¾)ã=‹c˜@çq¾ÝàAÕúÎ
-Þ @¨MA¡od€( =ªU‡@Nó
-¾UAÕúÎ# d€( =¥¿è@nšh¾l÷AÕúÎCi€d€( = â@‡ ã¾K+%AÕúÎc d€( =žLÆ@–Ð¾ó{AÕúÎ‚ï d€( =¥-4@¤7:¾-ÖAÕúÎ¡8€d€( =žLÆ@³i¾%èØAÕúÎÀq€d
-€(€A9°›= â@½t¾]§ÀAÕúÎÞ® AŒ5Od‚¨ =”ŽÕ@ÌH2@¨n›î4-ÖÀ¿y¢0Nõ¾YQAÕúÎþ£ d€( =¤š€@Û@ß¾EDùAÕúÎ$ d€( = â@èñ¾EWMAÕúÎ<·€d€( =¡*I@÷ ´¾BXýAÕúÎ[l€d€( =žßzAm¾BnAÕúÎyb d€( A	’Ã¾dœ5AÕúÎ—§€d
-€(€A	~˜= âAýV¾V
-HAÕúÎ¶ˆ€AŒ½÷d€( =£uAeõ¾](AÕúÎÖ} d
-€(€@õ#R= âA"OÍ¾B±AÕúÎõ” AŽp»d€( =¥-4A)Þd¾x³AÕúÎþ d
-€*€@Ò!=¤š€A/It¾ÕAÕúÎ3j @àAŒ*‚d€( = âA5êÈ¾ŽÛSAÕúÎ Rˆ€d
-€(€@¼gÆ=¨
-·A>`¾WÜ”AÕúÎ!qé AŽ¢d€( =¸cAE™÷¾.M¥AÕúÎ"‘Ò€d€( =£uAI…Â¾ûpAÕúÎ#¸ñ d€( =¢O±AP';Q‹SAÕúÎ$ß# d‚¨ =te	AP¹@¨nŸVI²À¿y¢ô	ªû>®|ùAÕúÎ&Œ d@( =oÏj?qCAÕúÎ'+Ó€d€( =k9ÌAM_N?·AÕúÎ(Q– d€( =\SˆAG;?-TyAÕúÎ)q+€d€( =jdA>ø£?(ÅAÕúÎ*` d€( =bŽA5¡Ç?˜„AÕúÎ+¯©€d€( =_Ã¿A.0?«þAÕúÎ,ÎÈ d€( =XãQA#¼Ñ?+DAÕúÎ-íÌ€d€( =f¤-Aex?9ÕÃAÕúÎ/T d€( =m„›A´Ò?%ÃgAÕúÎ0,™€d€( =c3öAq®?†oAÕúÎ1Kà€d€( =f¤-@ò#? îhAÕúÎ2k1€d€( =XãQ@Ø¯×?,NAÕúÎ3Š€€d€( =hîü@Áß“?#N­AÕúÎ4©ï d€( =dY]@­{Ö?¬}AÕúÎ5É d€( =_Ã¿@˜–?$€AÕúÎ6è5 d€( =XãQ@…jÞ?&¡`AÕúÎ8° d‚¨ =m„›@\ì3@¨n¢¯Æ À¿y£¦;º?#À¿AÕúÎ9&í€d€( =ŽÓÏ@+ž?ÛôAÕúÎ:F˜€d€( =„ƒ)@3?9AÕúÎ;r¸ d € ?¾SwAÕúÎ<žv d € ?Y‰AÕúÎ=Èà€d € ?sÅTAÕúÎ?ð€d € ?¦ñ1AÕúÎ@7_ d € ?Õµ½AÕúÎAgk d € @QAÕúÎB­ d € @DéAÕúÎCñÚ d € @hVAÕúÎE‘€d € @‚lUAÕúÎF0 €d € @Ž¯zAÕúÎGP› d € @›Í¡AÕúÎHo&€d € @¥=AÕúÎIÃ€d € @³gAÕúÎJ¬¼ d ‚ˆ @Á)@¨n§t|À¿y¥o…OAÕúÎKÌY€d € @Î´ºAÕúÎLë³ d € @âôAÕúÎN
-÷ d € @êðAÕúÎO)?€d € @ô}«AÕúÎPG€d € A:íAÕúÎQgl d € AoºAÕúÎR†˜ d € A¢’AÕúÎS¥«€d € ADcAÕúÎTÃã d € ABoAÕúÎUáÔ d € AöAÕúÎW  d € A#*ÐAÕúÎXò€d € A+¸éAÕúÎY=€d € A0¤8AÕúÎZ[
- d € A7×ŽAÕúÎ[yS€d € A>/áAÕúÎ\–÷ d € AIóDAÕúÎ]¶¨ d ‚ˆ AN(@¨nª62~ÓÀ¿y¦9¹Ò¼AÕúÎ^ÞÜ€d € AT€cAÕúÎ`Î€d € AYG2AÕúÎa+
-€d € AW#«AÕúÎbPÕ€d € AXG¯AÕúÎcw[ d € AN(AÕúÎd•Ë d € AGÏ½AÕúÎeµå€d € A?Ó¥AÕúÎfÕ €d € A8NAÕúÎgóë€d € A/[´AÕúÎiò€d € A'ß^AÕúÎj2?€d € A®yAÕúÎkQ¢€d € A2#AÕúÎlpü€d € A	É„AÕúÎmì€d € @ýæÇAÕúÎn®ÿ€d € @ë]AÕúÎoÍÂ€d € @ÔKAÕúÎpí d ‚ˆ @À)Ž@¨n¬”ù‡À¿y¦sSrSAÕúÎr*€d € @¥¾AÕúÎs+v€d € @’­†AÕúÎtJ~€d € @wº„AÕúÎuiÐ d € @PòAÕúÎv‰ d € @#ã‰AÕúÎw´€€d € @;0AÕúÎxßU€d € ?ãeåAÕúÎz	Ñ d € ?´XAÕúÎ{3+ d € ?æ?îAÕúÎ|f'€d € @}[AÕúÎ}–#€d € @LôAÕúÎ~ÚÁ d € @ixYAÕúÎù€d € @‚GÕAÕúÎ¥ d € @’ö‡AÕúÎ‚7V€d € @™AÕúÎƒVm€d ‚ˆ @¨ÇH@¨n°	9 À¿y§=×á…AÕúÎ„ut d € @²æAÕúÎ…“• d € @ÀàAÕúÎ†±ô€d € @Ëm0AÕúÎ‡Ðý€d € @àÐpAÕúÎˆï•€d € @ìAÕúÎŠç d € @õ¡®AÕúÎ‹+ä€d € A8ùAÕúÎŒKÓ d € AAÕúÎjJ d € A±gAÕúÎŽ‰o d € Av¿AÕúÎ§F€d € A"½NAÕúÎÅ›€d € A*ÝçAÕúÎ‘ãr d € A44ÃAÕúÎ“]€d € A:DAÕúÎ”"£€d € A@®¨AÕúÎ•Aì€d € AIs‚AÕúÎ–`\ d ‚ˆ AM¨O@¨n²éw»À¿y¨W‘Ò|AÕúÎ—†ª€d € AQ]ZAÕúÎ˜¬ €d € AWÇíAÕúÎ™ÐÍ€d € AUÿ¨AÕúÎšöÇ€d € AU[fAÕúÎœJ d € AO^TAÕúÎ<ƒ€d € AH†?AÕúÎž[² d € A?A¤AÕúÎŸ{ d € A5´AÕúÎ ™è€d € A.¥2AÕúÎ¡¹#€d € A)^¢AÕúÎ¢Ø;€d € Aä½AÕúÎ£÷ d € AE]AÕúÎ¥Q€d € A»AÕúÎ¦5g d € @úz½AÕúÎ§T° d € @æ©AÕúÎ¨s¨€d € @Ìl³AÕúÎ©’”€d ‚ˆ @±yâ@¨nµ0RÀ¿y¨Ó"=¬AÕúÎª±’ d € @—Ï•AÕúÎ«ÐÂ d € @€¶PAÕúÎ¬ïà d € @]~5AÕúÎ®é€d € @+žAÕúÎ¯.2 d € ?ò:AÕúÎ°Y÷ d € ?dñ'AÕúÎ±„o d € ?<<AÕúÎ²Áf€d € ?%hAÕúÎ³ý{€d € ?€(½AÕúÎµ.]€d € ?Óm¶AÕúÎ¶]÷ d € @	9AÕúÎ·¢à d € @>hØAÕúÎ¸ç›€d € @_};AÕúÎºõ€d € @~Û™AÕúÎ»&Y d € @Š±nAÕúÎ¼E‘€d ‚ˆ @šœ@¨n¹ÀÚœ'À¿y©ÊjïŽAÕúÎ½cü€d € @¨~GAÕúÎ¾‚™€d € @µåoAÕúÎ¿ €d € @ÁM‘AÕúÎÀÀ(€d € @Ìþ´AÕúÎÁß€d € @âôAÕúÎÂþ€d € @î¥AÕúÎÄ. d € @ûÃ@AÕúÎÅ;ç d € A]zAÕúÎÆ[„ d € AlOAÕúÎÇzž€d € ACæAÕúÎÈš<€d € AexAÕúÎÉ¸Š€d € A$ÒAÕúÎÊ×Æ€d € A-/AÕúÎËöÅ€d € A1ZºAÕúÎÍÔ€d € A5XÆAÕúÎÎ3þ€d € A<šAÕúÎÏSÎ€d ‚ˆ ABd­@¨n¿	^:bÀ¿y«sœWAÕúÎÐr² d € AIAAÕúÎÑš¼€d € AM¨OAÕúÎÒÀ1€d € AR]AÕúÎÓåÍ d € APK—AÕúÎÕº€d € AOLAÕúÎÖ2v€d € AHóÁAÕúÎ×RY d € AA	éAÕúÎØqx€d € A7!AÕúÎÙ €d € A/¤µAÕúÎÚ¯š€d € A';AÕúÎÛÎv d € A ‡ˆAÕúÎÜí© d € Az*AÕúÎÞÀ€d € A
-mÆAÕúÎß, d € AñoAÕúÎàK% d € @í8AÕúÎájd d ‚ˆ @Ú÷Þ@¨nÁf´ô”À¿y«ÆÒƒ?AÕúÎâ‰« d € @ÃqAÕúÎã¨¸€d € @®ØAÕúÎäÇ§ d € @›©!AÕúÎåæŠ€d € @ˆÖéAÕúÎç« d € @dVJAÕúÎè$×€d € @:jÌAÕúÎéDh€d € @
-‚=AÕúÎêp d € ?Ì AÕúÎëš´ d € ?`aAÕúÎìÄâ d € ?nCAÕúÎî Å d € ?¡Ï!AÕúÎï3†€d € ?ÞÕØAÕúÎðc d € @	9AÕúÎñ§™€d € @A‹âAÕúÎòëï d € @\ì3AÕúÎô@ d ‚ˆ @{¸@¨nÅ‘qïBÀ¿y¬Ùþ·ôAÕúÎõ)÷€d € @†!aAÕúÎöHø d € @’ö‡AÕúÎ÷g/€d € @¤É<AÕúÎø…` d € @¬3RAÕúÎù£ d € @·äuAÕúÎúÁ_€d € @Êm­AÕúÎûß?€d € @Ñ!AAÕúÎüüà d € @ä…{AÕúÎþ d € @ïšAÕúÎÿ: d € @úÃ½AÕúÏ Y d € Aº¯AÕúÏw d € A	nCAÕúÏ—N d € AFÔAÕúÏ¶ d € AÂ®AÕúÏÔì€d € A!bŠAÕúÏóÊ€d € A((_AÕúÏ±€d ‚ˆ A.î3@¨nÈrduJÀ¿y­Àï¢AÕúÏ1L d € A73LAÕúÏ	P+ d € A:ÖAÕúÏ
-më d € AB­®AÕúÏŒ# d € AIAÕúÏ«> d € AL¨ÌAÕúÏÓ d € AS€àAÕúÏø• d € ASÜ!AÕúÏi d € AUíhAÕúÏDS d € AT¤äAÕúÏj/€d € ALñÍAÕúÏ‰€€d € AD¾ôAÕúÏ¨r d € A=Â_AÕúÏÇ‹ d € A4kƒAÕúÏæA d € A+gAÕúÏ$ d € A õ	AÕúÏ$A€d ‚ˆ AÔq@¨nÊ¨.ààÀ¿y®†3)ÙAÕúÏCç d € A4AÕúÏcQ€d € AúAÕúÏ‚2€d € @÷|4AÕúÏ¡# d € @âôAÕúÏÀ€d € @ÎÙ:AÕúÏß3€d € @»¾AÕúÏ þ>€d € @¦ÈBAÕúÏ"1 d € @”¬ŒAÕúÏ#<€d € @€HÏAÕúÏ$[2€d € @]Ç6AÕúÏ%zO€d € @*»AÕúÏ&™.€d € ?ú6*AÕúÏ'ÄŽ d € ?€(½AÕúÏ(îï€d € ?9˜¦AÕúÏ*+”€d € ?1œŽAÕúÏ+h€d ‚ˆ ?Œ"à@¨nÎ[ê))À¿y¯E(âàAÕúÏ,—«€d € ?ÞÕØAÕúÏ-ÇA d € @8BAÕúÏ/¢€d € @;EÏAÕúÏ0P d € @\1AÕúÏ1oà€d € @wº„AÕúÏ2A d € @‰±ëAÕúÏ3®€d € @—†•AÕúÏ4ÌX€d € @¨ëÉAÕúÏ5êÎ€d € @¶RñAÕúÏ7í€d € @ÂAÕúÏ8(€d € @Î´ºAÕúÏ9Eú€d € @ØBVAÕúÏ:cÈ d € @ãóyAÕúÏ;] d € @ñì£AÕúÏ< [€d € A )§AÕúÏ=¿L€d ‚ˆ @¨oR£S&À¿yÓn.±ÃA8ù@¨nÑ™<ÓíÀ¿y°[`6AÕúÏ>Þ?€d € A‰AÕúÏ?ý d € AŽÛAÕúÏA' d € AxAÕúÏB<n d € A#¼ÑAÕúÏC[³ d € A*KåAÕúÏDz½€d € A06·AÕúÏE™ d € A9D’AÕúÏF¸Î d € A@Š(AÕúÏG× d € AC­1AÕúÏHõÏ d € AL_ËAÕúÏJp€d € AP–AÕúÏK=€d € AWµ­AÕúÏLbû d € AYYrAÕúÏMˆc d € AWH,AÕúÏN®% d € ASÜ!AÕúÏOÔå d ‚ˆ AMß@¨nÕ+]À¿y±1|ÉAÕúÏPóÇ€d € AHÏ@AÕúÏR;€d € A>`AÕúÏS2˜€d € A6|ÉAÕúÏTQ¸ d € A+‚)AÕúÏUq d € A#OPAÕúÏV+ d € Ay­AÕúÏW¯ d € A"ÑAÕúÏXÍæ d € A¹µAÕúÏYì£€d € @õ¡®AÕúÏ[¶€d € @ß¬lAÕúÏ\+€d € @Ìl³AÕúÏ]J#€d € @µåoAÕúÏ^iC d € @¢Ê6AÕúÏ_ˆ d € @ŒBóAÕúÏ`§$€d € @kw_AÕúÏaÆ‰€d € @K†ÿAÕúÏbåp d ‚ˆ @ .~@¨nØ§dkÀ¿y±ùÓÄZAÕúÏd: d € ?þ46AÕúÏe<%€d € ?±5OAÕúÏff£€d € ?ÂQƒAÕúÏg¢¿ d € ?çõóAÕúÏhÕ¼ d € @ÅbAÕúÏjJ d € @U9AÕúÏkJ5 d € @sswAÕúÏli- d € @„ý]AÕúÏm‡Ë d € @’‰AÕúÏn¦G d € @ ¦°AÕúÏoÄ(€d € @±çcAÕúÏpân d € @¾˜	AÕúÏr D d € @É ©AÕúÏs  d € @Û‰àAÕúÏt>Õ d € @ê9ŒAÕúÏu^( d ‚ˆ @öÅ±@¨nÛ»´nÀ¿y³#¯)AÕúÏv|U d € @ÿSËAÕúÏwšÇ€d € A	%BAÕúÏxº1 d € Aë“AÕúÏyÙ¨€d € A°êAÕúÏzø—€d € Aæ4AÕúÏ|% d € A!‡AÕúÏ}5& d € A%—WAÕúÏ~TÇ€d € A:±–AÕúÏsº€d € AD¾ôAÕúÏƒ4‚ d € ANL‘AÕúÏ„S² d € AS¥aAÕúÏ…ræ d € AY}òAÕúÏ†™k d € A]Ž>AÕúÏ‡¿& d ‚ˆ AdøU@¨nßOsnQÀ¿y´BÙÕmAÕúÏˆä:€d € Aa‰AÕúÏŠ
-9€d € A^{AÕúÏ‹0¼ d € AV6hAÕúÏŒOþ d € AQYAÕúÏná d € AHÏ@AÕúÏŽŽ, d € A@A'AÕúÏ­6 d € A7ŽAÕúÏÌ€d € A,“ìAÕúÏ‘ë) d € A"ÌAÕúÏ“
-: d € Aæ±AÕúÏ”)É d € AþÍAÕúÏ•Hà€d € A–.AÕúÏ–h d € @î¥AÕúÏ—†÷€d € @ÞèAÕúÏ˜¥Î€d € @Å'AÕúÏ™ÄÇ€d € @´/jAÕúÏšã·€d ‚ˆ @Ì§@¨nâ?Çé^À¿yµ$
-AÕúÏœ¼€d € @ŠúoAÕúÏ!÷ d € @jœ\AÕúÏž@ß€d € @@ùàAÕúÏŸ` d € @0rAÕúÏ ‹‰ d € ?ëóÿAÕúÏ¡µõ€d € ?š÷AÕúÏ¢à d € ?ÑAÕúÏ¤x d € ?ÎK¦AÕúÏ¥O+€d € @`.AÕúÏ¦ÿ d € @=ÖÖAÕúÏ§Ä° d € @YÉ*AÕúÏ¨âü€d € @vMAÕúÏª€d € @õAÕúÏ« ±€d € @š<AÕúÏ¬?€€d € @¬|SAÕúÏ­^[€d ‚ˆ @¹šz@¨nål«À¿yµê·²AÕúÏ®|1€d € @É ©AÕúÏ¯›& d € @Ûe`AÕúÏ°ºE d € @ê‚AÕúÏ±Ù_€d € @ýÆAÕúÏ²øŠ d € A:pAÕúÏ´5 d € A‘ÉAÕúÏµ6 d € A"ÑAÕúÏ¶T,€d € ACiAÕúÏ·sô d € A
-7AÕúÏ¸’u€d € Aõ†AÕúÏ¹°Õ d € A&„šAÕúÏºÐ€d € A,¬AÕúÏ»ïw d € A1ì¼AÕúÏ½q€d € A:±–AÕúÏ¾-é d € AA‰«AÕúÏ¿M¶ d € AHáAÕúÏÀlT d ‚ˆ ARœ@¨néú³LÀ¿y·cáiÏAÕúÏÁ’å d € AW~ìAÕúÏÂ¸. d € AXîAÕúÏÃÝ5 d € AZØ¶AÕúÏÅ•€d € AV£êAÕúÏÆ)i d € AQÊÛAÕúÏÇHž d € AJ*AÕúÏÈgÃ€d € ABvíAÕúÏÉ†° d € A<U[AÕúÏÊ¥Ú d € A0ÿyAÕúÏËÄ¢€d € A(ƒ AÕúÏÌãŠ d € ACAÕúÏÎl d € AlAÕúÏÏ!Å d € A#ËAÕúÏÐA€d € AöAÕúÏÑ` d € @ñ"AÕúÏÒ€d € @à«ïAÕúÏÓžI€d ‚ˆ @Ì#²@¨nì"†CxÀ¿y·ük1AÕúÏÔ½5 d € @³xèAÕúÏÕÜƒ€d € @Ÿ§-AÕúÏÖû„€d € @ŠlAÕúÏØÝ€d € @m-dAÕúÏÙ: d € @A‹âAÕúÏÚY d € @¡^AÕúÏÛ„ƒ d € ?å­ìAÕúÏÜ¯·€d € ?„&ÉAÕúÏÝÙë d € ? ìAÕúÏßÆ€d € ?ÂQƒAÕúÏàH €d € @†%AÕúÏáw‹€d € @6þÂAÕúÏâ½z€d € @VAÕúÏãÛõ€d € @m¿fAÕúÏäúe€d € @†×ãAÕúÏæ d ‚ˆ @”Š@¨nð3.§rÀ¿y¸ñ‘AÕúÏç8f d € @¡ï4AÕúÏèW€d € @­Ä×AÕúÏéuG€d € @¹ã{AÕúÏê”× d € @ËÚ±AÕúÏë³Û€d € @ØBVAÕúÏìÓ€d € @ç„AÕúÏíñ€d € @ñì£AÕúÏï#€d € @ýÄAÕúÏð.Ö d € AüAÕúÏñN €d € A¢’AÕúÏòm½€d € AûbAÕúÏó‹ê€d € A~AÕúÏôª™€d € A"ôAÕúÏõÉ}€d € A,JëAÕúÏöçˆ d € A1£»AÕúÏøp d € A7³AÕúÏù$y d ‚ˆ A<ç]@¨nô¤¿¥HÀ¿yº>ìYóAÕúÏúD{ d € AC/AÕúÏûbÿ d € AKGAÕúÏü‚¶€d € AO9ÓAÕúÏý©H€d € ARoAÕúÏþÏ-€d € AV6hAÕúÏÿôŠ d € ATI£AÕúÐ€ d € ASÜ!AÕúÐ_‰ d € AH½ AÕúÐ~É€d € AE‡¶AÕúÐž d € A;Õ™AÕúÐ½Q€d € A5ØˆAÕúÐÝ_ d € A/¤µAÕúÐüc€d € A%•AÕúÐ	‘ d € AQÁAÕúÐ
-:Ú d € A1)AÕúÐZ€d ‚ˆ AþP@¨n÷6-À¿yºÒ§©wAÕúÐ™ë€d € AðAÕúÐ¹h d € @ù29AÕúÐØw€d € @ïšAÕúÐ÷v€d € @ß>ëAÕúÐ¿ d € @ÕMAÕúÐ6o d € @Ê$¬AÕúÐU²€d € @À)ŽAÕúÐu d € @°žàAÕúÐ”F d € @ 9/AÕúÐ³q d € @ŽxAÕúÐÒÅ d € @v–€AÕúÐñì€d € @RAÕúÐd€d € @HõAÕúÐ1/€d € @)à›AÕúÐP• d € @\EAÕúÐpß d € ?ê=úAÕúÐÎ€d ‚ˆ ?°£N@¨nû™¾À¿y»Ó3€AÕúÐ­Â€d € ?SÔôAÕúÐ ×§€d € >,íAÕúÐ!ÿ€d € =˜uAÕúÐ#&è d €     AÕúÐ$P‰€d € <E øAÕúÐ%w· d € =é…AÕúÐ&žÞ€d €     AÕúÐ'Åý€d € <ôÒ1AÕúÐ(íe d €     AÕúÐ*«€d € =z*–AÕúÐ+<° d €     AÕúÐ,d´ d € <ÐQÃAÕúÐ-Œb d € =z*–AÕúÐ.´- d €     AÕúÐ/Ü d € <ôÒ1AÕúÐ1ë d €     AÕúÐ2*ê€d @ AÕúÐ3RJ€d @ AÕúÐ4yg€d ªˆ(=˜u@¨mcŠ	À¿wƒFÜ]d@¨mc‹.ÌÀ¿wƒFÜ]FAÕúÐ5Ÿø >ª?½»£d €     AÕúÐ6Í³ d @ AÕúÐ8³ d @ AÕúÐ9OU d € ;N}AÕúÐ:- d €     AÕúÐ;Ð¾ d @ AÕúÐ=„€d @ AÕúÐ>RR€d @ AÕúÐ?’½ d @ AÕúÐ@Ó8€d @ AÕúÐB9 d @ AÕúÐCV´ d @ AÕúÐD— d @ AÕúÐE×4 d @ AÕúÐGˆ d •H >ÅÏEAÕúÐHSË€d € >¼¯*AÕúÐI d € >Ñ7gAÕúÐJÌs€d € >ÅÏEAÕúÐLÑ d € >ÚW‚AÕúÐMäß d € >Îï`AÕúÐO!x€d € ? ìAÕúÐP]ö d @ AÕúÐQ™ñ€d € >Ø|AÕúÐRÖ'€d € >¾÷0AÕúÐT d € >å¿¤AÕúÐUgÉ€d € ?‹ßAÕúÐV£½€d € >Îï`AÕúÐWëÕ d € >ÈLAÕúÐY4b d € ?PAÕúÐZ|ž€d € >è«AÕúÐ`J® d € ?„&ÉAÕúÐaœ"€d € >ÈLAÕúÐbå7 d € >¼¯*AÕúÐd–^ d € @¨k’-VÀ¿xùÞ Ñ?;à­AÕúÐi3ê d € >ì—¹AÕúÐnt€d € ?†nÏAÕúÐoÙ d € ?&4lAÕúÐq+Ñ d € ?ƒ”ÇAÕúÐrv‹€d € ?GHÏAÕúÐs¿I d € ?r¡PAÕúÐu\ d € ?ðMAÕúÐvVŽ d € ?cÍ$AÕúÐwŸY€X

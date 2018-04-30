@@ -23,10 +23,10 @@ Supports:
 
 ## Installation
 
-GUTILS is available through [`conda`](http://conda.pydata.org/docs/install/quick.html) and was designed with Python 3.5 or above in mind. I backported it to 2.7 by request. Please use 3.5+ if possible as the [gwt project](https://github.com/TEOS-10/GSW-Python) will soon end support for 2.7.
+GUTILS is available through [`conda`](http://conda.pydata.org/docs/install/quick.html) and was designed for Python 3.6+. It was backported to 2.7 by request. Please use 3.6+ if possible as the [gwt project](https://github.com/TEOS-10/GSW-Python) will soon end support for 2.7.
 
 ```bash
-$ conda create -n gutils python=3.5
+$ conda create -n gutils python=3.6
 $ source activate gutils
 $ conda install -c conda-forge gutils
 ```
@@ -34,4 +34,4 @@ $ conda install -c conda-forge gutils
 
 ## Testing
 
-To run the "long" tests you will need [this](https://github.com/SECOORA/SGS) cloned somewhere. Then set the env variable `GUTILS_TEST_CONFIG_DIRECTORY` to the config directory, ie `export GUTILS_TEST_CONFIG_DIRECTORY=/data/Development/secoora/sgs/SGS/config`
+To run the "long" tests you will need [this](https://github.com/SECOORA/SGS) cloned somewhere. Then set the env variable `GUTILS_TEST_CONFIG_DIRECTORY` to the config directory, ie `export GUTILS_TEST_CONFIG_DIRECTORY=/data/dev/SGS/config`
