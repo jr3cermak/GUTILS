@@ -1,0 +1,8 @@
+gutils.templates package
+========================
+
+.. automodule:: gutils.templates
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

@@ -9,7 +9,7 @@
     <title>gutils package &#8212; gutils 2.7.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -27,6 +27,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-gutils">
@@ -127,6 +129,14 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gutils.slocum.html">gutils.slocum package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gutils.templates.html">gutils.templates package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gutils.watch.html">gutils.watch package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gutils.watch.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gutils.watch.html#module-gutils.watch.ascii">gutils.watch.ascii module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gutils.watch.html#module-gutils.watch.binary">gutils.watch.binary module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gutils.watch.html#module-gutils.watch.netcdf">gutils.watch.netcdf module</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -137,7 +147,7 @@
 <span id="gutils-ctd-module"></span><h2>gutils.ctd module<a class="headerlink" href="#module-gutils.ctd" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="gutils.ctd.calculate_density">
-<code class="descclassname">gutils.ctd.</code><code class="descname">calculate_density</code><span class="sig-paren">(</span><em>time</em>, <em>temperature</em>, <em>pressure</em>, <em>salinity</em>, <em>latitude</em>, <em>longitude</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.ctd.calculate_density" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">gutils.ctd.</code><code class="descname">calculate_density</code><span class="sig-paren">(</span><em>temperature</em>, <em>pressure</em>, <em>salinity</em>, <em>latitude</em>, <em>longitude</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.ctd.calculate_density" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates density given glider practical salinity, pressure, latitude,
 and longitude using Gibbs gsw SA_from_SP and rho functions.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -145,7 +155,6 @@ and longitude using Gibbs gsw SA_from_SP and rho functions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>time</strong> (<em>UNIX epoch</em>) – </li>
 <li><strong>temperature</strong> (<em>C</em><em>)</em><em>, </em><em>pressure</em><em> (</em><em>dbar</em><em>)</em><em>, </em><em>salinity</em><em> (</em><em>psu PSS-78</em>) – </li>
 <li><strong>latitude</strong> (<em>decimal degrees</em><em>)</em><em>, </em><em>longitude</em><em> (</em><em>decimal degrees</em>) – </li>
 </ul>
@@ -160,14 +169,14 @@ and longitude using Gibbs gsw SA_from_SP and rho functions.</p>
 
 <dl class="function">
 <dt id="gutils.ctd.calculate_practical_salinity">
-<code class="descclassname">gutils.ctd.</code><code class="descname">calculate_practical_salinity</code><span class="sig-paren">(</span><em>time</em>, <em>conductivity</em>, <em>temperature</em>, <em>pressure</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.ctd.calculate_practical_salinity" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">gutils.ctd.</code><code class="descname">calculate_practical_salinity</code><span class="sig-paren">(</span><em>conductivity</em>, <em>temperature</em>, <em>pressure</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.ctd.calculate_practical_salinity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates practical salinity given glider conductivity, temperature,
 and pressure using Gibbs gsw SP_from_C function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>conductivity</strong> (<em>time</em><em>,</em>) – </td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>conductivity</strong> (<em>S/m</em><em>)</em><em>, </em><em>temperature</em><em> (</em><em>C</em><em>)</em><em>, </em><em>and pressure</em><em> (</em><em>dbar</em>) – </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">salinity (psu PSS-78).</td>
 </tr>
@@ -269,7 +278,7 @@ depth positive down.</p>
 
 <dl class="function">
 <dt id="gutils.nc.create_dataset">
-<code class="descclassname">gutils.nc.</code><code class="descname">create_dataset</code><span class="sig-paren">(</span><em>file</em>, <em>reader_class</em>, <em>config_path</em>, <em>output_path</em>, <em>subset</em>, <em>template</em>, <em>profile_id_type</em>, <em>**filters</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.nc.create_dataset" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">gutils.nc.</code><code class="descname">create_dataset</code><span class="sig-paren">(</span><em>file</em>, <em>reader_class</em>, <em>deployments_path</em>, <em>subset</em>, <em>template</em>, <em>profile_id_type</em>, <em>**filters</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.nc.create_dataset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -315,6 +324,11 @@ depth positive down.</p>
 <dl class="function">
 <dt id="gutils.nc.merge_profile_netcdf_files">
 <code class="descclassname">gutils.nc.</code><code class="descname">merge_profile_netcdf_files</code><span class="sig-paren">(</span><em>folder</em>, <em>output</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.nc.merge_profile_netcdf_files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="gutils.nc.process_folder">
+<code class="descclassname">gutils.nc.</code><code class="descname">process_folder</code><span class="sig-paren">(</span><em>deployment_path</em>, <em>mode</em>, <em>merger_class</em>, <em>reader_class</em>, <em>subset=True</em>, <em>template='trajectory'</em>, <em>profile_id_type=1</em>, <em>workers=4</em>, <em>**filters</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.nc.process_folder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -372,6 +386,7 @@ depth timeseries
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -415,8 +430,8 @@ depth timeseries
       &copy;2017, Kyle Wilcox.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 

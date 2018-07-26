@@ -1,5 +1,6 @@
 ./_sources/api/gutils.rst.txt
 ./_sources/api/gutils.slocum.rst.txt
+./_sources/api/gutils.templates.rst.txt
 ./_sources/api/gutils.watch.rst.txt
 ./_sources/api/modules.rst.txt
 ./_sources/development.rst.txt
@@ -31,6 +32,7 @@
 ./_static/websupport.js
 ./api/gutils.html
 ./api/gutils.slocum.html
+./api/gutils.templates.html
 ./api/gutils.watch.html
 ./api/modules.html
 ./development.html

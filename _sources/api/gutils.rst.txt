@@ -12,6 +12,8 @@ Subpackages
 .. toctree::
 
     gutils.slocum
+    gutils.templates
+    gutils.watch
 
 Submodules
 ----------

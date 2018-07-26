@@ -9,7 +9,7 @@
     <title>gutils.watch package &#8212; gutils 2.7.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -27,6 +27,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-gutils.watch">
@@ -42,7 +44,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyinotify.ProcessEvent</span></code></p>
 <dl class="method">
 <dt id="gutils.watch.ascii.Ascii2NetcdfProcessor.my_init">
-<code class="descname">my_init</code><span class="sig-paren">(</span><em>outputs_path</em>, <em>configs_path</em>, <em>subset</em>, <em>template</em>, <em>profile_id_type</em>, <em>**filters</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.ascii.Ascii2NetcdfProcessor.my_init" title="Permalink to this definition">¶</a></dt>
+<code class="descname">my_init</code><span class="sig-paren">(</span><em>deployments_path</em>, <em>subset</em>, <em>template</em>, <em>profile_id_type</em>, <em>**filters</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.ascii.Ascii2NetcdfProcessor.my_init" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is called from ProcessEvent.__init__(). This method is
 empty here and must be redefined to be useful. In effect, if you
 need to specifically initialize your subclass’ instance then you
@@ -64,11 +66,6 @@ keyword arguments though.</p>
 <code class="descname">process_IN_MOVED_TO</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.ascii.Ascii2NetcdfProcessor.process_IN_MOVED_TO" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="gutils.watch.ascii.Ascii2NetcdfProcessor.valid_file">
-<code class="descname">valid_file</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.ascii.Ascii2NetcdfProcessor.valid_file" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -84,20 +81,6 @@ keyword arguments though.</p>
 <dt id="gutils.watch.ascii.Slocum2NetcdfProcessor.convert_to_netcdf">
 <code class="descname">convert_to_netcdf</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.ascii.Slocum2NetcdfProcessor.convert_to_netcdf" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="gutils.watch.ascii.Slocum2NetcdfProcessor.my_init">
-<code class="descname">my_init</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.ascii.Slocum2NetcdfProcessor.my_init" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called from ProcessEvent.__init__(). This method is
-empty here and must be redefined to be useful. In effect, if you
-need to specifically initialize your subclass’ instance then you
-just have to override this method in your subclass. Then all the
-keyworded arguments passed to ProcessEvent.__init__() will be
-transmitted as parameters to this method. Beware you MUST pass
-keyword arguments though.</p>
-<p>&#64;param kargs: optional delegated arguments from __init__().
-&#64;type kargs: dict</p>
-</dd></dl>
 
 </dd></dl>
 
@@ -120,7 +103,7 @@ keyword arguments though.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyinotify.ProcessEvent</span></code></p>
 <dl class="method">
 <dt id="gutils.watch.binary.Binary2AsciiProcessor.my_init">
-<code class="descname">my_init</code><span class="sig-paren">(</span><em>outputs_path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.binary.Binary2AsciiProcessor.my_init" title="Permalink to this definition">¶</a></dt>
+<code class="descname">my_init</code><span class="sig-paren">(</span><em>deployments_path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.binary.Binary2AsciiProcessor.my_init" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is called from ProcessEvent.__init__(). This method is
 empty here and must be redefined to be useful. In effect, if you
 need to specifically initialize your subclass’ instance then you
@@ -142,11 +125,6 @@ keyword arguments though.</p>
 <code class="descname">process_IN_MOVED_TO</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.binary.Binary2AsciiProcessor.process_IN_MOVED_TO" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="gutils.watch.binary.Binary2AsciiProcessor.valid_file">
-<code class="descname">valid_file</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.binary.Binary2AsciiProcessor.valid_file" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -158,11 +136,6 @@ keyword arguments though.</p>
 <code class="descname">PAIRS</code><em class="property"> = {'.dbd': '.ebd', '.mbd': '.nbd', '.sbd': '.tbd'}</em><a class="headerlink" href="#gutils.watch.binary.Slocum2AsciiProcessor.PAIRS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
-<dt id="gutils.watch.binary.Slocum2AsciiProcessor.VALID_EXTENSIONS">
-<code class="descname">VALID_EXTENSIONS</code><a class="headerlink" href="#gutils.watch.binary.Slocum2AsciiProcessor.VALID_EXTENSIONS" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="gutils.watch.binary.Slocum2AsciiProcessor.check_for_pair">
 <code class="descname">check_for_pair</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.binary.Slocum2AsciiProcessor.check_for_pair" title="Permalink to this definition">¶</a></dt>
@@ -172,20 +145,6 @@ keyword arguments though.</p>
 <dt id="gutils.watch.binary.Slocum2AsciiProcessor.convert_to_ascii">
 <code class="descname">convert_to_ascii</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.binary.Slocum2AsciiProcessor.convert_to_ascii" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="gutils.watch.binary.Slocum2AsciiProcessor.my_init">
-<code class="descname">my_init</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.binary.Slocum2AsciiProcessor.my_init" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is called from ProcessEvent.__init__(). This method is
-empty here and must be redefined to be useful. In effect, if you
-need to specifically initialize your subclass’ instance then you
-just have to override this method in your subclass. Then all the
-keyworded arguments passed to ProcessEvent.__init__() will be
-transmitted as parameters to this method. Beware you MUST pass
-keyword arguments though.</p>
-<p>&#64;param kargs: optional delegated arguments from __init__().
-&#64;type kargs: dict</p>
-</dd></dl>
 
 </dd></dl>
 
@@ -205,7 +164,7 @@ keyword arguments though.</p>
 <dl class="class">
 <dt id="gutils.watch.netcdf.Netcdf2ErddapProcessor">
 <em class="property">class </em><code class="descclassname">gutils.watch.netcdf.</code><code class="descname">Netcdf2ErddapProcessor</code><span class="sig-paren">(</span><em>pevent=None</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2ErddapProcessor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyinotify.ProcessEvent</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#gutils.watch.netcdf.NetcdfProcessor" title="gutils.watch.netcdf.NetcdfProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">gutils.watch.netcdf.NetcdfProcessor</span></code></a></p>
 <dl class="method">
 <dt id="gutils.watch.netcdf.Netcdf2ErddapProcessor.create_and_update_content">
 <code class="descname">create_and_update_content</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2ErddapProcessor.create_and_update_content" title="Permalink to this definition">¶</a></dt>
@@ -213,7 +172,7 @@ keyword arguments though.</p>
 
 <dl class="method">
 <dt id="gutils.watch.netcdf.Netcdf2ErddapProcessor.my_init">
-<code class="descname">my_init</code><span class="sig-paren">(</span><em>outputs_path</em>, <em>erddap_content_path</em>, <em>erddap_flag_path</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2ErddapProcessor.my_init" title="Permalink to this definition">¶</a></dt>
+<code class="descname">my_init</code><span class="sig-paren">(</span><em>deployments_path</em>, <em>erddap_content_path</em>, <em>erddap_flag_path</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2ErddapProcessor.my_init" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is called from ProcessEvent.__init__(). This method is
 empty here and must be redefined to be useful. In effect, if you
 need to specifically initialize your subclass’ instance then you
@@ -235,17 +194,12 @@ keyword arguments though.</p>
 <code class="descname">process_IN_MOVED_TO</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2ErddapProcessor.process_IN_MOVED_TO" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="gutils.watch.netcdf.Netcdf2ErddapProcessor.valid_extension">
-<code class="descname">valid_extension</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2ErddapProcessor.valid_extension" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
 <dt id="gutils.watch.netcdf.Netcdf2FtpProcessor">
 <em class="property">class </em><code class="descclassname">gutils.watch.netcdf.</code><code class="descname">Netcdf2FtpProcessor</code><span class="sig-paren">(</span><em>pevent=None</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2FtpProcessor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyinotify.ProcessEvent</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#gutils.watch.netcdf.NetcdfProcessor" title="gutils.watch.netcdf.NetcdfProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">gutils.watch.netcdf.NetcdfProcessor</span></code></a></p>
 <dl class="method">
 <dt id="gutils.watch.netcdf.Netcdf2FtpProcessor.my_init">
 <code class="descname">my_init</code><span class="sig-paren">(</span><em>ftp_url</em>, <em>ftp_user</em>, <em>ftp_pass</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2FtpProcessor.my_init" title="Permalink to this definition">¶</a></dt>
@@ -275,11 +229,12 @@ keyword arguments though.</p>
 <code class="descname">upload_file</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2FtpProcessor.upload_file" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="gutils.watch.netcdf.Netcdf2FtpProcessor.valid_extension">
-<code class="descname">valid_extension</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.Netcdf2FtpProcessor.valid_extension" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+</dd></dl>
 
+<dl class="class">
+<dt id="gutils.watch.netcdf.NetcdfProcessor">
+<em class="property">class </em><code class="descclassname">gutils.watch.netcdf.</code><code class="descname">NetcdfProcessor</code><span class="sig-paren">(</span><em>pevent=None</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.NetcdfProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyinotify.ProcessEvent</span></code></p>
 </dd></dl>
 
 <dl class="function">
@@ -309,7 +264,7 @@ keyword arguments though.</p>
 
 <dl class="function">
 <dt id="gutils.watch.netcdf.netcdf_to_erddap_dataset">
-<code class="descclassname">gutils.watch.netcdf.</code><code class="descname">netcdf_to_erddap_dataset</code><span class="sig-paren">(</span><em>datasets_path</em>, <em>netcdf_path</em>, <em>flag_path</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.netcdf_to_erddap_dataset" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">gutils.watch.netcdf.</code><code class="descname">netcdf_to_erddap_dataset</code><span class="sig-paren">(</span><em>deployments_path</em>, <em>datasets_path</em>, <em>netcdf_path</em>, <em>flag_path</em><span class="sig-paren">)</span><a class="headerlink" href="#gutils.watch.netcdf.netcdf_to_erddap_dataset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -317,6 +272,7 @@ keyword arguments though.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -358,8 +314,8 @@ keyword arguments though.</p>
       &copy;2017, Kyle Wilcox.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 
