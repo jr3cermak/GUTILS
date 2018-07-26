@@ -173,7 +173,7 @@ def main_to_netcdf():
     notifier.coalesce_events()
 
     try:
-        L.info(f"Watching {args.deployments_path} for new binary files")
+        L.info(f"Watching {deployments_path} for new ascii files")
         notifier.loop(daemonize=daemonize)
     except NotifierError:
         L.exception('Unable to start notifier loop')

@@ -24,9 +24,11 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Copy over environment definition
+COPY environment.yml /tmp/environment.yml
+
 # Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
 ENV MINICONDA_VERSION latest
-ENV PYTHON_VERSION 3.6
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
     /bin/bash /miniconda.sh -b -p /opt/conda && \
@@ -41,35 +43,15 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
         --add channels axiom-data-science \
         --add channels conda-forge \
         && \
-    /opt/conda/bin/conda install python=$PYTHON_VERSION && \
+    /opt/conda/bin/conda env update -n root --file /tmp/environment.yml && \
     /opt/conda/bin/conda clean -a -y
 
 ENV PATH /opt/conda/bin:$PATH
 
-# Install requirements
-COPY requirements*.txt /tmp/
-RUN conda install -y \
-        --file /tmp/requirements.txt \
-        && \
-    conda clean -a -y
-
-ENV GUTILS_BINARY_DIRECTORY /gutils/binary
-VOLUME $GUTILS_BINARY_DIRECTORY
-
-ENV GUTILS_ASCII_DIRECTORY /gutils/ascii
-VOLUME $GUTILS_ASCII_DIRECTORY
-
-ENV GUTILS_NETCDF_DIRECTORY /gutils/netcdf
-VOLUME $GUTILS_NETCDF_DIRECTORY
-
-ENV GUTILS_CONFIG_DIRECTORY /gutils/config
-VOLUME $GUTILS_CONFIG_DIRECTORY
-
+ENV GUTILS_DEPLOYMENTS_DIRECTORY /gutils/deployments
 ENV GUTILS_ERDDAP_CONTENT_PATH /gutils/erddap/content
-VOLUME $GUTILS_ERDDAP_CONTENT_PATH
-
 ENV GUTILS_ERDDAP_FLAG_PATH /gutils/erddap/flag
-VOLUME $GUTILS_ERDDAP_FLAG_PATH
+VOLUME ["${GUTILS_DEPLOYMENTS_DIRECTORY}", "${GUTILS_ERDDAP_CONTENT_PATH}", "${GUTILS_ERDDAP_FLAG_PATH}"]
 
 RUN mkdir -p /etc/my_init.d && \
     mkdir -p /gutils
