@@ -8,7 +8,6 @@ from collections import namedtuple
 import netCDF4 as nc4
 from lxml import etree
 
-from gutils import safe_makedirs
 from gutils.nc import check_dataset, create_dataset, merge_profile_netcdf_files
 from gutils.slocum import SlocumReader
 from gutils.tests import resource, GutilsTestClass
@@ -26,23 +25,12 @@ def decoder(x):
 
 class TestCreateGliderScript(GutilsTestClass):
 
-    def tearDown(self):
-        outputs = [
-            resource('slocum', 'netcdf')
-        ]
-        for d in outputs:
-            try:
-                shutil.rmtree(d)
-            except (IOError, OSError):
-                pass
-
     def test_defaults(self):
-        out_base = resource('slocum', 'netcdf', 'bass-20160909T1733')
+        out_base = resource('slocum', 'bass-test-ascii', 'rt', 'netcdf')
         args = dict(
-            file=resource('slocum', 'usf_bass_2016_253_0_6_sbd.dat'),
+            file=resource('slocum', 'bass-test-ascii', 'rt', 'ascii', 'usf_bass_2016_253_0_6_sbd.dat'),
             reader_class=SlocumReader,
-            config_path=resource('slocum', 'config', 'bass-20160909T1733'),
-            output_path=out_base,
+            deployments_path=resource('slocum'),
             subset=False,
             template='trajectory',
             profile_id_type=1,
@@ -73,16 +61,17 @@ class TestCreateGliderScript(GutilsTestClass):
         for o in output_files:
             assert check_dataset(ds(file=o)) == 0
 
-    def test_all_ascii(self):
-        out_base = resource('slocum', 'netcdf', 'bass-20160909T1733')
-        safe_makedirs(out_base)
+        # Cleanup
+        shutil.rmtree(out_base)
 
-        for f in glob(resource('slocum', 'usf_bass*.dat')):
+    def test_all_ascii(self):
+        out_base = resource('slocum', 'bass-test-ascii', 'rt', 'netcdf')
+
+        for f in glob(resource('slocum', 'bass-test-ascii', 'rt', 'ascii', 'usf_bass*.dat')):
             args = dict(
                 file=f,
                 reader_class=SlocumReader,
-                config_path=resource('slocum', 'config', 'bass-20160909T1733'),
-                output_path=out_base,
+                deployments_path=resource('slocum'),
                 subset=False,
                 template='ioos_ngdac',
                 profile_id_type=2,
@@ -112,14 +101,16 @@ class TestCreateGliderScript(GutilsTestClass):
         for o in output_files:
             assert check_dataset(ds(file=o)) == 0
 
+        # Cleanup
+        shutil.rmtree(out_base)
+
     def test_delayed(self):
-        out_base = resource('slocum', 'netcdf', 'modena-20150625T0000')
+        out_base = resource('slocum', 'modena-test-ascii', 'delayed', 'netcdf')
 
         args = dict(
-            file=resource('slocum', 'modena_2015_175_0_9_dbd.dat'),
+            file=resource('slocum', 'modena-test-ascii', 'delayed', 'ascii', 'modena_2015_175_0_9_dbd.dat'),
             reader_class=SlocumReader,
-            config_path=resource('slocum', 'config', 'modena-20150625T0000'),
-            output_path=out_base,
+            deployments_path=resource('slocum'),
             subset=False,
             template='trajectory',
             profile_id_type=1,
@@ -149,6 +140,9 @@ class TestCreateGliderScript(GutilsTestClass):
         ds = namedtuple('Arguments', ['file'])
         for o in output_files:
             assert check_dataset(ds(file=o)) == 0
+
+        # Cleanup
+        shutil.rmtree(out_base)
 
 
 class TestGliderCheck(GutilsTestClass):
@@ -191,13 +185,18 @@ class TestNetcdfToErddap(GutilsTestClass):
     def test_appending_variables(self):
         datasets_path = resource('erddap', 'datasets.xml')
         netcdf_files = [
-            resource('erddap', '1.nc'),  # Creates datasets.xml
-            resource('erddap', '2.nc'),  # Adds additional variables
-            resource('erddap', '3.nc')   # Should not remove any variables
+            resource('erddap', 'fakedeployment', 'rt', 'netcdf', '1.nc'),  # Creates datasets.xml
+            resource('erddap', 'fakedeployment', 'rt', 'netcdf', '2.nc'),  # Adds additional variables
+            resource('erddap', 'fakedeployment', 'rt', 'netcdf', '3.nc')   # Should not remove any variables
         ]
 
         for n in netcdf_files:
-            netcdf_to_erddap_dataset(datasets_path, n, None)
+            netcdf_to_erddap_dataset(
+                resource('erddap'),
+                datasets_path,
+                n,
+                None
+            )
 
         xmltree = etree.parse(datasets_path).getroot()
         find_dataset = etree.XPath("//erddapDatasets/dataset")
@@ -211,4 +210,4 @@ class TestNetcdfToErddap(GutilsTestClass):
         assert 'salinity' in vs
         assert 'density' in vs
 
-        os.remove(datasets_path)
+        #os.remove(datasets_path)

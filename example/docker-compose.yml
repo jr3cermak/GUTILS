@@ -13,7 +13,7 @@ services:
   config:
     image: sgs-content
     volumes:
-      - ./run/config:/data/secoora/dev/config
+      - ./run:/data
     command: /sbin/my_init -- secoora_config_sync
 
   gutils:
@@ -28,10 +28,7 @@ services:
       RUN_NETCDF_TO_ERDDAP_WATCH: "yes"
       GUTILS_NETCDF_TEMPLATE: ioos_ngdac
     volumes:
-      - "./run/binary:/gutils/binary"
-      - "./run/ascii:/gutils/ascii"
-      - "./run/netcdf:/gutils/netcdf"
-      - "./run/config:/gutils/config:ro"
+      - "./run/deployments:/gutils/deployments"
       - "./run/erddap/content:/gutils/erddap/content"
       - "./run/erddap/flag:/gutils/erddap/flag"
     depends_on:
@@ -42,10 +39,7 @@ services:
     image: nginx:stable
     volumes:
       - "./nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "./run/binary:/gutils/binary:ro"
-      - "./run/ascii:/gutils/ascii:ro"
-      - "./run/netcdf:/gutils/netcdf:ro"
-      - "./run/config:/gutils/config:ro"
+      - "./run/deployments:/gutils/deployments:ro"
       - "./run/ftp:/gutils/ftp:ro"
     ports:
       - "20000:80"
@@ -55,7 +49,7 @@ services:
     volumes:
       - "./run/erddap/content/datasets.xml:/usr/local/tomcat/content/erddap/datasets.xml"
       - "./run/erddap/flag:/erddapData/flag"
-      - "./run/netcdf:/gutils/netcdf:ro"
+      - "./run/deployments:/gutils/deployments:ro"
     ports:
       - "8080:8080"
 

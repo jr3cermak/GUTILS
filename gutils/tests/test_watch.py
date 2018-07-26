@@ -22,36 +22,39 @@ from gutils.tests import resource, output, GutilsTestClass
 import logging
 L = logging.getLogger(__name__)  # noqa
 
-config_path = resource('slocum', 'config', 'bass-20160909T1733')
-original_binary = resource('slocum', 'binary', 'bass-20160909T1733')
-binary_path = output('binary', 'bass-20160909T1733')
-ascii_path = output('ascii', 'bass-20160909T1733')
-netcdf_path = output('netcdf', 'bass-20160909T1733')
+deployment = 'bass-test-watch'
+
+binary_path     = resource('slocum', deployment, 'rt', 'binary')
+ascii_path      = resource('slocum', deployment, 'rt', 'ascii')
+netcdf_path     = resource('slocum', deployment, 'rt', 'netcdf')
+original_binary = resource('slocum', 'bass-20160909T1733', 'rt', 'binary')
+config_path     = resource('slocum', deployment, 'config')
+
 erddap_content_path = output('erddap', 'content')
 erddap_flag_path = output('erddap', 'flag')
 ftp_path = output('ftp')
 
 
 def wait_for_files(path, number):
-        # Wait for NetCDF to be created
-        count = 0
-        loops = 20
-        while True:
-            try:
-                num_files = len(os.listdir(path))
-                assert num_files == number
-                break
-            except AssertionError:
-                if count >= loops:
-                    raise AssertionError("Not enough files in {}: Expected: {} Got: {}.".format(path, number, num_files))
-                count += 1
-                time.sleep(6)
+    # Wait for NetCDF to be created
+    count = 0
+    loops = 20
+    while True:
+        try:
+            num_files = len(os.listdir(path))
+            assert num_files == number
+            break
+        except AssertionError:
+            if count >= loops:
+                raise AssertionError("Not enough files in {}: Expected: {} Got: {}.".format(path, number, num_files))
+            count += 1
+            time.sleep(6)
 
 
 class TestWatchClasses(GutilsTestClass):
 
     def setUp(self):
-        super(TestWatchClasses, self).setUp()
+        super().setUp()
 
         safe_makedirs(binary_path)
         safe_makedirs(ascii_path)
@@ -62,6 +65,9 @@ class TestWatchClasses(GutilsTestClass):
 
     def tearDown(self):
         shutil.rmtree(output())
+        shutil.rmtree(binary_path)
+        shutil.rmtree(ascii_path)
+        shutil.rmtree(netcdf_path)
 
     def test_gutils_binary_to_ascii_watch(self):
 
@@ -70,7 +76,7 @@ class TestWatchClasses(GutilsTestClass):
 
         # Convert binary data to ASCII
         processor = Slocum2AsciiProcessor(
-            outputs_path=os.path.dirname(ascii_path)
+            deployments_path=resource('slocum'),
         )
         notifier = ThreadedNotifier(wm, processor)
         notifier.coalesce_events()
@@ -103,8 +109,7 @@ class TestWatchClasses(GutilsTestClass):
 
         # Convert ASCII data to NetCDF
         processor = Slocum2NetcdfProcessor(
-            outputs_path=os.path.dirname(netcdf_path),
-            configs_path=os.path.dirname(config_path),
+            deployments_path=resource('slocum'),
             subset=False,
             template='trajectory',
             profile_id_type=2,
@@ -148,7 +153,7 @@ class TestWatchClasses(GutilsTestClass):
 
         # Convert ASCII data to NetCDF
         processor = Netcdf2ErddapProcessor(
-            outputs_path=os.path.dirname(netcdf_path),
+            deployments_path=resource('slocum'),
             erddap_content_path=erddap_content_path,
             erddap_flag_path=erddap_flag_path
         )

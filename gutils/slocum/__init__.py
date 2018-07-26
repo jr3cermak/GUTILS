@@ -206,7 +206,6 @@ class SlocumReader(object):
         try:
             # Compute salinity
             df['salinity'] = calculate_practical_salinity(
-                time=masked_epoch(df.t),
                 conductivity=df.conductivity.values,
                 temperature=df.temperature.values,
                 pressure=df.pressure.values,
@@ -217,7 +216,6 @@ class SlocumReader(object):
         try:
             # Compute density
             df['density'] = calculate_density(
-                time=masked_epoch(df.t),
                 temperature=df.temperature.values,
                 pressure=df.pressure.values,
                 salinity=df.salinity.values,

@@ -1,7 +1,5 @@
 #!python
 # coding=utf-8
-import os
-
 from gutils import get_decimal_degrees, interpolate_gps, masked_epoch
 
 from gutils.yo import (
@@ -22,7 +20,7 @@ from gutils.ctd import (
 )
 
 from gutils.slocum import SlocumReader
-from gutils.tests import GutilsTestClass
+from gutils.tests import GutilsTestClass, resource
 
 import logging
 L = logging.getLogger(__name__)  # noqa
@@ -45,10 +43,11 @@ def is_continuous(profiled_dataset):
     return True
 
 
-ctd_filepath = os.path.join(
-    os.path.dirname(__file__),
-    'resources',
+ctd_filepath = resource(
     'slocum',
+    'bass-test-ascii',
+    'rt',
+    'ascii',
     'usf_bass_2016_253_0_6_sbd.dat'
 )
 
@@ -243,7 +242,6 @@ class TestSalinity(GutilsTestClass):
     def test_practical_salinity(self):
         sr = SlocumReader(ctd_filepath)
         salinity = calculate_practical_salinity(
-            sr.data.sci_m_present_time,
             sr.data.sci_water_cond,
             sr.data.sci_water_temp,
             sr.data.sci_water_pressure,
@@ -258,7 +256,6 @@ class TestDensity(GutilsTestClass):
         df = sr.standardize()
 
         salinity = calculate_practical_salinity(
-            sr.data.sci_m_present_time,
             sr.data.sci_water_cond,
             sr.data.sci_water_temp,
             sr.data.sci_water_pressure,
@@ -272,7 +269,6 @@ class TestDensity(GutilsTestClass):
         )
 
         density = calculate_density(
-            sr.data.sci_m_present_time,
             sr.data.sci_water_temp,
             sr.data.sci_water_pressure,
             salinity,

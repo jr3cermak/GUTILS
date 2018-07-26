@@ -23,50 +23,33 @@ L = logging.getLogger(__name__)
 
 class Ascii2NetcdfProcessor(ProcessEvent):
 
-    def my_init(self, outputs_path, configs_path, subset, template, profile_id_type, **filters):
-        self.outputs_path = outputs_path
-        self.configs_path = configs_path
+    def my_init(self, deployments_path, subset, template, profile_id_type, **filters):
+        self.deployments_path = deployments_path
         self.subset = subset
         self.template = template
-        self.filters = filters
         self.profile_id_type = profile_id_type
-
-    def valid_file(self, name):
-        _, extension = os.path.splitext(name)
-        if extension.lower() in self.VALID_EXTENSIONS:
-            return True
-        return False
+        self.filters = filters
 
     def process_IN_CLOSE(self, event):
-        if self.valid_file(event.name):
-            self.convert_to_netcdf(event)
+        self.convert_to_netcdf(event)
 
     def process_IN_MOVED_TO(self, event):
-        if self.valid_file(event.name):
-            self.convert_to_netcdf(event)
+        self.convert_to_netcdf(event)
 
 
 class Slocum2NetcdfProcessor(Ascii2NetcdfProcessor):
 
     VALID_EXTENSIONS = ['.dat']
 
-    def my_init(self, *args, **kwargs):
-        super(Slocum2NetcdfProcessor, self).my_init(*args, **kwargs)
+    def __call__(self, event):
+        if os.path.splitext(event.name)[-1] in self.VALID_EXTENSIONS:
+            super().__call__(event)
 
     def convert_to_netcdf(self, event):
-        glider_folder_name = os.path.basename(event.path)
-        glider_config_folder = os.path.join(self.configs_path, glider_folder_name)
-        if not os.path.isdir(glider_config_folder):
-            L.error("Config folder {} not found!".format(glider_config_folder))
-            return
-
-        glider_output_folder = os.path.join(self.outputs_path, glider_folder_name)
-
         create_dataset(
             file=event.pathname,
             reader_class=SlocumReader,
-            config_path=glider_config_folder,
-            output_path=glider_output_folder,
+            deployments_path=self.deployments_path,
             subset=self.subset,
             template=self.template,
             profile_id_type=self.profile_id_type,
@@ -80,29 +63,16 @@ def create_netcdf_arg_parser():
         description="Monitor a directory for new ASCII glider data and outputs NetCDF."
     )
     parser.add_argument(
-        '-d',
-        '--data_path',
-        help='Path to ASCII glider data directory',
-        default=os.environ.get('GUTILS_ASCII_DIRECTORY')
+        "-d",
+        "--deployments_path",
+        help="Path to deployments directory",
+        default=os.environ.get('GUTILS_DEPLOYMENTS_DIRECTORY')
     )
     parser.add_argument(
         '-r',
         '--reader_class',
         help='Glider reader to interpret the data',
         default='slocum'
-    )
-    parser.add_argument(
-        '-o',
-        '--outputs',
-        help='Where to place the newly generated NetCDF files.',
-        default=os.environ.get('GUTILS_NETCDF_DIRECTORY')
-    )
-    parser.add_argument(
-        '-c',
-        '--configs',
-        help="Folder to look for NetCDF global and glider "
-             "JSON configuration files.  Default is './config'.",
-        default=os.environ.get('GUTILS_CONFIG_DIRECTORY', './config')
     )
     parser.add_argument(
         '-fp', '--filter_points',
@@ -162,9 +132,7 @@ def main_to_netcdf():
 
     filter_args = vars(args)
     # Remove non-filter args into positional arguments
-    data_path = filter_args.pop('data_path')
-    configs = filter_args.pop('configs')
-    outputs = filter_args.pop('outputs')
+    deployments_path = filter_args.pop('deployments_path')
     subset = filter_args.pop('subset')
     daemonize = filter_args.pop('daemonize')
     template = filter_args.pop('template')
@@ -175,16 +143,16 @@ def main_to_netcdf():
     if reader_class == 'slocum':
         reader_class = SlocumReader
 
-    if not data_path:
-        L.error("Please provide a --data_path agrument or set the "
-                "GUTILS_ASCII_DIRECTORY environmental variable")
+    if not deployments_path:
+        L.error("Please provide a --deployments_path agrument or set the "
+                "GUTILS_DEPLOYMENTS_DIRECTORY environmental variable")
         sys.exit(parser.print_usage())
 
     # Add inotify watch
     wm = WatchManager()
     mask = IN_MOVED_TO | IN_CLOSE_WRITE
     wm.add_watch(
-        data_path,
+        deployments_path,
         mask,
         rec=True,
         auto_add=True
@@ -193,8 +161,7 @@ def main_to_netcdf():
     # Convert ASCII data to NetCDF using a specific reader class
     if reader_class == SlocumReader:
         processor = Slocum2NetcdfProcessor(
-            outputs_path=outputs,
-            configs_path=configs,
+            deployments_path=deployments_path,
             subset=subset,
             template=template,
             profile_id_type=profile_id_type,
@@ -206,10 +173,7 @@ def main_to_netcdf():
     notifier.coalesce_events()
 
     try:
-        L.info("Watching {} and Outputting NetCDF to {}".format(
-            data_path,
-            outputs)
-        )
+        L.info(f"Watching {args.deployments_path} for new binary files")
         notifier.loop(daemonize=daemonize)
     except NotifierError:
         L.exception('Unable to start notifier loop')

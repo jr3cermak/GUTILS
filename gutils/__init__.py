@@ -5,6 +5,7 @@ from __future__ import division  # always return floats when dividing
 import os
 import math
 import errno
+import warnings
 import subprocess
 from collections import namedtuple
 
@@ -181,7 +182,10 @@ def get_uv_data(profile):
         uv_index = profile[uvslice].index[:2]
         if uv_index.size != 0:
             uv_index = uv_index[-1]
-            t = profile.t.loc[uv_index].to_pydatetime()
+            with warnings.catch_warnings():
+                # We don't care about dropping nanoseconds
+                warnings.simplefilter("ignore")
+                t = profile.t.loc[uv_index].to_pydatetime()
             x = profile.x.loc[uv_index]
             y = profile.y.loc[uv_index]
             u = profile.u_orig.loc[uv_index]
@@ -215,8 +219,11 @@ def get_profile_data(profile, method=None):
 
     elif method == PROFILE_MEAN:
         # T,X,Y: AVERAGE
-        all_t = profile.t.view('int64') // pd.Timedelta(1, unit='ms')  # covert to epoch ms
-        t = pd.to_datetime(all_t.mean(), unit='ms').to_pydatetime()
+        all_t = (profile.t - pd.Timestamp('1970-01-01')) // pd.Timedelta('1ms')  # ms since epoch
+        with warnings.catch_warnings():
+            # We don't care about dropping nanoseconds
+            warnings.simplefilter("ignore")
+            t = pd.to_datetime(all_t.mean(), unit='ms').to_pydatetime()
         y = profile.y.mean()
         x = profile.x.mean()
 

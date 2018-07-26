@@ -1,6 +1,6 @@
 {
   "dimensions": {
-    "obs": -1
+    "time": -1
   },
   "variables": {
     "crs" : {
@@ -15,7 +15,7 @@
       }
     },
     "conductivity": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -32,7 +32,7 @@
       }
     },
     "density": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -49,7 +49,7 @@
       }
     },
     "depth": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -69,7 +69,7 @@
       }
     },
     "m_altitude": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -83,7 +83,7 @@
       }
     },
     "lat": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -120,7 +120,7 @@
       }
     },
     "lon": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -167,7 +167,7 @@
       }
     },
     "pressure": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -246,7 +246,7 @@
       }
     },
     "salinity": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -263,7 +263,7 @@
       }
     },
     "temperature": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -283,7 +283,7 @@
       }
     },
     "time": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "calendar": "gregorian",
@@ -354,7 +354,7 @@
       }
     },
     "u_orig": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -371,7 +371,7 @@
       }
     },
     "v_orig": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -388,7 +388,7 @@
       }
     },
     "sci_oxy3835_oxygen": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -401,7 +401,7 @@
       }
     },
     "sci_oxy3835_wphase_oxygen": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -414,7 +414,7 @@
       }
     },
     "sci_oxy3835_wphase_saturation": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -427,7 +427,7 @@
       }
     },
     "sci_bbfl2s_chlor_scaled": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -440,7 +440,7 @@
       }
     },
     "sci_flbbcd_chlor_units": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -453,7 +453,7 @@
       }
     },
     "sci_flntu_chlor_units": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -466,7 +466,7 @@
       }
     },
     "sci_flntu_turb_units": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -479,7 +479,7 @@
       }
     },
     "sci_bbfl2s_cdom_scaled": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},
@@ -492,7 +492,7 @@
       }
     },
     "sci_flbbcd_cdom_units": {
-      "shape": ["obs"],
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "_FillValue": { "type": "double", "data": -9999.9},

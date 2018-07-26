@@ -1,27 +1,29 @@
 #!/usr/bin/env python
 import warnings
 
-from gutils import (
-    validate_glider_args,
-)
-
 from gsw.gibbs.practical_salinity import SP_from_C
 from gsw.gibbs.conversions import SA_from_SP, CT_from_t
 from gsw.gibbs.density_enthalpy_48 import rho
 
 
-def calculate_practical_salinity(time, conductivity, temperature, pressure):
+def calculate_practical_salinity(conductivity, temperature, pressure):
     """Calculates practical salinity given glider conductivity, temperature,
     and pressure using Gibbs gsw SP_from_C function.
 
     Parameters:
-        time, conductivity (S/m), temperature (C), and pressure (dbar).
+        conductivity (S/m), temperature (C), and pressure (dbar).
 
     Returns:
         salinity (psu PSS-78).
     """
 
-    validate_glider_args(time, conductivity, temperature, pressure)
+    correct_sizes = (
+        conductivity.size ==
+        temperature.size ==
+        pressure.size
+    )
+    if correct_sizes is False:
+        raise ValueError('Arguments must all be the same length')
 
     # Convert S/m to mS/cm
     mS_conductivity = conductivity * 10
@@ -35,12 +37,11 @@ def calculate_practical_salinity(time, conductivity, temperature, pressure):
         )
 
 
-def calculate_density(time, temperature, pressure, salinity, latitude, longitude):
+def calculate_density(temperature, pressure, salinity, latitude, longitude):
     """Calculates density given glider practical salinity, pressure, latitude,
     and longitude using Gibbs gsw SA_from_SP and rho functions.
 
     Parameters:
-        time (UNIX epoch),
         temperature (C), pressure (dbar), salinity (psu PSS-78),
         latitude (decimal degrees), longitude (decimal degrees)
 
@@ -48,7 +49,15 @@ def calculate_density(time, temperature, pressure, salinity, latitude, longitude
         density (kg/m**3),
     """
 
-    validate_glider_args(time, temperature, pressure, salinity, latitude, longitude)
+    correct_sizes = (
+        temperature.size ==
+        pressure.size ==
+        salinity.size ==
+        latitude.size ==
+        longitude.size
+    )
+    if correct_sizes is False:
+        raise ValueError('Arguments must all be the same length')
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")

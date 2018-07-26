@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<erddapDatasets>
+    <requestBlacklist/>
+<dataset type="EDDTableFromNcFiles" datasetID="fakedeployment_rt" active="true">
+    <reloadEveryNMinutes>10000000</reloadEveryNMinutes>
+    <updateEveryNMillis>-1</updateEveryNMillis>
+    <fileDir>/data/dev/GUTILS/gutils/tests/resources/erddap/fakedeployment/rt/netcdf</fileDir>
+    <recursive>false</recursive>
+    <fileNameRegex>.*\.nc</fileNameRegex>
+    <metadataFrom>last</metadataFrom>
+    <sortedColumnSourceName>time</sortedColumnSourceName>
+    <sortFilesBySourceNames>trajectory time</sortFilesBySourceNames>
+    <fileTableInMemory>false</fileTableInMemory>
+
+    <addAttributes>
+        <att name="cdm_data_type">trajectoryProfile</att>
+        <att name="featureType">trajectoryProfile</att>
+        <att name="cdm_trajectory_variables">trajectory</att>
+        <att name="cdm_profile_variables">profile_id,time,latitude,longitude</att>
+        <att name="subsetVariables">trajectory,profile_id,time,latitude,longitude</att>
+        <att name="Conventions">Unidata Dataset Discovery v1.0, COARDS, CF-1.6</att>
+        <att name="keywords">AUVS &gt; Autonomous Underwater Vehicles, Oceans &gt; Ocean Pressure &gt; Water Pressure, Oceans &gt; Ocean Temperature &gt; Water Temperature, Oceans &gt; Salinity/Density &gt; Conductivity, Oceans &gt; Salinity/Density &gt; Density, Oceans &gt; Salinity/Density &gt; Salinity, glider, In Situ Ocean-based platforms &gt; Seaglider, Spray, Slocum, trajectory, underwater glider, water, wmo</att>
+        <att name="keywords_vocabulary">GCMD Science Keywords</att>
+        <att name="Metadata_Conventions">Unidata Dataset Discovery v1.0, COARDS, CF-1.6</att>
+        <att name="sourceUrl">(local files)</att>
+        <att name="title">fakedeployment_rt</att>
+        <att name="infoUrl">https://github.com/SECOORA/GUTILS</att>
+    </addAttributes>
+    <dataVariable>
+        <sourceName>trajectory</sourceName>
+        <destinationName>trajectory</destinationName>
+        <dataType>String</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>time</sourceName>
+        <destinationName>precise_time</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>depth</sourceName>
+        <destinationName>depth</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>lat</sourceName>
+        <destinationName>precise_lat</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>lon</sourceName>
+        <destinationName>precise_lon</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>m_altitude</sourceName>
+        <destinationName>m_altitude</destinationName>
+        <dataType>double</dataType>
+        <addAttributes>
+            <att name="ioos_category">Other</att>
+        </addAttributes>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>pressure</sourceName>
+        <destinationName>pressure</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>lat_uv</sourceName>
+        <destinationName>lat_uv</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>lon_uv</sourceName>
+        <destinationName>lon_uv</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>profile_id</sourceName>
+        <destinationName>profile_id</destinationName>
+        <dataType>int</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>profile_lat</sourceName>
+        <destinationName>latitude</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>profile_lon</sourceName>
+        <destinationName>longitude</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>profile_time</sourceName>
+        <destinationName>time</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>time_uv</sourceName>
+        <destinationName>time_uv</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>u</sourceName>
+        <destinationName>u</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>v</sourceName>
+        <destinationName>v</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+<dataVariable>
+        <sourceName>conductivity</sourceName>
+        <destinationName>conductivity</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>temperature</sourceName>
+        <destinationName>temperature</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>salinity</sourceName>
+        <destinationName>salinity</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    <dataVariable>
+        <sourceName>density</sourceName>
+        <destinationName>density</destinationName>
+        <dataType>double</dataType>
+    </dataVariable>
+    
+    </dataset></erddapDatasets>
+

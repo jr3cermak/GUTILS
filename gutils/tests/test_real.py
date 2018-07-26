@@ -16,24 +16,18 @@ L = logging.getLogger(__name__)  # noqa
 
 @pytest.mark.long
 @pytest.mark.parametrize("deployment", [
-    'bass-20160909T1733',
+    'bass-full-test',
 ])
 def test_real_deployments(deployment):
     setup_testing_logger(level=logging.WARNING)
-    binary_path = resource('slocum', 'binary', deployment)
-    ascii_path = resource('slocum', 'ascii', deployment)
-    netcdf_path = resource('slocum', 'netcdf', deployment)
-    default_configs = resource('slocum', 'config', deployment)
-
-    # Config path is usually an env variable pointing to a configuration setup
-    all_config_path = os.environ.get('GUTILS_TEST_CONFIG_DIRECTORY', default_configs)
-    config_path = os.path.join(all_config_path, deployment)
+    binary_path     = resource('slocum', deployment, 'rt', 'binary')
+    ascii_path      = resource('slocum', deployment, 'rt', 'ascii')
+    netcdf_path     = resource('slocum', deployment, 'rt', 'netcdf')
 
     # Static args
     args = dict(
         reader_class=SlocumReader,
-        config_path=config_path,
-        output_path=netcdf_path,
+        deployments_path=resource('slocum'),
         subset=True,
         template='ioos_ngdac',
         profile_id_type=2,

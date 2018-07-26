@@ -1,14 +1,9 @@
-An example GDAM implementation using `docker-compose`
+An example real-time GUTILS implementation using `docker-compose`
 
-* `./config` - put individual glider config files in here (eg. `./config/usf-bass-dep1/*.json`) or symlnk this directoy to your configuration folder.
-* `./binary` - put your glider data in here (eg. `./data/usf-bass-dep1/*.tdb`)
-* `./ascii` - netCDF files are produced here
-* `./netcdf` - netCDF files are produced here
+* `./deployments` - individual glider directories
 * `./ftp` - files uploaded to the ftp are produced here
 
 ### Running
-
-
 
 ```bash
 $ docker-compose build  # If you make changes to the code you need to run this everytime

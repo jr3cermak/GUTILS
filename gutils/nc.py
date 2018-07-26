@@ -3,7 +3,6 @@
 from __future__ import division
 
 import os
-import sys
 import json
 import math
 import shutil
@@ -11,6 +10,7 @@ import argparse
 import calendar
 import tempfile
 from glob import glob
+from pathlib import Path
 from datetime import datetime
 from collections import OrderedDict
 
@@ -192,7 +192,7 @@ def get_creation_attributes(profile):
             'date_modified': nc_create_ts,
             'history': '{} - {}'.format(
                 nc_create_ts,
-                'Created with the GUTILS package: "{}"'.format(sys.argv[0])
+                'Created with the GUTILS package: https://github.com/SECOORA/GUTILS'
             )
         }
     }
@@ -204,6 +204,12 @@ def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=Pro
         tmp_handle, tmp_path = tempfile.mkstemp(suffix='.nc', prefix='gutils_glider_netcdf_')
 
         profile_time = profile.t.dropna().iloc[0]
+
+        # output_path = os.path.join(
+        #     output_path,
+        #     'netcdf',
+        #     mode
+        # )
 
         if profile_id_type == ProfileIdTypes.EPOCH:
             # We are using the epoch as the profile_index!
@@ -378,13 +384,8 @@ def create_arg_parser():
         help="Combined ASCII file to process into NetCDF"
     )
     parser.add_argument(
-        'config_path',
-        help='Path to configuration files for this specific glider deployment.'
-    )
-    parser.add_argument(
-        'output_path',
-        help='Path to folder to save NetCDF output. A directory named after '
-             'the deployment will be created here'
+        'deployments_path',
+        help='Path to folder containing all deployment config and for file output.'
     )
     parser.add_argument(
         "-r",
@@ -434,15 +435,26 @@ def create_arg_parser():
     return parser
 
 
-def create_dataset(file, reader_class, config_path, output_path, subset, template, profile_id_type, **filters):
+def create_dataset(file, reader_class, deployments_path, subset, template, profile_id_type, **filters):
 
     processed_df, mode = process_dataset(file, reader_class, **filters)
 
     if processed_df is None:
         return 1
 
-    attrs = read_attrs(config_path, template=template)
+    # Figure out the netCDF output path based on the file and the deployments_path
+    dep_path = Path(deployments_path)
+    file_path = Path(file)
+    individual_dep_path = None
+    for pp in file_path.parents:
+        if dep_path == pp:
+            break
+        individual_dep_path = pp
 
+    config_path = individual_dep_path / 'config'
+    output_path = individual_dep_path / mode / 'netcdf'
+
+    attrs = read_attrs(config_path, template=template)
     return create_netcdf(attrs, processed_df, output_path, mode, profile_id_type, subset=subset)
 
 
@@ -455,8 +467,7 @@ def main_create():
     filter_args = vars(args)
     # Remove non-filter args into positional arguments
     file = filter_args.pop('file')
-    config_path = filter_args.pop('config_path')
-    output_path = filter_args.pop('output_path')
+    deployments_path = filter_args.pop('deployments_path')
     subset = filter_args.pop('subset')
     template = filter_args.pop('template')
 
@@ -468,8 +479,7 @@ def main_create():
     return create_dataset(
         file=file,
         reader_class=reader_class,
-        config_path=config_path,
-        output_path=output_path,
+        deployments_path=deployments_path,
         subset=subset,
         template=template,
         **filter_args
@@ -477,7 +487,6 @@ def main_create():
 
 
 # CHECKER
-
 def check_dataset(args):
     check_suite = CheckSuite()
     check_suite.load_all_available_checkers()
@@ -608,3 +617,39 @@ def merge_profile_netcdf_files(folder, output):
         os.close(new_fp)
         if os.path.exists(new_path):
             os.remove(new_path)
+
+
+def process_folder(deployment_path, mode, merger_class, reader_class, subset=True, template='trajectory', profile_id_type=ProfileIdTypes.EPOCH, workers=4, **filters):
+
+    from multiprocessing import Pool
+
+    binary_path = os.path.join(deployment_path, 'binary', mode),
+    ascii_path = os.path.join(deployment_path, 'ascii', mode)
+
+    # Make ASCII files
+    merger = merger_class(
+        binary_path,
+        ascii_path
+    )
+    # The merge results contain a reference to the new produced ASCII file as well as what binary files went into it.
+    merger.convert()
+
+    asciis = os.scandir(ascii_path)
+
+    with Pool(processes=workers) as pool:
+        kwargs = dict(
+            reader_class=SlocumReader,
+            deployment_path=deployment_path,
+            subset=subset,
+            template=template,
+            profile_id_type=profile_id_type,
+            **filters
+        )
+
+        multiple_results = [
+            pool.apply_async(
+                create_dataset, (), dict(file=x.path, **kwargs)
+            ) for x in asciis
+        ]
+
+        print([ res.get() for res in multiple_results ])

@@ -6,6 +6,7 @@ import shutil
 import argparse
 import tempfile
 from ftplib import FTP
+from pathlib import Path
 from copy import deepcopy
 from datetime import datetime
 from collections import namedtuple
@@ -30,7 +31,13 @@ import logging
 L = logging.getLogger(__name__)
 
 
-class Netcdf2FtpProcessor(ProcessEvent):
+class NetcdfProcessor(ProcessEvent):
+    def __call__(self, event):
+        if os.path.splitext(event.name)[-1] in ['.nc']:
+            super().__call__(event)
+
+
+class Netcdf2FtpProcessor(NetcdfProcessor):
 
     def my_init(self, ftp_url, ftp_user, ftp_pass):
         self.ftp_url = ftp_url
@@ -38,24 +45,14 @@ class Netcdf2FtpProcessor(ProcessEvent):
         self.ftp_pass = ftp_pass
 
     def process_IN_CLOSE(self, event):
-        f = namedtuple('Check_Arguments', ['file'])
-        args = f(file=event.pathname)
-        if self.valid_extension(event.name) and check_dataset(args) == 0:
+        args = SimpleNamespace(file=event.pathname)
+        if check_dataset(args) == 0:
             self.upload_file(event)
 
     def process_IN_MOVED_TO(self, event):
-        f = namedtuple('Check_Arguments', ['file'])
-        args = f(file=event.pathname)
-        if self.valid_extension(event.name) and check_dataset(args) == 0:
+        args = SimpleNamespace(file=event.pathname)
+        if check_dataset(args) == 0:
             self.upload_file(event)
-
-    def valid_extension(self, name):
-        _, ext = os.path.splitext(name)
-        if ext in ['.nc', 'nc4']:
-            return True
-
-        L.error('Unrecognized file extension: {}'.format(ext))
-        return False
 
     def upload_file(self, event):
         ftp = None
@@ -97,9 +94,9 @@ def create_ftp_arg_parser():
     )
     parser.add_argument(
         "-d",
-        "--data_path",
+        "--deployments_path",
         help="Path to the glider data netCDF output directory",
-        default=os.environ.get('GUTILS_NETCDF_DIRECTORY')
+        default=os.environ.get('GUTILS_DEPLOYMENTS_DIRECTORY')
     )
     parser.add_argument(
         "--ftp_url",
@@ -132,9 +129,9 @@ def main_to_ftp():
     parser = create_ftp_arg_parser()
     args = parser.parse_args()
 
-    if not args.data_path:
-        L.error("Please provide an --data_path agrument or set the "
-                "GUTILS_NETCDF_DIRECTORY environmental variable")
+    if not args.deployments_path:
+        L.error("Please provide an --deployments_path agrument or set the "
+                "deployments_path environmental variable")
         sys.exit(parser.print_usage())
 
     if not args.ftp_url:
@@ -145,7 +142,7 @@ def main_to_ftp():
     wm = WatchManager()
     mask = IN_MOVED_TO | IN_CLOSE_WRITE
     wm.add_watch(
-        args.data_path,
+        args.deployments_path,
         mask,
         rec=True,
         auto_add=True
@@ -162,10 +159,7 @@ def main_to_ftp():
     notifier.coalesce_events()
 
     try:
-        L.info("Watching {} and Uploading to {}".format(
-            args.data_path,
-            args.ftp_url)
-        )
+        L.info(f"Watching {args.deployments_path} and Uploading to {args.ftp_url}")
         notifier.loop(daemonize=args.daemonize)
     except NotifierError:
         L.exception('Unable to start notifier loop')
@@ -215,7 +209,7 @@ destination_mapping = {
 }
 
 
-def netcdf_to_erddap_dataset(datasets_path, netcdf_path, flag_path):
+def netcdf_to_erddap_dataset(deployments_path, datasets_path, netcdf_path, flag_path):
     tmp_handle, tmp_path = tempfile.mkstemp(prefix='gutils_errdap_', suffix='.xml')
 
     try:
@@ -239,12 +233,23 @@ def netcdf_to_erddap_dataset(datasets_path, netcdf_path, flag_path):
                 )
                 f.write('\n')
 
-        deployment_directory = os.path.dirname(netcdf_path)
-        deployment_name = os.path.basename(deployment_directory)
+        # Go back until we hit the deployments_path, then we extract the deployment name and mode
+        deployment_directory = Path(netcdf_path).parent
+        mode = deployment_directory.parent.name
+
+        dep_path = Path(deployments_path)
+        individual_dep_path = None
+        for pp in deployment_directory.parents:
+            if dep_path == pp:
+                break
+            individual_dep_path = pp
+
+        deployment_name = f'{individual_dep_path.name}_{mode}'
+
         with nc4.Dataset(netcdf_path) as ncd:
             xmlstring = jenv.get_template('erddap_deployment.xml').render(
                 deployment_name=deployment_name,
-                deployment_directory=deployment_directory,
+                deployment_directory=str(deployment_directory),
                 deployment_variables=ncd.variables,
                 datatype_mapping=datatype_mapping,
                 destination_mapping=destination_mapping
@@ -319,30 +324,23 @@ def netcdf_to_erddap_dataset(datasets_path, netcdf_path, flag_path):
             os.remove(tmp_path)
 
 
-class Netcdf2ErddapProcessor(ProcessEvent):
+class Netcdf2ErddapProcessor(NetcdfProcessor):
 
-    def my_init(self, outputs_path, erddap_content_path, erddap_flag_path):
-        self.outputs_path = os.path.realpath(outputs_path)
+    def my_init(self, deployments_path, erddap_content_path, erddap_flag_path):
+        self.deployments_path = os.path.realpath(deployments_path)
         self.erddap_content_path = os.path.realpath(erddap_content_path)
         self.erddap_flag_path = os.path.realpath(erddap_flag_path)
 
     def process_IN_CLOSE(self, event):
-        if self.valid_extension(event.name):
-            self.create_and_update_content(event)
+        self.create_and_update_content(event)
 
     def process_IN_MOVED_TO(self, event):
-        if self.valid_extension(event.name):
-            self.create_and_update_content(event)
-
-    def valid_extension(self, name):
-        _, ext = os.path.splitext(name)
-        if ext in ['.nc', 'nc4']:
-            return True
-        return False
+        self.create_and_update_content(event)
 
     def create_and_update_content(self, event):
         datasets_path = os.path.join(self.erddap_content_path, 'datasets.xml')
         netcdf_to_erddap_dataset(
+            deployments_path=self.deployments_path,
             datasets_path=datasets_path,
             netcdf_path=event.pathname,
             flag_path=self.erddap_flag_path
@@ -357,9 +355,9 @@ def create_erddap_arg_parser():
     )
     parser.add_argument(
         "-d",
-        "--data_path",
+        "--deployments_path",
         help="Path to the glider data netCDF output directory",
-        default=os.environ.get('GUTILS_NETCDF_DIRECTORY')
+        default=os.environ.get('GUTILS_DEPLOYMENTS_DIRECTORY')
     )
     parser.add_argument(
         "--erddap_content_path",
@@ -387,9 +385,9 @@ def main_to_erddap():
     parser = create_erddap_arg_parser()
     args = parser.parse_args()
 
-    if not args.data_path:
-        L.error("Please provide an --data_path agrument or set the "
-                "GUTILS_NETCDF_DIRECTORY environmental variable")
+    if not args.deployments_path:
+        L.error("Please provide an --deployments_path agrument or set the "
+                "GUTILS_DEPLOYMENTS_DIRECTORY environmental variable")
         sys.exit(parser.print_usage())
 
     if not args.erddap_content_path:
@@ -400,14 +398,14 @@ def main_to_erddap():
     wm = WatchManager()
     mask = IN_MOVED_TO | IN_CLOSE_WRITE
     wm.add_watch(
-        args.data_path,
+        args.deployments_path,
         mask,
         rec=True,
         auto_add=True
     )
 
     processor = Netcdf2ErddapProcessor(
-        outputs_path=args.data_path,
+        deployments_path=args.deployments_path,
         erddap_content_path=args.erddap_content_path,
         erddap_flag_path=args.erddap_flag_path
     )
@@ -418,7 +416,7 @@ def main_to_erddap():
 
     try:
         L.info("Watching {}, updating content at {} and flags at {}".format(
-            args.data_path,
+            args.deployments_path,
             args.erddap_content_path,
             args.erddap_flag_path
         ))

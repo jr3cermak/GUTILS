@@ -54,4 +54,5 @@ docs/_site
 docs/api
 docs/notebooks/.ipynb_checkpoints/
 .env
+.envrc
 .pytest_cache
