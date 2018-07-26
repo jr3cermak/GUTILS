@@ -9,7 +9,7 @@ from ftplib import FTP
 from pathlib import Path
 from copy import deepcopy
 from datetime import datetime
-from collections import namedtuple
+from types import SimpleNamespace
 
 import numpy as np
 import netCDF4 as nc4

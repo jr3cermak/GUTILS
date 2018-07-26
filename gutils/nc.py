@@ -205,12 +205,6 @@ def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=Pro
 
         profile_time = profile.t.dropna().iloc[0]
 
-        # output_path = os.path.join(
-        #     output_path,
-        #     'netcdf',
-        #     mode
-        # )
-
         if profile_id_type == ProfileIdTypes.EPOCH:
             # We are using the epoch as the profile_index!
             profile_index = calendar.timegm(profile_time.utctimetuple())
