@@ -33,7 +33,7 @@ L = logging.getLogger(__name__)
 
 class NetcdfProcessor(ProcessEvent):
     def __call__(self, event):
-        if os.path.splitext(event.name)[-1] in ['.nc']:
+        if os.path.splitext(event.name)[-1] in ['.nc'] and 'delayed' not in event.name:
             super().__call__(event)
 
 
