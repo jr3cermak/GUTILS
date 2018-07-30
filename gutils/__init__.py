@@ -17,7 +17,7 @@ from scipy.signal import boxcar, convolve
 import logging
 L = logging.getLogger(__name__)
 
-__version__ = "2.7.0"
+__version__ = "3.0.1"
 
 
 def boxcar_smooth_dataset(dataset, window_size):
