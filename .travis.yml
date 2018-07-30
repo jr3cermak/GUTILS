@@ -15,11 +15,15 @@ matrix:
       env: TEST_TARGET=coding_standards
     - python: 3.6
       env: TEST_TARGET=docs
+    - python: 3.6
+      env: TEST_TARGET=makerelease
   allow_failures:
     - python: 3.6
       env: TEST_TARGET=coding_standards
     - python: 3.6
       env: TEST_TARGET=docs
+    - python: 3.6
+      env: TEST_TARGET=makerelease
 
 before_install:
   # Install miniconda
@@ -72,8 +76,12 @@ script:
       ./docs/deploy.sh ;
     fi
 
+  - if [[ $TEST_TARGET == 'makerelease' ]]; then
+      echo "Making a release..." ;
+    fi
+
 after_success:
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_TAG" != "" ] && [ "$TEST_TARGET" == "default" ] && [ "$TRAVIS_PYTHON_VERSION" == "3.6" ]; then
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_TAG" != "" ] && [ "$TEST_TARGET" == "makerelease" ]; then
       conda install -n root conda-build anaconda-client ;
       conda build conda-recipe;
       anaconda -t $ANACONDA_TOKEN upload --force -u axiom-data-science $HOME/miniconda/**/gutils-*.tar.bz2 ;
@@ -83,5 +91,9 @@ deploy:
   provider: releases
   api_key:
     secure: 76K3ayTtDeEyEhtOftO3EnAOpg0uQ3vM+0rS7lr9O7otAbP3Kb4U37fPezqVMfFsjgy+J3EXqtpkIMMBj++Y+wRJV9NH1KXuNaro9OWjzXomvP3+O24qhDTwO5IWrqrApvTMaDUEcjysZ72PbY8KUysOp5xtsDAeNidJg7C5XOEITVeT2yqHKVmaVK+ndDEGtM71hzHCP5swx44fiqQ9LwWM2OI+OuozJHiBBE6uMgp/4OLX5vv61K71eADfsm9RyQe2+PqrBFfXUCWVSwPyuKBWM6YkjuSl6UpMJH5y+Q9iPP6sFZi31RfDbMG3s5rr5Qbi1+lIiKsVDfFWcU+O/jJqtfbgeNu/QsGL70Xu9iJhnioKE6QEDWbfwgeIsXhpXcd8VvTiW7HAWn244naFMcDvWhbXc28kv/NRWgh8rYI+gXg4m9ugK6XgrVc6ywY4/zRvWNpaarFciDiaYH0/rW3bmmiIVdS84FGiwYl/rjlkQtorvbo5PMUTa5VQDmZGICYHbFV5FEf1fyIHJCi+6k4yobGCg8KxaVJW3g6hONqdKX8rGmWlxCYHE+3eShNxGb/QndqP2XeorTeg2BCWTpqrvPeYWfqqfu9CSTzlDdaPNjxPp2qDiZpQ5y2gcBiT3wRXdY1ju+E3EBOYk8lE/XgdG7fAtJ5Yfs8lgwa8nZA=
+  file_glob: true
+  file: "$HOME/miniconda/**/gutils-*.tar.bz2"
+  skip_cleanup: true
   on:
     tags: true
+    condition: $TEST_TARGET == "makerelease"
