@@ -617,8 +617,8 @@ def process_folder(deployment_path, mode, merger_class, reader_class, subset=Tru
 
     from multiprocessing import Pool
 
-    binary_path = os.path.join(deployment_path, 'binary', mode),
-    ascii_path = os.path.join(deployment_path, 'ascii', mode)
+    binary_path = os.path.join(deployment_path, mode, 'binary')
+    ascii_path = os.path.join(deployment_path, mode, 'ascii')
 
     # Make ASCII files
     merger = merger_class(
@@ -628,12 +628,12 @@ def process_folder(deployment_path, mode, merger_class, reader_class, subset=Tru
     # The merge results contain a reference to the new produced ASCII file as well as what binary files went into it.
     merger.convert()
 
-    asciis = os.scandir(ascii_path)
+    asciis = sorted([ x.path for x in os.scandir(ascii_path) ])
 
     with Pool(processes=workers) as pool:
         kwargs = dict(
             reader_class=SlocumReader,
-            deployment_path=deployment_path,
+            deployments_path=Path(str(deployment_path)).parent,
             subset=subset,
             template=template,
             profile_id_type=profile_id_type,
@@ -642,7 +642,7 @@ def process_folder(deployment_path, mode, merger_class, reader_class, subset=Tru
 
         multiple_results = [
             pool.apply_async(
-                create_dataset, (), dict(file=x.path, **kwargs)
+                create_dataset, (), dict(file=x, **kwargs)
             ) for x in asciis
         ]
 
