@@ -272,7 +272,10 @@ class SlocumMerger(object):
 
     def __del__(self):
         # Remove tmpdir
-        shutil.rmtree(self.tmpdir)
+        try:
+            shutil.rmtree(self.tmpdir)
+        except FileNotFoundError:
+            pass
 
     def convert(self):
         # Copy to tempdir
