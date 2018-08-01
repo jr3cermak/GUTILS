@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 import warnings
 
-from gsw.gibbs.practical_salinity import SP_from_C
-from gsw.gibbs.conversions import SA_from_SP, CT_from_t
-from gsw.gibbs.density_enthalpy_48 import rho
+from gsw import rho, SP_from_C, SA_from_SP, CT_from_t
 
 
 def calculate_practical_salinity(conductivity, temperature, pressure):

@@ -1,6 +1,6 @@
 cc-plugin-glider>=1.0.4
 compliance-checker
-gsw<3.1.0
+gsw
 netCDF4
 numpy>=1.14
 pandas
