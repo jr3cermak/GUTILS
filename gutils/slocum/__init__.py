@@ -64,12 +64,47 @@ class SlocumReader(object):
                     title, value = al.split(':', 1)
                     metadata[title.strip()] = value.strip()
 
+        # Pull out the number of bytes for each column
+        #   The last numerical field is the number of bytes transmitted for each sensor:
+        #     1    A 1 byte integer value [-128 .. 127].
+        #     2    A 2 byte integer value [-32768 .. 32767].
+        #     4    A 4 byte float value (floating point, 6-7 significant digits,
+        #                                approximately 10^-38 to 10^38 dynamic range).
+        #     8    An 8 byte double value (floating point, 15-16 significant digits,
+        #                                  approximately 10^-308 to 10^308 dyn. range).
+        dtypedf = pd.read_csv(
+            self.ascii_file,
+            index_col=False,
+            skiprows=data_start - 1,
+            nrows=1,
+            header=None,
+            names=headers,
+            sep=' ',
+            skip_blank_lines=True,
+        )
+
+        def intflag_to_dtype(intvalue):
+            if intvalue == 1:
+                return np.object  # ints can't have NaN so use object for now
+            elif intvalue == 2:
+                return np.object  # ints can't have NaN so use object for now
+            elif intvalue == 4:
+                return np.float32
+            elif intvalue == 8:
+                return np.float64
+            else:
+                return np.object
+
+        inttypes = [ intflag_to_dtype(x) for x in dtypedf.iloc[0].astype(int).values ]
+        dtypes = dict(zip(dtypedf.columns, inttypes))
+
         df = pd.read_csv(
             self.ascii_file,
             index_col=False,
             skiprows=data_start,
             header=None,
             names=headers,
+            dtype=dtypes,
             sep=' ',
             skip_blank_lines=True,
         )
