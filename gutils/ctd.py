@@ -16,9 +16,7 @@ def calculate_practical_salinity(conductivity, temperature, pressure):
     """
 
     correct_sizes = (
-        conductivity.size ==
-        temperature.size ==
-        pressure.size
+        conductivity.size == temperature.size == pressure.size
     )
     if correct_sizes is False:
         raise ValueError('Arguments must all be the same length')
@@ -48,11 +46,7 @@ def calculate_density(temperature, pressure, salinity, latitude, longitude):
     """
 
     correct_sizes = (
-        temperature.size ==
-        pressure.size ==
-        salinity.size ==
-        latitude.size ==
-        longitude.size
+        temperature.size == pressure.size == salinity.size == latitude.size == longitude.size
     )
     if correct_sizes is False:
         raise ValueError('Arguments must all be the same length')
