@@ -390,27 +390,27 @@ def create_arg_parser():
     parser.add_argument(
         '-ts', '--tsint',
         help="Interpolation window to consider when assigning profiles",
-        default=2
+        default=None
     )
     parser.add_argument(
         '-fp', '--filter_points',
         help="Filter out profiles that do not have at least this number of points",
-        default=5
+        default=None
     )
     parser.add_argument(
         '-fd', '--filter_distance',
         help="Filter out profiles that do not span at least this vertical distance (meters)",
-        default=1
+        default=None
     )
     parser.add_argument(
         '-ft', '--filter_time',
         help="Filter out profiles that last less than this numer of seconds",
-        default=10
+        default=None
     )
     parser.add_argument(
         '-fz', '--filter_z',
         help="Filter out profiles that are not completely below this depth (meters)",
-        default=1
+        default=None
     )
     parser.add_argument(
         '--no-subset',
@@ -429,12 +429,9 @@ def create_arg_parser():
     return parser
 
 
-def create_dataset(file, reader_class, deployments_path, subset, template, profile_id_type, **filters):
-
-    processed_df, mode = process_dataset(file, reader_class, **filters)
-
-    if processed_df is None:
-        return 1
+def create_dataset(file, reader_class, deployments_path, subset, template, profile_id_type, **filter_args):
+    # Remove None filters from the arguments
+    filter_args = { k: v for k, v in filter_args.items() if v is not None }
 
     # Figure out the netCDF output path based on the file and the deployments_path
     dep_path = Path(deployments_path)
@@ -444,11 +441,19 @@ def create_dataset(file, reader_class, deployments_path, subset, template, profi
         if dep_path == pp:
             break
         individual_dep_path = pp
-
     config_path = individual_dep_path / 'config'
-    output_path = individual_dep_path / mode / 'netcdf'
 
+    # Extract the filters from the config and override with passed in filters that are not None
     attrs = read_attrs(config_path, template=template)
+    file_filters = attrs.pop('filters', {})
+    filters = dict_update(file_filters, filter_args)
+
+    processed_df, mode = process_dataset(file, reader_class, **filters)
+
+    if processed_df is None:
+        return 1
+
+    output_path = individual_dep_path / mode / 'netcdf'
     return create_netcdf(attrs, processed_df, output_path, mode, profile_id_type, subset=subset)
 
 

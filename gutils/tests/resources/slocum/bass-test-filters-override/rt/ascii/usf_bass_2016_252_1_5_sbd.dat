@@ -1,0 +1,21 @@
+dbd_label: DBD_ASC(dinkum_binary_data_ascii)file
+encoding_ver: 2
+num_ascii_tags: 14
+all_sensors: 0
+filename: usf-bass-2016-252-1-5
+the8x3_filename: 02470005
+filename_extension: sbd
+filename_label: usf-bass-2016-252-1-5-sbd(02470005)
+mission_name: SLOPE.MI
+fileopen_time: Fri_Sep__9_15:04:20_2016
+sensors_per_cycle: 33
+num_label_lines: 3
+num_segments: 1
+segment_filename_0: usf-bass-2016-252-1-5
+c_heading c_wpt_lat m_altitude m_avg_speed m_ballast_pumped m_battery m_battpos m_depth m_depth_rate m_gps_lat m_gps_lon m_heading m_lat m_leakdetect_voltage m_lon m_mission_avg_speed_climbing m_mission_avg_speed_diving m_pitch m_present_time m_roll m_vacuum m_vehicle_temp m_water_depth m_water_vx m_water_vy sci_bbfl2s_bb_scaled sci_bbfl2s_cdom_scaled sci_bbfl2s_chlor_scaled sci_m_present_time sci_oxy3835_oxygen sci_water_cond sci_water_pressure sci_water_temp 
+rad lat m m/s cc volts in m m/s lat lon rad lat volts lon m/s m/s rad timestamp rad inHg degC m m/s m/s nodim ppb ug/l timestamp nodim s/m bar degc 
+4 8 4 4 4 4 4 4 4 8 8 4 8 4 8 4 4 4 8 4 4 4 4 4 4 4 4 4 8 4 4 4 4 
+NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473433389.98633 NaN NaN NaN NaN NaN NaN 0 0 0 1473433389.98633 0 0 0 0 
+0.668442 2830 17.4676 0.191703 224.435 15.6566 0.950014 0.32011 0.00576372 2821.4952 -8017.2571 0.734804 2821.49520001601 2.49695 -8017.25709999989 0.237362 0.189855 0.444399 1473433409.9888 0.101582 8.19426 29.9062 -1 -0.00912774 0.15986 NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN 228.659 NaN 0.945095 0.685727 0.00686748 NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473433409.9888 NaN NaN NaN -1 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473433414.39468 NaN NaN NaN NaN NaN NaN 0 0 0 1473433414.39468 0 0 0 0 
