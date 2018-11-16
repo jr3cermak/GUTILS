@@ -2,9 +2,9 @@ name: gutils36
 channels:
   - conda-forge
   - axiom-data-science
-  - kwilcox
   - defaults
 dependencies:
+  - pocean-core=1.5.0=py_0
   - alabaster=0.7.11=py_3
   - asn1crypto=0.24.0=py36_0
   - atomicwrites=1.1.5=py36_0
@@ -17,14 +17,15 @@ dependencies:
   - bottleneck=1.2.1=py36_1
   - ca-certificates=2018.4.16=0
   - cartopy=0.16.0=py36_0
-  - cc-plugin-glider=1.0.5=py_1
+  - cc-plugin-glider=1.0.6=py_1
   - certifi=2018.4.16=py36_0
-  - cf_units=1.2.0=py36_0
+  - cf_units=2.0.1=py36h7eb728f_2
   - cffi=1.11.5=py36_0
+  - cftime=1.0.1=py36h7eb728f_1
   - chardet=3.0.4=py36_0
   - click=6.7=py_1
   - cloudpickle=0.5.3=py_0
-  - compliance-checker=4.0.1=py_1
+  - compliance-checker=4.1.1=py_0
   - cryptography=2.2.1=py36_0
   - curl=7.59.0=1
   - cycler=0.10.0=py36_0
@@ -38,6 +39,7 @@ dependencies:
   - docutils=0.14=py36_0
   - entrypoints=0.2.3=py36_1
   - expat=2.2.5=0
+  - flake8=3.5.0=py36_1000
   - fontconfig=2.12.6=0
   - freetype=2.8.1=0
   - geos=3.6.2=1
@@ -46,7 +48,7 @@ dependencies:
   - gmp=6.1.2=0
   - gst-plugins-base=1.8.0=0
   - gstreamer=1.8.0=1
-  - gsw=3.0.6=py36_0
+  - gsw=3.2.1=py36h470a237_3
   - h5netcdf=0.6.1=py_0
   - h5py=2.7.1=py36_2
   - hdf4=4.2.13=0
@@ -85,21 +87,22 @@ dependencies:
   - lxml=4.2.1=py36_0
   - markupsafe=1.0=py36_0
   - matplotlib=2.2.2=py36_1
+  - mccabe=0.6.1=py_1
   - mistune=0.8.3=py36_1
   - more-itertools=4.1.0=py_0
   - msgpack-python=0.5.6=py36h2d50403_2
   - nbconvert=5.3.1=py_1
   - nbformat=4.4.0=py36_0
   - ncurses=5.9=10
-  - netcdf4=1.3.1=py36_3
+  - netcdf4=1.4.0=py36_0
   - notebook=5.4.1=py36_0
-  - numpy=1.14.5=py36_blas_openblashd3ea46f_201
+  - numpy=1.15.2=py36_blas_openblashd3ea46f_1
   - olefile=0.45.1=py36_0
   - openblas=0.2.20=7
   - openssl=1.0.2o=0
   - owslib=0.16.0=py_0
   - packaging=17.1=py_0
-  - pandas=0.23.3=py36_0
+  - pandas=0.23.4=py36hf8a1672_0
   - pandoc=2.1.3=0
   - pandocfilters=1.4.2=py36_0
   - parso=0.2.0=py_0
@@ -112,27 +115,29 @@ dependencies:
   - pillow=5.1.0=py36_0
   - pip=9.0.3=py36_0
   - pluggy=0.6.0=py_0
-  - pocean-core=1.4.1=py_0
   - proj4=4.9.3=5
   - prompt_toolkit=1.0.15=py36_0
   - psutil=5.4.6=py36_0
   - ptyprocess=0.5.2=py36_0
   - py=1.5.3=py_0
+  - pycodestyle=2.4.0=py_1
   - pycparser=2.18=py36_0
   - pyepsg=0.3.2=py36_0
   - pyflakes=1.6.0=py36_0
   - pygc=1.2.1=py36_0
   - pygeoif=0.7=py36_0
   - pygments=2.2.0=py36_0
-  - pyinotify=0.9.6=py36_0
+  - pyinotify=0.9.6=py36_1000
   - pyopenssl=17.5.0=py36_1
   - pyparsing=2.2.0=py36_0
   - pyproj=1.9.5.1=py36_0
   - pyqt=5.6.0=py36_5
   - pyshp=1.2.12=py_0
   - pysocks=1.6.8=py36_1
-  - pytest=3.6.3=py36_0
-  - pytest-flakes=2.0.0=py_1
+  - pytest=3.6.4=py36_0
+  - pytest-env=0.6.2=py_0
+  - pytest-flake8=1.0.2=py36_1001
+  - pytest-flakes=4.0.0=py_0
   - pytest-pep8=1.0.6=py_1
   - python=3.6.5=1
   - python-dateutil=2.7.2=py_0
@@ -145,14 +150,14 @@ dependencies:
   - readline=7.0=0
   - regex=2017.07.28=py36_0
   - requests=2.18.4=py36_1
-  - scipy=1.1.0=py36_blas_openblashd3ea46f_201
+  - scipy=1.1.0=py36_blas_openblash7943236_201
   - send2trash=1.5.0=py_0
   - setuptools=39.1.0=py36_0
   - shapely=1.6.4=py36_0
   - simplegeneric=0.8.1=py36_0
   - simplejson=3.14.0=py36_0
   - sip=4.18=py36_1
-  - six=1.11.0=py36_1
+  - six=1.11.0=py36_1001
   - snowballstemmer=1.2.1=py_1
   - sortedcontainers=2.0.3=py36_0
   - sphinx=1.7.5=py36_0
@@ -172,7 +177,7 @@ dependencies:
   - wcwidth=0.1.7=py36_0
   - webencodings=0.5=py36_0
   - wheel=0.31.0=py36_0
-  - whichcraft=0.4.1=py_1
+  - whichcraft=0.5.2=py_1
   - widgetsnbextension=3.2.1=py36_0
   - xarray=0.10.7=py36_0
   - xorg-libxau=1.0.8=3
