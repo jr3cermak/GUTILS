@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 import warnings
 
-from gsw.gibbs.practical_salinity import SP_from_C
-from gsw.gibbs.conversions import SA_from_SP, CT_from_t
-from gsw.gibbs.density_enthalpy_48 import rho
+from gsw import rho, SP_from_C, SA_from_SP, CT_from_t
 
 
 def calculate_practical_salinity(conductivity, temperature, pressure):
@@ -18,9 +16,7 @@ def calculate_practical_salinity(conductivity, temperature, pressure):
     """
 
     correct_sizes = (
-        conductivity.size ==
-        temperature.size ==
-        pressure.size
+        conductivity.size == temperature.size == pressure.size
     )
     if correct_sizes is False:
         raise ValueError('Arguments must all be the same length')
@@ -50,11 +46,7 @@ def calculate_density(temperature, pressure, salinity, latitude, longitude):
     """
 
     correct_sizes = (
-        temperature.size ==
-        pressure.size ==
-        salinity.size ==
-        latitude.size ==
-        longitude.size
+        temperature.size == pressure.size == salinity.size == latitude.size == longitude.size
     )
     if correct_sizes is False:
         raise ValueError('Arguments must all be the same length')

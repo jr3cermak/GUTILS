@@ -1,0 +1,35 @@
+dbd_label: DBD_ASC(dinkum_binary_data_ascii)file
+encoding_ver: 2
+num_ascii_tags: 14
+all_sensors: 0
+filename: usf-bass-2016-253-0-5
+the8x3_filename: 02480005
+filename_extension: sbd
+filename_label: usf-bass-2016-253-0-5-sbd(02480005)
+mission_name: SLOPE.MI
+fileopen_time: Sat_Sep_10_09:21:22_2016
+sensors_per_cycle: 34
+num_label_lines: 3
+num_segments: 1
+segment_filename_0: usf-bass-2016-253-0-5
+c_heading c_wpt_lat c_wpt_lon m_altitude m_avg_speed m_ballast_pumped m_battery m_battpos m_depth m_depth_rate m_gps_lat m_gps_lon m_heading m_lat m_leakdetect_voltage m_lon m_mission_avg_speed_climbing m_mission_avg_speed_diving m_pitch m_present_time m_roll m_vacuum m_vehicle_temp m_water_depth m_water_vx m_water_vy sci_bbfl2s_bb_scaled sci_bbfl2s_cdom_scaled sci_bbfl2s_chlor_scaled sci_m_present_time sci_oxy3835_oxygen sci_water_cond sci_water_pressure sci_water_temp 
+rad lat lon m m/s cc volts in m m/s lat lon rad lat volts lon m/s m/s rad timestamp rad inHg degC m m/s m/s nodim ppb ug/l timestamp nodim s/m bar degc 
+4 8 8 4 4 4 4 4 4 4 8 8 4 8 4 8 4 4 4 8 4 4 4 4 4 4 4 4 4 8 4 4 4 4 
+NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499213.41556 NaN NaN NaN NaN NaN NaN 0 0 0 1473499213.41556 0 0 0 0 
+1.10383 2830 -8011 4.45788 0.215823 231.789 14.981 0.98346 0.269546 -0.00385009 2827.6488 -8015.9696 1.11936 2827.64880001669 2.49512 -8015.96959999988 0.178393 0.263142 -0.159445 1473499231.03113 0.111824 8.19827 28.2812 -1 -0.0190955 0.0812683 NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN 231.69 NaN 0.985428 0.226761 -0.000810399 2827.6488 -8015.9696 NaN NaN NaN NaN NaN NaN NaN 1473499231.03113 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499237.44788 NaN NaN NaN NaN NaN NaN 0 0 0 1473499237.44788 0 0 0 0 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.642942 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499287.43921 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.343447 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499292.82596 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.596268 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499298.12897 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.961885 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499303.42926 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.938548 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499312.0687 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.269546 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499317.16815 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.584599 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499322.2648 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.355116 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499327.35748 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.207313 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499332.45169 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.246208 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499337.54013 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN 0.986411 0.845199 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499342.63071 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.238429 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499347.73035 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.596268 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499353.0408 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 
+NaN NaN NaN NaN NaN NaN NaN NaN 0.172307 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 1473499358.33786 NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN 

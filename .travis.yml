@@ -1,6 +1,7 @@
 language: python
 
 sudo: false
+dist: xenial
 
 env:
   global:
@@ -10,6 +11,8 @@ matrix:
   fast_finish: true
   include:
     - python: 3.6
+      env: TEST_TARGET=default
+    - python: 3.7
       env: TEST_TARGET=default
     - python: 3.6
       env: TEST_TARGET=coding_standards
