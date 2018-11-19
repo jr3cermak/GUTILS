@@ -12,42 +12,32 @@ import logging
 L = logging.getLogger(__name__)
 
 
-def binarize_diff(data):
-    data[data <= 0] = -1
-    data[data >= 0] = 1
-    return data
-
-
 def calculate_delta_depth(interp_data):
+    """ Figure out when the interpolated Z data turns a corner
+    """
     delta_depth = np.diff(interp_data)
-    delta_depth = binarize_diff(delta_depth)
+    delta_depth[delta_depth <= 0] = -1
+    delta_depth[delta_depth >= 0] = 1
     delta_depth = boxcar_smooth_dataset(delta_depth, 2)
+    delta_depth[delta_depth <= 0] = -1
+    delta_depth[delta_depth >= 0] = 1
     return delta_depth
 
 
-def assign_profiles(df, tsint=None):
-    """Returns the start and stop timestamps for every profile indexed from the
-    depth timeseries
-    Parameters:
-        time, depth
-    Returns:
-        A Nx2 array of the start and stop timestamps indexed from the yo
-    Use filter_yo_extrema to remove invalid/incomplete profiles
-    """
-
+def assign_profiles(df, tsint=1):
     profile_df = df.copy()
     profile_df['profile'] = np.nan  # Fill profile with nans
     tmp_df = df.copy()
 
     if tsint is None:
-        tsint = 2
+        tsint = 1
 
     # Make 't' epochs and not a DateTimeIndex
     tmp_df['t'] = masked_epoch(tmp_df.t)
     # Set negative depth values to NaN
     tmp_df.loc[tmp_df.z <= 0, 'z'] = np.nan
 
-    # Remove NaN rows
+    # Remove any rows where time or z is NaN
     tmp_df = tmp_df.dropna(subset=['t', 'z'], how='any')
 
     if len(tmp_df) < 2:
@@ -73,25 +63,32 @@ def assign_profiles(df, tsint=None):
     filtered_z = boxcar_smooth_dataset(interp_z, max(tsint // 2, 1))
     delta_depth = calculate_delta_depth(filtered_z)
 
-    p_inds = np.empty((0, 2))
+    # Find where the depth indexes (-1 and 1) flip
     inflections = np.where(np.diff(delta_depth) != 0)[0]
+    # Do we have any profiles?
     if inflections.size < 1:
         return profile_df
-    p_inds = np.append(p_inds, [[0, inflections[0]]], axis=0)
 
-    for p in range(len(inflections) - 1):
-        p_inds = np.append(p_inds, [[inflections[p], inflections[p + 1]]], axis=0)
-    p_inds = np.append(p_inds, [[inflections[-1], len(ts) - 1]], axis=0)
+    # Prepend a zero at the beginning start the series of profiles
+    p_inds = np.insert(inflections, 0, 0)
+    # Append the size of the time array to end the series of profiles
+    p_inds = np.append(p_inds, ts.size - 1)
+    # Zip up neighbors to get the ranges of each profile in interpolated space
+    p_inds = list(zip(p_inds[0:-1], p_inds[1:]))
+    # Convert the profile indexes into datetime objets
+    p_inds = [
+        (
+            pd.to_datetime(ts[int(p0)], unit='s'),
+            pd.to_datetime(ts[int(p1)], unit='s')
+        )
+        for p0, p1 in p_inds
+    ]
 
-    # Start profile index
-    profile_index = 0
-    ts_window = tsint * 2
+    # We have the profiles in interpolated space, now associate this
+    # space with the actual data using the datetimes.
 
     # Iterate through the profile start/stop indices
-    for p0, p1 in p_inds:
-
-        min_time = pd.to_datetime(ts[int(p0)] - ts_window, unit='s')
-        max_time = pd.to_datetime(ts[int(p1)] + ts_window, unit='s')
+    for profile_index, (min_time, max_time) in enumerate(p_inds):
 
         # Get rows between the min and max time
         time_between = profile_df.t.between(min_time, max_time, inclusive=True)
@@ -107,17 +104,7 @@ def assign_profiles(df, tsint=None):
         else:
             L.debug('No data rows matched the time range of this profile, Skipping.')
 
-        # Increment the profile index
-        profile_index += 1
-
     # Remove rows that were not assigned a profile
     # profile_df = profile_df.loc[~profile_df.profile.isnull()]
 
-    # L.info(
-    #     list(zip(
-    #         profile_df.t,
-    #         profile_df.profile,
-    #         profile_df.z,
-    #     ))[0:20]
-    # )
     return profile_df
