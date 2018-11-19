@@ -117,9 +117,9 @@ class SlocumReader(object):
         # Convert NMEA coordinates to decimal degrees
         for col in df.columns:
             # Ignore if the m_gps_lat and/or m_gps_lon value is the default masterdata value
-            if '_lat' in col:
+            if col.endswith('_lat'):
                 df[col] = df[col].map(lambda x: get_decimal_degrees(x) if x <= 9000 else np.nan)
-            elif '_lon' in col:
+            elif col.endswith('_lon'):
                 df[col] = df[col].map(lambda x: get_decimal_degrees(x) if x < 18000 else np.nan)
 
         # Standardize 'time' to the 't' column
