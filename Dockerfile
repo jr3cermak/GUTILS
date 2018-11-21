@@ -57,7 +57,7 @@ RUN mkdir -p /etc/my_init.d && \
     mkdir -p /gutils
 COPY docker/init/* /etc/my_init.d/
 
-ENV GUTILS_VERSION 3.0.1
+ENV GUTILS_VERSION 3.1.0
 
 ENV PROJECT_ROOT /code
 RUN mkdir -p "$PROJECT_ROOT"
