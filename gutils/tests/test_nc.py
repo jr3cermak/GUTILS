@@ -51,12 +51,12 @@ class TestCreateGliderScript(GutilsTestClass):
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473499507
+            assert ncd.variables['profile_id'][0] == 1473499526
 
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473509118
+            assert ncd.variables['profile_id'][0] == 1473509128
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])
@@ -85,12 +85,12 @@ class TestCreateGliderScript(GutilsTestClass):
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473499507
+            assert ncd.variables['profile_id'][0] == 1473499526
 
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473509118
+            assert ncd.variables['profile_id'][0] == 1473509128
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])
@@ -125,7 +125,7 @@ class TestCreateGliderScript(GutilsTestClass):
         # Only profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473507407
+            assert ncd.variables['profile_id'][0] == 1473507417
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])
@@ -205,7 +205,7 @@ class TestCreateGliderScript(GutilsTestClass):
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1435264145
+            assert ncd.variables['profile_id'][0] == 1435264155
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])

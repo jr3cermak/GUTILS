@@ -68,7 +68,7 @@ class TestFindProfile(GutilsTestClass):
     def test_find_profile(self):
         assert len(self.profiled_dataset) != 0
         assert len(self.profiled_dataset) == len(self.df)
-        assert len(self.profiled_dataset.profile.dropna().unique()) == 63
+        assert len(self.profiled_dataset.profile.dropna().unique()) == 32
 
         # import matplotlib.dates as mpd
         # df = self.profiled_dataset.copy()
