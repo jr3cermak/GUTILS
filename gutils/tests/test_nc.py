@@ -17,6 +17,8 @@ from pocean.dsg import ContiguousRaggedTrajectoryProfile
 
 import logging
 L = logging.getLogger(__name__)  # noqa
+logging.getLogger('gutils.nc').setLevel(logging.WARNING)
+logging.getLogger('pocean').setLevel(logging.ERROR)
 
 
 def decoder(x):
@@ -131,7 +133,7 @@ class TestCreateGliderScript(GutilsTestClass):
             assert check_dataset(ds(file=o)) == 0
 
         # Cleanup
-        #shutil.rmtree(out_base)
+        shutil.rmtree(out_base)
 
     def test_all_ascii(self):
         out_base = resource('slocum', 'bass-test-ascii', 'rt', 'netcdf')
@@ -272,7 +274,7 @@ class TestNetcdfToErddap(GutilsTestClass):
         ds = find_dataset(xmltree)[0]
         vs = [ d.findtext('sourceName') for d in ds.iter('dataVariable') ]
 
-        # Temperatuer is only in 2.nc and not 1.nc or 3.nc. Make sure
+        # Temperature is only in 2.nc and not 1.nc or 3.nc. Make sure
         # it was carried through correctly
         assert 'temperature' in vs
         assert 'conductivity' in vs
