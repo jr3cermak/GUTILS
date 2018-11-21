@@ -1,5 +1,6 @@
 #!python
 # coding=utf-8
+import os
 import pandas as pd
 
 from gutils.yo import assign_profiles
@@ -9,10 +10,10 @@ L = logging.getLogger(__name__)
 
 
 def default_filter(dataset):
-    dataset, rm_depth = filter_profile_depth(dataset, reindex=False)
-    dataset, rm_points = filter_profile_number_of_points(dataset, reindex=False)
-    dataset, rm_time = filter_profile_timeperiod(dataset, reindex=False)
-    dataset, rm_distance = filter_profile_distance(dataset, reindex=True)
+    dataset, rm_depth,    _ = filter_profile_depth(dataset, reindex=False)
+    dataset, rm_points,   _ = filter_profile_number_of_points(dataset, reindex=False)
+    dataset, rm_time,     _ = filter_profile_timeperiod(dataset, reindex=False)
+    dataset, rm_distance, _ = filter_profile_distance(dataset, reindex=True)
     total_filtered = rm_depth + rm_points + rm_time + rm_distance
     return dataset, total_filtered
 
@@ -46,7 +47,7 @@ def filter_profile_depth(dataset, below=None, reindex=True):
     def conditional(profile):
         return profile.z.max() >= below
 
-    return filter_profiles(dataset, conditional, reindex=reindex)
+    return (*filter_profiles(dataset, conditional, reindex=reindex), below)
 
 
 def filter_profile_timeperiod(dataset, timespan_condition=None, reindex=True):
@@ -62,7 +63,7 @@ def filter_profile_timeperiod(dataset, timespan_condition=None, reindex=True):
         timespan = profile.t.max() - profile.t.min()
         return timespan >= pd.Timedelta(timespan_condition, unit='s')
 
-    return filter_profiles(dataset, conditional, reindex=reindex)
+    return (*filter_profiles(dataset, conditional, reindex=reindex), timespan_condition)
 
 
 def filter_profile_distance(dataset, distance_condition=None, reindex=True):
@@ -78,7 +79,7 @@ def filter_profile_distance(dataset, distance_condition=None, reindex=True):
         distance = abs(profile.z.max() - profile.z.min())
         return distance >= distance_condition
 
-    return filter_profiles(dataset, conditional, reindex=reindex)
+    return (*filter_profiles(dataset, conditional, reindex=reindex), distance_condition)
 
 
 def filter_profile_number_of_points(dataset, points_condition=None, reindex=True):
@@ -93,7 +94,7 @@ def filter_profile_number_of_points(dataset, points_condition=None, reindex=True
     def conditional(profile):
         return len(profile) >= points_condition
 
-    return filter_profiles(dataset, conditional, reindex=reindex)
+    return (*filter_profiles(dataset, conditional, reindex=reindex), points_condition)
 
 
 def process_dataset(file, reader_class, tsint=None, filter_z=None, filter_points=None, filter_time=None, filter_distance=None):
@@ -123,18 +124,18 @@ def process_dataset(file, reader_class, tsint=None, filter_z=None, filter_points
 
         # Filter data
         original_profiles = len(profiles.profile.unique())
-        filtered, rm_depth    = filter_profile_depth(profiles, below=filter_z, reindex=False)
-        filtered, rm_points   = filter_profile_number_of_points(filtered, points_condition=filter_points, reindex=False)
-        filtered, rm_time     = filter_profile_timeperiod(filtered, timespan_condition=filter_time, reindex=False)
-        filtered, rm_distance = filter_profile_distance(filtered, distance_condition=filter_distance, reindex=True)
+        filtered, rm_depth,    did_depth    = filter_profile_depth(profiles, below=filter_z, reindex=False)
+        filtered, rm_points,   did_points   = filter_profile_number_of_points(filtered, points_condition=filter_points, reindex=False)
+        filtered, rm_time,     did_time     = filter_profile_timeperiod(filtered, timespan_condition=filter_time, reindex=False)
+        filtered, rm_distance, did_distance = filter_profile_distance(filtered, distance_condition=filter_distance, reindex=True)
         total_filtered = rm_depth + rm_points + rm_time + rm_distance
         L.info(
             (
-                'Filtered {}/{} profiles from {}'.format(total_filtered, original_profiles, file),
-                'Depth ({}m): {}'.format(filter_z, rm_depth),
-                'Points ({}): {}'.format(filter_points, rm_points),
-                'Time ({}s): {}'.format(filter_time, rm_time),
-                'Distance ({}m): {}'.format(filter_distance, rm_distance),
+                'Filtered {}/{} profiles from {}'.format(total_filtered, original_profiles, os.path.basename(file)),
+                'Depth ({}m): {}'.format(did_depth, rm_depth),
+                'Points ({}): {}'.format(did_points, rm_points),
+                'Time ({}s): {}'.format(did_time, rm_time),
+                'Distance ({}m): {}'.format(did_distance, rm_distance),
             )
         )
 

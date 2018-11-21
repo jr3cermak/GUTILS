@@ -85,7 +85,7 @@ class TestFindProfile(GutilsTestClass):
         df = df[~df.z.isnull()]
         profs = df.profile[~df.profile.isnull()].unique()
 
-        fdf, _ = filter_profile_depth(
+        fdf, _, _ = filter_profile_depth(
             self.profiled_dataset,
             below=meters
         )
@@ -94,7 +94,7 @@ class TestFindProfile(GutilsTestClass):
         assert is_continuous(fdf) is True
 
         # No profiles are deeper than 10000m
-        fdf, _ = filter_profile_depth(
+        fdf, _, _ = filter_profile_depth(
             self.profiled_dataset,
             below=10000
         )
@@ -105,25 +105,25 @@ class TestFindProfile(GutilsTestClass):
 
     def test_filter_profile_timeperiod(self):
         # This should filter all profiles that are less than 300 seconds long
-        fdf, _ = filter_profile_timeperiod(
+        fdf, _, _ = filter_profile_timeperiod(
             self.profiled_dataset,
             timespan_condition=300
         )
         profiles = fdf.profile.unique()
-        assert len(profiles) == 17
+        assert len(profiles) == 22
         assert is_continuous(fdf) is True
 
         # This should filter all profiles that are less than 0 seconds (none of them)
-        fdf, _ = filter_profile_timeperiod(
+        fdf, _, _ = filter_profile_timeperiod(
             self.profiled_dataset,
             timespan_condition=0
         )
         profiles = fdf.profile.unique()
-        assert len(profiles) == 63
+        assert len(profiles) == 32
         assert is_continuous(fdf) is True
 
         # This should filter all profiles that are less than 10000 seconds (all of them)
-        fdf, _ = filter_profile_timeperiod(
+        fdf, _, _ = filter_profile_timeperiod(
             self.profiled_dataset,
             timespan_condition=10000
         )
@@ -134,16 +134,16 @@ class TestFindProfile(GutilsTestClass):
 
     def test_filter_profile_distance(self):
         # This should filter all profiles that are not 0m in depth distance
-        fdf, _ = filter_profile_distance(
+        fdf, _, _ = filter_profile_distance(
             self.profiled_dataset,
             distance_condition=0
         )
         profiles = fdf.profile.unique()
-        assert len(profiles) == 58
+        assert len(profiles) == 32
         assert is_continuous(fdf) is True
 
         # This should filter all profiles that are not 10000m in depth distance (all of them)
-        fdf, _ = filter_profile_distance(
+        fdf, _, _ = filter_profile_distance(
             self.profiled_dataset,
             distance_condition=10000
         )
@@ -154,16 +154,16 @@ class TestFindProfile(GutilsTestClass):
 
     def test_filter_profile_number_of_points(self):
         # This should filter all profiles that don't have any points
-        fdf, _ = filter_profile_number_of_points(
+        fdf, _, _ = filter_profile_number_of_points(
             self.profiled_dataset,
             points_condition=0
         )
         profiles = fdf.profile.unique()
-        assert len(profiles) == 63
+        assert len(profiles) == 32
         assert is_continuous(fdf) is True
 
         # This should filter all profiles that don't have at least 100000 points (all of them)
-        fdf, _ = filter_profile_number_of_points(
+        fdf, _, _ = filter_profile_number_of_points(
             self.profiled_dataset,
             points_condition=100000
         )
@@ -175,7 +175,7 @@ class TestFindProfile(GutilsTestClass):
         # Compute manually the longest profile in terms of points and filter by that
         # so we only have one as a result
         max_points = self.profiled_dataset.groupby('profile').size().max()
-        fdf, _ = filter_profile_number_of_points(
+        fdf, _, _ = filter_profile_number_of_points(
             self.profiled_dataset,
             points_condition=max_points
         )
@@ -185,7 +185,7 @@ class TestFindProfile(GutilsTestClass):
         assert profiles == [0]  # Make sure it reindexed to the "0" profile
 
         # Now if we add one we should get no profiles
-        fdf, _ = filter_profile_number_of_points(
+        fdf, _, _ = filter_profile_number_of_points(
             self.profiled_dataset,
             points_condition=max_points + 1
         )
@@ -195,10 +195,10 @@ class TestFindProfile(GutilsTestClass):
         assert fdf.empty
 
     def test_default_filter_composite(self):
-        fdf, _ = filter_profile_depth(self.profiled_dataset)
-        fdf, _ = filter_profile_number_of_points(fdf)
-        fdf, _ = filter_profile_timeperiod(fdf)
-        fdf, _ = filter_profile_distance(fdf)
+        fdf, _, _ = filter_profile_depth(self.profiled_dataset)
+        fdf, _, _ = filter_profile_number_of_points(fdf)
+        fdf, _, _ = filter_profile_timeperiod(fdf)
+        fdf, _, _ = filter_profile_distance(fdf)
         profiles = fdf.profile.unique()
         assert len(profiles) == 32
         assert is_continuous(fdf) is True
