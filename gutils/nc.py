@@ -586,7 +586,8 @@ def merge_profile_netcdf_files(folder, output):
                 df = old.to_dataframe(axes=axes, clean_cols=False)
                 dfs.append(df)
 
-        full_df = pd.concat(dfs, ignore_index=True)
+        full_df = pd.concat(dfs, ignore_index=True, sort=False)
+        full_df = full_df.sort_values(['trajectory', 'profile_id', 'profile_time', 'depth'])
 
         # Now add a profile axes
         axes = {
