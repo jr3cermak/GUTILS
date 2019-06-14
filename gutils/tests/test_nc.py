@@ -29,123 +29,15 @@ class TestCreateGliderScript(GutilsTestClass):
 
     def test_defaults(self):
         out_base = resource('slocum', 'bass-test-ascii', 'rt', 'netcdf')
-        args = dict(
-            file=resource('slocum', 'bass-test-ascii', 'rt', 'ascii', 'usf_bass_2016_253_0_6_sbd.dat'),
-            reader_class=SlocumReader,
-            deployments_path=resource('slocum'),
-            subset=False,
-            template='trajectory',
-            profile_id_type=1,
-            tsint=10,
-            filter_distance=1,
-            filter_points=5,
-            filter_time=10,
-            filter_z=1
-        )
-        create_dataset(**args)
 
-        output_files = sorted(os.listdir(out_base))
-        output_files = [ os.path.join(out_base, o) for o in output_files ]
-        assert len(output_files) == 32
-
-        # First profile
-        with nc4.Dataset(output_files[0]) as ncd:
-            assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473499526
-
-        # Last profile
-        with nc4.Dataset(output_files[-1]) as ncd:
-            assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473509128
-
-        # Check netCDF file for compliance
-        ds = namedtuple('Arguments', ['file'])
-        for o in output_files:
-            assert check_dataset(ds(file=o)) == 0
-
-        # Cleanup
-        shutil.rmtree(out_base)
-
-    def test_load_filters_from_config(self):
-        out_base = resource('slocum', 'bass-test-filters-config', 'rt', 'netcdf')
-        args = dict(
-            file=resource('slocum', 'bass-test-filters-config', 'rt', 'ascii', 'usf_bass_2016_253_0_6_sbd.dat'),
-            reader_class=SlocumReader,
-            deployments_path=resource('slocum'),
-            subset=False,
-            template='trajectory',
-            profile_id_type=1,
-        )
-        create_dataset(**args)
-
-        output_files = sorted(os.listdir(out_base))
-        output_files = [ os.path.join(out_base, o) for o in output_files ]
-        assert len(output_files) == 32
-
-        # First profile
-        with nc4.Dataset(output_files[0]) as ncd:
-            assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473499526
-
-        # Last profile
-        with nc4.Dataset(output_files[-1]) as ncd:
-            assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473509128
-
-        # Check netCDF file for compliance
-        ds = namedtuple('Arguments', ['file'])
-        for o in output_files:
-            assert check_dataset(ds(file=o)) == 0
-
-        # Cleanup
-        shutil.rmtree(out_base)
-
-    def test_parameter_filters_override_config(self):
-        out_base = resource('slocum', 'bass-test-filters-override', 'rt', 'netcdf')
-        args = dict(
-            file=resource('slocum', 'bass-test-filters-override', 'rt', 'ascii', 'usf_bass_2016_253_0_6_sbd.dat'),
-            reader_class=SlocumReader,
-            deployments_path=resource('slocum'),
-            subset=True,
-            template='ioos_ngdac',
-            profile_id_type=1,
-            tsint=None,
-            filter_distance=None,
-            filter_points=None,
-            filter_time=None,
-            filter_z=32
-        )
-        # This filters to a single profile
-        create_dataset(**args)
-
-        output_files = sorted(os.listdir(out_base))
-        output_files = [ os.path.join(out_base, o) for o in output_files ]
-        assert len(output_files) == 1
-
-        # Only profile
-        with nc4.Dataset(output_files[0]) as ncd:
-            assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1473507417
-
-        # Check netCDF file for compliance
-        ds = namedtuple('Arguments', ['file'])
-        for o in output_files:
-            assert check_dataset(ds(file=o)) == 0
-
-        # Cleanup
-        shutil.rmtree(out_base)
-
-    def test_all_ascii(self):
-        out_base = resource('slocum', 'bass-test-ascii', 'rt', 'netcdf')
-
-        for f in glob(resource('slocum', 'bass-test-ascii', 'rt', 'ascii', 'usf_bass*.dat')):
+        try:
             args = dict(
-                file=f,
+                file=resource('slocum', 'bass-test-ascii', 'rt', 'ascii', 'usf_bass_2016_253_0_6_sbd.dat'),
                 reader_class=SlocumReader,
                 deployments_path=resource('slocum'),
                 subset=False,
-                template='ioos_ngdac',
-                profile_id_type=2,
+                template='trajectory',
+                profile_id_type=1,
                 tsint=10,
                 filter_distance=1,
                 filter_points=5,
@@ -154,66 +46,187 @@ class TestCreateGliderScript(GutilsTestClass):
             )
             create_dataset(**args)
 
-        output_files = sorted(os.listdir(out_base))
-        output_files = [ os.path.join(out_base, o) for o in output_files ]
+            output_files = sorted(os.listdir(out_base))
+            output_files = [ os.path.join(out_base, o) for o in output_files ]
+            assert len(output_files) == 32
 
-        # First profile
-        with nc4.Dataset(output_files[0]) as ncd:
-            assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 0
+            # First profile
+            with nc4.Dataset(output_files[0]) as ncd:
+                assert ncd.variables['profile_id'].ndim == 0
+                assert ncd.variables['profile_id'][0] == 1473499526
 
-        # Last profile
-        with nc4.Dataset(output_files[-1]) as ncd:
-            assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == len(output_files) - 1
+            # Last profile
+            with nc4.Dataset(output_files[-1]) as ncd:
+                assert ncd.variables['profile_id'].ndim == 0
+                assert ncd.variables['profile_id'][0] == 1473509128
 
-        # Check netCDF file for compliance
-        ds = namedtuple('Arguments', ['file'])
-        for o in output_files:
-            assert check_dataset(ds(file=o)) == 0
+            # Check netCDF file for compliance
+            ds = namedtuple('Arguments', ['file'])
+            for o in output_files:
+                assert check_dataset(ds(file=o)) == 0
 
-        # Cleanup
-        shutil.rmtree(out_base)
+        finally:
+            # Cleanup
+            shutil.rmtree(out_base)
+
+    def test_load_filters_from_config(self):
+        out_base = resource('slocum', 'bass-test-filters-config', 'rt', 'netcdf')
+
+        try:
+            args = dict(
+                file=resource('slocum', 'bass-test-filters-config', 'rt', 'ascii', 'usf_bass_2016_253_0_6_sbd.dat'),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=False,
+                template='trajectory',
+                profile_id_type=1,
+            )
+            create_dataset(**args)
+
+            output_files = sorted(os.listdir(out_base))
+            output_files = [ os.path.join(out_base, o) for o in output_files ]
+            assert len(output_files) == 32
+
+            # First profile
+            with nc4.Dataset(output_files[0]) as ncd:
+                assert ncd.variables['profile_id'].ndim == 0
+                assert ncd.variables['profile_id'][0] == 1473499526
+
+            # Last profile
+            with nc4.Dataset(output_files[-1]) as ncd:
+                assert ncd.variables['profile_id'].ndim == 0
+                assert ncd.variables['profile_id'][0] == 1473509128
+
+            # Check netCDF file for compliance
+            ds = namedtuple('Arguments', ['file'])
+            for o in output_files:
+                assert check_dataset(ds(file=o)) == 0
+
+        finally:
+            # Cleanup
+            shutil.rmtree(out_base)
+
+    def test_parameter_filters_override_config(self):
+        out_base = resource('slocum', 'bass-test-filters-override', 'rt', 'netcdf')
+
+        try:
+            args = dict(
+                file=resource('slocum', 'bass-test-filters-override', 'rt', 'ascii', 'usf_bass_2016_253_0_6_sbd.dat'),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=True,
+                template='ioos_ngdac',
+                profile_id_type=1,
+                tsint=None,
+                filter_distance=None,
+                filter_points=None,
+                filter_time=None,
+                filter_z=32
+            )
+            # This filters to a single profile
+            create_dataset(**args)
+
+            output_files = sorted(os.listdir(out_base))
+            output_files = [ os.path.join(out_base, o) for o in output_files ]
+            assert len(output_files) == 1
+
+            # Only profile
+            with nc4.Dataset(output_files[0]) as ncd:
+                assert ncd.variables['profile_id'].ndim == 0
+                assert ncd.variables['profile_id'][0] == 1473507417
+
+            # Check netCDF file for compliance
+            ds = namedtuple('Arguments', ['file'])
+            for o in output_files:
+                assert check_dataset(ds(file=o)) == 0
+
+        finally:
+            # Cleanup
+            shutil.rmtree(out_base)
+
+    def test_all_ascii(self):
+        out_base = resource('slocum', 'bass-test-ascii', 'rt', 'netcdf')
+
+        try:
+            for f in glob(resource('slocum', 'bass-test-ascii', 'rt', 'ascii', 'usf_bass*.dat')):
+                args = dict(
+                    file=f,
+                    reader_class=SlocumReader,
+                    deployments_path=resource('slocum'),
+                    subset=False,
+                    template='ioos_ngdac',
+                    profile_id_type=2,
+                    tsint=10,
+                    filter_distance=1,
+                    filter_points=5,
+                    filter_time=10,
+                    filter_z=1
+                )
+                create_dataset(**args)
+
+            output_files = sorted(os.listdir(out_base))
+            output_files = [ os.path.join(out_base, o) for o in output_files ]
+
+            # First profile
+            with nc4.Dataset(output_files[0]) as ncd:
+                assert ncd.variables['profile_id'].ndim == 0
+                assert ncd.variables['profile_id'][0] == 0
+
+            # Last profile
+            with nc4.Dataset(output_files[-1]) as ncd:
+                assert ncd.variables['profile_id'].ndim == 0
+                assert ncd.variables['profile_id'][0] == len(output_files) - 1
+
+            # Check netCDF file for compliance
+            ds = namedtuple('Arguments', ['file'])
+            for o in output_files:
+                assert check_dataset(ds(file=o)) == 0
+
+        finally:
+            # Cleanup
+            shutil.rmtree(out_base)
 
     def test_delayed(self):
         out_base = resource('slocum', 'modena-test-ascii', 'delayed', 'netcdf')
 
-        args = dict(
-            file=resource('slocum', 'modena-test-ascii', 'delayed', 'ascii', 'modena_2015_175_0_9_dbd.dat'),
-            reader_class=SlocumReader,
-            deployments_path=resource('slocum'),
-            subset=False,
-            template='trajectory',
-            profile_id_type=1,
-            tsint=10,
-            filter_distance=1,
-            filter_points=5,
-            filter_time=10,
-            filter_z=1
-        )
-        create_dataset(**args)
+        try:
+            args = dict(
+                file=resource('slocum', 'modena-test-ascii', 'delayed', 'ascii', 'modena_2015_175_0_9_dbd.dat'),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=False,
+                template='trajectory',
+                profile_id_type=1,
+                tsint=10,
+                filter_distance=1,
+                filter_points=5,
+                filter_time=10,
+                filter_z=1
+            )
+            create_dataset(**args)
 
-        output_files = sorted(os.listdir(out_base))
-        output_files = [ os.path.join(out_base, o) for o in output_files ]
-        assert len(output_files) == 6
+            output_files = sorted(os.listdir(out_base))
+            output_files = [ os.path.join(out_base, o) for o in output_files ]
+            assert len(output_files) == 6
 
-        # First profile
-        with nc4.Dataset(output_files[0]) as ncd:
-            assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1435257435
+            # First profile
+            with nc4.Dataset(output_files[0]) as ncd:
+                assert ncd.variables['profile_id'].ndim == 0
+                assert ncd.variables['profile_id'][0] == 1435257435
 
-        # Last profile
-        with nc4.Dataset(output_files[-1]) as ncd:
-            assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1435264155
+            # Last profile
+            with nc4.Dataset(output_files[-1]) as ncd:
+                assert ncd.variables['profile_id'].ndim == 0
+                assert ncd.variables['profile_id'][0] == 1435264155
 
-        # Check netCDF file for compliance
-        ds = namedtuple('Arguments', ['file'])
-        for o in output_files:
-            assert check_dataset(ds(file=o)) == 0
+            # Check netCDF file for compliance
+            ds = namedtuple('Arguments', ['file'])
+            for o in output_files:
+                assert check_dataset(ds(file=o)) == 0
 
-        # Cleanup
-        shutil.rmtree(out_base)
+        finally:
+            # Cleanup
+            shutil.rmtree(out_base)
 
 
 class TestGliderCheck(GutilsTestClass):
