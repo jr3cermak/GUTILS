@@ -1,4 +1,4 @@
-cc-plugin-glider>=1.0.4
+cc-plugin-glider>=1.0.6,<2.0.0
 compliance-checker>=4.1.1
 gsw
 netCDF4
@@ -9,4 +9,3 @@ pyinotify
 scipy
 six
 whichcraft
-cftime==1.0.1
