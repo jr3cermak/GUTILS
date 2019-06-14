@@ -28,6 +28,7 @@ from gutils.filters import process_dataset
 from gutils.slocum import SlocumReader
 
 import logging
+logging.getLogger("urllib3").setLevel(logging.WARNING)
 L = logging.getLogger(__name__)
 
 
@@ -334,7 +335,6 @@ def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=Pro
 def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes.EPOCH, subset=True):
     # Create NetCDF Files for Each Profile
     written_files = []
-
     # Optionally, remove any variables from the dataframe that do not have metadata assigned
     if subset is True:
         all_columns = set(data.columns)
@@ -354,6 +354,12 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
             "Excluded from output (absent from JSON config):\n  * {}".format('\n  * '.join(orphans))
         )
         data = data.drop(orphans, axis=1)
+
+    # Change to the datatype defined in the JSON. This is so
+    # all netCDF files have the same dtypes for the variables in the end
+    for c in data.columns:
+        if c in attrs.get('variables', {}) and attrs['variables'][c].get('type'):
+            data[c] = data[c].astype(attrs['variables'][c]['type'])
 
     written = []
     for pi, profile in data.groupby('profile'):

@@ -68,6 +68,20 @@
         "colorBarPalette": "OceanDepth"
       }
     },
+    "m_altitude": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "_FillValue": { "type": "double", "data": -9999.9},
+        "long_name": "Altitude",
+        "observation_type": "measured",
+        "platform": "platform",
+        "positive": "down",
+        "standard_name": "altitude",
+        "units": "m",
+        "ioos_category": "Location"
+      }
+    },
     "lat": {
       "shape": ["time"],
       "type": "double",
