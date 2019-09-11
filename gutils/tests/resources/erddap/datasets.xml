@@ -4,7 +4,7 @@
 <dataset type="EDDTableFromNcFiles" datasetID="fakedeployment_rt" active="true">
     <reloadEveryNMinutes>10000000</reloadEveryNMinutes>
     <updateEveryNMillis>-1</updateEveryNMillis>
-    <fileDir>/data/dev/GUTILS/gutils/tests/resources/erddap/fakedeployment/rt/netcdf</fileDir>
+    <fileDir>/data/dev/sgs/GUTILS/gutils/tests/resources/erddap/fakedeployment/rt/netcdf</fileDir>
     <recursive>false</recursive>
     <fileNameRegex>.*\.nc</fileNameRegex>
     <metadataFrom>last</metadataFrom>

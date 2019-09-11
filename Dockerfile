@@ -1,10 +1,13 @@
-FROM phusion/baseimage:0.10.0
+FROM phusion/baseimage:0.11
+
+LABEL maintainer="Kyle Wilcox <kyle@axiomdatascience.com>" \
+      description='The GUTILS container'
+
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
 ENV KILL_PROCESS_TIMEOUT 30
 ENV KILL_ALL_PROCESSES_TIMEOUT 30
 
-MAINTAINER Kyle Wilcox <kyle@axiomdatascience.com>
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG C.UTF-8
 
@@ -24,16 +27,23 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Copy over environment definition
-COPY environment.yml /tmp/environment.yml
-
 # Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
 ENV MINICONDA_VERSION latest
-RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
+RUN curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
     /bin/bash /miniconda.sh -b -p /opt/conda && \
     rm /miniconda.sh && \
-    /opt/conda/bin/conda config \
+    /opt/conda/bin/conda clean -afy && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/profile && \
+    echo "conda activate base" >> /etc/profile && \
+    find /opt/conda/ -follow -type f -name '*.a' -delete && \
+    find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
+    /opt/conda/bin/conda update -n base conda && \
+    /opt/conda/bin/conda clean -afy
+
+# Copy over environment definition
+COPY environment.yml /tmp/environment.yml
+RUN /opt/conda/bin/conda config \
         --set always_yes yes \
         --set changeps1 no \
         --set show_channel_urls True \
@@ -43,8 +53,8 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
         --add channels axiom-data-science \
         --add channels conda-forge \
         && \
-    /opt/conda/bin/conda env update -n root --file /tmp/environment.yml && \
-    /opt/conda/bin/conda clean -a -y
+    /opt/conda/bin/conda env update -n base --file /tmp/environment.yml && \
+    /opt/conda/bin/conda clean -afy
 
 ENV PATH /opt/conda/bin:$PATH
 
@@ -62,5 +72,5 @@ ENV GUTILS_VERSION 3.1.0
 ENV PROJECT_ROOT /code
 RUN mkdir -p "$PROJECT_ROOT"
 COPY . $PROJECT_ROOT
+RUN cd $PROJECT_ROOT && pip install --no-deps .
 WORKDIR $PROJECT_ROOT
-RUN pip install .
