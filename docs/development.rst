@@ -5,7 +5,7 @@ Create a conda environment
 
 .. code:: bash
 
-    $ conda create -n gutils python=3.5
-    $ source activate gutils
-    $ conda install --file requirements.txt
+    $ conda create -n gutils37 python=3.7
+    $ source activate gutils37
+    $ conda env create environment.yml
 

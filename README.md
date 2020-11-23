@@ -23,12 +23,12 @@ Supports:
 
 ## Installation
 
-GUTILS is available through [`conda`](http://conda.pydata.org/docs/install/quick.html) and was designed for Python 3.6+. It was backported to 2.7 by request. Please use 3.6+ if possible as the [gwt project](https://github.com/TEOS-10/GSW-Python) will soon end support for 2.7.
+GUTILS is available through [`conda`](http://conda.pydata.org/docs/install/quick.html) and was designed for Python 3.7+. It was backported to 2.7 by request. Please use 3.7+ if possible as the [gwt project](https://github.com/TEOS-10/GSW-Python) will soon end support for 2.7.
 
 ```bash
-$ conda create -n gutils python=3.6
-$ source activate gutils
-$ conda install -c conda-forge gutils
+$ conda create -n gutils37 python=3.7
+$ source activate gutils37
+$ conda install -c conda-forge gutils37
 ```
 
 
