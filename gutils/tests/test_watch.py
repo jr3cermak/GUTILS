@@ -114,6 +114,7 @@ class TestWatchClasses(GutilsTestClass):
             template='trajectory',
             profile_id_type=2,
             tsint=10,
+            prefer_file_filters=True,
             filter_distance=1,
             filter_points=5,
             filter_time=10,

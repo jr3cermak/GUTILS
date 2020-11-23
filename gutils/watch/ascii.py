@@ -53,6 +53,7 @@ class Slocum2NetcdfProcessor(Ascii2NetcdfProcessor):
             subset=self.subset,
             template=self.template,
             profile_id_type=self.profile_id_type,
+            prefer_file_filters=True,
             **self.filters
         )
 

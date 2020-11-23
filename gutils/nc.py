@@ -435,7 +435,7 @@ def create_arg_parser():
     return parser
 
 
-def create_dataset(file, reader_class, deployments_path, subset, template, profile_id_type, **filter_args):
+def create_dataset(file, reader_class, deployments_path, subset, template, profile_id_type, prefer_file_filters=False, **filter_args):
     # Remove None filters from the arguments
     filter_args = { k: v for k, v in filter_args.items() if v is not None }
 
@@ -452,7 +452,15 @@ def create_dataset(file, reader_class, deployments_path, subset, template, profi
     # Extract the filters from the config and override with passed in filters that are not None
     attrs = read_attrs(config_path, template=template)
     file_filters = attrs.pop('filters', {})
-    filters = dict_update(file_filters, filter_args)
+
+    # By default the filters passed in as filter_args will overwrite the filters defined in the
+    # config file. If the opposite shoudl happen (typically on a watch that uses a global set
+    # of command line filters), you can set prefer_file_filters=True to have the file filters
+    # take precendence over the passed in filters.
+    if prefer_file_filters is False:
+        filters = dict_update(file_filters, filter_args)
+    else:
+        filters = dict_update(filter_args, file_filters)
 
     processed_df, mode = process_dataset(file, reader_class, **filters)
 
