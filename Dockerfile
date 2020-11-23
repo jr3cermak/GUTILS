@@ -28,8 +28,10 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
-ENV MINICONDA_VERSION latest
-RUN curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
+ENV MINICONDA_VERSION py38_4.8.2
+ENV MINICONDA_SHA256 5bbb193fd201ebe25f4aeb3c58ba83feced6a25982ef4afa86d5506c3656c142
+RUN curl -k -o /miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
+    echo $MINICONDA_SHA256 /miniconda.sh | sha256sum --check && \
     /bin/bash /miniconda.sh -b -p /opt/conda && \
     rm /miniconda.sh && \
     /opt/conda/bin/conda clean -afy && \
@@ -38,23 +40,17 @@ RUN curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-$MIN
     echo "conda activate base" >> /etc/profile && \
     find /opt/conda/ -follow -type f -name '*.a' -delete && \
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
-    /opt/conda/bin/conda update -n base conda && \
+    /opt/conda/bin/conda install -y -c conda-forge -n base mamba && \
     /opt/conda/bin/conda clean -afy
 
-# Copy over environment definition
+ENV PATH /opt/conda/bin:$PATH
+
 COPY environment.yml /tmp/environment.yml
-RUN /opt/conda/bin/conda config \
-        --set always_yes yes \
-        --set changeps1 no \
-        --set show_channel_urls True \
+RUN mamba env update \
+        -n base \
+        -f /tmp/environment.yml \
         && \
-    /opt/conda/bin/conda config \
-        --add create_default_packages pip \
-        --add channels axiom-data-science \
-        --add channels conda-forge \
-        && \
-    /opt/conda/bin/conda env update -n base --file /tmp/environment.yml && \
-    /opt/conda/bin/conda clean -afy
+    mamba clean -afy
 
 ENV PATH /opt/conda/bin:$PATH
 
