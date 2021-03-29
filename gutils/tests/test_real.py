@@ -30,7 +30,7 @@ def test_real_deployments(deployment):
         reader_class=SlocumReader,
         deployments_path=resource('slocum'),
         subset=True,
-        template='trajectory',
+        template='slocum_dac',
         profile_id_type=1,
         filter_distance=1,
         filter_points=5,
