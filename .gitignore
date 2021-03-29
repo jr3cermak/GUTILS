@@ -56,3 +56,7 @@ docs/notebooks/.ipynb_checkpoints/
 .env
 .envrc
 .pytest_cache
+
+.vscode
+gutils/tests/resources/slocum/**/netcdf/**/*.nc
+gutils/tests/resources/slocum/**/ascii/**/*.nc

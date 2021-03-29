@@ -21,7 +21,7 @@
         <att name="Metadata_Conventions">Unidata Dataset Discovery v1.0, COARDS, CF-1.6</att>
         <att name="sourceUrl">(local files)</att>
         <att name="title">{{ deployment_name }}</att>
-        <att name="infoUrl">https://github.com/SECOORA/GUTILS</att>
+        <att name="infoUrl">https://axiomdatascience.com</att>
     </addAttributes>
     {%- for varname, varobj in deployment_variables.items() %}
     {%- if ( (destination_mapping.get(varname, varname)|truncate(11, False, '', 0) != 'instrument_') and

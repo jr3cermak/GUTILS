@@ -32,10 +32,10 @@ ALL_EXTENSIONS = [".sbd", ".tbd", ".mbd", ".nbd", ".dbd", ".ebd"]
 class SlocumReader(object):
 
     TIMESTAMP_SENSORS = ['m_present_time', 'sci_m_present_time']
-    PRESSURE_SENSORS = ['sci_water_pressure', 'm_water_pressure', 'm_pressure']
+    PRESSURE_SENSORS = ['sci_water_pressure', 'sci_water_pressure2', 'm_water_pressure', 'm_pressure']
     DEPTH_SENSORS = ['m_depth', 'm_water_depth']
-    TEMPERATURE_SENSORS = ['sci_water_temp']
-    CONDUCTIVITY_SENSORS = ['sci_water_cond']
+    TEMPERATURE_SENSORS = ['sci_water_temp', 'sci_water_temp2']
+    CONDUCTIVITY_SENSORS = ['sci_water_cond', 'sci_water_cond2']
 
     def __init__(self, ascii_file):
         self.ascii_file = ascii_file
