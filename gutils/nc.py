@@ -216,7 +216,7 @@ def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=Pro
             # files that have been created and only works if NETCDF FILES ARE WRITTEN IN
             # ASCENDING ORDER.
             # There is a race condition here if files are being in parallel and one should be
-            # sure that when this function is being run there can be no more files writtten.
+            # sure that when this function is being run there can be no more files written.
             # This file being written is the last profile available.
             netcdf_files_same_mode = list(glob(
                 os.path.join(

@@ -16,8 +16,7 @@ L = logging.getLogger(__name__)  # noqa
 
 @pytest.mark.long
 @pytest.mark.parametrize("deployment", [
-    'bass-full-test',
-    'sam-20190909T0000',
+    'unit_191-20210323T0000',
 ])
 def test_real_deployments(deployment):
     setup_testing_logger(level=logging.WARNING)
@@ -31,8 +30,8 @@ def test_real_deployments(deployment):
         reader_class=SlocumReader,
         deployments_path=resource('slocum'),
         subset=True,
-        template='ioos_ngdac',
-        profile_id_type=2,
+        template='trajectory',
+        profile_id_type=1,
         filter_distance=1,
         filter_points=5,
         filter_time=10,

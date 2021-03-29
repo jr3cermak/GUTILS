@@ -145,7 +145,7 @@ def main_to_netcdf():
         reader_class = SlocumReader
 
     if not deployments_path:
-        L.error("Please provide a --deployments_path agrument or set the "
+        L.error("Please provide a --deployments_path argument or set the "
                 "GUTILS_DEPLOYMENTS_DIRECTORY environmental variable")
         sys.exit(parser.print_usage())
 
