@@ -359,7 +359,18 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
     # all netCDF files have the same dtypes for the variables in the end
     for c in data.columns:
         if c in attrs.get('variables', {}) and attrs['variables'][c].get('type'):
-            data[c] = data[c].astype(attrs['variables'][c]['type'])
+            try:
+                ztype = attrs['variables'][c]['type']
+                data[c] = data[c].astype(ztype)
+            except ValueError:
+                try:
+                    if '_FillValue' in attrs['variables'][c]:
+                        if 'data' in attrs['variables'][c]['_FillValue']:
+                            data[c] = data[c].fillna(attrs['variables'][c]['_FillValue']['data']).astype(ztype)
+                        else:
+                            data[c] = data[c].fillna(attrs['variables'][c]['_FillValue']).astype(ztype)
+                except ValueError:
+                    L.error("Could not covert {} to {}. Skipping {}.".format(c, ztype, c))
 
     written = []
     for pi, profile in data.groupby('profile'):
