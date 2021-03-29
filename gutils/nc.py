@@ -536,6 +536,10 @@ def check_dataset(args):
             checker_names=['gliderdac'],
             verbose=True,
             criteria='normal',
+            skip_checks=[
+                # This takes forever and hurts my CPU. Skip it.
+                'check_standard_names:A',
+            ],
             output_format='json',
             output_filename=outfile
         )
