@@ -35,10 +35,9 @@ erddap_flag_path = output('erddap', 'flag')
 ftp_path = output('ftp')
 
 
-def wait_for_files(path, number):
+def wait_for_files(path, number, loops=20, sleep=6):
     # Wait for NetCDF to be created
     count = 0
-    loops = 20
     while True:
         try:
             num_files = len(os.listdir(path))
@@ -48,7 +47,7 @@ def wait_for_files(path, number):
             if count >= loops:
                 raise AssertionError("Not enough files in {}: Expected: {} Got: {}.".format(path, number, num_files))
             count += 1
-            time.sleep(6)
+            time.sleep(sleep)
 
 
 class TestWatchClasses(GutilsTestClass):
@@ -138,11 +137,12 @@ class TestWatchClasses(GutilsTestClass):
         merger = SlocumMerger(
             original_binary,
             ascii_path,
-            globs=['*.tbd', '*.sbd']
+            globs=['*-253-0-0.tbd', '*-253-0-0.sbd']
+
         )
         merger.convert()
 
-        wait_for_files(netcdf_path, 230)
+        wait_for_files(netcdf_path, 26, loops=2, sleep=15)
 
         wm.rm_watch(wdd.values(), rec=True)
         notifier.stop()
