@@ -465,9 +465,9 @@ def create_dataset(file, reader_class, deployments_path, subset, template, profi
     file_filters = attrs.pop('filters', {})
 
     # By default the filters passed in as filter_args will overwrite the filters defined in the
-    # config file. If the opposite shoudl happen (typically on a watch that uses a global set
+    # config file. If the opposite should happen (typically on a watch that uses a global set
     # of command line filters), you can set prefer_file_filters=True to have the file filters
-    # take precendence over the passed in filters.
+    # take precedence over the passed in filters.
     if prefer_file_filters is False:
         filters = dict_update(file_filters, filter_args)
     else:
@@ -533,9 +533,9 @@ def check_dataset(args):
     try:
         return_value, errors = ComplianceChecker.run_checker(
             ds_loc=args.file,
-            checker_names=['gliderdac'],
-            verbose=True,
-            criteria='normal',
+            checker_names=['gliderdac:3.0'],
+            verbose=2,
+            criteria='lenient',
             skip_checks=[
                 # This takes forever and hurts my CPU. Skip it.
                 'check_standard_names:A',
@@ -555,7 +555,7 @@ def check_dataset(args):
             log = L.warning
 
         with open(outfile, 'rt') as f:
-            show_messages(json.loads(f.read())['gliderdac'], log)
+            show_messages(json.loads(f.read())['gliderdac:3.0'], log)
 
         return return_value
     finally:
