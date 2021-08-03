@@ -23,11 +23,15 @@ L = logging.getLogger(__name__)
 
 class Ascii2NetcdfProcessor(ProcessEvent):
 
-    def my_init(self, deployments_path, subset, template, profile_id_type, **filters):
+    def my_init(
+            self, deployments_path, subset, template, profile_id_type,
+            prefer_file_filters=True, **filters
+        ):
         self.deployments_path = deployments_path
         self.subset = subset
         self.template = template
         self.profile_id_type = profile_id_type
+        self.prefer_file_filters = prefer_file_filters
         self.filters = filters
 
     def process_IN_CLOSE(self, event):
@@ -53,7 +57,7 @@ class Slocum2NetcdfProcessor(Ascii2NetcdfProcessor):
             subset=self.subset,
             template=self.template,
             profile_id_type=self.profile_id_type,
-            prefer_file_filters=True,
+            prefer_file_filters=self.prefer_file_filters,
             **self.filters
         )
 
@@ -166,6 +170,7 @@ def main_to_netcdf():
             subset=subset,
             template=template,
             profile_id_type=profile_id_type,
+            prefer_file_filters=True,
             **filter_args
         )
     notifier = Notifier(wm, processor, read_freq=10)
