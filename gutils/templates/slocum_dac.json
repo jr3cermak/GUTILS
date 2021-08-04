@@ -349,7 +349,7 @@
         "ioos_category": "Currents",
         "coordinates": "lon_uv lat_uv time_uv",
         "colorBarMaximum": { "type": "double", "data": 0.5},
-        "colorBarMinimum": { "type": "double", "data": -0.5},
+        "colorBarMinimum": { "type": "double", "data": -0.5}
       }
     },
     "v": {
@@ -367,7 +367,7 @@
         "ioos_category": "Currents",
         "coordinates": "lon_uv lat_uv time_uv",
         "colorBarMaximum": { "type": "double", "data": 0.5},
-        "colorBarMinimum": { "type": "double", "data": -0.5},
+        "colorBarMinimum": { "type": "double", "data": -0.5}
       }
     },
     "u_orig": {
