@@ -15879,13 +15879,17 @@
         "type": "double"
     },
     "sci_flbbcd_bb_units": {
+        "shape": ["time"],
         "attributes": {
+            "units": "m-1.sr-1",
+            "long_name": "Backscatter",
+            "colorBarMinimum": 0.0,
+            "colorBarMaximum": 0.002,
             "ioos_category": "Other",
             "platform": "platform",
             "observation_type": "measured",
             "sensor": "sci_flbbcd_bb_units",
-            "_FillValue": { "type": "double", "data": -9999.9},
-            "units": "nodim"
+            "_FillValue": { "type": "double", "data": -9999.9}
         },
         "type": "double"
     },
@@ -20180,12 +20184,16 @@
     },
     "sci_rinkoII_DO": {
         "attributes": {
+            "units": "%",
+            "long_name": "Dissolved Oxygen Saturation",
+            "colorBarMinimum": 60.0,
+            "colorBarMaximum": 100.0,
             "ioos_category": "Other",
+            "standard_name": "fractional_saturation_of_oxygen_in_sea_water",
             "platform": "platform",
             "observation_type": "measured",
             "sensor": "sci_rinkoII_DO",
-            "_FillValue": { "type": "double", "data": -9999.9},
-            "units": "%"
+            "_FillValue": { "type": "double", "data": -9999.9}
         },
         "type": "double"
     },
@@ -31338,6 +31346,121 @@
             "units": "m"
         },
         "type": "double"
+    },
+    "calc_soundvel": {
+      "shape": ["time"],
+      "type": "float",
+      "attributes": {
+        "units": "m.s-1",
+        "long_name": "Sound Speed",
+        "colorBarMinimum": 1400.0,
+        "colorBarMaximum": 1600.0,
+        "ioos_category": "Other",
+        "standard_name": "speed_of_sound_in_sea_water",
+        "platform": "platform",
+        "observation_type": "calculated",
+        "_FillValue": {"type": "float", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_sv": {
+      "shape": ["time"],
+      "type": "float",
+      "attributes": {
+        "units": "nodim",
+        "long_name": "Scattering Volume (SV)",
+        "colorBarMinimum": -50.0,
+        "colorBarMaximum": 0.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "float", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_propocc": {
+      "shape": ["time"],
+      "type": "float",
+      "attributes": {
+        "units": "nodim",
+        "long_name": "Prop Occ",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 1.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "float", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_aggindex": {
+      "shape": ["time"],
+      "type": "float",
+      "attributes": {
+        "units": "m-1",
+        "long_name": "Aggregation Index",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 1.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "float", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_sa": {
+      "shape": ["time"],
+      "type": "float",
+      "attributes": {
+        "units": "dB",
+        "long_name": "Scattering Area",
+        "colorBarMinimum": -70.0,
+        "colorBarMaximum": 0.0,
+        "ioos_category": "Other",
+        "standard_name": "scattering_angle",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "float", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_ctrmass": {
+      "shape": ["time"],
+      "type": "float",
+      "attributes": {
+        "units": "M",
+        "long_name": "Center of Mass",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 50.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "float", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_inertia": {
+      "shape": ["time"],
+      "type": "float",
+      "attributes": {
+        "units": "m-2",
+        "long_name": "Inertia",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 500.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "float", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_eqarea": {
+      "shape": ["time"],
+      "type": "float",
+      "attributes": {
+        "units": "m",
+        "long_name": "Eq Area",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 50.0,
+        "ioos_category": "Other",
+        "standard_name": "",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "float", "data": -9999.9}
+      }
     }
   }
 }

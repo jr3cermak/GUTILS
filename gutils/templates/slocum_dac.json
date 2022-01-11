@@ -496,370 +496,514 @@
       }
     },
     "c_wpt_lat": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "c_wpt_lat",
-            "_FillValue": { "type": "double", "data": -9999.9},
-            "type": "double",
-            "units": "lat"
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "c_wpt_lat",
+        "_FillValue": { "type": "double", "data": -9999.9},
+        "type": "double",
+        "units": "lat"
+      },
+      "type": "double"
     },
     "c_wpt_lon": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "c_wpt_lon",
-            "_FillValue": { "type": "double", "data": -9999.9},
-            "type": "double",
-            "units": "lon"
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "c_wpt_lon",
+        "_FillValue": { "type": "double", "data": -9999.9},
+        "type": "double",
+        "units": "lon"
+      },
+      "type": "double"
     },
     "m_ballast_pumped": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_ballast_pumped",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "cc"
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_ballast_pumped",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "cc"
+      },
+      "type": "float"
     },
     "m_battery": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_battery",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "volts"
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_battery",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "volts"
+      },
+      "type": "float"
     },
     "m_battpos": {
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_battpos",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "in"
-        },
-        "type": "float"
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_battpos",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "in"
+      },
+      "type": "float"
     },
     "m_coulomb_amphr_total": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_coulomb_amphr_total",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "amp-hrs"
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_coulomb_amphr_total",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "amp-hrs"
+      },
+      "type": "float"
     },
     "m_depth": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "axis": "Z",
-            "comment": "Glider pressure transducer measured pressure",
-            "long_name": "Depth",
-            "observation_type": "calculated",
-            "positive": "down",
-            "reference_datum": "sea-surface",
-            "standard_name": "depth",
-            "units": "m",
-            "valid_max": 2000.0,
-            "valid_min": 0.0
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "axis": "Z",
+        "comment": "Glider pressure transducer measured pressure",
+        "long_name": "Depth",
+        "observation_type": "calculated",
+        "positive": "down",
+        "reference_datum": "sea-surface",
+        "standard_name": "depth",
+        "units": "m",
+        "valid_max": 2000.0,
+        "valid_min": 0.0
+      },
+      "type": "double"
     },
     "m_gps_lat": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "axis": "Y",
-            "comment": "Latitude measured using on-board GPS.  NMEA coordinates.",
-            "long_name": "GPS Measured Latitude",
-            "observation_type": "measured",
-            "precision": 5,
-            "units": "degrees_minutes_north",
-            "valid_max": 9000.0,
-            "valid_min": -9000.0
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "axis": "Y",
+        "comment": "Latitude measured using on-board GPS.  NMEA coordinates.",
+        "long_name": "GPS Measured Latitude",
+        "observation_type": "measured",
+        "precision": 5,
+        "units": "degrees_minutes_north",
+        "valid_max": 9000.0,
+        "valid_min": -9000.0
+      },
+      "type": "double"
     },
     "m_gps_lon": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "axis": "X",
-            "comment": "Longitude measured using on-board GPS. NMEA coordinates.",
-            "long_name": "GPS Measured Longitude",
-            "observation_type": "measured",
-            "precision": 5,
-            "units": "degrees_minutes_east",
-            "valid_max": 18000.0,
-            "valid_min": -18000.0
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "axis": "X",
+        "comment": "Longitude measured using on-board GPS. NMEA coordinates.",
+        "long_name": "GPS Measured Longitude",
+        "observation_type": "measured",
+        "precision": 5,
+        "units": "degrees_minutes_east",
+        "valid_max": 18000.0,
+        "valid_min": -18000.0
+      },
+      "type": "double"
     },
     "m_heading": {
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_heading",
-            "_FillValue": { "type": "double", "data": -9999.9},
-            "units": "rad"
-        },
-        "type": "double"
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_heading",
+        "_FillValue": { "type": "double", "data": -9999.9},
+        "units": "rad"
+      },
+      "type": "double"
     },
     "m_lat": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "axis": "Y",
-            "comment": "Dead-reckoned latitude calculated by the glider while underwater. NMEA coordinates",
-            "long_name": "Dead-Reckoned Latitude",
-            "observation_type": "calculated",
-            "precision": 5,
-            "standard_name": "m_latitude",
-            "units": "degrees_north",
-            "valid_max": 9000.0,
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "valid_min": -9000.0
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "axis": "Y",
+        "comment": "Dead-reckoned latitude calculated by the glider while underwater. NMEA coordinates",
+        "long_name": "Dead-Reckoned Latitude",
+        "observation_type": "calculated",
+        "precision": 5,
+        "standard_name": "m_latitude",
+        "units": "degrees_north",
+        "valid_max": 9000.0,
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "valid_min": -9000.0
+      },
+      "type": "float"
     },
     "m_leakdetect_voltage": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_leakdetect_voltage",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "volts"
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_leakdetect_voltage",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "volts"
+      },
+      "type": "float"
     },
     "m_leakdetect_voltage_forward": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_leakdetect_voltage_forward",
-            "_FillValue": { "type": "double", "data": -9999.9},
-            "units": "volts"
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_leakdetect_voltage_forward",
+        "_FillValue": { "type": "double", "data": -9999.9},
+        "units": "volts"
+      },
+      "type": "double"
     },
     "m_lon": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "axis": "X",
-            "comment": "Dead-reckoned longitude calculoned by the glider while underwater. NMEA coordinates",
-            "long_name": "Dead-Reckoned Longitude",
-            "observation_type": "calculated",
-            "precision": 5,
-            "standard_name": "m_longitude",
-            "units": "degrees_east",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "valid_max": 18000.0,
-            "valid_min": -18000.0
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "axis": "X",
+        "comment": "Dead-reckoned longitude calculoned by the glider while underwater. NMEA coordinates",
+        "long_name": "Dead-Reckoned Longitude",
+        "observation_type": "calculated",
+        "precision": 5,
+        "standard_name": "m_longitude",
+        "units": "degrees_east",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "valid_max": 18000.0,
+        "valid_min": -18000.0
+      },
+      "type": "float"
     },
     "m_pitch": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_pitch",
-            "_FillValue": { "type": "double", "data": -9999.9},
-            "units": "rad"
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_pitch",
+        "_FillValue": { "type": "double", "data": -9999.9},
+        "units": "rad"
+      },
+      "type": "double"
     },
     "m_roll": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_roll",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "rad"
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_roll",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "rad"
+      },
+      "type": "float"
     },
     "m_vacuum": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "m_vacuum",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "inHg"
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "m_vacuum",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "inHg"
+      },
+      "type": "float"
     },
     "sci_bsipar_par": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "sci_bsipar_par",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "uE/m^2sec"
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "sci_bsipar_par",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "uE/m^2sec"
+      },
+      "type": "float"
     },
     "sci_flbb_chlor_units": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "sci_flbb_chlor_units",
-            "_FillValue": { "type": "double", "data": -9999.9},
-            "units": "ug/l"
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "sci_flbb_chlor_units",
+        "_FillValue": { "type": "double", "data": -9999.9},
+        "units": "ug/l"
+      },
+      "type": "double"
     },
     "sci_flbb_bb_units": {
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "sci_flbb_bb_units",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "nodim"
-        },
-        "type": "float"
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "sci_flbb_bb_units",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "nodim"
+      },
+      "type": "float"
     },
     "sci_rinkoII_DO": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "sci_rinkoII_DO",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "%"
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "sci_rinkoII_DO",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "%"
+      },
+      "type": "float"
     },
     "sci_water_pressure": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "axis": "Z",
-            "long_name": "CTD Pressure",
-            "observation_type": "measured",
-            "positive": "down",
-            "reference_datum": "sea-surface",
-            "standard_name": "sea_water_pressure",
-            "units": "bar",
-            "valid_max": 2000.0,
-            "valid_min": 0.0
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "axis": "Z",
+        "long_name": "CTD Pressure",
+        "observation_type": "measured",
+        "positive": "down",
+        "reference_datum": "sea-surface",
+        "standard_name": "sea_water_pressure",
+        "units": "bar",
+        "valid_max": 2000.0,
+        "valid_min": 0.0
+      },
+      "type": "double"
     },
     "sci_water_pressure2": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "sensor": "sci_water_pressure2",
-            "_FillValue": { "type": "double", "data": -9999.9},
-            "units": "bar"
-        },
-        "type": "double"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "sensor": "sci_water_pressure2",
+        "_FillValue": { "type": "double", "data": -9999.9},
+        "units": "bar"
+      },
+      "type": "double"
     },
     "sci_water_temp": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "standard_name": "sea_water_temperature",
-            "sensor": "sci_water_temp",
-            "units": "degree_Celsius",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "valid_max": 40.0,
-            "valid_min": -5.0
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "standard_name": "sea_water_temperature",
+        "sensor": "sci_water_temp",
+        "units": "degree_Celsius",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "valid_max": 40.0,
+        "valid_min": -5.0
+      },
+      "type": "float"
     },
     "sci_water_temp2": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "standard_name": "sea_water_temperature",
-            "units": "degree_Celsius",
-            "sensor": "sci_water_temp2",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "valid_max": 40.0,
-            "valid_min": -5.0
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "standard_name": "sea_water_temperature",
+        "units": "degree_Celsius",
+        "sensor": "sci_water_temp2",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "valid_max": 40.0,
+        "valid_min": -5.0
+      },
+      "type": "float"
     },
     "sci_water_cond": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "standard_name": "sea_water_electrical_conductivity",
-            "sensor": "sci_water_cond",
-            "units": "S.m-1",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "valid_max": 10.0,
-            "valid_min": 0.0
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "standard_name": "sea_water_electrical_conductivity",
+        "sensor": "sci_water_cond",
+        "units": "S.m-1",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "valid_max": 10.0,
+        "valid_min": 0.0
+      },
+      "type": "float"
     },
     "sci_water_cond2": {
-        "shape": ["time"],
-        "attributes": {
-            "ioos_category": "Other",
-            "platform": "platform",
-            "observation_type": "measured",
-            "standard_name": "sea_water_electrical_conductivity",
-            "sensor": "sci_water_cond2",
-            "_FillValue": { "type": "float", "data": -9999.9},
-            "units": "S.m-1",
-            "valid_max": 10.0,
-            "valid_min": 0.0
-        },
-        "type": "float"
+      "shape": ["time"],
+      "attributes": {
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "standard_name": "sea_water_electrical_conductivity",
+        "sensor": "sci_water_cond2",
+        "_FillValue": { "type": "float", "data": -9999.9},
+        "units": "S.m-1",
+        "valid_max": 10.0,
+        "valid_min": 0.0
+      },
+      "type": "float"
+    },
+    "sci_flbbcd_bb_units": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "m-1.sr-1",
+        "long_name": "Backscatter",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 0.002,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": { "type": "double", "data": -9999.9}
+      }
+    },
+    "sci_rinkoii_do": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "%",
+        "long_name": "Dissolved Oxygen Saturation",
+        "colorBarMinimum": 60.0,
+        "colorBarMaximum": 100.0,
+        "ioos_category": "Other",
+        "standard_name": "fractional_saturation_of_oxygen_in_sea_water",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": { "type": "double", "data": -9999.9}
+      }
+    },
+    "calc_soundvel": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "m.s-1",
+        "long_name": "Sound Speed",
+        "colorBarMinimum": 1400.0,
+        "colorBarMaximum": 1600.0,
+        "ioos_category": "Other",
+        "standard_name": "speed_of_sound_in_sea_water",
+        "platform": "platform",
+        "observation_type": "calculated",
+        "_FillValue": {"type": "double", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_sv": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "nodim",
+        "long_name": "Scattering Volume (SV)",
+        "colorBarMinimum": -50.0,
+        "colorBarMaximum": 0.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "double", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_propocc": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "nodim",
+        "long_name": "Prop Occ",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 1.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "double", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_aggindex": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "m-1",
+        "long_name": "Aggregation Index",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 1.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "double", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_sa": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "dB",
+        "long_name": "Scattering Area",
+        "colorBarMinimum": -70.0,
+        "colorBarMaximum": 0.0,
+        "ioos_category": "Other",
+        "standard_name": "scattering_angle",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "double", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_ctrmass": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "M",
+        "long_name": "Center of Mass",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 50.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "double", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_inertia": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "m-2",
+        "long_name": "Inertia",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 500.0,
+        "ioos_category": "Other",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "double", "data": -9999.9}
+      }
+    },
+    "sci_echodroid_eqarea": {
+      "shape": ["time"],
+      "type": "double",
+      "attributes": {
+        "units": "m",
+        "long_name": "Eq Area",
+        "colorBarMinimum": 0.0,
+        "colorBarMaximum": 50.0,
+        "ioos_category": "Other",
+        "standard_name": "",
+        "platform": "platform",
+        "observation_type": "measured",
+        "_FillValue": {"type": "double", "data": -9999.9}
+      }
     }
   }
 }
