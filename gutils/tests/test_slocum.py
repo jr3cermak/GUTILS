@@ -4,9 +4,12 @@ import os
 import shutil
 import tempfile
 from glob import glob
+from collections import namedtuple
 
+import netCDF4 as nc4
 from gutils.slocum import SlocumMerger, SlocumReader
 from gutils.tests import GutilsTestClass, resource
+from gutils.nc import check_dataset, create_dataset
 
 import logging
 L = logging.getLogger(__name__)  # noqa
@@ -159,3 +162,120 @@ class TestSlocumExportDelayed(GutilsTestClass):
         assert 'x' in enh.columns
         assert 'y' in enh.columns
         assert 'z' in enh.columns
+
+
+class TestEcodroidOne(GutilsTestClass):
+
+    def setUp(self):
+        super().setUp()
+        self.binary_path = resource('slocum', 'unit_507_one', 'delayed', 'binary')
+        self.ascii_path = resource('slocum', 'unit_507_one', 'delayed', 'ascii')
+        self.netcdf_path = resource('slocum', 'unit_507_one', 'delayed', 'netcdf')
+        self.cache_path = resource('slocum', 'unit_507_one', 'config')
+
+    def tearDown(self):
+        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path)  # Remove generated netCDF
+
+    def test_z_axis_method(self):
+        merger = SlocumMerger(
+            self.binary_path,
+            self.ascii_path,
+            cache_directory=self.cache_path,
+            globs=['unit_507-2021-308*']
+        )
+        _ = merger.convert()
+
+        for ascii_file in os.listdir(self.ascii_path):
+            args = dict(
+                file=os.path.join(self.ascii_path, ascii_file),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=True,
+                template='slocum_dac',
+                profile_id_type=1,
+                tsint=10,
+                filter_distance=1,
+                filter_points=5,
+                filter_time=10,
+                filter_z=1,
+                z_axis_method=2
+            )
+            create_dataset(**args)
+
+        assert os.path.exists(self.netcdf_path)
+
+        output_files = sorted(os.listdir(self.netcdf_path))
+        output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
+        assert len(output_files) == 28
+
+        # First profile
+        with nc4.Dataset(output_files[0]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1636072703
+
+        # Last profile
+        with nc4.Dataset(output_files[-1]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1636146248
+
+        # Check netCDF file for compliance
+        ds = namedtuple('Arguments', ['file'])
+        for o in output_files:
+            assert check_dataset(ds(file=o)) == 0
+
+
+class TestEcodroidTwo(GutilsTestClass):
+
+    def setUp(self):
+        super().setUp()
+        self.binary_path = resource('slocum', 'unit_507_two', 'rt', 'binary')
+        self.ascii_path = resource('slocum', 'unit_507_two', 'rt', 'ascii')
+        self.netcdf_path = resource('slocum', 'unit_507_two', 'rt', 'netcdf')
+        self.cache_path = resource('slocum', 'unit_507_two', 'config')
+
+    def tearDown(self):
+        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path)  # Remove generated netCDF
+
+    def test_z_axis_method(self):
+        merger = SlocumMerger(
+            self.binary_path,
+            self.ascii_path,
+            cache_directory=self.cache_path,
+            globs=['unit_507-2021-*']
+        )
+        _ = merger.convert()
+
+        for ascii_file in os.listdir(self.ascii_path):
+            args = dict(
+                file=os.path.join(self.ascii_path, ascii_file),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=True,
+                template='slocum_dac',
+                profile_id_type=1,
+                tsint=10,
+                filter_distance=1,
+                filter_points=5,
+                filter_time=10,
+                filter_z=1,
+                z_axis_method=1
+            )
+            create_dataset(**args)
+
+        assert os.path.exists(self.netcdf_path)
+
+        output_files = sorted(os.listdir(self.netcdf_path))
+        output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
+        assert len(output_files) == 29
+
+        # First profile
+        with nc4.Dataset(output_files[0]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1638999396
+
+        # Last profile
+        with nc4.Dataset(output_files[-1]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1639069272

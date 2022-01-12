@@ -863,7 +863,7 @@
     },
     "sci_flbbcd_bb_units": {
       "shape": ["time"],
-      "type": "double",
+      "type": "float",
       "attributes": {
         "units": "m-1.sr-1",
         "long_name": "Backscatter",
@@ -872,12 +872,12 @@
         "ioos_category": "Other",
         "platform": "platform",
         "observation_type": "measured",
-        "_FillValue": { "type": "double", "data": -9999.9}
+        "_FillValue": { "type": "float", "data": -9999.9}
       }
     },
     "sci_rinkoii_do": {
       "shape": ["time"],
-      "type": "double",
+      "type": "float",
       "attributes": {
         "units": "%",
         "long_name": "Dissolved Oxygen Saturation",
@@ -887,7 +887,7 @@
         "standard_name": "fractional_saturation_of_oxygen_in_sea_water",
         "platform": "platform",
         "observation_type": "measured",
-        "_FillValue": { "type": "double", "data": -9999.9}
+        "_FillValue": { "type": "float", "data": -9999.9}
       }
     },
     "calc_soundvel": {
@@ -907,7 +907,7 @@
     },
     "sci_echodroid_sv": {
       "shape": ["time"],
-      "type": "double",
+      "type": "float",
       "attributes": {
         "units": "nodim",
         "long_name": "Scattering Volume (SV)",
@@ -916,12 +916,12 @@
         "ioos_category": "Other",
         "platform": "platform",
         "observation_type": "measured",
-        "_FillValue": {"type": "double", "data": -9999.9}
+        "_FillValue": {"type": "float", "data": -9999.9}
       }
     },
     "sci_echodroid_propocc": {
       "shape": ["time"],
-      "type": "double",
+      "type": "float",
       "attributes": {
         "units": "nodim",
         "long_name": "Prop Occ",
@@ -930,12 +930,12 @@
         "ioos_category": "Other",
         "platform": "platform",
         "observation_type": "measured",
-        "_FillValue": {"type": "double", "data": -9999.9}
+        "_FillValue": {"type": "float", "data": -9999.9}
       }
     },
     "sci_echodroid_aggindex": {
       "shape": ["time"],
-      "type": "double",
+      "type": "float",
       "attributes": {
         "units": "m-1",
         "long_name": "Aggregation Index",
@@ -944,12 +944,12 @@
         "ioos_category": "Other",
         "platform": "platform",
         "observation_type": "measured",
-        "_FillValue": {"type": "double", "data": -9999.9}
+        "_FillValue": {"type": "float", "data": -9999.9}
       }
     },
     "sci_echodroid_sa": {
       "shape": ["time"],
-      "type": "double",
+      "type": "float",
       "attributes": {
         "units": "dB",
         "long_name": "Scattering Area",
@@ -959,12 +959,12 @@
         "standard_name": "scattering_angle",
         "platform": "platform",
         "observation_type": "measured",
-        "_FillValue": {"type": "double", "data": -9999.9}
+        "_FillValue": {"type": "float", "data": -9999.9}
       }
     },
     "sci_echodroid_ctrmass": {
       "shape": ["time"],
-      "type": "double",
+      "type": "float",
       "attributes": {
         "units": "M",
         "long_name": "Center of Mass",
@@ -973,12 +973,12 @@
         "ioos_category": "Other",
         "platform": "platform",
         "observation_type": "measured",
-        "_FillValue": {"type": "double", "data": -9999.9}
+        "_FillValue": {"type": "float", "data": -9999.9}
       }
     },
     "sci_echodroid_inertia": {
       "shape": ["time"],
-      "type": "double",
+      "type": "float",
       "attributes": {
         "units": "m-2",
         "long_name": "Inertia",
@@ -987,12 +987,12 @@
         "ioos_category": "Other",
         "platform": "platform",
         "observation_type": "measured",
-        "_FillValue": {"type": "double", "data": -9999.9}
+        "_FillValue": {"type": "float", "data": -9999.9}
       }
     },
     "sci_echodroid_eqarea": {
       "shape": ["time"],
-      "type": "double",
+      "type": "float",
       "attributes": {
         "units": "m",
         "long_name": "Eq Area",
@@ -1002,7 +1002,7 @@
         "standard_name": "",
         "platform": "platform",
         "observation_type": "measured",
-        "_FillValue": {"type": "double", "data": -9999.9}
+        "_FillValue": {"type": "float", "data": -9999.9}
       }
     }
   }

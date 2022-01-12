@@ -16,14 +16,14 @@ L = logging.getLogger(__name__)  # noqa
 
 @pytest.mark.long
 @pytest.mark.parametrize("deployment", [
-    'unit_191-20210323T0000',
+    ('unit_191-20210323T0000', 'rt'),
 ])
 def test_real_deployments(deployment):
     setup_testing_logger(level=logging.WARNING)
-    binary_path     = resource('slocum', deployment, 'rt', 'binary')
-    ascii_path      = resource('slocum', deployment, 'rt', 'ascii')
-    netcdf_path     = resource('slocum', deployment, 'rt', 'netcdf')
-    config_path     = resource('slocum', deployment, 'config')
+    binary_path     = resource('slocum', deployment[0], deployment[1], 'binary')
+    ascii_path      = resource('slocum', deployment[0], deployment[1], 'ascii')
+    netcdf_path     = resource('slocum', deployment[0], deployment[1], 'netcdf')
+    config_path     = resource('slocum', deployment[0], 'config')
 
     # Static args
     args = dict(
