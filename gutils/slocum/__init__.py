@@ -29,6 +29,10 @@ MODE_MAPPING = {
 ALL_EXTENSIONS = [".sbd", ".tbd", ".mbd", ".nbd", ".dbd", ".ebd"]
 
 
+COMPUTE_PRESSURE = 1
+USE_RAW_PRESSURE = 2
+
+
 class SlocumReader(object):
 
     TIMESTAMP_SENSORS = ['m_present_time', 'sci_m_present_time']
@@ -110,7 +114,7 @@ class SlocumReader(object):
         )
         return metadata, df
 
-    def standardize(self, gps_prefix=None):
+    def standardize(self, gps_prefix=None, z_axis_method=COMPUTE_PRESSURE):
 
         df = self.data.copy()
 
@@ -154,65 +158,68 @@ class SlocumReader(object):
             df['y'] = y_interp
             df['x'] = x_interp
 
-        """
-        ---- Option 1: Always calculate Z from pressure ----
-        It's really a matter of data provider preference and varies from one provider to another.
-        That being said, typically the sci_water_pressure or m_water_pressure variables, if present
-        in the raw data files, will typically have more non-NaN values than m_depth.  For example,
-        all MARACOOS gliders typically have both m_depth and sci_water_pressure contained in them.
-        However, m_depth is typically heavily decimated while sci_water_pressure contains a more
-        complete pressure record.  So, while we transmit both m_depth and sci_water_pressure, I
-        calculate depth from pressure & (interpolated) latitude and use that as my NetCDF depth
-        variable. - Kerfoot
-        """
-        # Search for a 'pressure' column
-        for p in self.PRESSURE_SENSORS:
-            if p in df.columns:
-                # Convert bar to dbar here
-                df['pressure'] = df[p].copy() * 10
-                # Calculate depth from pressure and latitude
-                # Negate the results so that increasing values note increasing depths
-                df['z'] = -z_from_p(df.pressure, df.y)
-                break
+        if z_axis_method == COMPUTE_PRESSURE:
+            """
+            ---- Option 1: Always calculate Z from pressure ----
+            It's really a matter of data provider preference and varies from one provider to another.
+            That being said, typically the sci_water_pressure or m_water_pressure variables, if present
+            in the raw data files, will typically have more non-NaN values than m_depth.  For example,
+            all MARACOOS gliders typically have both m_depth and sci_water_pressure contained in them.
+            However, m_depth is typically heavily decimated while sci_water_pressure contains a more
+            complete pressure record.  So, while we transmit both m_depth and sci_water_pressure, I
+            calculate depth from pressure & (interpolated) latitude and use that as my NetCDF depth
+            variable. - Kerfoot
+            """
+            # Search for a 'pressure' column
+            for p in self.PRESSURE_SENSORS:
+                if p in df.columns:
+                    # Convert bar to dbar here
+                    df['pressure'] = df[p].copy() * 10
+                    # Calculate depth from pressure and latitude
+                    # Negate the results so that increasing values note increasing depths
+                    df['z'] = -z_from_p(df.pressure, df.y)
+                    break
 
-        if 'z' not in df and 'pressure' not in df:
-            # Search for a 'z' column
+            if 'z' not in df and 'pressure' not in df:
+                # Search for a 'z' column
+                for p in self.DEPTH_SENSORS:
+                    if p in df.columns:
+                        df['z'] = df[p].copy()
+                        # Calculate pressure from depth and latitude
+                        # Negate the results so that increasing values note increasing depth
+                        df['pressure'] = -p_from_z(df.z, df.y)
+                        break
+
+        elif z_axis_method == USE_RAW_PRESSURE:
+            """
+            ---- Option 2: Use raw pressure/depth data that was sent across ----
+            """
+            # Standardize to the 'pressure' column
+            for p in self.PRESSURE_SENSORS:
+                if p in df.columns:
+                    # Convert bar to dbar here
+                    df['pressure'] = df[p].copy() * 10
+                    break
+
+            # Standardize to the 'z' column
             for p in self.DEPTH_SENSORS:
                 if p in df.columns:
                     df['z'] = df[p].copy()
-                    # Calculate pressure from depth and latitude
-                    # Negate the results so that increasing values note increasing depth
-                    df['pressure'] = -p_from_z(df.z, df.y)
                     break
-        # End Option 1
 
-        """
-        ---- Option 2: Use raw pressure/depth data that was sent across ----
-        # Standardize to the 'pressure' column
-        for p in self.PRESSURE_SENSORS:
-            if p in df.columns:
-                # Convert bar to dbar here
-                df['pressure'] = df[p].copy() * 10
-                break
+            # Don't calculate Z from pressure if a metered depth column exists already
+            if 'pressure' in df and 'z' not in df:
+                # Calculate depth from pressure and latitude
+                # Negate the results so that increasing values note increasing depths
+                df['z'] = -z_from_p(df.pressure, df.y)
 
-        # Standardize to the 'z' column
-        for p in self.DEPTH_SENSORS:
-            if p in df.columns:
-                df['z'] = df[p].copy()
-                break
+            if 'z' in df and 'pressure' not in df:
+                # Calculate pressure from depth and latitude
+                # Negate the results so that increasing values note increasing depth
+                df['pressure'] = -p_from_z(df.z, df.y)
 
-        # Don't calculate Z from pressure if a metered depth column exists already
-        if 'pressure' in df and 'z' not in df:
-            # Calculate depth from pressure and latitude
-            # Negate the results so that increasing values note increasing depths
-            df['z'] = -z_from_p(df.pressure, df.y)
-
-        if 'z' in df and 'pressure' not in df:
-            # Calculate pressure from depth and latitude
-            # Negate the results so that increasing values note increasing depth
-            df['pressure'] = -p_from_z(df.z, df.y)
-        # End Option 2
-        """
+        else:
+            raise ValueError("No z-axis method exists for {}".format(z_axis_method))
 
         rename_columns = {
             'm_water_vx': 'u_orig',

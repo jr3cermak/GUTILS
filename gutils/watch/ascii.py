@@ -91,13 +91,20 @@ def create_netcdf_arg_parser():
     )
     parser.add_argument(
         '-ft', '--filter_time',
-        help="Filter out profiles that last less than this numer of seconds",
+        help="Filter out profiles that last less than this number of seconds",
         default=10
     )
     parser.add_argument(
         '-fz', '--filter_z',
         help="Filter out profiles that are not completely below this depth (meters)",
         default=1
+    )
+    parser.add_argument(
+        "-za",
+        "--z_axis_method",
+        help="1 == Calculate depth from pressure, 2 == Use raw depth values",
+        default=1,
+        type=int
     )
     parser.add_argument(
         '--no-subset',

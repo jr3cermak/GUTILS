@@ -430,6 +430,13 @@ def create_arg_parser():
         default=None
     )
     parser.add_argument(
+        "-za",
+        "--z_axis_method",
+        help="1 == Calculate depth from pressure, 2 == Use raw depth values",
+        default=1,
+        type=int
+    )
+    parser.add_argument(
         '--no-subset',
         dest='subset',
         action='store_false',
@@ -446,7 +453,15 @@ def create_arg_parser():
     return parser
 
 
-def create_dataset(file, reader_class, deployments_path, subset, template, profile_id_type, prefer_file_filters=False, **filter_args):
+def create_dataset(file,
+    reader_class,
+    deployments_path,
+    subset,
+    template,
+    profile_id_type,
+    prefer_file_filters=False,
+    **filter_args
+):
     # Remove None filters from the arguments
     filter_args = { k: v for k, v in filter_args.items() if v is not None }
 

@@ -97,7 +97,14 @@ def filter_profile_number_of_points(dataset, points_condition=None, reindex=True
     return (*filter_profiles(dataset, conditional, reindex=reindex), points_condition)
 
 
-def process_dataset(file, reader_class, tsint=None, filter_z=None, filter_points=None, filter_time=None, filter_distance=None):
+def process_dataset(file,
+                    reader_class,
+                    tsint=None,
+                    filter_z=None,
+                    filter_points=None,
+                    filter_time=None,
+                    filter_distance=None,
+                    z_axis_method=1):
 
     # Check filename
     if file is None:
@@ -105,7 +112,7 @@ def process_dataset(file, reader_class, tsint=None, filter_z=None, filter_points
 
     try:
         reader = reader_class(file)
-        data = reader.standardize()
+        data = reader.standardize(z_axis_method=z_axis_method)
 
         if 'z' not in data.columns:
             L.warning("No Z axis found - Skipping {}".format(file))
@@ -117,7 +124,6 @@ def process_dataset(file, reader_class, tsint=None, filter_z=None, filter_points
 
         # Find profile breaks
         profiles = assign_profiles(data, tsint=tsint)
-
         # Shortcut for empty dataframes
         if profiles is None:
             return None, None
