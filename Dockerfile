@@ -28,16 +28,15 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
-ENV MINICONDA_VERSION py38_4.8.2
-ENV MINICONDA_SHA256 5bbb193fd201ebe25f4aeb3c58ba83feced6a25982ef4afa86d5506c3656c142
+ENV MINICONDA_VERSION py39_4.10.3
+ENV MINICONDA_SHA256 1ea2f885b4dbc3098662845560bc64271eb17085387a70c2ba3f29fff6f8d52f
 RUN curl -k -o /miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
     echo $MINICONDA_SHA256 /miniconda.sh | sha256sum --check && \
     /bin/bash /miniconda.sh -b -p /opt/conda && \
     rm /miniconda.sh && \
+    /opt/conda/bin/conda update -c conda-forge -n base conda && \
     /opt/conda/bin/conda clean -afy && \
-    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/profile && \
-    echo "conda activate base" >> /etc/profile && \
+    /opt/conda/bin/conda init && \
     find /opt/conda/ -follow -type f -name '*.a' -delete && \
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
     /opt/conda/bin/conda install -y -c conda-forge -n base mamba && \
