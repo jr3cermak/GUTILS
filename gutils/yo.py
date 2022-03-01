@@ -75,7 +75,7 @@ def assign_profiles(df, tsint=1):
     p_inds = np.append(p_inds, ts.size - 1)
     # Zip up neighbors to get the ranges of each profile in interpolated space
     p_inds = list(zip(p_inds[0:-1], p_inds[1:]))
-    # Convert the profile indexes into datetime objets
+    # Convert the profile indexes into datetime objects
     p_inds = [
         (
             pd.to_datetime(ts[int(p0)], unit='s'),

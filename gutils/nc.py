@@ -14,9 +14,16 @@ from pathlib import Path
 from datetime import datetime
 from collections import OrderedDict
 
+import pandas as pd
 import netCDF4 as nc4
 from compliance_checker.runner import ComplianceChecker, CheckSuite
-from pocean.utils import dict_update, get_fill_value
+from pocean.cf import cf_safe_name
+from pocean.utils import (
+    dict_update,
+    get_fill_value,
+    create_ncvar_from_series,
+    get_ncdata_from_series
+)
 from pocean.meta import MetaInterface
 from pocean.dsg import (
     IncompleteMultidimensionalTrajectory,
@@ -134,6 +141,34 @@ def set_uv_data(ncd, uv_txy):
     ncd.sync()
 
 
+def set_extra_data(ncd, extras_df):
+    """
+    extras_df must have a single datetime index, all columns will be variables
+    dimensioned by that index.
+    """
+    if extras_df.empty:
+        return
+
+    dims = ('extras',)
+    extras_df = extras_df.reset_index()
+    extras_df = extras_df.drop(columns=['profile'])
+
+    ncd.createDimension(dims[0], len(extras_df))
+    for c in extras_df.columns:
+        var_name = cf_safe_name(c)
+
+        v = create_ncvar_from_series(
+            ncd,
+            var_name,
+            dims,
+            extras_df[c],
+            zlib=True,
+            complevel=1
+        )
+        vvalues = get_ncdata_from_series(extras_df[c], v)
+        v[:] = vvalues
+
+
 def get_geographic_attributes(profile):
     miny = round(profile.y.min(), 5)
     maxy = round(profile.y.max(), 5)
@@ -199,7 +234,12 @@ def get_creation_attributes(profile):
     }
 
 
-def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=ProfileIdTypes.EPOCH):
+def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=ProfileIdTypes.EPOCH,
+                          extras_df=None):
+
+    if extras_df is None:
+        extras_df = pd.DataFrame()
+
     try:
         # Path to hold file while we create it
         tmp_handle, tmp_path = tempfile.mkstemp(suffix='.nc', prefix='gutils_glider_netcdf_')
@@ -284,6 +324,9 @@ def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=Pro
                 reduce_dims=True,
                 mode='a') as ncd:
 
+            # Set an extras data
+            set_extra_data(ncd, extras_df)
+
             # We only want to apply metadata from the `attrs` map if the variable is already in
             # the netCDF file or it is a scalar variable (no shape defined). This avoids
             # creating measured variables that were not measured in this profile.
@@ -332,50 +375,72 @@ def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=Pro
             os.remove(tmp_path)
 
 
-def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes.EPOCH, subset=True):
+def change_datatype(data, c, attrs):
+    if c in attrs.get('variables', {}) and attrs['variables'][c].get('type'):
+        try:
+            ztype = attrs['variables'][c]['type']
+            return data[c].astype(ztype)
+        except ValueError:
+            try:
+                if '_FillValue' in attrs['variables'][c]:
+                    if 'data' in attrs['variables'][c]['_FillValue']:
+                        return data[c].fillna(attrs['variables'][c]['_FillValue']['data']).astype(ztype)
+                    else:
+                        return data[c].fillna(attrs['variables'][c]['_FillValue']).astype(ztype)
+            except ValueError:
+                L.error("Could not covert {} to {}. Skipping {}.".format(c, ztype, c))
+
+    return None
+
+
+def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes.EPOCH,
+                  subset=True, extras_df=None):
+
+    if extras_df is None:
+        extras_df = pd.DataFrame()
+
     # Create NetCDF Files for Each Profile
     written_files = []
-    # Optionally, remove any variables from the dataframe that do not have metadata assigned
-    if subset is True:
-        all_columns = set(data.columns)
-        reserved_columns = [
-            'trajectory',
-            'profile',
-            't',
-            'x',
-            'y',
-            'z',
-            'u_orig',
-            'v_orig'
-        ]
-        removable_columns = all_columns - set(reserved_columns)
-        orphans = removable_columns - set(attrs.get('variables', {}).keys())
-        L.debug(
-            "Excluded from output (absent from JSON config):\n  * {}".format('\n  * '.join(orphans))
-        )
-        data = data.drop(orphans, axis=1)
 
-    # Change to the datatype defined in the JSON. This is so
-    # all netCDF files have the same dtypes for the variables in the end
-    for c in data.columns:
-        if c in attrs.get('variables', {}) and attrs['variables'][c].get('type'):
-            try:
-                ztype = attrs['variables'][c]['type']
-                data[c] = data[c].astype(ztype)
-            except ValueError:
-                try:
-                    if '_FillValue' in attrs['variables'][c]:
-                        if 'data' in attrs['variables'][c]['_FillValue']:
-                            data[c] = data[c].fillna(attrs['variables'][c]['_FillValue']['data']).astype(ztype)
-                        else:
-                            data[c] = data[c].fillna(attrs['variables'][c]['_FillValue']).astype(ztype)
-                except ValueError:
-                    L.error("Could not covert {} to {}. Skipping {}.".format(c, ztype, c))
+    for df in [data, extras_df]:
+
+        # Optionally, remove any variables from the dataframe that do not have metadata assigned
+        if subset is True:
+            all_columns = set(df.columns)
+            reserved_columns = [
+                'trajectory',
+                'profile',
+                't',
+                'x',
+                'y',
+                'z',
+                'u_orig',
+                'v_orig'
+            ]
+            removable_columns = all_columns - set(reserved_columns)
+            orphans = removable_columns - set(attrs.get('variables', {}).keys())
+            L.debug(
+                "Excluded from output (absent from JSON config):\n  * {}".format('\n  * '.join(orphans))
+            )
+            df.drop(orphans, axis=1, inplace=True)
+
+        # Change to the datatype defined in the JSON. This is so
+        # all netCDF files have the same dtypes for the variables in the end
+        for c in df.columns:
+            changed = change_datatype(df, c, attrs)
+            if changed is not None:
+                df[c] = changed
 
     written = []
     for pi, profile in data.groupby('profile'):
+
+        profile_extras = pd.DataFrame()
+        if not extras_df.empty:
+            profile_extras = extras_df.loc[extras_df.profile == pi]
+
         try:
-            cr = create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type)
+            cr = create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type,
+                                       extras_df=profile_extras)
             written.append(cr)
         except BaseException:
             L.exception('Error creating netCDF for profile {}. Skipping.'.format(pi))
@@ -488,13 +553,14 @@ def create_dataset(file,
     else:
         filters = dict_update(filter_args, file_filters)
 
-    processed_df, mode = process_dataset(file, reader_class, **filters)
+    processed_df, extras_df, mode = process_dataset(file, reader_class, **filters)
 
     if processed_df is None:
         return 1
 
     output_path = individual_dep_path / mode / 'netcdf'
-    return create_netcdf(attrs, processed_df, output_path, mode, profile_id_type, subset=subset)
+    return create_netcdf(attrs, processed_df, output_path, mode, profile_id_type,
+                         subset=subset, extras_df=extras_df)
 
 
 def main_create():
@@ -678,7 +744,9 @@ def process_folder(deployment_path, mode, merger_class, reader_class, subset=Tru
     # The merge results contain a reference to the new produced ASCII file as well as what binary files went into it.
     merger.convert()
 
-    asciis = sorted([ x.path for x in os.scandir(ascii_path) ])
+    asciis = sorted(
+        [ x.path for x in os.scandir(ascii_path) if Path(x).suffix in ['.dat']]
+    )
 
     with Pool(processes=workers) as pool:
         kwargs = dict(

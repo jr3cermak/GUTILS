@@ -1,7 +1,7 @@
 {
     "glider": "bass",
     "trajectory_date": "20160909T1733",
-     "filters": {
+    "filters": {
         "tsint": 10,
         "filter_z": 0,
         "filter_time": 10,

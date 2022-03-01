@@ -1,4 +1,4 @@
-#! /bin/bash --
+#!/bin/bash
 
 PATH=/bin:/usr/bin
 
@@ -14,15 +14,15 @@ cacPerms=664;
 USAGE="
 $app
 
-NAME 
+NAME
     $app - Convert and merge native Slocum glider binary flight and science data files
 
 SYNOPSIS
-    $app [-h] [-f SENSOR_LIST] [-c DBD_CACHE_DIR] [-m] [-e EXTENSION] [-b TWRC_EXE_DIR] [-q] SOURCEDIR DESTDIR
+    $app [-h] [-f SENSOR_LIST] [-c DBD_CACHE_DIR] [-m] [-e EXTENSION] [-b TWRC_EXE_DIR] [-y PYTHON_PATH] [-g] [-r RANGE] [-q] SOURCEDIR DESTDIR
 
 DESCRIPTION
     Convert and merge all binary *.[demnst]bd files in SOURCEDIR and write the
-    output data files to DESTDIR.  If present, the following flight/science 
+    output data files to DESTDIR.  If present, the following flight/science
     controller file pairs are merged:
 
      FLIGHT/SCIENCEsource
@@ -46,7 +46,7 @@ DESCRIPTION
         User specified location for writing sensor list .cac files used to
         convert the binary files.  Defaults to SOURCEDIR/cache.  May be
         specified using the DBD_CACHE_DIR environment variable.
-            
+
     -m
         Output matlab formatted ascii files instead of dba format.
 
@@ -59,6 +59,15 @@ DESCRIPTION
         table files.  If not specified, the default versions supplied with
         this package are used.  May be set using the TWRC_EXE_DIR environment
         variable
+
+    -y FILE
+        Path to the python interpreter to use for the pseudogram calculations
+
+    -g
+        Try to compute pseudograms (can be slow)
+
+    -r RANGE
+        echosounder range, used in pseudograms
 
     -q
         Suppress STDOUT
@@ -74,7 +83,9 @@ local_twrc_exe_dir="$app_dir";
 # Default ascii file extension
 dba_extension='dat';
 # Process options
-while getopts hf:c:me:b:qp option
+# while getopts hgqpmf:c:e:b:y::r:: option
+# while getopts hf:c:me:b:r:y:qp option
+while getopts hf:c:me:b:y::r::giqp option
 do
 
     case "$option" in
@@ -83,7 +94,7 @@ do
             echo "$USAGE";
             exit 0;
             ;;
-        "f") 
+        "f")
             sensor_filter=$OPTARG;
             ;;
         "c")
@@ -97,6 +108,18 @@ do
             ;;
         "b")
             local_twrc_exe_dir=$OPTARG;
+            ;;
+        "y")
+            python_path=$OPTARG;
+            ;;
+        "r")
+            echosounderRange=$OPTARG;
+            ;;
+        "g")
+            computePseudograms=1;
+            ;;
+        "i")
+            computePseudogramImages=1;
             ;;
         "q")
             quiet=1;
@@ -155,6 +178,17 @@ then
     echo "Missing utility: $dba_sensor_filter" >&2;
     exit 1;
 fi
+pseudogram="${TWRC_EXE_DIR}/../echotools/decodePseudogram.py";
+if [ ! -x "$pseudogram" ]
+then
+    echo "Missing pseudogram utility: $pseudogram" >&2;
+fi
+
+if [ ! -n "$echosounderRange" ]
+then
+    echo "Setting default echosounderRange: 60.0" >&2;
+    echosounderRange=60.0
+fi
 
 # Display usage if no source directory and destination directory were specified
 if [ "$#" -eq 0 ]
@@ -199,6 +233,17 @@ fi
 # Display fully qualified path
 [ -z "$quiet" ] && echo "Binary source: $dbdRoot";
 [ -z "$quiet" ] && echo "ASCII destination: $ascDest";
+[ -z "$quiet" ] && echo "sensor_filter: $sensor_filter";
+[ -z "$quiet" ] && echo "local_cac_dir: $local_cac_dir";
+[ -z "$quiet" ] && echo "matlab: $matlab";
+[ -z "$quiet" ] && echo "dba_extension: $dba_extension";
+[ -z "$quiet" ] && echo "local_twrc_exe_dir: $local_twrc_exe_dir";
+[ -z "$quiet" ] && echo "python_path: $python_path";
+[ -z "$quiet" ] && echo "echosounderRange: $echosounderRange";
+[ -z "$quiet" ] && echo "computePseudograms: $computePseudograms";
+[ -z "$quiet" ] && echo "computePseudogramImages: $computePseudogramImages";
+[ -z "$quiet" ] && echo "quiet: $quiet";
+[ -z "$quiet" ] && echo "printsuccess: $printsuccess";
 
 # If specified, validate the sensor list for filtering
 if [ -n "$sensor_filter" ]
@@ -352,7 +397,46 @@ do
 	    fi
 
         [ -z "$quiet" ] && echo "Source science file: $sciSource";
-        [ -z "$quiet" ] &&echo "Converting & Merging flight and science files";
+
+        if [ -n "$computePseudograms" ]
+        then
+            [ -z "$quiet" ] && echo "Computing Scatter Pseudogram";
+            $python_path $pseudogram \
+                --tbdFile $sciSource \
+                --sbdFile $dbdSource \
+                --cacheDir $local_cac_dir \
+                --dbd2asc $dbd2asc \
+                --csvOut "${tmpDir}/${dbdSeg}_${asciiExt}.pseudogram" \
+                --csvHeader \
+                --echosounderRange "$echosounderRange" \
+                --title "$segment - Scatter"
+        fi
+
+        if [ -n "$computePseudogramImages" ]
+        then
+            [ -z "$quiet" ] && echo "Computing Pseudogram Images";
+            $python_path $pseudogram \
+                --tbdFile $sciSource \
+                --sbdFile $dbdSource \
+                --cacheDir $local_cac_dir \
+                --dbd2asc $dbd2asc \
+                --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.scatter.png" \
+                --useScatterPlot \
+                --echosounderRange "$echosounderRange" \
+                --title "$segment - Scatter"
+
+            $python_path $pseudogram \
+                --tbdFile $sciSource \
+                --sbdFile $dbdSource \
+                --cacheDir $local_cac_dir \
+                --dbd2asc $dbd2asc \
+                --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.binned.png" \
+                --binnedDepthLabels \
+                --echosounderRange "$echosounderRange" \
+                --title "$segment - Binned"
+        fi
+
+        [ -z "$quiet" ] && echo "Converting & Merging flight and science files";
 
         # Create the science data file .dba filename
         sciDba="${tmpDir}/${dbdSeg}_${sciExt}.dba";
@@ -554,7 +638,7 @@ do
     # owner and group
     cacFile="${local_cac_dir}/${cac}.cac";
     if [ -f "$cacFile" ]
-    then 
+    then
         [ -z "$quiet" ] && echo "Updating $asciiExt ${cac}.cac permissions ($cacPerms)";
         oldPerms=$(stat --format=%a $cacFile);
         chmod $cacPerms $cacFile;
@@ -568,7 +652,7 @@ do
         sciCac=$(awk '/^sensor_list_crc:/ {print tolower($2)}' $sciSource);
         sciCacFile="${local_cac_dir}/${sciCac}.cac";
         if [ -f "$sciCacFile" ]
-        then 
+        then
             [ -z "$quiet" ] && echo "Updating $sciExt ${sciCac}.cac permissions ($cacPerms)";
             oldPerms=$(stat --format=%a $sciCacFile);
             chmod $cacPerms $sciCacFile;
@@ -587,7 +671,7 @@ done
 [ "$convertedCount" -eq 0 ] && exit 1;
 
 [ -z "$quiet" ] && echo -n "Moving output files to destination: $ascDest...";
-status=$(mv ${tmpDir}/*.${dba_extension} $ascDest 2>&1);
+status=$(mv ${tmpDir}/*.${dba_extension} ${tmpDir}/*.pseudogram ${tmpDir}/*.png $ascDest 2>&1);
 if [ "$?" -eq 0 ]
 then
     [ -z "$quiet" ] && echo "Done.";
