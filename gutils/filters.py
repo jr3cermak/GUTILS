@@ -113,20 +113,21 @@ def process_dataset(file,
     try:
         reader = reader_class(file)
         data = reader.standardize(z_axis_method=z_axis_method)
+        extras = reader.extras()
 
         if 'z' not in data.columns:
             L.warning("No Z axis found - Skipping {}".format(file))
-            return None, None
+            return None, None, None
 
         if 't' not in data.columns:
             L.warning("No T axis found - Skipping {}".format(file))
-            return None, None
+            return None, None, None
 
         # Find profile breaks
         profiles = assign_profiles(data, tsint=tsint)
         # Shortcut for empty dataframes
         if profiles is None:
-            return None, None
+            return None, None, None
 
         # Filter data
         original_profiles = len(profiles.profile.unique())
@@ -154,8 +155,27 @@ def process_dataset(file,
         # TODO: Backfill U/V?
         # TODO: Backfill X/Y?
 
+        # Combine extra data, which has a time index already
+        # This puts the profile information into the extras
+        # dataframe
+        if not extras.empty:
+            try:
+                merge = pd.merge_asof(
+                    extras,
+                    filtered[['t', 'profile']],
+                    left_index=True,
+                    right_index=False,
+                    right_on='t',
+                    direction='nearest',
+                    tolerance=pd.Timedelta(minutes=10)
+                ).set_index(extras.index)
+                extras['profile'] = merge.profile.ffill()
+
+            except BaseException as e:
+                L.error(f"Could not merge 'extras' data, skipping: {e}")
+
     except ValueError as e:
         L.exception('{} - Skipping'.format(e))
         raise
 
-    return filtered, reader.mode
+    return filtered, extras, reader.mode

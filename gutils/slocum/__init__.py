@@ -1,7 +1,10 @@
 #!/usr/bin/env python
+from lib2to3.pytree import Base
 import os
+import sys
 import shutil
 from glob import glob
+from pathlib import Path
 from tempfile import mkdtemp
 from collections import OrderedDict
 
@@ -32,6 +35,10 @@ ALL_EXTENSIONS = [".sbd", ".tbd", ".mbd", ".nbd", ".dbd", ".ebd"]
 COMPUTE_PRESSURE = 1
 USE_RAW_PRESSURE = 2
 
+PSEUDOGRAM_DEPLOYMENTS = [
+    'unit_507'
+]
+
 
 class SlocumReader(object):
 
@@ -45,6 +52,9 @@ class SlocumReader(object):
         self.ascii_file = ascii_file
         self.metadata, self.data = self.read()
 
+        # Do we have a pseudogram file as well?
+        self._extras = pd.DataFrame()
+
         # Set the mode to 'rt' or 'delayed'
         self.mode = None
         if 'filename_extension' in self.metadata:
@@ -53,6 +63,33 @@ class SlocumReader(object):
                 if filemode in extensions:
                     self.mode = m
                     break
+
+    def extras(self):
+        pse_file = Path(self.ascii_file).with_suffix(".pseudogram")
+        if pse_file.exists():
+            try:
+                self._extras = pd.read_csv(
+                    pse_file,
+                    header=0,
+                    names=[
+                        'pseudogram_time',
+                        'pseudogram_depth',
+                        'pseudogram_sv'
+                    ]
+                )
+                self._extras['pseudogram_time'] = pd.to_datetime(
+                    self._extras.pseudogram_time, unit='s', origin='unix'
+                )
+                self._extras = self._extras.sort_values([
+                    'pseudogram_time',
+                    'pseudogram_depth'
+                ])
+                self._extras.set_index("pseudogram_time", inplace=True)
+            except BaseException as e:
+                self._extras = pd.DataFrame()
+                L.warning(f"Could not process pseudogram file {pse_file}: {e}")
+
+        return self._extras
 
     def read(self):
         metadata = OrderedDict()
@@ -340,6 +377,26 @@ class SlocumMerger(object):
             '-p',
             '-c', self.cache_directory
         ]
+
+        # Perform pseudograms if this ASCII file matches the deployment
+        # name of things we know to have the data. There needs to be a
+        # better way to figure this out, but we don't have any understanding
+        # of a deployment config object at this point.
+
+        # Ideally this code isn't tacked into convertDbds.sh to output separate
+        # files and can be done using the ASCII files exported from SlocumMerger
+        # using pandas. Maybe Rob Cermack will take a look and integrate the code
+        # more tightly into GUTILS? For now we are going to keep it separate
+        # so UAF can iterate on the code and we can just plop their updated files
+        # into the "ecotools" folder of GUTILS.
+        for d in PSEUDOGRAM_DEPLOYMENTS:
+            if d in self.matched_files[0]:
+                pargs = pargs + [
+                    '-y', sys.executable,
+                    '-g',  # Makes the pseudogram ASCII
+                    '-i',  # Makes the pseudogram images. This is slow!
+                    '-r', "60.0"
+                ]
 
         pargs.append(self.tmpdir)
         pargs.append(self.destination_directory)
