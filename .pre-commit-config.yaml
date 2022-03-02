@@ -8,14 +8,16 @@ repos:
       files: .*\.*.py
     - id: trailing-whitespace
       files: .*\.*.py
-    - id: check-ast
     - id: debug-statements
+      exclude: gutils/slocum/echotools/.*\.py
+    - id: check-ast
     - id: check-added-large-files
+    - id: check-json
+    - id: check-merge-conflict
+    - id: check-yaml
     - id: requirements-txt-fixer
-    - id: file-contents-sorter
 
 - repo: https://github.com/pycqa/flake8
   rev: 4.0.1
   hooks:
     - id: flake8
-      args: [-c setup.cfg]
