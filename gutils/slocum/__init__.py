@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from lib2to3.pytree import Base
 import os
 import sys
 import shutil

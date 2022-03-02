@@ -1,0 +1,21 @@
+
+
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.0.1
+  hooks:
+    - id: end-of-file-fixer
+      files: .*\.*.py
+    - id: trailing-whitespace
+      files: .*\.*.py
+    - id: check-ast
+    - id: debug-statements
+    - id: check-added-large-files
+    - id: requirements-txt-fixer
+    - id: file-contents-sorter
+
+- repo: https://github.com/pycqa/flake8
+  rev: 4.0.1
+  hooks:
+    - id: flake8
+      args: [-c setup.cfg]

@@ -8,4 +8,3 @@ Create a conda environment
     $ conda create -n gutils37 python=3.7
     $ source activate gutils37
     $ conda env create environment.yml
-
