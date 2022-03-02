@@ -1,4 +1,3 @@
 ipdb
 pre-commit
 pytest
-pytest-flake8

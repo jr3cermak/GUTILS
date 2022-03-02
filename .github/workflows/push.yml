@@ -36,9 +36,8 @@ jobs:
 
     - name: Python ${{ matrix.python-version }}
       shell: bash -l {0}
-      # numba is listed in requirements.txt so we need to remove it below.
       run: |
-        conda create --name TEST python=${{ matrix.python-version }} --file requirements.txt --file tests/requirements.txt
+        conda create --name TEST python=${{ matrix.python-version }} --file requirements.txt --file requirements-dev.txt
         source activate TEST
         pip install -e . --no-deps --force-reinstall
 
