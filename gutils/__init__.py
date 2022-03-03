@@ -7,11 +7,11 @@ import math
 import errno
 import warnings
 import subprocess
+from io import StringIO
 from collections import namedtuple
 
 import numpy as np
 import pandas as pd
-from six import StringIO
 from scipy.signal import boxcar, convolve
 
 import logging
