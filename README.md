@@ -37,7 +37,7 @@ The main concept is to break the data down from each deployment of glider into d
 GUTILS is available as a python library through [`conda`](http://conda.pydata.org/docs/install/quick.html) and was designed for Python 3.8+.
 
 ```bash
-$ conda create -n gutils python=3.10
+$ conda create -n gutils python=3.9
 $ source activate gutils
 $ conda install -c conda-forge gutils
 ```
