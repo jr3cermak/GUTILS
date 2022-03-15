@@ -26,4 +26,4 @@ git commit -m "Release $1"
 git tag $1
 
 # Push to Git
-git push --tags origin master
+echo "git push --tags origin main"

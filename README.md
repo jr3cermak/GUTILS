@@ -1,6 +1,5 @@
 # 🚤 Glider Utilities (GUTILS)
 
-[![Build Status](https://travis-ci.org/SECOORA/GUTILS.svg?branch=master)](https://travis-ci.org/SECOORA/GUTILS)
 [![license](https://img.shields.io/github/license/SECOORA/GUTILS.svg)](https://github.com/SECOORA/GUTILS/blob/master/LICENSE.txt)
 [![GitHub release](https://img.shields.io/github/release/SECOORA/GUTILS.svg)]()
 
