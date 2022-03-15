@@ -99,12 +99,14 @@ def filter_profile_number_of_points(dataset, points_condition=None, reindex=True
 
 def process_dataset(file,
                     reader_class,
+                    *,
                     tsint=None,
                     filter_z=None,
                     filter_points=None,
                     filter_time=None,
                     filter_distance=None,
-                    z_axis_method=1):
+                    z_axis_method=1,
+                    **extra_kwargs):
 
     # Check filename
     if file is None:
@@ -121,7 +123,7 @@ def process_dataset(file,
         # for the pseudogram.  If the pseudogram is found, the
         # echometrics (echodroid) variable are removed from the
         # data section and reassigned with the extras dimension.
-        extras, data = reader.extras(data)
+        extras, data = reader.extras(data, **extra_kwargs)
 
         if 'z' not in data.columns:
             L.warning("No Z axis found - Skipping {}".format(file))

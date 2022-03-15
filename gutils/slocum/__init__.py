@@ -38,6 +38,16 @@ PSEUDOGRAM_DEPLOYMENTS = [
     'unit_507'
 ]
 
+ECHOMETRICS_SENSORS = [
+    'sci_echodroid_aggindex',
+    'sci_echodroid_ctrmass',
+    'sci_echodroid_eqarea',
+    'sci_echodroid_inertia',
+    'sci_echodroid_propocc',
+    'sci_echodroid_sa',
+    'sci_echodroid_sv',
+]
+
 
 class SlocumReader(object):
 
@@ -63,7 +73,7 @@ class SlocumReader(object):
                     self.mode = m
                     break
 
-    def extras(self, data):
+    def extras(self, data, **kwargs):
         """
         Process pseudogram and echometrics data here for now.  If the echometrics
         data is found, the echometrics (echodroid) variables are reassigned the
@@ -90,9 +100,7 @@ class SlocumReader(object):
                     echometricsData = data[data['sci_echodroid_sv'] < 0]
                     if len(echometricsData) > 0:
                         # Create echometrics variables in self._extras
-                        ECHOMETRICS_SENSORS = ['sci_echodroid_aggindex', 'sci_echodroid_ctrmass',
-                            'sci_echodroid_eqarea', 'sci_echodroid_inertia', 'sci_echodroid_propocc',
-                            'sci_echodroid_sa', 'sci_echodroid_sv']
+
                         for sensor in ECHOMETRICS_SENSORS:
                             self._extras[sensor] = np.full((len(self._extras['pseudogram_time'])), np.nan)
                         for idx, row in echometricsData.iterrows():
@@ -106,7 +114,9 @@ class SlocumReader(object):
                                 ptimeidx = self._extras['pseudogram_time'][self._extras['pseudogram_time'] == ptime].axes[0].values[0]
                                 # Update self._extras from the row of echometrics data
                                 dataRow = row.get(ECHOMETRICS_SENSORS)
-                                self._extras.update(pd.DataFrame(dataRow.to_dict(),index=[ptimeidx]))
+                                self._extras.update(
+                                    pd.DataFrame(dataRow.to_dict(), index=[ptimeidx])
+                                )
                         # Once data is copied out of data, the columns have to be removed from data
                         # or the write to netCDF will fail.
                         data = data.drop(columns=ECHOMETRICS_SENSORS)

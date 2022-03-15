@@ -559,7 +559,17 @@ def create_dataset(
     else:
         filters = dict_update(filter_args, file_filters)
 
-    processed_df, extras_df, mode = process_dataset(file, reader_class, **filters)
+    # Kwargs can be defined in the "extra_kwargs" section of
+    # a configuration object and passed into the extras method
+    # of a reader.
+    extra_kwargs = attrs.pop('extra_kwargs', {})
+
+    processed_df, extras_df, mode = process_dataset(
+        file,
+        reader_class,
+        **filters,
+        **extra_kwargs,
+    )
 
     if processed_df is None:
         return 1
