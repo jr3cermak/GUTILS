@@ -24,9 +24,9 @@ L = logging.getLogger(__name__)
 class Ascii2NetcdfProcessor(ProcessEvent):
 
     def my_init(
-            self, deployments_path, subset, template, profile_id_type,
-            prefer_file_filters=True, **filters
-        ):
+        self, deployments_path, subset, template, profile_id_type,
+        prefer_file_filters=True, **filters
+    ):
         self.deployments_path = deployments_path
         self.subset = subset
         self.template = template

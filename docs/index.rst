@@ -35,7 +35,7 @@ GUTILS is available through `conda <http://conda.pydata.org/docs/install/quick.h
 
 .. code:: bash
 
-    $ conda create -n gutils python=3.5
+    $ conda create -n gutils python=3.8
     $ source activate gutils
     $ conda install -c conda-forge gutils
 

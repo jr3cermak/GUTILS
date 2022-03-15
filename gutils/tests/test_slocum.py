@@ -23,7 +23,7 @@ class TestSlocumMerger(GutilsTestClass):
         self.ascii_path = resource('slocum', 'bass-20150407T1300', 'rt', 'ascii')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         # Remove any cached .cac files
         for cac in glob(os.path.join(self.binary_path, '*.cac')):
             os.remove(cac)
@@ -92,7 +92,7 @@ class TestSlocumReaderWithGPS(GutilsTestClass):
         self.ascii_path = resource('slocum', 'bass-20160909T1733', 'rt', 'ascii')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         # Remove any cached .cac files
         for cac in glob(os.path.join(self.binary_path, '*.cac')):
             os.remove(cac)
@@ -133,7 +133,7 @@ class TestSlocumExportDelayed(GutilsTestClass):
         self.cache_path = resource('slocum', 'modena-20150625T0000', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
 
     def test_single_pair_existing_cac_files(self):
         # The 0 files are there to produce the required .cac files
@@ -174,8 +174,8 @@ class TestEcodroidOne(GutilsTestClass):
         self.cache_path = resource('slocum', 'unit_507_one', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path)  # Remove generated netCDF
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_z_axis_method(self):
         merger = SlocumMerger(
@@ -236,8 +236,8 @@ class TestEcodroidTwo(GutilsTestClass):
         self.cache_path = resource('slocum', 'unit_507_two', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path)  # Remove generated netCDF
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_z_axis_method(self):
         merger = SlocumMerger(
@@ -293,8 +293,8 @@ class TestEcoMetricsOne(GutilsTestClass):
         self.cache_path = resource('slocum', 'ecometrics', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path)  # Remove generated netCDF
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_pseudogram(self):
         merger = SlocumMerger(
@@ -350,8 +350,8 @@ class TestEcoMetricsTwo(GutilsTestClass):
         self.cache_path = resource('slocum', 'ecometrics2', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path)  # Remove generated netCDF
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_pseudogram(self):
         merger = SlocumMerger(
@@ -407,8 +407,8 @@ class TestEcoMetricsThree(GutilsTestClass):
         self.cache_path = resource('slocum', 'ecometrics3', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path)  # Remove generated netCDF
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_pseudogram(self):
         merger = SlocumMerger(

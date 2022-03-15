@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.11
+FROM phusion/baseimage:focal-1.0.0
 
 LABEL maintainer="Kyle Wilcox <kyle@axiomdatascience.com>" \
       description='The GUTILS container'
@@ -28,8 +28,8 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
-ENV MINICONDA_VERSION py39_4.10.3
-ENV MINICONDA_SHA256 1ea2f885b4dbc3098662845560bc64271eb17085387a70c2ba3f29fff6f8d52f
+ENV MINICONDA_VERSION py39_4.11.0
+ENV MINICONDA_SHA256 4ee9c3aa53329cd7a63b49877c0babb49b19b7e5af29807b793a76bdb1d362b4
 RUN curl -k -o /miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
     echo $MINICONDA_SHA256 /miniconda.sh | sha256sum --check && \
     /bin/bash /miniconda.sh -b -p /opt/conda && \
@@ -50,6 +50,13 @@ RUN mamba env update \
         -f /tmp/environment.yml \
         && \
     mamba clean -afy
+
+COPY pip-requirements.txt /tmp/pip-requirements.txt
+RUN pip install \
+        --no-deps \
+        --force-reinstall \
+        --ignore-installed \
+        -r /tmp/pip-requirements.txt
 
 ENV PATH /opt/conda/bin:$PATH
 

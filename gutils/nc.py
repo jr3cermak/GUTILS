@@ -518,7 +518,8 @@ def create_arg_parser():
     return parser
 
 
-def create_dataset(file,
+def create_dataset(
+    file,
     reader_class,
     deployments_path,
     subset,

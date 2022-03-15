@@ -1,3 +1,0 @@
-pytest
-pytest-env
-pytest-flake8
