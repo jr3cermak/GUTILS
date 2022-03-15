@@ -68,7 +68,7 @@ class TestCreateGliderScript(GutilsTestClass):
 
         finally:
             # Cleanup
-            shutil.rmtree(out_base)
+            shutil.rmtree(out_base, ignore_errors=True)
 
     def test_load_filters_from_config(self):
         out_base = resource('slocum', 'bass-test-filters-config', 'rt', 'netcdf')
@@ -105,7 +105,7 @@ class TestCreateGliderScript(GutilsTestClass):
 
         finally:
             # Cleanup
-            shutil.rmtree(out_base)
+            shutil.rmtree(out_base, ignore_errors=True)
 
     def test_parameter_filters_override_config(self):
         out_base = resource('slocum', 'bass-test-filters-override', 'rt', 'netcdf')
@@ -143,7 +143,7 @@ class TestCreateGliderScript(GutilsTestClass):
 
         finally:
             # Cleanup
-            shutil.rmtree(out_base)
+            shutil.rmtree(out_base, ignore_errors=True)
 
     def test_all_ascii(self):
         out_base = resource('slocum', 'bass-test-ascii', 'rt', 'netcdf')
@@ -185,7 +185,7 @@ class TestCreateGliderScript(GutilsTestClass):
 
         finally:
             # Cleanup
-            shutil.rmtree(out_base)
+            shutil.rmtree(out_base, ignore_errors=True)
 
     def test_delayed(self):
         out_base = resource('slocum', 'modena-test-ascii', 'delayed', 'netcdf')
@@ -227,7 +227,7 @@ class TestCreateGliderScript(GutilsTestClass):
 
         finally:
             # Cleanup
-            shutil.rmtree(out_base)
+            shutil.rmtree(out_base, ignore_errors=True)
 
 
 class TestGliderCheck(GutilsTestClass):

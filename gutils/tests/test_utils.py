@@ -256,9 +256,9 @@ class TestDensity(GutilsTestClass):
         df = sr.standardize()
 
         salinity = calculate_practical_salinity(
-            sr.data.sci_water_cond,
-            sr.data.sci_water_temp,
-            sr.data.sci_water_pressure,
+            sr.data.sci_water_cond.values,
+            sr.data.sci_water_temp.values,
+            sr.data.sci_water_pressure.values,
         )
         assert sr.data.sci_m_present_time.size == salinity.size
 
@@ -269,8 +269,8 @@ class TestDensity(GutilsTestClass):
         )
 
         density = calculate_density(
-            sr.data.sci_water_temp,
-            sr.data.sci_water_pressure,
+            sr.data.sci_water_temp.values,
+            sr.data.sci_water_pressure.values,
             salinity,
             est_lat,
             est_lon

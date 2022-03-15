@@ -63,10 +63,10 @@ class TestWatchClasses(GutilsTestClass):
         safe_makedirs(erddap_flag_path)
 
     def tearDown(self):
-        shutil.rmtree(output())
-        shutil.rmtree(binary_path)
-        shutil.rmtree(ascii_path)
-        shutil.rmtree(netcdf_path)
+        shutil.rmtree(output(), ignore_errors=True)
+        shutil.rmtree(binary_path, ignore_errors=True)
+        shutil.rmtree(ascii_path, ignore_errors=True)
+        shutil.rmtree(netcdf_path, ignore_errors=True)
 
     def test_gutils_binary_to_ascii_watch(self):
 

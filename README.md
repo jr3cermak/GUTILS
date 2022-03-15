@@ -37,9 +37,9 @@ The main concept is to break the data down from each deployment of glider into d
 GUTILS is available as a python library through [`conda`](http://conda.pydata.org/docs/install/quick.html) and was designed for Python 3.8+.
 
 ```bash
-$ conda create -n gutils38 python=3.8
-$ source activate gutils38
-$ conda install -c conda-forge gutils38
+$ conda create -n gutils python=3.10
+$ source activate gutils
+$ conda install -c conda-forge gutils
 ```
 
 ## Development
@@ -60,19 +60,19 @@ Setup a GUTILS conda environment and install the base packages:
 you are
 ```bash
 $ mamba env create environment.yml
-$ conda activate gutils38
+$ conda activate gutils
 ```
 
 ## Update
 
-To update the gutils38 environment, issue these commands from your root gutils directory
+To update the gutils environment, issue these commands from your root gutils directory
 
 ```bash
 $ git pull
 $ conda deactivate
-$ conda env remove -n gutils38
+$ conda env remove -n gutils
 $ mamba env create environment.yml
-$ conda activate gutils38
+$ conda activate gutils
 ```
 
 ## Testing

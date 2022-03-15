@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.11
+FROM phusion/baseimage:focal-1.0.0
 
 LABEL maintainer="Kyle Wilcox <kyle@axiomdatascience.com>" \
       description='The GUTILS container'
@@ -50,6 +50,13 @@ RUN mamba env update \
         -f /tmp/environment.yml \
         && \
     mamba clean -afy
+
+COPY pip-requirements.txt /tmp/pip-requirements.txt
+RUN pip install \
+        --no-deps \
+        --force-reinstall \
+        --ignore-installed \
+        -r /tmp/pip-requirements.txt
 
 ENV PATH /opt/conda/bin:$PATH
 

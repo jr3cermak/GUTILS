@@ -213,7 +213,7 @@ class SlocumReader(object):
                     df['pressure'] = df[p].copy() * 10
                     # Calculate depth from pressure and latitude
                     # Negate the results so that increasing values note increasing depths
-                    df['z'] = -z_from_p(df.pressure, df.y)
+                    df['z'] = -z_from_p(df.pressure.values, df.y.values)
                     break
 
             if 'z' not in df and 'pressure' not in df:
@@ -223,7 +223,7 @@ class SlocumReader(object):
                         df['z'] = df[p].copy()
                         # Calculate pressure from depth and latitude
                         # Negate the results so that increasing values note increasing depth
-                        df['pressure'] = -p_from_z(df.z, df.y)
+                        df['pressure'] = -p_from_z(df.z.values, df.y.values)
                         break
 
         elif z_axis_method == USE_RAW_PRESSURE:
@@ -247,12 +247,12 @@ class SlocumReader(object):
             if 'pressure' in df and 'z' not in df:
                 # Calculate depth from pressure and latitude
                 # Negate the results so that increasing values note increasing depths
-                df['z'] = -z_from_p(df.pressure, df.y)
+                df['z'] = -z_from_p(df.pressure.values, df.y.values)
 
             if 'z' in df and 'pressure' not in df:
                 # Calculate pressure from depth and latitude
                 # Negate the results so that increasing values note increasing depth
-                df['pressure'] = -p_from_z(df.z, df.y)
+                df['pressure'] = -p_from_z(df.z.values, df.y.values)
 
         else:
             raise ValueError("No z-axis method exists for {}".format(z_axis_method))
@@ -297,8 +297,8 @@ class SlocumReader(object):
                 temperature=df.temperature.values,
                 pressure=df.pressure.values,
                 salinity=df.salinity.values,
-                latitude=df.y,
-                longitude=df.x,
+                latitude=df.y.values,
+                longitude=df.x.values,
             )
         except (ValueError, AttributeError) as e:
             L.error("Could not compute density for {}: {}".format(self.ascii_file, e))
@@ -350,10 +350,7 @@ class SlocumMerger(object):
 
     def __del__(self):
         # Remove tmpdir
-        try:
-            shutil.rmtree(self.tmpdir)
-        except FileNotFoundError:
-            pass
+        shutil.rmtree(self.tmpdir, ignore_errors=True)
 
     def convert(self):
         # Copy to tempdir
