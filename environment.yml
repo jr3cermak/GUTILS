@@ -83,7 +83,7 @@ dependencies:
   - netcdf4=1.5.8
   - nodeenv=1.6.0
   - numpy=1.22.3
-  - openssl=3.0.0
+  - openssl=1.1.1l
   - owslib=0.25.0
   - packaging=21.3
   - pandas=1.4.1
