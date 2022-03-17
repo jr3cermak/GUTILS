@@ -38,16 +38,6 @@ PSEUDOGRAM_DEPLOYMENTS = [
     'unit_507'
 ]
 
-ECHOMETRICS_SENSORS = [
-    'sci_echodroid_aggindex',
-    'sci_echodroid_ctrmass',
-    'sci_echodroid_eqarea',
-    'sci_echodroid_inertia',
-    'sci_echodroid_propocc',
-    'sci_echodroid_sa',
-    'sci_echodroid_sv',
-]
-
 
 class SlocumReader(object):
 
@@ -75,63 +65,124 @@ class SlocumReader(object):
 
     def extras(self, data, **kwargs):
         """
-        Process pseudogram and echometrics data here for now.  If the echometrics
-        data is found, the echometrics (echodroid) variables are reassigned the
-        extras dimension.
+        Extra data processing for auxillary or experimental data.  This
+        section is driven by arguments to kwargs supplied by
+        deployment.json(extra_kwargs).
+
+        Available settings:
+          * ecometrics with pseudograms ("enable_pseudograms": true)
+            This stores pseudogram and ecometrics data into an extras
+            time dimension.
         """
-        pse_file = Path(self.ascii_file).with_suffix(".pseudogram")
-        if pse_file.exists():
-            try:
-                self._extras = pd.read_csv(
-                    pse_file,
-                    header=0,
-                    names=[
-                        'pseudogram_time',
-                        'pseudogram_depth',
-                        'pseudogram_sv'
-                    ]
-                )
 
-                # Loop through echometrics values and assign them into available pseudogram times
-                if 'sci_echodroid_sv' in data.columns:
-                    # Only move echometrics data that is not NaN.  There is a curious
-                    # problem from the science computer where the first row of echometrics
-                    # data could be all zeroes.  Here we take valid Sv values < 0 dB.
-                    echometricsData = data[data['sci_echodroid_sv'] < 0]
-                    if len(echometricsData) > 0:
-                        # Create echometrics variables in self._extras
+        ECOMETRICS_SENSORS = [ 'sci_echodroid_aggindex', 'sci_echodroid_ctrmass',
+            'sci_echodroid_eqarea', 'sci_echodroid_inertia', 'sci_echodroid_propocc',
+            'sci_echodroid_sa', 'sci_echodroid_sv']
+        PSEUDOGRAM_VARS = ['pseudogram_time', 'pseudogram_depth', 'pseudogram_sv']
+        POSITIONAL_VARS = ['x', 'y']
 
-                        for sensor in ECHOMETRICS_SENSORS:
-                            self._extras[sensor] = np.full((len(self._extras['pseudogram_time'])), np.nan)
-                        for idx, row in echometricsData.iterrows():
-                            tdiff = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).min()
-                            # if a close enough match is found, assign the echometrics
-                            # values into self._extras
-                            if tdiff < 1e-6:
-                                tidx = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).argmin()
-                                ptime = np.unique(self._extras['pseudogram_time'])[tidx]
-                                # Place values into the first time index that matches
-                                ptimeidx = self._extras['pseudogram_time'][self._extras['pseudogram_time'] == ptime].axes[0].values[0]
-                                # Update self._extras from the row of echometrics data
-                                dataRow = row.get(ECHOMETRICS_SENSORS)
-                                self._extras.update(
-                                    pd.DataFrame(dataRow.to_dict(), index=[ptimeidx])
-                                )
-                        # Once data is copied out of data, the columns have to be removed from data
-                        # or the write to netCDF will fail.
-                        data = data.drop(columns=ECHOMETRICS_SENSORS)
+        # Default extra settings
+        enable_pseudograms = kwargs.pop('enable_pseudograms', False)
 
-                self._extras['pseudogram_time'] = pd.to_datetime(
-                    self._extras.pseudogram_time, unit='s', origin='unix'
-                )
+        if enable_pseudograms:
+
+            # Two possible outcomes:
+            #     (1) If the pseudogram exists, align ecometrics data along
+            #         the pseudogram sample time.  There is a slight difference due to
+            #         time being read with full float precision and reading time using
+            #         the slocum binaries.  This should be less so if the dbdreader is
+            #         utilized.
+            #     (2) If the pseudogram does not exist, create an empty placeholder for
+            #         the pseudogram and use the times available from the ecometrics data.
+            #
+            # ECOMETRIC_SENSOR and PSEUDOGRAM_VARS will have the extras dimension.
+            # Any ECOMETRIC_SENSOR variables will be removed from the data variable.
+
+            pse_file = Path(self.ascii_file).with_suffix(".pseudogram")
+            have_pseudogram = False
+            if pse_file.exists():
+                try:
+                    self._extras = pd.read_csv(
+                        pse_file,
+                        header=0,
+                        names=PSEUDOGRAM_VARS
+                    )
+                    have_pseudogram = True
+                except BaseException as e:
+                    self._extras = pd.DataFrame()
+                    L.warning(f"Could not process pseudogram file {pse_file}: {e}")
+
+            # DEBUG
+            #have_pseudogram = False
+            #self._extras = pd.DataFrame()
+            '''
+            if not(have_pseudogram):
+                # If the pseudogram does not exist, we still need empty placeholders
+                self._extras = pd.DataFrame({k: pd.Series(dtype='float64') for k in PSEUDOGRAM_VARS})
+            '''
+
+            # Do we have ecometrics data?
+            echometricsData = pd.DataFrame()
+            have_ecometrics = False
+            if 'sci_echodroid_sv' in data.columns:
+                # Valid data rows are where Sv is less than 0 dB
+                ecometricsData = data[data['sci_echodroid_sv'] < 0]
+                if len(ecometricsData) > 0:
+                    have_ecometrics = True
+
+            # Create ECOMETRICS variable placeholders
+            if have_pseudogram:
+                # ecometrics data is inserted into time data as provided by the pseudogram
+                for sensor in ECOMETRICS_SENSORS:
+                    self._extras[sensor] = np.full((len(self._extras['pseudogram_time'])), np.nan)
+            else:
+                # with a missing pseudogram, we can use a shorter list of times
+                # we have to create placeholders for PSEUDOGRAM and ECOMETRICS variables
+                for sensor in PSEUDOGRAM_VARS + ECOMETRICS_SENSORS:
+                    self._extras[sensor] = np.full((len(ecometricsData)), np.nan)
+
+            if have_pseudogram:
+                for idx, row in ecometricsData.iterrows():
+                    tdiff = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).min()
+                    # if a close enough match is found, assign the ecometrics
+                    # values into self._extras
+                    if tdiff < 1e-6:
+                        tidx = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).argmin()
+                        ptime = np.unique(self._extras['pseudogram_time'])[tidx]
+                        # Place values into the first time index that matches
+                        ptimeidx = self._extras['pseudogram_time'][self._extras['pseudogram_time'] == ptime].axes[0].values[0]
+                        # Update self._extras from the row of ecometrics data
+                        dataRow = row.get(ECOMETRICS_SENSORS)
+                        self._extras.update(
+                            pd.DataFrame(dataRow.to_dict(), index=[ptimeidx])
+                        )
+            else:
+                ecometricsData.reset_index(inplace=True, drop=True)
+                for sensor in ECOMETRICS_SENSORS + ['m_present_time']:
+                   if sensor in ecometricsData:
+                       destSensor = sensor
+                       if destSensor == 'm_present_time':
+                           destSensor = 'pseudogram_time'
+                       self._extras[destSensor] = ecometricsData[sensor]
+
+            # Once ecometrics are copied out of data, the columns have to be removed from data
+            # or the write to netCDF will fail due to duplicate variables.
+            if have_ecometrics:
+                data = data.drop(columns=ECOMETRICS_SENSORS)
+
+            self._extras['pseudogram_time'] = pd.to_datetime(
+                self._extras.pseudogram_time, unit='s', origin='unix'
+            )
+
+            if have_pseudogram:
                 self._extras = self._extras.sort_values([
                     'pseudogram_time',
                     'pseudogram_depth'
                 ])
-                self._extras.set_index("pseudogram_time", inplace=True)
-            except BaseException as e:
-                self._extras = pd.DataFrame()
-                L.warning(f"Could not process pseudogram file {pse_file}: {e}")
+            else:
+                self._extras = self._extras.sort_values(['pseudogram_time'])
+
+            self._extras.set_index("pseudogram_time", inplace=True)
 
         return self._extras, data
 
