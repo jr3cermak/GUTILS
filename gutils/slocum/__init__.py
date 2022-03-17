@@ -485,7 +485,7 @@ class SlocumMerger(object):
                     '-y', sys.executable,
                     '-g',  # Makes the pseudogram ASCII
                     '-i',  # Makes the pseudogram images. This is slow!
-                    '-r', "60.0"
+                    '-r', "-60.0"
                 ]
 
         pargs.append(self.tmpdir)
