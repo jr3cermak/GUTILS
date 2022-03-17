@@ -75,11 +75,8 @@ class SlocumReader(object):
             time dimension.
         """
 
-        ECOMETRICS_SENSORS = [ 'sci_echodroid_aggindex', 'sci_echodroid_ctrmass',
-            'sci_echodroid_eqarea', 'sci_echodroid_inertia', 'sci_echodroid_propocc',
-            'sci_echodroid_sa', 'sci_echodroid_sv']
+        ECOMETRICS_SENSORS = [ 'sci_echodroid_aggindex', 'sci_echodroid_ctrmass', 'sci_echodroid_eqarea', 'sci_echodroid_inertia', 'sci_echodroid_propocc', 'sci_echodroid_sa', 'sci_echodroid_sv']
         PSEUDOGRAM_VARS = ['pseudogram_time', 'pseudogram_depth', 'pseudogram_sv']
-        POSITIONAL_VARS = ['x', 'y']
 
         # Default extra settings
         enable_pseudograms = kwargs.pop('enable_pseudograms', False)
@@ -122,7 +119,7 @@ class SlocumReader(object):
             '''
 
             # Do we have ecometrics data?
-            echometricsData = pd.DataFrame()
+            ecometricsData = pd.DataFrame()
             have_ecometrics = False
             if 'sci_echodroid_sv' in data.columns:
                 # Valid data rows are where Sv is less than 0 dB
@@ -159,11 +156,11 @@ class SlocumReader(object):
             else:
                 ecometricsData.reset_index(inplace=True, drop=True)
                 for sensor in ECOMETRICS_SENSORS + ['m_present_time']:
-                   if sensor in ecometricsData:
-                       destSensor = sensor
-                       if destSensor == 'm_present_time':
-                           destSensor = 'pseudogram_time'
-                       self._extras[destSensor] = ecometricsData[sensor]
+                    if sensor in ecometricsData:
+                        destSensor = sensor
+                        if destSensor == 'm_present_time':
+                            destSensor = 'pseudogram_time'
+                        self._extras[destSensor] = ecometricsData[sensor]
 
             # Once ecometrics are copied out of data, the columns have to be removed from data
             # or the write to netCDF will fail due to duplicate variables.

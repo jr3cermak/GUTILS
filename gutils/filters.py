@@ -202,5 +202,4 @@ def process_dataset(file,
         L.exception('{} - Skipping'.format(e))
         raise
 
-
     return filtered, extras, reader.mode
