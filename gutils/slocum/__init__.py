@@ -459,7 +459,7 @@ class SlocumMerger(object):
         # Use the first file as a place to start looking for the config directory
         try:
             file = self.matched_files[0]
-        except BaseException as e:
+        except BaseException:
             L.warning("No matched files")
             self.attrs = {}
             self.filters = {}
@@ -549,7 +549,7 @@ class SlocumMerger(object):
                 if echosounderDirection == 'up':
                     echosounderRange = - (echosounderRange)
             except BaseException as e:
-                L.warning("Bad extra_kwargs for pseudograms, falling back to defaults")
+                L.warning(f"Bad extra_kwargs for pseudograms, falling back to defaults: {e}")
 
             for d in PSEUDOGRAM_DEPLOYMENTS:
                 if d in self.matched_files[0]:
