@@ -24,7 +24,6 @@ from pocean.utils import (
     create_ncvar_from_series,
     get_ncdata_from_series
 )
-from pocean.meta import MetaInterface
 from pocean.dsg import (
     IncompleteMultidimensionalTrajectory,
     ContiguousRaggedTrajectoryProfile

@@ -242,6 +242,7 @@ def get_profile_data(profile, method=None):
     tuv = namedtuple('Profile_Data', ['t', 'x', 'y'])
     return tuv(t=t, x=x, y=y)
 
+
 def read_attrs(config_path=None, template=None):
 
     def cfg_file(name):
@@ -282,6 +283,7 @@ def read_attrs(config_path=None, template=None):
     one = dict_update(defaults, ins)
     two = dict_update(one, deps)
     return two
+
 
 def safe_makedirs(folder):
     try:
