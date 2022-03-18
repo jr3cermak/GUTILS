@@ -122,7 +122,8 @@ def process_dataset(file,
         # variables are reassigned with the extras dimension.
         extras, data = reader.extras(data, **extra_kwargs)
 
-        have_pseudograms = extra_kwargs.pop('enable_pseudograms', False)
+        pseudograms_attrs = extra_kwargs.pop('pseudograms', {})
+        have_pseudograms = pseudograms_attrs.pop('enable', False)
 
         if 'z' not in data.columns:
             L.warning("No Z axis found - Skipping {}".format(file))
@@ -191,7 +192,6 @@ def process_dataset(file,
                 profiles_to_add = profile_list.difference(extras_list)
                 first_t_in_profiles = filtered.groupby(by=["profile"]).min()['t']
                 for profile_to_add in profiles_to_add:
-                    print(profile_to_add)
                     empty_df = pd.DataFrame([[np.nan] * len(extras.columns)], columns=extras.columns)
                     empty_df['profile'] = float(profile_to_add)
                     empty_df['pseudogram_time'] = first_t_in_profiles[profile_to_add]
