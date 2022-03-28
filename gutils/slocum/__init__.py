@@ -557,7 +557,7 @@ class SlocumMerger(object):
                         pargs = pargs + [
                             '-y', sys.executable,
                             '-g',  # Makes the pseudogram ASCII
-                            '-i',  # Makes the pseudogram images. This is slow!
+                            # '-i',  # Makes the pseudogram images. This is slow!
                             '-r', f"{echosounderRange}"
                         ]
                     else:
