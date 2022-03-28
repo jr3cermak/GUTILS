@@ -123,7 +123,7 @@ class SlocumReader(object):
             if 'sci_echodroid_sv' in data.columns:
                 # Valid data rows are where Sv is less than 0 dB
                 ecometricsData = data[data['sci_echodroid_sv'] < 0]
-                if len(ecometricsData) > 0:
+                if not ecometricsData.empty:
                     have_ecometrics = True
 
             # Create ECOMETRICS variable placeholders
@@ -138,7 +138,7 @@ class SlocumReader(object):
                     self._extras[sensor] = np.full((len(ecometricsData)), np.nan)
 
             if have_pseudogram:
-                for idx, row in ecometricsData.iterrows():
+                for _, row in ecometricsData.iterrows():
                     tdiff = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).min()
                     # if a close enough match is found, assign the ecometrics
                     # values into self._extras
@@ -168,7 +168,7 @@ class SlocumReader(object):
                     # For now, copy one row of missing data.
                     empty_df = pd.DataFrame([[np.nan] * len(self._extras.columns)], columns=self._extras.columns)
                     empty_df['pseudogram_time'] = data['m_present_time'][0]
-                    self._extras = empty_df.append(self._extras)
+                    self._extras = pd.concat([self._extras, empty_df], ignore_index=True)
 
             # Once ecometrics are copied out of data, the columns have to be removed from data
             # or the write to netCDF will fail due to duplicate variables.
