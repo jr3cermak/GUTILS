@@ -2,6 +2,7 @@
 # coding=utf-8
 import os
 import pandas as pd
+import numpy as np
 
 from gutils.yo import assign_profiles
 
@@ -115,15 +116,14 @@ def process_dataset(file,
     try:
         reader = reader_class(file)
         data = reader.standardize(z_axis_method=z_axis_method)
-        # For whatever reason, only the first downward leg of
-        # profile 1 is written to the netCDF file.  The acoustic
-        # sensors for Gretel(unit_507) are on during the upward
-        # portion of the leg.
-        # The data section is also passed to extras processing
-        # for the pseudogram.  If the pseudogram is found, the
-        # echometrics (echodroid) variable are removed from the
-        # data section and reassigned with the extras dimension.
+
+        # The data section is also passed to extras processing.
+        # In certain circumstances, the dimension for certain
+        # variables are reassigned with the extras dimension.
         extras, data = reader.extras(data, **extra_kwargs)
+
+        pseudograms_attrs = extra_kwargs.pop('pseudograms', {})
+        have_pseudograms = pseudograms_attrs.pop('enable', False)
 
         if 'z' not in data.columns:
             L.warning("No Z axis found - Skipping {}".format(file))
@@ -183,6 +183,20 @@ def process_dataset(file,
 
             except BaseException as e:
                 L.error(f"Could not merge 'extras' data, skipping: {e}")
+
+            if have_pseudograms:
+                # To have consistent netCDF files, empty dataframes have to exist
+                # in extras for each valid profile in filtered variable
+                profile_list = set(filtered['profile'].unique())
+                extras_list = set(extras['profile'].unique().astype('int'))
+                profiles_to_add = profile_list.difference(extras_list)
+                first_t_in_profiles = filtered.groupby(by=["profile"]).min()['t']
+                for profile_to_add in profiles_to_add:
+                    empty_df = pd.DataFrame([[np.nan] * len(extras.columns)], columns=extras.columns)
+                    empty_df['profile'] = float(profile_to_add)
+                    empty_df['pseudogram_time'] = first_t_in_profiles[profile_to_add]
+                    empty_df.set_index('pseudogram_time', inplace=True)
+                    extras = empty_df.append(extras)
 
     except ValueError as e:
         L.exception('{} - Skipping'.format(e))

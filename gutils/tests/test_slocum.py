@@ -301,7 +301,9 @@ class TestEcoMetricsOne(GutilsTestClass):
             self.binary_path,
             self.ascii_path,
             cache_directory=self.cache_path,
-            globs=['*']
+            globs=['*'],
+            deployments_path=resource('slocum'),
+            template='slocum_dac'
         )
         _ = merger.convert()
 
@@ -339,6 +341,11 @@ class TestEcoMetricsOne(GutilsTestClass):
             assert ncd.variables['profile_id'].ndim == 0
             assert ncd.variables['profile_id'][0] == 1642638468
 
+        # Check netCDF file for compliance
+        ds = namedtuple('Arguments', ['file'])
+        for o in output_files:
+            assert check_dataset(ds(file=o)) == 0
+
 
 class TestEcoMetricsTwo(GutilsTestClass):
 
@@ -358,7 +365,9 @@ class TestEcoMetricsTwo(GutilsTestClass):
             self.binary_path,
             self.ascii_path,
             cache_directory=self.cache_path,
-            globs=['*']
+            globs=['*'],
+            deployments_path=resource('slocum'),
+            template='slocum_dac'
         )
         _ = merger.convert()
 
@@ -396,6 +405,11 @@ class TestEcoMetricsTwo(GutilsTestClass):
             assert ncd.variables['profile_id'].ndim == 0
             assert ncd.variables['profile_id'][0] == 1639069272
 
+        # Check netCDF file for compliance
+        ds = namedtuple('Arguments', ['file'])
+        for o in output_files:
+            assert check_dataset(ds(file=o)) == 0
+
 
 class TestEcoMetricsThree(GutilsTestClass):
 
@@ -415,7 +429,9 @@ class TestEcoMetricsThree(GutilsTestClass):
             self.binary_path,
             self.ascii_path,
             cache_directory=self.cache_path,
-            globs=['*']
+            globs=['*'],
+            deployments_path=resource('slocum'),
+            template='slocum_dac'
         )
         _ = merger.convert()
 
@@ -447,3 +463,67 @@ class TestEcoMetricsThree(GutilsTestClass):
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
             assert ncd.variables['profile_id'][0] == 1644648114
+
+        # Check netCDF file for compliance
+        ds = namedtuple('Arguments', ['file'])
+        for o in output_files:
+            assert check_dataset(ds(file=o)) == 0
+
+
+class TestEcoMetricsFour(GutilsTestClass):
+
+    def setUp(self):
+        super().setUp()
+        self.binary_path = resource('slocum', 'ecometrics4', 'rt', 'binary')
+        self.ascii_path = resource('slocum', 'ecometrics4', 'rt', 'ascii')
+        self.netcdf_path = resource('slocum', 'ecometrics4', 'rt', 'netcdf')
+        self.cache_path = resource('slocum', 'ecometrics4', 'config')
+
+    def tearDown(self):
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+
+    def test_pseudogram(self):
+        merger = SlocumMerger(
+            self.binary_path,
+            self.ascii_path,
+            cache_directory=self.cache_path,
+            globs=['*'],
+            deployments_path=resource('slocum'),
+            template='slocum_dac'
+        )
+        _ = merger.convert()
+
+        dat_files = [ p for p in os.listdir(self.ascii_path) if p.endswith('.dat')]
+        for ascii_file in dat_files:
+            args = dict(
+                file=os.path.join(self.ascii_path, ascii_file),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=True,
+                template='slocum_dac',
+                profile_id_type=1,
+                z_axis_method=1
+            )
+            create_dataset(**args)
+
+        assert os.path.exists(self.netcdf_path)
+
+        output_files = sorted(os.listdir(self.netcdf_path))
+        output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
+        assert len(output_files) == 12
+
+        # First profile
+        with nc4.Dataset(output_files[0]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1647110555
+
+        # Last profile
+        with nc4.Dataset(output_files[-1]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1647141015
+
+        # Check netCDF file for compliance
+        ds = namedtuple('Arguments', ['file'])
+        for o in output_files:
+            assert check_dataset(ds(file=o)) == 0

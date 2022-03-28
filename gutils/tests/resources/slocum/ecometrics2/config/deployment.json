@@ -36,6 +36,15 @@
         "title": "G507 Slocum Glider Dataset (Feb 2022)",
         "wmo_id": 4802989
     },
+    "extra_kwargs": {
+        "pseudograms": {
+            "enable": true,
+            "create_images": false,
+            "echosounderRange": 60.0,
+            "echosounderDirection": "down",
+            "echosounderRangeUnits": "meters"
+        }
+    },
     "variables": {
         "platform": {
             "attributes": {

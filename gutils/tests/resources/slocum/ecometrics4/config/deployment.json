@@ -45,8 +45,8 @@
     },
     "extra_kwargs": {
         "pseudograms": {
-            "enable": false,
-            "create_images": true,
+            "enable": true,
+            "create_images": false,
             "echosounderRange": 60.0,
             "echosounderDirection": "up",
             "echosounderRangeUnits": "meters"

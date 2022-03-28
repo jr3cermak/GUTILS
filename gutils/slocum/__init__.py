@@ -16,9 +16,14 @@ from gutils import (
     get_decimal_degrees,
     interpolate_gps,
     masked_epoch,
+    read_attrs,
     safe_makedirs
 )
 from gutils.ctd import calculate_practical_salinity, calculate_density
+
+from pocean.utils import (
+    dict_update
+)
 
 import logging
 L = logging.getLogger(__name__)
@@ -38,16 +43,6 @@ PSEUDOGRAM_DEPLOYMENTS = [
     'unit_507'
 ]
 
-ECHOMETRICS_SENSORS = [
-    'sci_echodroid_aggindex',
-    'sci_echodroid_ctrmass',
-    'sci_echodroid_eqarea',
-    'sci_echodroid_inertia',
-    'sci_echodroid_propocc',
-    'sci_echodroid_sa',
-    'sci_echodroid_sv',
-]
-
 
 class SlocumReader(object):
 
@@ -61,7 +56,7 @@ class SlocumReader(object):
         self.ascii_file = ascii_file
         self.metadata, self.data = self.read()
 
-        # Do we have a pseudogram file as well?
+        # Extra processing (pseudograms and other extra items)
         self._extras = pd.DataFrame()
 
         # Set the mode to 'rt' or 'delayed'
@@ -75,63 +70,123 @@ class SlocumReader(object):
 
     def extras(self, data, **kwargs):
         """
-        Process pseudogram and echometrics data here for now.  If the echometrics
-        data is found, the echometrics (echodroid) variables are reassigned the
-        extras dimension.
+        Extra data processing for auxillary or experimental data.  This
+        section is driven by arguments to kwargs supplied by
+        deployment.json(extra_kwargs).
+
+        Available settings:
+          * ecometrics with pseudograms ("pseudograms": "enable": true)
+            This processes pseudogram and ecometrics variables stores them
+            using an extras time dimension.
         """
-        pse_file = Path(self.ascii_file).with_suffix(".pseudogram")
-        if pse_file.exists():
-            try:
-                self._extras = pd.read_csv(
-                    pse_file,
-                    header=0,
-                    names=[
-                        'pseudogram_time',
-                        'pseudogram_depth',
-                        'pseudogram_sv'
-                    ]
-                )
 
-                # Loop through echometrics values and assign them into available pseudogram times
-                if 'sci_echodroid_sv' in data.columns:
-                    # Only move echometrics data that is not NaN.  There is a curious
-                    # problem from the science computer where the first row of echometrics
-                    # data could be all zeroes.  Here we take valid Sv values < 0 dB.
-                    echometricsData = data[data['sci_echodroid_sv'] < 0]
-                    if len(echometricsData) > 0:
-                        # Create echometrics variables in self._extras
+        ECOMETRICS_SENSORS = [ 'sci_echodroid_aggindex', 'sci_echodroid_ctrmass', 'sci_echodroid_eqarea', 'sci_echodroid_inertia', 'sci_echodroid_propocc', 'sci_echodroid_sa', 'sci_echodroid_sv']
+        PSEUDOGRAM_VARS = ['pseudogram_time', 'pseudogram_depth', 'pseudogram_sv']
 
-                        for sensor in ECHOMETRICS_SENSORS:
-                            self._extras[sensor] = np.full((len(self._extras['pseudogram_time'])), np.nan)
-                        for idx, row in echometricsData.iterrows():
-                            tdiff = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).min()
-                            # if a close enough match is found, assign the echometrics
-                            # values into self._extras
-                            if tdiff < 1e-6:
-                                tidx = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).argmin()
-                                ptime = np.unique(self._extras['pseudogram_time'])[tidx]
-                                # Place values into the first time index that matches
-                                ptimeidx = self._extras['pseudogram_time'][self._extras['pseudogram_time'] == ptime].axes[0].values[0]
-                                # Update self._extras from the row of echometrics data
-                                dataRow = row.get(ECHOMETRICS_SENSORS)
-                                self._extras.update(
-                                    pd.DataFrame(dataRow.to_dict(), index=[ptimeidx])
-                                )
-                        # Once data is copied out of data, the columns have to be removed from data
-                        # or the write to netCDF will fail.
-                        data = data.drop(columns=ECHOMETRICS_SENSORS)
+        # Default extra settings
+        pseudograms_attrs = kwargs.pop('pseudograms', {})
+        enable_pseudograms = pseudograms_attrs.pop('enable', False)
+        # Put the keyword back into the kwargs or we lose it upstream
+        pseudograms_attrs['enable'] = enable_pseudograms
 
-                self._extras['pseudogram_time'] = pd.to_datetime(
-                    self._extras.pseudogram_time, unit='s', origin='unix'
-                )
+        if enable_pseudograms:
+
+            # Two possible outcomes:
+            #     (1) If the pseudogram exists, align ecometrics data along
+            #         the pseudogram sample time.  There is a slight difference due to
+            #         time being read with full float precision and reading time using
+            #         the slocum binaries.  This should be less so if the dbdreader is
+            #         utilized.
+            #     (2) If the pseudogram does not exist, create an empty placeholder for
+            #         the pseudogram and use the times available from the ecometrics data.
+            #
+            # ECOMETRIC_SENSOR and PSEUDOGRAM_VARS will have the extras dimension.
+            # Any ECOMETRIC_SENSOR variables will be removed from the data variable.
+
+            pse_file = Path(self.ascii_file).with_suffix(".pseudogram")
+            have_pseudogram = False
+            if pse_file.exists():
+                try:
+                    self._extras = pd.read_csv(
+                        pse_file,
+                        header=0,
+                        names=PSEUDOGRAM_VARS
+                    )
+                    have_pseudogram = True
+                except BaseException as e:
+                    self._extras = pd.DataFrame()
+                    L.warning(f"Could not process pseudogram file {pse_file}: {e}")
+
+            # Do we have ecometrics data?
+            ecometricsData = pd.DataFrame()
+            have_ecometrics = False
+            if 'sci_echodroid_sv' in data.columns:
+                # Valid data rows are where Sv is less than 0 dB
+                ecometricsData = data[data['sci_echodroid_sv'] < 0]
+                if len(ecometricsData) > 0:
+                    have_ecometrics = True
+
+            # Create ECOMETRICS variable placeholders
+            if have_pseudogram:
+                # ecometrics data is inserted into time data as provided by the pseudogram
+                for sensor in ECOMETRICS_SENSORS:
+                    self._extras[sensor] = np.full((len(self._extras['pseudogram_time'])), np.nan)
+            else:
+                # with a missing pseudogram, we can use a shorter list of times
+                # we have to create placeholders for PSEUDOGRAM and ECOMETRICS variables
+                for sensor in PSEUDOGRAM_VARS + ECOMETRICS_SENSORS:
+                    self._extras[sensor] = np.full((len(ecometricsData)), np.nan)
+
+            if have_pseudogram:
+                for idx, row in ecometricsData.iterrows():
+                    tdiff = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).min()
+                    # if a close enough match is found, assign the ecometrics
+                    # values into self._extras
+                    if tdiff < 1e-6:
+                        tidx = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).argmin()
+                        ptime = np.unique(self._extras['pseudogram_time'])[tidx]
+                        # Place values into the first time index that matches
+                        ptimeidx = self._extras['pseudogram_time'][self._extras['pseudogram_time'] == ptime].axes[0].values[0]
+                        # Update self._extras from the row of ecometrics data
+                        dataRow = row.get(ECOMETRICS_SENSORS)
+                        self._extras.update(
+                            pd.DataFrame(dataRow.to_dict(), index=[ptimeidx])
+                        )
+            else:
+                if have_ecometrics:
+                    ecometricsData.reset_index(inplace=True, drop=True)
+                    for sensor in ECOMETRICS_SENSORS + ['m_present_time']:
+                        if sensor in ecometricsData:
+                            destSensor = sensor
+                            if destSensor == 'm_present_time':
+                                destSensor = 'pseudogram_time'
+                            self._extras[destSensor] = ecometricsData[sensor]
+                else:
+                    # We have to create fake missing ecometrics data here since
+                    # ECOMETRICS_SENSORS do not appear in the slocum_dac template
+                    # as the PSEUDOGRAM_VARS do.  This might be a temporary fix.
+                    # For now, copy one row of missing data.
+                    empty_df = pd.DataFrame([[np.nan] * len(self._extras.columns)], columns=self._extras.columns)
+                    empty_df['pseudogram_time'] = data['m_present_time'][0]
+                    self._extras = empty_df.append(self._extras)
+
+            # Once ecometrics are copied out of data, the columns have to be removed from data
+            # or the write to netCDF will fail due to duplicate variables.
+            data = data.drop(columns=ECOMETRICS_SENSORS)
+
+            self._extras['pseudogram_time'] = pd.to_datetime(
+                self._extras.pseudogram_time, unit='s', origin='unix'
+            )
+
+            if have_pseudogram:
                 self._extras = self._extras.sort_values([
                     'pseudogram_time',
                     'pseudogram_depth'
                 ])
-                self._extras.set_index("pseudogram_time", inplace=True)
-            except BaseException as e:
-                self._extras = pd.DataFrame()
-                L.warning(f"Could not process pseudogram file {pse_file}: {e}")
+            else:
+                self._extras = self._extras.sort_values(['pseudogram_time'])
+
+            self._extras.set_index("pseudogram_time", inplace=True)
 
         return self._extras, data
 
@@ -356,12 +411,12 @@ class SlocumMerger(object):
     Merges flight and science data files into an ASCII file.
 
     Copies files matching the regex in source_directory to their own temporary directory
-    before processing since the Rutgers supported script only takes foldesr as input
+    before processing since the Rutgers supported script only takes folders as input
 
     Returns a list of flight/science files that were processed into ASCII files
     """
 
-    def __init__(self, source_directory, destination_directory, cache_directory=None, globs=None):
+    def __init__(self, source_directory, destination_directory, cache_directory=None, globs=None, deployments_path=None, template=None, prefer_file_filters=False, **filter_args):
 
         globs = globs or ['*']
 
@@ -393,6 +448,55 @@ class SlocumMerger(object):
 
         self.matched_files = sorted(list(mf), key=slocum_binary_sorter)
 
+        # Initialize attrs as is done for gutils.nc.create_dataset()
+        # attrs and extra_kwargs are stored in the object
+        if deployments_path is None:
+            self.attrs = {}
+            self.filters = {}
+            self.extra_kwargs = {}
+            return
+
+        # Use the first file as a place to start looking for the config directory
+        try:
+            file = self.matched_files[0]
+        except BaseException:
+            L.warning("No matched files")
+            self.attrs = {}
+            self.filters = {}
+            self.extra_kwargs = {}
+            return
+
+        # Remove None filters from the arguments
+        filter_args = { k: v for k, v in filter_args.items() if v is not None }
+
+        # Figure out the ascii output path based on the file and the deployments_path
+        dep_path = Path(deployments_path)
+        file_path = Path(file)
+        individual_dep_path = None
+        for pp in file_path.parents:
+            if dep_path == pp:
+                break
+            individual_dep_path = pp
+        config_path = individual_dep_path / 'config'
+
+        # Extract the filters from the config and override with passed in filters that are not None
+        self.attrs = read_attrs(config_path, template=template)
+        self.file_filters = self.attrs.pop('filters', {})
+
+        # By default the filters passed in as filter_args will overwrite the filters defined in the
+        # config file. If the opposite should happen (typically on a watch that uses a global set
+        # of command line filters), you can set prefer_file_filters=True to have the file filters
+        # take precedence over the passed in filters.
+        if prefer_file_filters is False:
+            self.filters = dict_update(self.file_filters, filter_args)
+        else:
+            self.filters = dict_update(filter_args, self.file_filters)
+
+        # Kwargs can be defined in the "extra_kwargs" section of
+        # a configuration object and passed into the extras method
+        # of a reader.
+        self.extra_kwargs = self.attrs.pop('extra_kwargs', {})
+
     def __del__(self):
         # Remove tmpdir
         shutil.rmtree(self.tmpdir, ignore_errors=True)
@@ -419,26 +523,49 @@ class SlocumMerger(object):
             '-c', self.cache_directory
         ]
 
-        # Perform pseudograms if this ASCII file matches the deployment
-        # name of things we know to have the data. There needs to be a
-        # better way to figure this out, but we don't have any understanding
-        # of a deployment config object at this point.
+        pseudograms_attrs = self.extra_kwargs.pop('pseudograms', {})
+        have_pseudograms = pseudograms_attrs.pop('enable', False)
+        if have_pseudograms:
+            # Perform pseudograms if this ASCII file matches the deployment
+            # name of things we know to have the data. There needs to be a
+            # better way to figure this out, but we don't have any understanding
+            # of a deployment config object at this point.
 
-        # Ideally this code isn't tacked into convertDbds.sh to output separate
-        # files and can be done using the ASCII files exported from SlocumMerger
-        # using pandas. Tighter integration into GUTILS will be done by
-        # Rob Cermak@{UAF,UW}/John Horne@UW.  For now, the code is separate
-        # and placed in # GUTILS/gutils/slocum/echotools.
-        # The tools require one additional python library: dbdreader
-        # https://github.com/smerckel/dbdreader
-        for d in PSEUDOGRAM_DEPLOYMENTS:
-            if d in self.matched_files[0]:
-                pargs = pargs + [
-                    '-y', sys.executable,
-                    '-g',  # Makes the pseudogram ASCII
-                    '-i',  # Makes the pseudogram images. This is slow!
-                    '-r', "60.0"
-                ]
+            # Ideally this code isn't tacked into convertDbds.sh to output separate
+            # files and can be done using the ASCII files exported from SlocumMerger
+            # using pandas. Tighter integration into GUTILS will be done by
+            # Rob Cermak@{UAF,UW}/John Horne@UW.  For now, the code is separate
+            # and placed in # GUTILS/gutils/slocum/echotools.
+            # The tools require one additional python library: dbdreader
+            # https://github.com/smerckel/dbdreader
+
+            # Defaults
+            echosounderRange = 60.0
+            create_images = False
+            try:
+                create_images = pseudograms_attrs.pop('create_images', False)
+                echosounderRange = pseudograms_attrs.pop('echosounderRange', 60.0)
+                echosounderDirection = pseudograms_attrs.pop('echosounderDirection', 'down')
+                if echosounderDirection == 'up':
+                    echosounderRange = - (echosounderRange)
+            except BaseException as e:
+                L.warning(f"Bad extra_kwargs for pseudograms, falling back to defaults: {e}")
+
+            for d in PSEUDOGRAM_DEPLOYMENTS:
+                if d in self.matched_files[0]:
+                    if create_images:
+                        pargs = pargs + [
+                            '-y', sys.executable,
+                            '-g',  # Makes the pseudogram ASCII
+                            '-i',  # Makes the pseudogram images. This is slow!
+                            '-r', f"{echosounderRange}"
+                        ]
+                    else:
+                        pargs = pargs + [
+                            '-y', sys.executable,
+                            '-g',  # Makes the pseudogram ASCII
+                            '-r', f"{echosounderRange}"
+                        ]
 
         pargs.append(self.tmpdir)
         pargs.append(self.destination_directory)
