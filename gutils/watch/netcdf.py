@@ -43,6 +43,7 @@ class Netcdf2FtpProcessor(NetcdfProcessor):
         self.ftp_url = ftp_url
         self.ftp_user = ftp_user
         self.ftp_pass = ftp_pass
+        self.ftp_timeout = 60
 
     def process_IN_CLOSE(self, event):
         args = SimpleNamespace(file=event.pathname)
@@ -55,35 +56,36 @@ class Netcdf2FtpProcessor(NetcdfProcessor):
             self.upload_file(event)
 
     def upload_file(self, event):
-        ftp = None
         try:
-            ftp = FTP(self.ftp_url)
-            ftp.login(self.ftp_user, self.ftp_pass)
+            ftp_kwargs = {
+                'host': self.ftp_url,
+                'user': self.ftp_user,
+                'passwd': self.ftp_pass,
+                'timeout': self.ftp_timeout
+            }
 
-            with nc4.Dataset(event.pathname) as ncd:
-                if not hasattr(ncd, 'id'):
-                    raise ValueError("No 'id' global attribute")
-                # Change into the correct deployment directory
-                try:
-                    ftp.cwd(ncd.id)
-                except BaseException:
-                    ftp.mkd(ncd.id)
-                    ftp.cwd(ncd.id)
+            with FTP(**ftp_kwargs) as ftp:
 
-            with open(event.pathname, 'rb') as fp:
-                # Upload NetCDF file
-                ftp.storbinary(
-                    'STOR {}'.format(event.name),
-                    fp
-                )
-                L.info("Uploaded file: {}".format(event.name))
+                with nc4.Dataset(event.pathname) as ncd:
+                    if not hasattr(ncd, 'id'):
+                        raise ValueError("No 'id' global attribute")
+                    # Change into the correct deployment directory
+                    try:
+                        ftp.cwd(ncd.id)
+                    except BaseException:
+                        ftp.mkd(ncd.id)
+                        ftp.cwd(ncd.id)
+
+                with open(event.pathname, 'rb') as fp:
+                    # Upload NetCDF file
+                    ftp.storbinary(
+                        'STOR {}'.format(event.name),
+                        fp
+                    )
+                    L.info("Uploaded file: {}".format(event.name))
 
         except BaseException as e:
             L.error('Could not upload: {} to {}. {}.'.format(event.pathname, self.ftp_url, e))
-
-        finally:
-            if ftp is not None:
-                ftp.quit()
 
 
 def create_ftp_arg_parser():
