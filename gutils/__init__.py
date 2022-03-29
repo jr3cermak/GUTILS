@@ -14,6 +14,11 @@ import numpy as np
 import pandas as pd
 from scipy.signal import boxcar, convolve
 
+from pocean.meta import MetaInterface
+from pocean.utils import (
+    dict_update
+)
+
 import logging
 L = logging.getLogger(__name__)
 
@@ -236,6 +241,48 @@ def get_profile_data(profile, method=None):
 
     tuv = namedtuple('Profile_Data', ['t', 'x', 'y'])
     return tuv(t=t, x=x, y=y)
+
+
+def read_attrs(config_path=None, template=None):
+
+    def cfg_file(name):
+        return os.path.join(
+            config_path,
+            name
+        )
+
+    template = template or 'trajectory'
+
+    if os.path.isfile(template):
+        default_attrs_path = template
+    else:
+        template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+        default_attrs_path = os.path.join(template_dir, '{}.json'.format(template))
+        if not os.path.isfile(default_attrs_path):
+            L.error("Template path {} not found, using defaults.".format(default_attrs_path))
+            default_attrs_path = os.path.join(template_dir, 'trajectory.json')
+
+    # Load in template defaults
+    defaults = dict(MetaInterface.from_jsonfile(default_attrs_path))
+
+    # Load instruments
+    ins = {}
+    if config_path:
+        ins_attrs_path = cfg_file("instruments.json")
+        if os.path.isfile(ins_attrs_path):
+            ins = dict(MetaInterface.from_jsonfile(ins_attrs_path))
+
+    # Load deployment attributes (including some global attributes)
+    deps = {}
+    if config_path:
+        deps_attrs_path = cfg_file("deployment.json")
+        if os.path.isfile(deps_attrs_path):
+            deps = dict(MetaInterface.from_jsonfile(deps_attrs_path))
+
+    # Update, highest precedence updates last
+    one = dict_update(defaults, ins)
+    two = dict_update(one, deps)
+    return two
 
 
 def safe_makedirs(folder):

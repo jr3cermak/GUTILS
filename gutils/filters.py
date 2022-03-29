@@ -2,6 +2,7 @@
 # coding=utf-8
 import os
 import pandas as pd
+import numpy as np
 
 from gutils.yo import assign_profiles
 
@@ -99,12 +100,14 @@ def filter_profile_number_of_points(dataset, points_condition=None, reindex=True
 
 def process_dataset(file,
                     reader_class,
+                    *,
                     tsint=None,
                     filter_z=None,
                     filter_points=None,
                     filter_time=None,
                     filter_distance=None,
-                    z_axis_method=1):
+                    z_axis_method=1,
+                    **extra_kwargs):
 
     # Check filename
     if file is None:
@@ -113,7 +116,11 @@ def process_dataset(file,
     try:
         reader = reader_class(file)
         data = reader.standardize(z_axis_method=z_axis_method)
-        extras = reader.extras()
+
+        # The data section is also passed to extras processing.
+        # In certain circumstances, the dimension for certain
+        # variables are reassigned with the extras dimension.
+        extras, data = reader.extras(data, **extra_kwargs)
 
         if 'z' not in data.columns:
             L.warning("No Z axis found - Skipping {}".format(file))
@@ -170,6 +177,20 @@ def process_dataset(file,
                     tolerance=pd.Timedelta(minutes=10)
                 ).set_index(extras.index)
                 extras['profile'] = merge.profile.ffill()
+
+                # To have consistent netCDF files, empty "extras" variables need to exist
+                # in for each valid profile that was calculated above into "filtered".
+                profile_list = set(filtered['profile'].unique())
+                extras_list = set(extras['profile'].unique().astype('int32'))
+                profiles_to_add = profile_list.difference(extras_list)
+                if profiles_to_add:
+                    first_t_in_profiles = filtered.groupby(by=["profile"]).min()['t']
+                    for profile_to_add in profiles_to_add:
+                        empty_df = pd.DataFrame([[np.nan] * len(extras.columns)], columns=extras.columns)
+                        empty_df['profile'] = profile_to_add
+                        empty_df['pseudogram_time'] = first_t_in_profiles[profile_to_add]
+                        empty_df.set_index('pseudogram_time', inplace=True)
+                        extras = pd.concat([extras, empty_df], sort=True)
 
             except BaseException as e:
                 L.error(f"Could not merge 'extras' data, skipping: {e}")

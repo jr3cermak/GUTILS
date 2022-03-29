@@ -91,7 +91,7 @@ def assign_profiles(df, tsint=1):
     for profile_index, (min_time, max_time) in enumerate(p_inds):
 
         # Get rows between the min and max time
-        time_between = profile_df.t.between(min_time, max_time, inclusive=True)
+        time_between = profile_df.t.between(min_time, max_time, inclusive='both')
 
         # Get indexes of the between rows since we can't assign by the range due to NaT values
         ixs = profile_df.loc[time_between].index.tolist()

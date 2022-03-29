@@ -24,13 +24,12 @@ from pocean.utils import (
     create_ncvar_from_series,
     get_ncdata_from_series
 )
-from pocean.meta import MetaInterface
 from pocean.dsg import (
     IncompleteMultidimensionalTrajectory,
     ContiguousRaggedTrajectoryProfile
 )
 
-from gutils import get_uv_data, get_profile_data, safe_makedirs, setup_cli_logger
+from gutils import get_uv_data, get_profile_data, read_attrs, safe_makedirs, setup_cli_logger
 from gutils.filters import process_dataset
 from gutils.slocum import SlocumReader
 
@@ -45,48 +44,6 @@ class ProfileIdTypes(object):
     EPOCH = 1  # epochs
     COUNT = 2  # "count" from the output directory
     FRAME = 3  # "profile" column from the input dataframe
-
-
-def read_attrs(config_path=None, template=None):
-
-    def cfg_file(name):
-        return os.path.join(
-            config_path,
-            name
-        )
-
-    template = template or 'trajectory'
-
-    if os.path.isfile(template):
-        default_attrs_path = template
-    else:
-        template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-        default_attrs_path = os.path.join(template_dir, '{}.json'.format(template))
-        if not os.path.isfile(default_attrs_path):
-            L.error("Template path {} not found, using defaults.".format(default_attrs_path))
-            default_attrs_path = os.path.join(template_dir, 'trajectory.json')
-
-    # Load in template defaults
-    defaults = dict(MetaInterface.from_jsonfile(default_attrs_path))
-
-    # Load instruments
-    ins = {}
-    if config_path:
-        ins_attrs_path = cfg_file("instruments.json")
-        if os.path.isfile(ins_attrs_path):
-            ins = dict(MetaInterface.from_jsonfile(ins_attrs_path))
-
-    # Load deployment attributes (including some global attributes)
-    deps = {}
-    if config_path:
-        deps_attrs_path = cfg_file("deployment.json")
-        if os.path.isfile(deps_attrs_path):
-            deps = dict(MetaInterface.from_jsonfile(deps_attrs_path))
-
-    # Update, highest precedence updates last
-    one = dict_update(defaults, ins)
-    two = dict_update(one, deps)
-    return two
 
 
 def set_scalar_value(value, ncvar):
@@ -472,27 +429,32 @@ def create_arg_parser():
     parser.add_argument(
         '-ts', '--tsint',
         help="Interpolation window to consider when assigning profiles",
-        default=None
+        default=None,
+        type=int
     )
     parser.add_argument(
         '-fp', '--filter_points',
         help="Filter out profiles that do not have at least this number of points",
-        default=None
+        default=None,
+        type=int
     )
     parser.add_argument(
         '-fd', '--filter_distance',
         help="Filter out profiles that do not span at least this vertical distance (meters)",
-        default=None
+        default=None,
+        type=float
     )
     parser.add_argument(
         '-ft', '--filter_time',
         help="Filter out profiles that last less than this numer of seconds",
-        default=None
+        default=None,
+        type=float
     )
     parser.add_argument(
         '-fz', '--filter_z',
         help="Filter out profiles that are not completely below this depth (meters)",
-        default=None
+        default=None,
+        type=float
     )
     parser.add_argument(
         "-za",
@@ -554,7 +516,17 @@ def create_dataset(
     else:
         filters = dict_update(filter_args, file_filters)
 
-    processed_df, extras_df, mode = process_dataset(file, reader_class, **filters)
+    # Kwargs can be defined in the "extra_kwargs" section of
+    # a configuration object and passed into the extras method
+    # of a reader.
+    extra_kwargs = attrs.pop('extra_kwargs', {})
+
+    processed_df, extras_df, mode = process_dataset(
+        file,
+        reader_class,
+        **filters,
+        **extra_kwargs,
+    )
 
     if processed_df is None:
         return 1
