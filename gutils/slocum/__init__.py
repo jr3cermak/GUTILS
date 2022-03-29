@@ -39,10 +39,6 @@ ALL_EXTENSIONS = [".sbd", ".tbd", ".mbd", ".nbd", ".dbd", ".ebd"]
 COMPUTE_PRESSURE = 1
 USE_RAW_PRESSURE = 2
 
-PSEUDOGRAM_DEPLOYMENTS = [
-    'unit_507'
-]
-
 
 class SlocumReader(object):
 
@@ -84,10 +80,8 @@ class SlocumReader(object):
         PSEUDOGRAM_VARS = ['pseudogram_time', 'pseudogram_depth', 'pseudogram_sv']
 
         # Default extra settings
-        pseudograms_attrs = kwargs.pop('pseudograms', {})
-        enable_pseudograms = pseudograms_attrs.pop('enable', False)
-        # Put the keyword back into the kwargs or we lose it upstream
-        pseudograms_attrs['enable'] = enable_pseudograms
+        pseudograms_attrs = kwargs.get('pseudograms', {})
+        enable_pseudograms = pseudograms_attrs.get('enable', False)
 
         if enable_pseudograms:
 
@@ -523,8 +517,8 @@ class SlocumMerger(object):
             '-c', self.cache_directory
         ]
 
-        pseudograms_attrs = self.extra_kwargs.pop('pseudograms', {})
-        have_pseudograms = pseudograms_attrs.pop('enable', False)
+        pseudograms_attrs = self.extra_kwargs.get('pseudograms', {})
+        have_pseudograms = pseudograms_attrs.get('enable', False)
         if have_pseudograms:
             # Perform pseudograms if this ASCII file matches the deployment
             # name of things we know to have the data. There needs to be a
@@ -540,32 +534,25 @@ class SlocumMerger(object):
             # https://github.com/smerckel/dbdreader
 
             # Defaults
-            echosounderRange = 60.0
-            create_images = False
-            try:
-                create_images = pseudograms_attrs.pop('create_images', False)
-                echosounderRange = pseudograms_attrs.pop('echosounderRange', 60.0)
-                echosounderDirection = pseudograms_attrs.pop('echosounderDirection', 'down')
-                if echosounderDirection == 'up':
-                    echosounderRange = - (echosounderRange)
-            except BaseException as e:
-                L.warning(f"Bad extra_kwargs for pseudograms, falling back to defaults: {e}")
+            create_images = pseudograms_attrs.get('create_images', False)
+            echosounderRange = pseudograms_attrs.get('echosounderRange', 60.0)
+            echosounderDirection = pseudograms_attrs.get('echosounderDirection', 'down')
+            if echosounderDirection == 'up':
+                echosounderRange = - (echosounderRange)
 
-            for d in PSEUDOGRAM_DEPLOYMENTS:
-                if d in self.matched_files[0]:
-                    if create_images:
-                        pargs = pargs + [
-                            '-y', sys.executable,
-                            '-g',  # Makes the pseudogram ASCII
-                            # '-i',  # Makes the pseudogram images. This is slow!
-                            '-r', f"{echosounderRange}"
-                        ]
-                    else:
-                        pargs = pargs + [
-                            '-y', sys.executable,
-                            '-g',  # Makes the pseudogram ASCII
-                            '-r', f"{echosounderRange}"
-                        ]
+            if create_images:
+                pargs = pargs + [
+                    '-y', sys.executable,
+                    '-g',  # Makes the pseudogram ASCII
+                    '-i',  # Makes the pseudogram images. This is slow!
+                    '-r', f"{echosounderRange}"
+                ]
+            else:
+                pargs = pargs + [
+                    '-y', sys.executable,
+                    '-g',  # Makes the pseudogram ASCII
+                    '-r', f"{echosounderRange}"
+                ]
 
         pargs.append(self.tmpdir)
         pargs.append(self.destination_directory)
