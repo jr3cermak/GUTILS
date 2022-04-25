@@ -8,6 +8,16 @@
         "filter_points": 5,
         "filter_distance": 1
     },
+    "extra_kwargs": {
+        "pseudograms": {
+            "enable_nc": false,
+            "enable_ascii": false,
+            "enable_image": false,
+            "echosounderRange": 60.0,
+            "echosounderDirection": "up",
+            "echosounderRangeUnits": "meters"
+        }
+    },
     "attributes": {
         "acknowledgement": "This work was supported by funding from NOAA/IOOS/AOOS.",
         "comment": "",
@@ -42,15 +52,6 @@
         "support_type": "ra,federal,federal",
         "title": "G507 Slocum Glider Dataset (Feb 2022)",
         "wmo_id": 4802989
-    },
-    "extra_kwargs": {
-        "pseudograms": {
-            "enable": false,
-            "create_images": true,
-            "echosounderRange": 60.0,
-            "echosounderDirection": "up",
-            "echosounderRangeUnits": "meters"
-        }
     },
     "variables": {
         "platform": {

@@ -2,7 +2,6 @@
 # coding=utf-8
 import os
 import pandas as pd
-import numpy as np
 
 from gutils.yo import assign_profiles
 
@@ -177,23 +176,9 @@ def process_dataset(file,
                     tolerance=pd.Timedelta(minutes=10)
                 ).set_index(extras.index)
                 extras['profile'] = merge.profile.ffill()
-
-                # To have consistent netCDF files, empty "extras" variables need to exist
-                # in for each valid profile that was calculated above into "filtered".
-                profile_list = set(filtered['profile'].unique())
-                extras_list = set(extras['profile'].unique().astype('int32'))
-                profiles_to_add = profile_list.difference(extras_list)
-                if profiles_to_add:
-                    first_t_in_profiles = filtered.groupby(by=["profile"]).min()['t']
-                    for profile_to_add in profiles_to_add:
-                        empty_df = pd.DataFrame([[np.nan] * len(extras.columns)], columns=extras.columns)
-                        empty_df['profile'] = profile_to_add
-                        empty_df['pseudogram_time'] = first_t_in_profiles[profile_to_add]
-                        empty_df.set_index('pseudogram_time', inplace=True)
-                        extras = pd.concat([extras, empty_df], sort=True)
-
             except BaseException as e:
                 L.error(f"Could not merge 'extras' data, skipping: {e}")
+                extras = pd.DataFrame()
 
     except ValueError as e:
         L.exception('{} - Skipping'.format(e))
