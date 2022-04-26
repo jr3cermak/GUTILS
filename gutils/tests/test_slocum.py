@@ -393,17 +393,19 @@ class TestEcoMetricsTwo(GutilsTestClass):
 
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 17
+        assert len(output_files) == 32
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
+            # first time in the first profile
             assert ncd.variables['profile_id'][0] == 1639020410
 
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1639069272
+            # first time in the last ecodroid profile
+            assert ncd.variables['profile_id'][0] == 1639070632
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])

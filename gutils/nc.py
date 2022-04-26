@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import datetime
 from collections import OrderedDict
 
+import numpy as np
 import pandas as pd
 import netCDF4 as nc4
 from compliance_checker.runner import ComplianceChecker, CheckSuite
@@ -191,11 +192,7 @@ def get_creation_attributes(profile):
     }
 
 
-def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=ProfileIdTypes.EPOCH,
-                          extras_df=None):
-
-    if extras_df is None:
-        extras_df = pd.DataFrame()
+def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=ProfileIdTypes.EPOCH):
 
     try:
         # Path to hold file while we create it
@@ -281,9 +278,6 @@ def create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type=Pro
                 reduce_dims=True,
                 mode='a') as ncd:
 
-            # Set an extras data
-            set_extra_data(ncd, extras_df)
-
             # We only want to apply metadata from the `attrs` map if the variable is already in
             # the netCDF file or it is a scalar variable (no shape defined). This avoids
             # creating measured variables that were not measured in this profile.
@@ -359,21 +353,22 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
     # Create NetCDF Files for Each Profile
     written_files = []
 
-    for df in [data, extras_df]:
+    reserved_columns = [
+        'trajectory',
+        'profile',
+        't',
+        'x',
+        'y',
+        'z',
+        'u_orig',
+        'v_orig'
+    ]
 
+    for df in [data, extras_df]:
         # Optionally, remove any variables from the dataframe that do not have metadata assigned
         if subset is True:
             all_columns = set(df.columns)
-            reserved_columns = [
-                'trajectory',
-                'profile',
-                't',
-                'x',
-                'y',
-                'z',
-                'u_orig',
-                'v_orig'
-            ]
+
             removable_columns = all_columns - set(reserved_columns)
             orphans = removable_columns - set(attrs.get('variables', {}).keys())
             L.debug(
@@ -393,11 +388,39 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
 
         profile_extras = pd.DataFrame()
         if not extras_df.empty:
-            profile_extras = extras_df.loc[extras_df.profile == pi]
+
+            # Write the extras dimension to a new profile file
+            profile_extras = extras_df.loc[extras_df.profile == pi].copy()
+            if profile_extras.empty:
+                continue
+
+            # Standardize the columns of the "extras" from the matched profile
+            profile_extras.loc[:, 't'] = profile_extras.index
+            profile_extras = profile_extras.reset_index(drop=True)
+            profile_extras.loc[:, 'x'] = profile.x.dropna().iloc[0]
+            profile_extras.loc[:, 'y'] = profile.y.dropna().iloc[0]
+
+            # Fill in extras with empty data
+            for c in profile:
+                if c not in profile_extras:
+                    profile_extras.loc[:, c] = np.nan
+                    profile_extras.loc[:, c] = profile_extras[c].astype(profile[c].dtype)
+
+            # Fill in regular profile with empty data
+            for c in profile_extras:
+                if c not in profile:
+                    profile.loc[:, c] = np.nan
+                    profile.loc[:, c] = profile[c].astype(profile_extras[c].dtype)
+
+            try:
+                cr = create_profile_netcdf(attrs, profile_extras, output_path, mode, profile_id_type)
+                written.append(cr)
+            except BaseException:
+                L.exception('Error creating extra netCDF profile {}. Skipping.'.format(pi))
+                continue
 
         try:
-            cr = create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type,
-                                       extras_df=profile_extras)
+            cr = create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type)
             written.append(cr)
         except BaseException:
             L.exception('Error creating netCDF for profile {}. Skipping.'.format(pi))

@@ -76,14 +76,28 @@ class SlocumReader(object):
             using an extras time dimension.
         """
 
-        ECOMETRICS_SENSORS = [ 'sci_echodroid_aggindex', 'sci_echodroid_ctrmass', 'sci_echodroid_eqarea', 'sci_echodroid_inertia', 'sci_echodroid_propocc', 'sci_echodroid_sa', 'sci_echodroid_sv']
-        PSEUDOGRAM_VARS = ['pseudogram_time', 'pseudogram_depth', 'pseudogram_sv']
+        ECOMETRICS_SENSORS = [
+            'sci_echodroid_aggindex',
+            'sci_echodroid_ctrmass',
+            'sci_echodroid_eqarea',
+            'sci_echodroid_inertia',
+            'sci_echodroid_propocc',
+            'sci_echodroid_sa',
+            'sci_echodroid_sv',
+        ]
+
+        PSEUDOGRAM_VARS = [
+            'pseudogram_time',
+            'pseudogram_depth',
+            'pseudogram_sv',
+        ]
 
         # Default extra settings
         pseudograms_attrs = kwargs.get('pseudograms', {})
-        enable_pseudograms = pseudograms_attrs.get('enable', False)
+        enable_nc = pseudograms_attrs.get('enable_nc', False)
+        enable_ascii = pseudograms_attrs.get('enable_ascii', False)
 
-        if enable_pseudograms:
+        if enable_nc and enable_ascii:
 
             # Two possible outcomes:
             #     (1) If the pseudogram exists, align ecometrics data along
@@ -123,13 +137,18 @@ class SlocumReader(object):
             # Create ECOMETRICS variable placeholders
             if have_pseudogram:
                 # ecometrics data is inserted into time data as provided by the pseudogram
+                size = len(self._extras['pseudogram_time'])
                 for sensor in ECOMETRICS_SENSORS:
-                    self._extras[sensor] = np.full((len(self._extras['pseudogram_time'])), np.nan)
+                    self._extras[sensor] = np.full(size, np.nan)
+
             else:
                 # with a missing pseudogram, we can use a shorter list of times
                 # we have to create placeholders for PSEUDOGRAM and ECOMETRICS variables
-                for sensor in PSEUDOGRAM_VARS + ECOMETRICS_SENSORS:
-                    self._extras[sensor] = np.full((len(ecometricsData)), np.nan)
+                size = len(ecometricsData)
+                for sensor in ECOMETRICS_SENSORS:
+                    self._extras[sensor] = np.full(size, np.nan)
+                for sensor in PSEUDOGRAM_VARS:
+                    self._extras[sensor] = np.full(size, np.nan)
 
             if have_pseudogram:
                 for _, row in ecometricsData.iterrows():
@@ -172,15 +191,24 @@ class SlocumReader(object):
                 self._extras.pseudogram_time, unit='s', origin='unix'
             )
 
-            if have_pseudogram:
-                self._extras = self._extras.sort_values([
-                    'pseudogram_time',
-                    'pseudogram_depth'
-                ])
-            else:
-                self._extras = self._extras.sort_values(['pseudogram_time'])
+            if not self._extras['pseudogram_depth'].any():
+                self._extras.loc[:, 'pseudogram_depth'] = 0.0
 
-            self._extras.set_index("pseudogram_time", inplace=True)
+            self._extras = self._extras.sort_values([
+                'pseudogram_time',
+                'pseudogram_depth'
+            ])
+
+            # Return a "standardized" dataframe with "t" as the index
+            # and a column named "z".
+            self._extras.rename(
+                columns={
+                    "pseudogram_time": "t",
+                    "pseudogram_depth": "z"
+                },
+                inplace=True
+            )
+            self._extras.set_index("t", inplace=True)
 
         return self._extras, data
 
@@ -518,8 +546,8 @@ class SlocumMerger(object):
         ]
 
         pseudograms_attrs = self.extra_kwargs.get('pseudograms', {})
-        have_pseudograms = pseudograms_attrs.get('enable', False)
-        if have_pseudograms:
+        enable_ascii = pseudograms_attrs.get('enable_ascii', False)
+        if enable_ascii:
             # Perform pseudograms if this ASCII file matches the deployment
             # name of things we know to have the data. There needs to be a
             # better way to figure this out, but we don't have any understanding
@@ -534,25 +562,19 @@ class SlocumMerger(object):
             # https://github.com/smerckel/dbdreader
 
             # Defaults
-            create_images = pseudograms_attrs.get('create_images', False)
+            enable_image = pseudograms_attrs.get('enable_image', False)
             echosounderRange = pseudograms_attrs.get('echosounderRange', 60.0)
             echosounderDirection = pseudograms_attrs.get('echosounderDirection', 'down')
             if echosounderDirection == 'up':
                 echosounderRange = - (echosounderRange)
 
-            if create_images:
-                pargs = pargs + [
-                    '-y', sys.executable,
-                    '-g',  # Makes the pseudogram ASCII
-                    '-i',  # Makes the pseudogram images. This is slow!
-                    '-r', f"{echosounderRange}"
-                ]
-            else:
-                pargs = pargs + [
-                    '-y', sys.executable,
-                    '-g',  # Makes the pseudogram ASCII
-                    '-r', f"{echosounderRange}"
-                ]
+            pargs = pargs + [
+                '-y', sys.executable,
+                '-g',  # Makes the pseudogram ASCII
+                '-r', f"{echosounderRange}"
+            ]
+            if enable_image:
+                pargs.append('-i')  # Makes the pseudogram images. This is slow!
 
         pargs.append(self.tmpdir)
         pargs.append(self.destination_directory)

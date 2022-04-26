@@ -1005,32 +1005,8 @@
         "_FillValue": {"type": "float", "data": -9999.9}
       }
     },
-    "pseudogram_time": {
-      "type": "double",
-      "attributes": {
-        "long_name": "Pseudogram Time",
-        "ioos_category": "Other",
-        "standard_name": "pseudogram_time",
-        "platform": "platform",
-        "observation_type": "measured",
-        "_FillValue": {"type": "double", "data": -1}
-      }
-    },
-    "pseudogram_depth": {
-      "type": "double",
-      "attributes": {
-        "units": "m",
-        "long_name": "Pseudogram Depth",
-        "valid_min": 0.0,
-        "valid_max": 2000.0,
-        "ioos_category": "Other",
-        "standard_name": "pseudogram_depth",
-        "platform": "platform",
-        "observation_type": "measured",
-        "_FillValue": {"type": "double", "data": -9999.9}
-      }
-    },
     "pseudogram_sv": {
+      "shape": ["time"],
       "type": "double",
       "attributes": {
         "units": "db",
@@ -1041,7 +1017,6 @@
         "standard_name": "pseudogram_sv",
         "platform": "platform",
         "observation_type": "measured",
-        "coordinates": "pseudogram_time pseudogram_depth",
         "_FillValue": {"type": "double", "data": -9999.9}
       }
     }
