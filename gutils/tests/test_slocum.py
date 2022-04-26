@@ -393,7 +393,7 @@ class TestEcoMetricsTwo(GutilsTestClass):
 
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 33
+        assert len(output_files) == 32
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
