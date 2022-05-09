@@ -6,6 +6,7 @@ import tempfile
 from glob import glob
 from collections import namedtuple
 
+import pytest
 import netCDF4 as nc4
 from gutils.slocum import SlocumMerger, SlocumReader
 from gutils.tests import GutilsTestClass, resource
@@ -164,6 +165,7 @@ class TestSlocumExportDelayed(GutilsTestClass):
         assert 'z' in enh.columns
 
 
+@pytest.mark.long
 class TestEcodroidOne(GutilsTestClass):
 
     def setUp(self):
@@ -177,7 +179,7 @@ class TestEcodroidOne(GutilsTestClass):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
-    def test_z_axis_method(self):
+    def test_pseudogram(self):
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -226,6 +228,7 @@ class TestEcodroidOne(GutilsTestClass):
             assert check_dataset(ds(file=o)) == 0
 
 
+@pytest.mark.long
 class TestEcodroidTwo(GutilsTestClass):
 
     def setUp(self):
@@ -239,7 +242,7 @@ class TestEcodroidTwo(GutilsTestClass):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
-    def test_z_axis_method(self):
+    def test_pseudogram(self):
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -283,6 +286,7 @@ class TestEcodroidTwo(GutilsTestClass):
             assert ncd.variables['profile_id'][0] == 1639069272
 
 
+@pytest.mark.long
 class TestEcoMetricsOne(GutilsTestClass):
 
     def setUp(self):
@@ -347,6 +351,7 @@ class TestEcoMetricsOne(GutilsTestClass):
             assert check_dataset(ds(file=o)) == 0
 
 
+@pytest.mark.long
 class TestEcoMetricsTwo(GutilsTestClass):
 
     def setUp(self):
@@ -393,7 +398,7 @@ class TestEcoMetricsTwo(GutilsTestClass):
 
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 32
+        assert len(output_files) == 48
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
@@ -413,6 +418,7 @@ class TestEcoMetricsTwo(GutilsTestClass):
             assert check_dataset(ds(file=o)) == 0
 
 
+@pytest.mark.long
 class TestEcoMetricsThree(GutilsTestClass):
 
     def setUp(self):
@@ -472,6 +478,7 @@ class TestEcoMetricsThree(GutilsTestClass):
             assert check_dataset(ds(file=o)) == 0
 
 
+@pytest.mark.long
 class TestEcoMetricsFour(GutilsTestClass):
 
     def setUp(self):
@@ -531,6 +538,7 @@ class TestEcoMetricsFour(GutilsTestClass):
             assert check_dataset(ds(file=o)) == 0
 
 
+@pytest.mark.long
 class TestEcoMetricsFive(GutilsTestClass):
 
     def setUp(self):
