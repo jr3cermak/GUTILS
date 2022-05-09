@@ -43,7 +43,7 @@ class Netcdf2FtpProcessor(NetcdfProcessor):
         self.ftp_url = ftp_url
         self.ftp_user = ftp_user
         self.ftp_pass = ftp_pass
-        self.ftp_timeout = 60
+        self.ftp_timeout = 120
 
     def process_IN_CLOSE(self, event):
         args = SimpleNamespace(file=event.pathname)
