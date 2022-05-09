@@ -529,3 +529,68 @@ class TestEcoMetricsFour(GutilsTestClass):
         ds = namedtuple('Arguments', ['file'])
         for o in output_files:
             assert check_dataset(ds(file=o)) == 0
+
+
+class TestEcoMetricsFive(GutilsTestClass):
+
+    def setUp(self):
+        super().setUp()
+        self.binary_path = resource('slocum', 'ecometrics5', 'rt', 'binary')
+        self.ascii_path = resource('slocum', 'ecometrics5', 'rt', 'ascii')
+        self.netcdf_path = resource('slocum', 'ecometrics5', 'rt', 'netcdf')
+        self.cache_path = resource('slocum', 'ecometrics5', 'config')
+
+    def tearDown(self):
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+
+    def test_pseudogram(self):
+        merger = SlocumMerger(
+            self.binary_path,
+            self.ascii_path,
+            cache_directory=self.cache_path,
+            globs=['*'],
+            deployments_path=resource('slocum'),
+            template='slocum_dac'
+        )
+        _ = merger.convert()
+
+        dat_files = [ p for p in os.listdir(self.ascii_path) if p.endswith('.dat')]
+        for ascii_file in dat_files:
+            args = dict(
+                file=os.path.join(self.ascii_path, ascii_file),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=True,
+                template='slocum_dac',
+                profile_id_type=1,
+                z_axis_method=1
+            )
+            create_dataset(**args)
+
+        assert os.path.exists(self.netcdf_path)
+
+        output_files = sorted(os.listdir(self.netcdf_path))
+        output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
+
+        for f in output_files:
+            with nc4.Dataset(f) as ncd:
+                assert 'time' in ncd.variables
+                assert 'depth' in ncd.variables
+                assert 'lat' in ncd.variables
+                assert 'lon' in ncd.variables
+                assert 'salinity' in ncd.variables
+                assert 'pressure' in ncd.variables
+                assert 'temperature' in ncd.variables
+                assert 'profile_time' in ncd.variables
+                assert 'profile_lat' in ncd.variables
+                assert 'profile_lon' in ncd.variables
+                assert 'profile_id' in ncd.variables
+                assert 'sci_echodroid_aggindex' in ncd.variables
+                assert 'sci_echodroid_ctrmass' in ncd.variables
+                assert 'sci_echodroid_eqarea' in ncd.variables
+                assert 'sci_echodroid_inertia' in ncd.variables
+                assert 'sci_echodroid_propocc' in ncd.variables
+                assert 'sci_echodroid_sa' in ncd.variables
+                assert 'sci_echodroid_sv' in ncd.variables
+                assert 'pseudogram_sv' in ncd.variables

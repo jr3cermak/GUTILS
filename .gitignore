@@ -60,3 +60,4 @@ docs/notebooks/.ipynb_checkpoints/
 .vscode
 gutils/tests/resources/slocum/**/netcdf/**/*.nc
 gutils/tests/resources/slocum/**/ascii/**/*.dat
+gutils/tests/resources/slocum/**/ascii/**/*.pseudogram
