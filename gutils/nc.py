@@ -383,10 +383,14 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
             if changed is not None:
                 df[c] = changed
 
-    written = []
     for pi, profile in data.groupby('profile'):
 
-        profile_extras = pd.DataFrame()
+        # Fill in regular profile with empty data
+        for c in extras_df:
+            if c not in profile:
+                profile.loc[:, c] = np.nan
+                profile.loc[:, c] = profile[c].astype(extras_df[c].dtype)
+
         if not extras_df.empty:
 
             # Write the extras dimension to a new profile file
@@ -397,8 +401,12 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
             # Standardize the columns of the "extras" from the matched profile
             profile_extras.loc[:, 't'] = profile_extras.index
             profile_extras = profile_extras.reset_index(drop=True)
-            profile_extras.loc[:, 'x'] = profile.x.dropna().iloc[0]
-            profile_extras.loc[:, 'y'] = profile.y.dropna().iloc[0]
+
+            if 'x' not in profile_extras:
+                profile_extras.loc[:, 'x'] = profile.x.dropna().iloc[0]
+
+            if 'y' not in profile_extras:
+                profile_extras.loc[:, 'y'] = profile.y.dropna().iloc[0]
 
             # Fill in extras with empty data
             for c in profile:
@@ -406,22 +414,16 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
                     profile_extras.loc[:, c] = np.nan
                     profile_extras.loc[:, c] = profile_extras[c].astype(profile[c].dtype)
 
-            # Fill in regular profile with empty data
-            for c in profile_extras:
-                if c not in profile:
-                    profile.loc[:, c] = np.nan
-                    profile.loc[:, c] = profile[c].astype(profile_extras[c].dtype)
-
             try:
-                cr = create_profile_netcdf(attrs, profile_extras, output_path, mode, profile_id_type)
-                written.append(cr)
+                cr = create_profile_netcdf(attrs, profile_extras, output_path, mode + '_extra', profile_id_type)
+                written_files.append(cr)
             except BaseException:
                 L.exception('Error creating extra netCDF profile {}. Skipping.'.format(pi))
                 continue
 
         try:
             cr = create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type)
-            written.append(cr)
+            written_files.append(cr)
         except BaseException:
             L.exception('Error creating netCDF for profile {}. Skipping.'.format(pi))
             continue

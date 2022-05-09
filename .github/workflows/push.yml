@@ -52,7 +52,7 @@ jobs:
       shell: bash -l {0}
       run: |
         source activate TEST
-        pytest --disable-warnings
+        pytest --disable-warnings -m "not long"
 
   pypi-build:
     runs-on: ubuntu-latest
@@ -124,7 +124,7 @@ jobs:
         outputs: type=docker
 
     - name: Run tests from the Docker image
-      run: docker run axiom/gutils:latest pytest
+      run: docker run axiom/gutils:latest pytest -m "not long"
 
   docker-push:
     name: Push latest image to Docker Hub

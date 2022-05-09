@@ -87,6 +87,10 @@ class SlocumReader(object):
         ]
 
         PSEUDOGRAM_VARS = [
+            'pseudogram_sv',
+        ]
+
+        PSEUDOGRAM_CSV_COLUMNS = [
             'pseudogram_time',
             'pseudogram_depth',
             'pseudogram_sv',
@@ -112,103 +116,101 @@ class SlocumReader(object):
             # Any ECOMETRIC_SENSOR variables will be removed from the data variable.
 
             pse_file = Path(self.ascii_file).with_suffix(".pseudogram")
-            have_pseudogram = False
+
+            pseudogram_data = pd.DataFrame(columns=PSEUDOGRAM_CSV_COLUMNS)
             if pse_file.exists():
                 try:
-                    self._extras = pd.read_csv(
+                    pseudogram_data = pd.read_csv(
                         pse_file,
                         header=0,
-                        names=PSEUDOGRAM_VARS
+                        names=PSEUDOGRAM_CSV_COLUMNS
                     )
-                    have_pseudogram = True
+                    pseudogram_data['pseudogram_time'] = pd.to_datetime(
+                        pseudogram_data.pseudogram_time, unit='s', origin='unix'
+                    )
                 except BaseException as e:
-                    self._extras = pd.DataFrame()
                     L.warning(f"Could not process pseudogram file {pse_file}: {e}")
 
             # Do we have ecometrics data?
-            ecometricsData = pd.DataFrame()
-            have_ecometrics = False
+            ecometrics_data = pd.DataFrame()
             if 'sci_echodroid_sv' in data.columns:
                 # Valid data rows are where Sv is less than 0 dB
-                ecometricsData = data[data['sci_echodroid_sv'] < 0]
-                if not ecometricsData.empty:
-                    have_ecometrics = True
+                ecometrics_data = data.loc[data.sci_echodroid_sv < 0, :]
 
-            # Create ECOMETRICS variable placeholders
-            if have_pseudogram:
-                # ecometrics data is inserted into time data as provided by the pseudogram
-                size = len(self._extras['pseudogram_time'])
-                for sensor in ECOMETRICS_SENSORS:
-                    self._extras[sensor] = np.full(size, np.nan)
+            empty_ecometrics_columns = {
+                k: np.nan for k in ECOMETRICS_SENSORS
+            }
+            empty_pseudogram_columns = {
+                k: np.nan for k in PSEUDOGRAM_VARS
+            }
+            if not pseudogram_data.empty:
 
+                # Create empty (nan) columns for the ECOMETRICS variables
+                self._extras = pseudogram_data.assign(**empty_ecometrics_columns)
+
+                if not ecometrics_data.empty:
+
+                    # Combine pseudogram and ecometrics data together by matching with the first
+                    # row that is within 1 second
+                    for _, row in ecometrics_data.iterrows():
+                        idx = pseudogram_data.loc[
+                            (pseudogram_data.pseudogram_time - row['t']).abs() < pd.Timedelta('1s')
+                        ]
+                        if not idx.empty:
+                            self._extras.loc[
+                                idx.iloc[0].name, ECOMETRICS_SENSORS
+                            ] = row.get(ECOMETRICS_SENSORS)
+
+                # Carry thought locations from the original glider data
+                # since it was still moving while measuring the ecometrics
+                # and pseudograms
+                self._extras = pd.merge_asof(
+                    self._extras.set_index('pseudogram_time'),
+                    data.set_index('t')[['x', 'y']],
+                    left_index=True,
+                    right_index=True,
+                    direction='nearest',
+                    tolerance=pd.Timedelta(seconds=60)
+                ).reset_index()
+
+                # Return a "standardized" dataframe with "t" as the index
+                # and a column named "z".
+                self._extras.rename(
+                    columns={
+                        'pseudogram_time': 't',
+                        'pseudogram_depth': 'z'
+                    },
+                    inplace=True
+                )
+
+            elif not ecometrics_data.empty:
+                # NOTE: There is no test coverage here!
+                ecometrics_data.reset_index(inplace=True, drop=True)
+                # Carry through the time and location of the data from the glider
+                # There are captured as "extras" because this data would typically
+                # be filtered out because it isn't an actual profile.
+                self._extras = ecometrics_data[ECOMETRICS_SENSORS + ['t', 'x', 'y']]
+                # If there is no pseudogram data, assign the ecometrics data to z=0
+                self._extras = self._extras.assign(
+                    z=0.0,
+                    **empty_ecometrics_columns
+                )
             else:
-                # with a missing pseudogram, we can use a shorter list of times
-                # we have to create placeholders for PSEUDOGRAM and ECOMETRICS variables
-                size = len(ecometricsData)
-                for sensor in ECOMETRICS_SENSORS:
-                    self._extras[sensor] = np.full(size, np.nan)
-                for sensor in PSEUDOGRAM_VARS:
-                    self._extras[sensor] = np.full(size, np.nan)
-
-            if have_pseudogram:
-                for _, row in ecometricsData.iterrows():
-                    tdiff = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).min()
-                    # if a close enough match is found, assign the ecometrics
-                    # values into self._extras
-                    if tdiff < 1e-6:
-                        tidx = np.abs(np.unique(self._extras['pseudogram_time']) - row['m_present_time']).argmin()
-                        ptime = np.unique(self._extras['pseudogram_time'])[tidx]
-                        # Place values into the first time index that matches
-                        ptimeidx = self._extras['pseudogram_time'][self._extras['pseudogram_time'] == ptime].axes[0].values[0]
-                        # Update self._extras from the row of ecometrics data
-                        dataRow = row.get(ECOMETRICS_SENSORS)
-                        self._extras.update(
-                            pd.DataFrame(dataRow.to_dict(), index=[ptimeidx])
-                        )
-            else:
-                if have_ecometrics:
-                    ecometricsData.reset_index(inplace=True, drop=True)
-                    for sensor in ECOMETRICS_SENSORS + ['m_present_time']:
-                        if sensor in ecometricsData:
-                            destSensor = sensor
-                            if destSensor == 'm_present_time':
-                                destSensor = 'pseudogram_time'
-                            self._extras[destSensor] = ecometricsData[sensor]
-                else:
-                    # We have to create fake missing ecometrics data here since
-                    # ECOMETRICS_SENSORS do not appear in the slocum_dac template
-                    # as the PSEUDOGRAM_VARS do.  This might be a temporary fix.
-                    # For now, copy one row of missing data.
-                    empty_df = pd.DataFrame([[np.nan] * len(self._extras.columns)], columns=self._extras.columns)
-                    empty_df['pseudogram_time'] = data['m_present_time'][0]
-                    self._extras = pd.concat([self._extras, empty_df], ignore_index=True)
+                # Empty dataframe with the correct columns
+                self._extras = pseudogram_data.assign(
+                    **{
+                        **empty_ecometrics_columns,
+                        **empty_pseudogram_columns
+                    }
+                )
 
             # Once ecometrics are copied out of data, the columns have to be removed from data
             # or the write to netCDF will fail due to duplicate variables.
-            data = data.drop(columns=ECOMETRICS_SENSORS)
+            data = data.drop(columns=ECOMETRICS_SENSORS, errors='ignore')
 
-            self._extras['pseudogram_time'] = pd.to_datetime(
-                self._extras.pseudogram_time, unit='s', origin='unix'
-            )
-
-            if not self._extras['pseudogram_depth'].any():
-                self._extras.loc[:, 'pseudogram_depth'] = 0.0
-
-            self._extras = self._extras.sort_values([
-                'pseudogram_time',
-                'pseudogram_depth'
-            ])
-
-            # Return a "standardized" dataframe with "t" as the index
-            # and a column named "z".
-            self._extras.rename(
-                columns={
-                    "pseudogram_time": "t",
-                    "pseudogram_depth": "z"
-                },
-                inplace=True
-            )
-            self._extras.set_index("t", inplace=True)
+            if not self._extras.empty:
+                self._extras = self._extras.sort_values(['t', 'z'])
+                self._extras.set_index('t', inplace=True)
 
         return self._extras, data
 
