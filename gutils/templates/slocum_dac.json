@@ -866,7 +866,7 @@
       "type": "float",
       "attributes": {
         "units": "m-1.sr-1",
-        "long_name": "Backscatter",
+        "long_name": "Optical Backscatter",
         "colorBarMinimum": 0.0,
         "colorBarMaximum": 0.002,
         "ioos_category": "Other",
