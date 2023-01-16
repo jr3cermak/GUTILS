@@ -29,7 +29,13 @@ def filter_profiles(dataset, conditional, reindex=True):
     # Re-index the profiles
     if reindex is True:
         f, _ = pd.factorize(filtered.profile)
-        filtered.loc[:, 'profile'] = f.astype('int32')  # Avoid the int64 dtype
+        # filters.py:32: FutureWarning: In a future version, `df.iloc[:, i] = newvals`
+        # will attempt to set the values inplace instead of always setting a new array.
+        # To retain the old behavior, use either `df[df.columns[i]] = newvals` or,
+        # if columns are non-unique, `df.isetitem(i, newvals)`
+        #breakpoint()
+        #filtered.loc[:, 'profile'] = f.astype('int32')  # Avoid the int64 dtype
+        filtered.profile = f.astype('int32')
 
     return filtered, before - after
 

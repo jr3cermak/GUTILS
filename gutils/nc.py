@@ -412,7 +412,8 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
             for c in profile:
                 if c not in profile_extras:
                     profile_extras.loc[:, c] = np.nan
-                    profile_extras.loc[:, c] = profile_extras[c].astype(profile[c].dtype)
+                    #profile_extras.loc[:, c] = profile_extras[c].astype(profile[c].dtype)
+                    profile_extras[c] = profile_extras[c].astype(profile[c].dtype)
 
             try:
                 cr = create_profile_netcdf(attrs, profile_extras, output_path, mode + '_extra', profile_id_type)
@@ -422,6 +423,7 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
                 continue
 
         try:
+            #breakpoint()
             cr = create_profile_netcdf(attrs, profile, output_path, mode, profile_id_type)
             written_files.append(cr)
         except BaseException:

@@ -103,6 +103,8 @@ class SlocumReader(object):
 
         if enable_nc and enable_ascii:
 
+            L.debug("Pseudogram processing is enabled.")
+
             # Two possible outcomes:
             #     (1) If the pseudogram exists, align ecometrics data along
             #         the pseudogram sample time.  There is a slight difference due to
@@ -249,9 +251,11 @@ class SlocumReader(object):
 
         def intflag_to_dtype(intvalue):
             if intvalue == 1:
-                return np.object  # ints can't have NaN so use object for now
+                #return np.object  # ints can't have NaN so use object for now
+                return np.object_  # ints can't have NaN so use object for now
             elif intvalue == 2:
-                return np.object  # ints can't have NaN so use object for now
+                #return np.object  # ints can't have NaN so use object for now
+                return np.object_  # ints can't have NaN so use object for now
             elif intvalue == 4:
                 return np.float32
             elif intvalue == 8:
@@ -581,11 +585,16 @@ class SlocumMerger(object):
         pargs.append(self.tmpdir)
         pargs.append(self.destination_directory)
 
+        L.debug("Arguments: %s" % (" ".join(pargs)))
         command_output, return_code = generate_stream(pargs)
+
+        L.debug("Command return code: %d" % (return_code))
 
         # Return
         processed = []
         output_files = command_output.read().split('\n')
+        L.debug("Command output: %s" % (output_files))
+        #breakpoint()
         # iterate and every time we hit a .dat file we return the cache
         binary_files = []
         for x in output_files:

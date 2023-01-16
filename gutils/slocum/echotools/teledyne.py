@@ -858,7 +858,9 @@ class Glider:
             dataObj = dict()
 
         dbdFp = dbdreader.DBD(inputFile, cacheDir=cacheDir)
-        dbdType = inputFile[-3:]
+
+        # Convert to lowercase to support [TBD;tbd]
+        dbdType = inputFile[-3:].lower()
         #self.stopToDebug()
         try:
             dbdFp = dbdreader.DBD(inputFile, cacheDir=cacheDir)
