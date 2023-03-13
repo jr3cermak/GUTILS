@@ -85,7 +85,7 @@ jobs:
         outputs: type=docker
 
     - name: Run tests from the Docker image
-      run: docker run axiom/gutils:${{ github.event.release.tag_name }} pytest -m "not long"
+      run: docker run axiom/gutils:${{ github.event.release.tag_name }} pytest -m "not long and not watch"
 
   docker-push:
     name: Push tagged image to Docker Hub

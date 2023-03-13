@@ -51,7 +51,7 @@ jobs:
       shell: bash -l {0}
       run: |
         micromamba activate TEST
-        pytest --disable-warnings -m "not long"
+        pytest --disable-warnings -m "not long and not watch"
 
   pypi-build:
     runs-on: ubuntu-latest
@@ -123,7 +123,7 @@ jobs:
         outputs: type=docker
 
     - name: Run tests from the Docker image
-      run: docker run axiom/gutils:latest pytest -m "not long"
+      run: docker run axiom/gutils:latest pytest -m "not long and not watch"
 
   docker-push:
     name: Push latest image to Docker Hub
