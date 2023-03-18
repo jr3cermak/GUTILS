@@ -549,8 +549,9 @@ class TestEcoMetricsFive(GutilsTestClass):
         self.cache_path = resource('slocum', 'ecometrics5', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        #shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        #shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        pass
 
     def test_pseudogram(self):
         merger = SlocumMerger(

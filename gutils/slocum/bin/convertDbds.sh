@@ -387,29 +387,29 @@ do
     if [ -f "$sciSource" ]
     then
 
-	    # dbdSource must have the ascii header line dbd_label: to be a valid *bd
-	    # file
-	    is_dbd=$(grep 'dbd_label:' $sciSource);
-	    if [ -z "$is_dbd" ]
-	    then
-	        echo "Invalid science source file: $sciSource" >&2;
-	        continue;
-	    fi
+        # dbdSource must have the ascii header line dbd_label: to be a valid *bd
+        # file
+        is_dbd=$(grep 'dbd_label:' $sciSource);
+        if [ -z "$is_dbd" ]
+        then
+            echo "Invalid science source file: $sciSource" >&2;
+            continue;
+        fi
 
         [ -z "$quiet" ] && echo "Source science file: $sciSource";
 
         if [ -n "$computePseudograms" ]
         then
-            [ -z "$quiet" ] && echo "Computing Scatter Pseudogram";
+            [ -z "$quiet" ] && echo "Exporting Pseudogram CSV";
             $python_path $pseudogram \
                 --inpDir ${dbdRoot} \
-                --inpFile ${segment}.?bd \
+                --inpFile ${segment}.?[bB][dD] \
                 --cacheDir $local_cac_dir \
-                --dbd2asc $dbd2asc \
                 --csvOut "${tmpDir}/${dbdSeg}_${asciiExt}.pseudogram" \
                 --csvHeader \
-                --echosounderRange "$echosounderRange" \
-                --title "$segment - Scatter"
+                --echosounderRange "$echosounderRange"
+
+            status=$(mv ${tmpDir}/*.pseudogram $ascDest 2>&1);
         fi
 
         if [ -n "$computePseudogramImages" ]
@@ -417,9 +417,8 @@ do
             [ -z "$quiet" ] && echo "Computing Pseudogram Images";
             $python_path $pseudogram \
                 --inpDir ${dbdRoot} \
-                --inpFile ${segment}.?bd \
+                --inpFile ${segment}.?[bB][dD] \
                 --cacheDir $local_cac_dir \
-                --dbd2asc $dbd2asc \
                 --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.scatter.png" \
                 --useScatterPlot \
                 --echosounderRange "$echosounderRange" \
@@ -427,13 +426,14 @@ do
 
             $python_path $pseudogram \
                 --inpDir ${dbdRoot} \
-                --inpFile ${segment}.?bd \
+                --inpFile ${segment}.?[bB][dD] \
                 --cacheDir $local_cac_dir \
-                --dbd2asc $dbd2asc \
                 --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.binned.png" \
                 --echosounderRange "$echosounderRange" \
                 --title "$segment - Binned"
+            status=$(mv ${tmpDir}/*.png $ascDest 2>&1);
         fi
+
 
         [ -z "$quiet" ] && echo "Converting & Merging flight and science files";
 
@@ -670,7 +670,7 @@ done
 [ "$convertedCount" -eq 0 ] && exit 1;
 
 [ -z "$quiet" ] && echo -n "Moving output files to destination: $ascDest...";
-status=$(mv ${tmpDir}/*.${dba_extension} ${tmpDir}/*.pseudogram ${tmpDir}/*.png $ascDest 2>&1);
+status=$(mv ${tmpDir}/*.${dba_extension} $ascDest 2>&1);
 if [ "$?" -eq 0 ]
 then
     [ -z "$quiet" ] && echo "Done.";
