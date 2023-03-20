@@ -177,7 +177,7 @@ class TestCreateGliderScript(GutilsTestClass):
             with nc4.Dataset(output_files[-1]) as ncd:
                 assert ncd.variables['profile_id'].ndim == 0
                 assert ncd.variables['profile_id'][0] == len(output_files) - 1
-                assert 'pseudogram_sv' not in ncd.variables
+                assert 'echogram_sv' not in ncd.variables
 
             # Check netCDF file for compliance
             ds = namedtuple('Arguments', ['file'])

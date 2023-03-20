@@ -1013,7 +1013,7 @@
         "_FillValue": {"type": "float", "data": -9999.9}
       }
     },
-    "pseudogram_sv": {
+    "echogram_sv": {
       "shape": ["time"],
       "type": "double",
       "attributes": {
@@ -1022,7 +1022,7 @@
         "colorBarMinimum": -200.0,
         "colorBarMaximum": 200.0,
         "ioos_category": "Other",
-        "standard_name": "pseudogram_sv",
+        "standard_name": "echogram_sv",
         "platform": "platform",
         "observation_type": "measured",
         "_FillValue": {"type": "double", "data": -9999.9}

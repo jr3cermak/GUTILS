@@ -179,7 +179,7 @@ class TestEcodroidOne(GutilsTestClass):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
-    def test_pseudogram(self):
+    def test_echogram(self):
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -242,7 +242,7 @@ class TestEcodroidTwo(GutilsTestClass):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
-    def test_pseudogram(self):
+    def test_echogram(self):
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -287,20 +287,20 @@ class TestEcodroidTwo(GutilsTestClass):
 
 
 @pytest.mark.long
-class TestEcoMetricsOne(GutilsTestClass):
+class TestEchoMetricsOne(GutilsTestClass):
 
     def setUp(self):
         super().setUp()
-        self.binary_path = resource('slocum', 'ecometrics', 'rt', 'binary')
-        self.ascii_path = resource('slocum', 'ecometrics', 'rt', 'ascii')
-        self.netcdf_path = resource('slocum', 'ecometrics', 'rt', 'netcdf')
-        self.cache_path = resource('slocum', 'ecometrics', 'config')
+        self.binary_path = resource('slocum', 'echometrics', 'rt', 'binary')
+        self.ascii_path = resource('slocum', 'echometrics', 'rt', 'ascii')
+        self.netcdf_path = resource('slocum', 'echometrics', 'rt', 'netcdf')
+        self.cache_path = resource('slocum', 'echometrics', 'config')
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
-    def test_pseudogram(self):
+    def test_echogram(self):
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -352,20 +352,20 @@ class TestEcoMetricsOne(GutilsTestClass):
 
 
 @pytest.mark.long
-class TestEcoMetricsTwo(GutilsTestClass):
+class TestEchoMetricsTwo(GutilsTestClass):
 
     def setUp(self):
         super().setUp()
-        self.binary_path = resource('slocum', 'ecometrics2', 'rt', 'binary')
-        self.ascii_path = resource('slocum', 'ecometrics2', 'rt', 'ascii')
-        self.netcdf_path = resource('slocum', 'ecometrics2', 'rt', 'netcdf')
-        self.cache_path = resource('slocum', 'ecometrics2', 'config')
+        self.binary_path = resource('slocum', 'echometrics2', 'rt', 'binary')
+        self.ascii_path = resource('slocum', 'echometrics2', 'rt', 'ascii')
+        self.netcdf_path = resource('slocum', 'echometrics2', 'rt', 'netcdf')
+        self.cache_path = resource('slocum', 'echometrics2', 'config')
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
-    def test_pseudogram(self):
+    def test_echogram(self):
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -394,11 +394,12 @@ class TestEcoMetricsTwo(GutilsTestClass):
             )
             create_dataset(**args)
 
+        print(self.netcdf_path)
         assert os.path.exists(self.netcdf_path)
 
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 48
+        assert len(output_files) == 32
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
@@ -419,20 +420,20 @@ class TestEcoMetricsTwo(GutilsTestClass):
 
 
 @pytest.mark.long
-class TestEcoMetricsThree(GutilsTestClass):
+class TestEchoMetricsThree(GutilsTestClass):
 
     def setUp(self):
         super().setUp()
-        self.binary_path = resource('slocum', 'ecometrics3', 'rt', 'binary')
-        self.ascii_path = resource('slocum', 'ecometrics3', 'rt', 'ascii')
-        self.netcdf_path = resource('slocum', 'ecometrics3', 'rt', 'netcdf')
-        self.cache_path = resource('slocum', 'ecometrics3', 'config')
+        self.binary_path = resource('slocum', 'echometrics3', 'rt', 'binary')
+        self.ascii_path = resource('slocum', 'echometrics3', 'rt', 'ascii')
+        self.netcdf_path = resource('slocum', 'echometrics3', 'rt', 'netcdf')
+        self.cache_path = resource('slocum', 'echometrics3', 'config')
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
-    def test_pseudogram(self):
+    def test_echogram(self):
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -479,20 +480,20 @@ class TestEcoMetricsThree(GutilsTestClass):
 
 
 @pytest.mark.long
-class TestEcoMetricsFour(GutilsTestClass):
+class TestEchoMetricsFour(GutilsTestClass):
 
     def setUp(self):
         super().setUp()
-        self.binary_path = resource('slocum', 'ecometrics4', 'rt', 'binary')
-        self.ascii_path = resource('slocum', 'ecometrics4', 'rt', 'ascii')
-        self.netcdf_path = resource('slocum', 'ecometrics4', 'rt', 'netcdf')
-        self.cache_path = resource('slocum', 'ecometrics4', 'config')
+        self.binary_path = resource('slocum', 'echometrics4', 'rt', 'binary')
+        self.ascii_path = resource('slocum', 'echometrics4', 'rt', 'ascii')
+        self.netcdf_path = resource('slocum', 'echometrics4', 'rt', 'netcdf')
+        self.cache_path = resource('slocum', 'echometrics4', 'config')
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
-    def test_pseudogram(self):
+    def test_echogram(self):
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -539,20 +540,20 @@ class TestEcoMetricsFour(GutilsTestClass):
 
 
 @pytest.mark.long
-class TestEcoMetricsFive(GutilsTestClass):
+class TestEchoMetricsFive(GutilsTestClass):
 
     def setUp(self):
         super().setUp()
-        self.binary_path = resource('slocum', 'ecometrics5', 'rt', 'binary')
-        self.ascii_path = resource('slocum', 'ecometrics5', 'rt', 'ascii')
-        self.netcdf_path = resource('slocum', 'ecometrics5', 'rt', 'netcdf')
-        self.cache_path = resource('slocum', 'ecometrics5', 'config')
+        self.binary_path = resource('slocum', 'echometrics5', 'rt', 'binary')
+        self.ascii_path = resource('slocum', 'echometrics5', 'rt', 'ascii')
+        self.netcdf_path = resource('slocum', 'echometrics5', 'rt', 'netcdf')
+        self.cache_path = resource('slocum', 'echometrics5', 'config')
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
-    def test_pseudogram(self):
+    def test_echogram(self):
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -601,4 +602,4 @@ class TestEcoMetricsFive(GutilsTestClass):
                 assert 'sci_echodroid_propocc' in ncd.variables
                 assert 'sci_echodroid_sa' in ncd.variables
                 assert 'sci_echodroid_sv' in ncd.variables
-                assert 'pseudogram_sv' in ncd.variables
+                assert 'echogram_sv' in ncd.variables

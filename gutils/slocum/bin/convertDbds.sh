@@ -61,13 +61,13 @@ DESCRIPTION
         variable
 
     -y FILE
-        Path to the python interpreter to use for the pseudogram calculations
+        Path to the python interpreter to use for the echogram calculations
 
     -g
-        Try to compute pseudograms (can be slow)
+        Try to compute echograms (can be slow)
 
     -r RANGE
-        echosounder range, used in pseudograms
+        echosounder range, used in echograms
 
     -q
         Suppress STDOUT
@@ -116,10 +116,10 @@ do
             echosounderRange=$OPTARG;
             ;;
         "g")
-            computePseudograms=1;
+            computeEchograms=1;
             ;;
         "i")
-            computePseudogramImages=1;
+            computeEchogramImages=1;
             ;;
         "q")
             quiet=1;
@@ -178,10 +178,10 @@ then
     echo "Missing utility: $dba_sensor_filter" >&2;
     exit 1;
 fi
-pseudogram="${TWRC_EXE_DIR}/../echotools/decodePseudogram.py";
-if [ ! -x "$pseudogram" ]
+echogram="${TWRC_EXE_DIR}/../echotools/decodePseudogram.py";
+if [ ! -x "$echogram" ]
 then
-    echo "Missing pseudogram utility: $pseudogram" >&2;
+    echo "Missing echogram utility: $echogram" >&2;
 fi
 
 if [ ! -n "$echosounderRange" ]
@@ -240,8 +240,8 @@ fi
 [ -z "$quiet" ] && echo "local_twrc_exe_dir: $local_twrc_exe_dir";
 [ -z "$quiet" ] && echo "python_path: $python_path";
 [ -z "$quiet" ] && echo "echosounderRange: $echosounderRange";
-[ -z "$quiet" ] && echo "computePseudograms: $computePseudograms";
-[ -z "$quiet" ] && echo "computePseudogramImages: $computePseudogramImages";
+[ -z "$quiet" ] && echo "computeEchograms: $computeEchograms";
+[ -z "$quiet" ] && echo "computeEchogramImages: $computeEchogramImages";
 [ -z "$quiet" ] && echo "quiet: $quiet";
 [ -z "$quiet" ] && echo "printsuccess: $printsuccess";
 
@@ -387,53 +387,53 @@ do
     if [ -f "$sciSource" ]
     then
 
-	    # dbdSource must have the ascii header line dbd_label: to be a valid *bd
-	    # file
-	    is_dbd=$(grep 'dbd_label:' $sciSource);
-	    if [ -z "$is_dbd" ]
-	    then
-	        echo "Invalid science source file: $sciSource" >&2;
-	        continue;
-	    fi
+        # dbdSource must have the ascii header line dbd_label: to be a valid *bd
+        # file
+        is_dbd=$(grep 'dbd_label:' $sciSource);
+        if [ -z "$is_dbd" ]
+        then
+            echo "Invalid science source file: $sciSource" >&2;
+            continue;
+        fi
 
         [ -z "$quiet" ] && echo "Source science file: $sciSource";
 
-        if [ -n "$computePseudograms" ]
+        if [ -n "$computeEchograms" ]
         then
-            [ -z "$quiet" ] && echo "Computing Scatter Pseudogram";
-            $python_path $pseudogram \
+            [ -z "$quiet" ] && echo "Exporting Echogram CSV";
+            $python_path $echogram \
                 --inpDir ${dbdRoot} \
-                --inpFile ${segment}.?bd \
+                --inpFile ${segment}.?[bB][dD] \
                 --cacheDir $local_cac_dir \
-                --dbd2asc $dbd2asc \
-                --csvOut "${tmpDir}/${dbdSeg}_${asciiExt}.pseudogram" \
+                --csvOut "${tmpDir}/${dbdSeg}_${asciiExt}.echogram" \
                 --csvHeader \
-                --echosounderRange "$echosounderRange" \
-                --title "$segment - Scatter"
+                --echosounderRange "$echosounderRange"
+
+            status=$(mv ${tmpDir}/*.echogram $ascDest 2>&1);
         fi
 
-        if [ -n "$computePseudogramImages" ]
+        if [ -n "$computeEchogramImages" ]
         then
-            [ -z "$quiet" ] && echo "Computing Pseudogram Images";
-            $python_path $pseudogram \
+            [ -z "$quiet" ] && echo "Computing Echogram Images";
+            $python_path $echogram \
                 --inpDir ${dbdRoot} \
-                --inpFile ${segment}.?bd \
+                --inpFile ${segment}.?[bB][dD] \
                 --cacheDir $local_cac_dir \
-                --dbd2asc $dbd2asc \
                 --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.scatter.png" \
                 --useScatterPlot \
                 --echosounderRange "$echosounderRange" \
                 --title "$segment - Scatter"
 
-            $python_path $pseudogram \
+            $python_path $echogram \
                 --inpDir ${dbdRoot} \
-                --inpFile ${segment}.?bd \
+                --inpFile ${segment}.?[bB][dD] \
                 --cacheDir $local_cac_dir \
-                --dbd2asc $dbd2asc \
                 --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.binned.png" \
                 --echosounderRange "$echosounderRange" \
                 --title "$segment - Binned"
+            status=$(mv ${tmpDir}/*.png $ascDest 2>&1);
         fi
+
 
         [ -z "$quiet" ] && echo "Converting & Merging flight and science files";
 
@@ -670,7 +670,7 @@ done
 [ "$convertedCount" -eq 0 ] && exit 1;
 
 [ -z "$quiet" ] && echo -n "Moving output files to destination: $ascDest...";
-status=$(mv ${tmpDir}/*.${dba_extension} ${tmpDir}/*.pseudogram ${tmpDir}/*.png $ascDest 2>&1);
+status=$(mv ${tmpDir}/*.${dba_extension} $ascDest 2>&1);
 if [ "$?" -eq 0 ]
 then
     [ -z "$quiet" ] && echo "Done.";

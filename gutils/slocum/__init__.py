@@ -52,7 +52,7 @@ class SlocumReader(object):
         self.ascii_file = ascii_file
         self.metadata, self.data = self.read()
 
-        # Extra processing (pseudograms and other extra items)
+        # Extra processing (echograms and other extra items)
         self._extras = pd.DataFrame()
 
         # Set the mode to 'rt' or 'delayed'
@@ -71,12 +71,12 @@ class SlocumReader(object):
         deployment.json(extra_kwargs).
 
         Available settings:
-          * ecometrics with pseudograms ("pseudograms": "enable": true)
-            This processes pseudogram and ecometrics variables stores them
+          * echometrics with echograms ("echograms": "enable": true)
+            This processes echogram and echometrics variables stores them
             using an extras time dimension.
         """
 
-        ECOMETRICS_SENSORS = [
+        ECHOMETRICS_SENSORS = [
             'sci_echodroid_aggindex',
             'sci_echodroid_ctrmass',
             'sci_echodroid_eqarea',
@@ -86,86 +86,86 @@ class SlocumReader(object):
             'sci_echodroid_sv',
         ]
 
-        PSEUDOGRAM_VARS = [
-            'pseudogram_sv',
+        ECHOGRAM_VARS = [
+            'echogram_sv',
         ]
 
-        PSEUDOGRAM_CSV_COLUMNS = [
-            'pseudogram_time',
-            'pseudogram_depth',
-            'pseudogram_sv',
+        ECHOGRAM_CSV_COLUMNS = [
+            'echogram_time',
+            'echogram_depth',
+            'echogram_sv',
         ]
 
         # Default extra settings
-        pseudograms_attrs = kwargs.get('pseudograms', {})
-        enable_nc = pseudograms_attrs.get('enable_nc', False)
-        enable_ascii = pseudograms_attrs.get('enable_ascii', False)
+        echograms_attrs = kwargs.get('echograms', {})
+        enable_nc = echograms_attrs.get('enable_nc', False)
+        enable_ascii = echograms_attrs.get('enable_ascii', False)
 
         if enable_nc and enable_ascii:
 
             # Two possible outcomes:
-            #     (1) If the pseudogram exists, align ecometrics data along
-            #         the pseudogram sample time.  There is a slight difference due to
+            #     (1) If the echogram exists, align echometrics data along
+            #         the echogram sample time.  There is a slight difference due to
             #         time being read with full float precision and reading time using
             #         the slocum binaries.  This should be less so if the dbdreader is
             #         utilized.
-            #     (2) If the pseudogram does not exist, create an empty placeholder for
-            #         the pseudogram and use the times available from the ecometrics data.
+            #     (2) If the echogram does not exist, create an empty placeholder for
+            #         the echogram and use the times available from the echometrics data.
             #
-            # ECOMETRIC_SENSOR and PSEUDOGRAM_VARS will have the extras dimension.
-            # Any ECOMETRIC_SENSOR variables will be removed from the data variable.
+            # ECHOMETRIC_SENSOR and ECHOGRAM_VARS will have the extras dimension.
+            # Any ECHOMETRIC_SENSOR variables will be removed from the data variable.
 
-            pse_file = Path(self.ascii_file).with_suffix(".pseudogram")
+            pse_file = Path(self.ascii_file).with_suffix(".echogram")
 
-            pseudogram_data = pd.DataFrame(columns=PSEUDOGRAM_CSV_COLUMNS)
+            echogram_data = pd.DataFrame(columns=ECHOGRAM_CSV_COLUMNS)
             if pse_file.exists():
                 try:
-                    pseudogram_data = pd.read_csv(
+                    echogram_data = pd.read_csv(
                         pse_file,
                         header=0,
-                        names=PSEUDOGRAM_CSV_COLUMNS
+                        names=ECHOGRAM_CSV_COLUMNS
                     )
-                    pseudogram_data['pseudogram_time'] = pd.to_datetime(
-                        pseudogram_data.pseudogram_time, unit='s', origin='unix'
+                    echogram_data['echogram_time'] = pd.to_datetime(
+                        echogram_data.echogram_time, unit='s', origin='unix'
                     )
                 except BaseException as e:
-                    L.warning(f"Could not process pseudogram file {pse_file}: {e}")
+                    L.warning(f"Could not process echogram file {pse_file}: {e}")
 
-            # Do we have ecometrics data?
-            ecometrics_data = pd.DataFrame()
+            # Do we have echometrics data?
+            echometrics_data = pd.DataFrame()
             if 'sci_echodroid_sv' in data.columns:
                 # Valid data rows are where Sv is less than 0 dB
-                ecometrics_data = data.loc[data.sci_echodroid_sv < 0, :]
+                echometrics_data = data.loc[data.sci_echodroid_sv < 0, :]
 
-            empty_ecometrics_columns = {
-                k: np.nan for k in ECOMETRICS_SENSORS
+            empty_echometrics_columns = {
+                k: np.nan for k in ECHOMETRICS_SENSORS
             }
-            empty_pseudogram_columns = {
-                k: np.nan for k in PSEUDOGRAM_VARS
+            empty_echogram_columns = {
+                k: np.nan for k in ECHOGRAM_VARS
             }
-            if not pseudogram_data.empty:
+            if not echogram_data.empty:
 
-                # Create empty (nan) columns for the ECOMETRICS variables
-                self._extras = pseudogram_data.assign(**empty_ecometrics_columns)
+                # Create empty (nan) columns for the ECHOMETRICS variables
+                self._extras = echogram_data.assign(**empty_echometrics_columns)
 
-                if not ecometrics_data.empty:
+                if not echometrics_data.empty:
 
-                    # Combine pseudogram and ecometrics data together by matching with the first
+                    # Combine echogram and echometrics data together by matching with the first
                     # row that is within 1 second
-                    for _, row in ecometrics_data.iterrows():
-                        idx = pseudogram_data.loc[
-                            (pseudogram_data.pseudogram_time - row['t']).abs() < pd.Timedelta('1s')
+                    for _, row in echometrics_data.iterrows():
+                        idx = echogram_data.loc[
+                            (echogram_data.echogram_time - row['t']).abs() < pd.Timedelta('1s')
                         ]
                         if not idx.empty:
                             self._extras.loc[
-                                idx.iloc[0].name, ECOMETRICS_SENSORS
-                            ] = row.get(ECOMETRICS_SENSORS)
+                                idx.iloc[0].name, ECHOMETRICS_SENSORS
+                            ] = row.get(ECHOMETRICS_SENSORS)
 
                 # Carry thought locations from the original glider data
-                # since it was still moving while measuring the ecometrics
-                # and pseudograms
+                # since it was still moving while measuring the echometrics
+                # and echograms
                 self._extras = pd.merge_asof(
-                    self._extras.set_index('pseudogram_time'),
+                    self._extras.set_index('echogram_time'),
                     data.set_index('t')[['x', 'y']],
                     left_index=True,
                     right_index=True,
@@ -177,36 +177,36 @@ class SlocumReader(object):
                 # and a column named "z".
                 self._extras.rename(
                     columns={
-                        'pseudogram_time': 't',
-                        'pseudogram_depth': 'z'
+                        'echogram_time': 't',
+                        'echogram_depth': 'z'
                     },
                     inplace=True
                 )
 
-            elif not ecometrics_data.empty:
+            elif not echometrics_data.empty:
                 # NOTE: There is no test coverage here!
-                ecometrics_data.reset_index(inplace=True, drop=True)
+                echometrics_data.reset_index(inplace=True, drop=True)
                 # Carry through the time and location of the data from the glider
                 # There are captured as "extras" because this data would typically
                 # be filtered out because it isn't an actual profile.
-                self._extras = ecometrics_data[ECOMETRICS_SENSORS + ['t', 'x', 'y']]
-                # If there is no pseudogram data, assign the ecometrics data to z=0
+                self._extras = echometrics_data[ECHOMETRICS_SENSORS + ['t', 'x', 'y']]
+                # If there is no echogram data, assign the echometrics data to z=0
                 self._extras = self._extras.assign(
                     z=0.0,
-                    **empty_ecometrics_columns
+                    **empty_echometrics_columns
                 )
             else:
                 # Empty dataframe with the correct columns
-                self._extras = pseudogram_data.assign(
+                self._extras = echogram_data.assign(
                     **{
-                        **empty_ecometrics_columns,
-                        **empty_pseudogram_columns
+                        **empty_echometrics_columns,
+                        **empty_echogram_columns
                     }
                 )
 
-            # Once ecometrics are copied out of data, the columns have to be removed from data
+            # Once echometrics are copied out of data, the columns have to be removed from data
             # or the write to netCDF will fail due to duplicate variables.
-            data = data.drop(columns=ECOMETRICS_SENSORS, errors='ignore')
+            data = data.drop(columns=ECHOMETRICS_SENSORS, errors='ignore')
 
             if not self._extras.empty:
                 self._extras = self._extras.sort_values(['t', 'z'])
@@ -547,10 +547,10 @@ class SlocumMerger(object):
             '-c', self.cache_directory
         ]
 
-        pseudograms_attrs = self.extra_kwargs.get('pseudograms', {})
-        enable_ascii = pseudograms_attrs.get('enable_ascii', False)
+        echograms_attrs = self.extra_kwargs.get('echograms', {})
+        enable_ascii = echograms_attrs.get('enable_ascii', False)
         if enable_ascii:
-            # Perform pseudograms if this ASCII file matches the deployment
+            # Perform echograms if this ASCII file matches the deployment
             # name of things we know to have the data. There needs to be a
             # better way to figure this out, but we don't have any understanding
             # of a deployment config object at this point.
@@ -564,19 +564,19 @@ class SlocumMerger(object):
             # https://github.com/smerckel/dbdreader
 
             # Defaults
-            enable_image = pseudograms_attrs.get('enable_image', False)
-            echosounderRange = pseudograms_attrs.get('echosounderRange', 60.0)
-            echosounderDirection = pseudograms_attrs.get('echosounderDirection', 'down')
+            enable_image = echograms_attrs.get('enable_image', False)
+            echosounderRange = echograms_attrs.get('echosounderRange', 60.0)
+            echosounderDirection = echograms_attrs.get('echosounderDirection', 'down')
             if echosounderDirection == 'up':
                 echosounderRange = - (echosounderRange)
 
             pargs = pargs + [
                 '-y', sys.executable,
-                '-g',  # Makes the pseudogram ASCII
+                '-g',  # Makes the echogram ASCII
                 '-r', f"{echosounderRange}"
             ]
             if enable_image:
-                pargs.append('-i')  # Makes the pseudogram images. This is slow!
+                pargs.append('-i')  # Makes the echogram images. This is slow!
 
         pargs.append(self.tmpdir)
         pargs.append(self.destination_directory)
