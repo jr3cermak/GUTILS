@@ -5,6 +5,7 @@ import time
 import shutil
 from glob import glob
 
+import pytest
 from pyinotify import (
     IN_CLOSE_WRITE,
     IN_MOVED_TO,
@@ -50,6 +51,7 @@ def wait_for_files(path, number, loops=20, sleep=6):
             time.sleep(sleep)
 
 
+@pytest.mark.watch
 class TestWatchClasses(GutilsTestClass):
 
     def setUp(self):
