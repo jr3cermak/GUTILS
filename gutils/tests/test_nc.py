@@ -188,6 +188,7 @@ class TestCreateGliderScript(GutilsTestClass):
             # Cleanup
             shutil.rmtree(out_base, ignore_errors=True)
 
+    @pytest.mark.long
     def test_delayed(self):
         out_base = resource('slocum', 'modena-test-ascii', 'delayed', 'netcdf')
 

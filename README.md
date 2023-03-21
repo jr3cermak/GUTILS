@@ -81,3 +81,10 @@ The tests are written using `pytest`. To run the tests use the `pytest` command.
 To run the "long" tests you will need [this](https://github.com/SECOORA/SGS) cloned somewhere. Then set the env variable `GUTILS_TEST_CONFIG_DIRECTORY` to the config directory, ie `export GUTILS_TEST_CONFIG_DIRECTORY=/data/dev/SGS/config` and run `pytest -m long`
 
 To run a specific test, locate the test name you would like to run and run: `pytest -k [name_of_test]` i.e. `pytest -k TestEcoMetricsOne`
+
+To run the tests in Docker, you can build the image (which does not include the tests or test data to reduce image size) and volume mount the tests when running:
+
+```shell
+docker built -t gutils .
+docker run -it --rm -v $(pwd)/gutils/tests:/code/gutils/tests gutils pytest -m "not long"
+```
