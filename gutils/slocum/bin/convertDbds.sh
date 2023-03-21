@@ -186,7 +186,7 @@ fi
 
 if [ ! -n "$echosounderRange" ]
 then
-    echo "Setting default echosounderRange: 60.0" >&2;
+    echo "Setting default echosounderRange: 60.0" >&1;
     echosounderRange=60.0
 fi
 

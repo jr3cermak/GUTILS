@@ -168,9 +168,13 @@ def generate_stream(processArgs):
         processArgs,
         universal_newlines=True,
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT
+        stderr=subprocess.PIPE
     )
-    stdout, _ = process.communicate()
+    stdout, stderr = process.communicate()
+
+    if stderr:
+        L.error(stderr)
+
     return StringIO(stdout), process.returncode
 
 

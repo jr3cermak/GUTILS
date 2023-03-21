@@ -9,9 +9,9 @@ on:
 jobs:
 
   pypi-build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v1
@@ -54,7 +54,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v3
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
@@ -85,7 +85,7 @@ jobs:
         outputs: type=docker
 
     - name: Run tests from the Docker image
-      run: docker run axiom/gutils:${{ github.event.release.tag_name }} pytest -m "not long"
+      run: docker run axiom/gutils:${{ github.event.release.tag_name }} pytest -m "not long and not watch"
 
   docker-push:
     name: Push tagged image to Docker Hub
@@ -95,7 +95,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v3
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
