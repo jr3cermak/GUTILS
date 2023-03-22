@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# DEBUG
+#set -x
+
 PATH=/bin:/usr/bin
 
 # Script basename
@@ -18,7 +21,7 @@ NAME
     $app - Convert and merge native Slocum glider binary flight and science data files
 
 SYNOPSIS
-    $app [-h] [-f SENSOR_LIST] [-c DBD_CACHE_DIR] [-m] [-e EXTENSION] [-b TWRC_EXE_DIR] [-y PYTHON_PATH] [-g] [-r RANGE] [-q] SOURCEDIR DESTDIR
+    $app [-h] [-f SENSOR_LIST] [-c DBD_CACHE_DIR] [-m] [-e EXTENSION] [-b TWRC_EXE_DIR] [-y PYTHON_PATH] [-g] [-t EGRAM_TYPE] [-r EGRAM_RANGE] [-n EGRAM_BINS] [-q] SOURCEDIR DESTDIR
 
 DESCRIPTION
     Convert and merge all binary *.[demnst]bd files in SOURCEDIR and write the
@@ -64,10 +67,25 @@ DESCRIPTION
         Path to the python interpreter to use for the echogram calculations
 
     -g
-        Try to compute echograms (can be slow)
+        Flag to decode/compute echograms from slocum files (can be slow)
 
-    -r RANGE
-        echosounder range, used in echograms
+    -i EGRAM_IMAGE_TYPES
+        If specified, this will produce echogram graphics.  One or more
+        types may be specified by comma delimited list and/or all.
+
+    -C EGRAM_COLORMAP
+        Specifies the colormap to use for echogram graphics.  Options
+        at present are: ek80, simrad
+
+    -t EGRAM_TYPE
+        Echogram data processing type: 'rt', 'delayed'
+
+    -r EGRAM_RANGE
+        Echogram range
+
+    -n EGRAM_BINS
+        Number of echogram bins, used for determining
+        bin range.
 
     -q
         Suppress STDOUT
@@ -84,8 +102,8 @@ local_twrc_exe_dir="$app_dir";
 dba_extension='dat';
 # Process options
 # while getopts hgqpmf:c:e:b:y::r:: option
-# while getopts hf:c:me:b:r:y:qp option
-while getopts hf:c:me:b:y::r::giqp option
+# while getopts hf:c:me:b:y::t:r:n::gi:qp option
+while getopts hf:c:me:b:r:y:t:r:n:i:C:qpg option
 do
 
     case "$option" in
@@ -112,14 +130,23 @@ do
         "y")
             python_path=$OPTARG;
             ;;
+        "t")
+            echogramType=$OPTARG;
+            ;;
         "r")
-            echosounderRange=$OPTARG;
+            echogramRange=$OPTARG;
+            ;;
+        "n")
+            echogramBins=$OPTARG;
             ;;
         "g")
             computeEchograms=1;
             ;;
         "i")
-            computeEchogramImages=1;
+            computeEchogramImages=$OPTARG;
+            ;;
+        "C")
+            echogramColormap=$OPTARG;
             ;;
         "q")
             quiet=1;
@@ -136,6 +163,8 @@ do
             ;;
     esac
 done
+# DEBUG
+quiet=0
 
 # Remove options from ARGV
 shift $((OPTIND-1));
@@ -178,16 +207,31 @@ then
     echo "Missing utility: $dba_sensor_filter" >&2;
     exit 1;
 fi
-echogram="${TWRC_EXE_DIR}/../echotools/decodePseudogram.py";
+echogram="${TWRC_EXE_DIR}/../echotools/processEchograms.py";
 if [ ! -x "$echogram" ]
 then
     echo "Missing echogram utility: $echogram" >&2;
 fi
 
-if [ ! -n "$echosounderRange" ]
+if [ ! -n "$echogramType" ]
 then
-    echo "Setting default echosounderRange: 60.0" >&1;
+    echo "Setting default echogramType: rt" >&1;
+    echogramType="rt"
+fi
+if [ ! -n "$echogramRange" ]
+then
+    echo "Setting default echogramRange: 60.0" >&1;
     echosounderRange=60.0
+fi
+if [ ! -n "$computeEchogramImages" ]
+then
+    echo "Setting default computeEchogramImages: None" >&1;
+    computeEchogramImages=""
+fi
+if [ ! -n "$echogramColormap" ]
+then
+    echo "Setting default echogramColormap: ek80" >&1;
+    echogramColormap="ek80"
 fi
 
 # Display usage if no source directory and destination directory were specified
@@ -239,7 +283,10 @@ fi
 [ -z "$quiet" ] && echo "dba_extension: $dba_extension";
 [ -z "$quiet" ] && echo "local_twrc_exe_dir: $local_twrc_exe_dir";
 [ -z "$quiet" ] && echo "python_path: $python_path";
-[ -z "$quiet" ] && echo "echosounderRange: $echosounderRange";
+[ -z "$quiet" ] && echo "echogramType: $echogramType";
+[ -z "$quiet" ] && echo "echogramBins: $echogramBins";
+[ -z "$quiet" ] && echo "echogramRange: $echogramRange";
+[ -z "$quiet" ] && echo "echogramColormap: $echogramColormap";
 [ -z "$quiet" ] && echo "computeEchograms: $computeEchograms";
 [ -z "$quiet" ] && echo "computeEchogramImages: $computeEchogramImages";
 [ -z "$quiet" ] && echo "quiet: $quiet";
@@ -400,14 +447,16 @@ do
 
         if [ -n "$computeEchograms" ]
         then
-            [ -z "$quiet" ] && echo "Exporting Echogram CSV";
+            [ -z "$quiet" ] && echo "Computing Echogram CSV";
             $python_path $echogram \
+                -t ${echogramType} \
                 --inpDir ${dbdRoot} \
-                --inpFile ${segment}.?[bB][dD] \
+                --inpFile ${segment} \
                 --cacheDir $local_cac_dir \
                 --csvOut "${tmpDir}/${dbdSeg}_${asciiExt}.echogram" \
                 --csvHeader \
-                --echosounderRange "$echosounderRange"
+                --echogramRange "$echogramRange" \
+                --echogramBins "$echogramBins"
 
             status=$(mv ${tmpDir}/*.echogram $ascDest 2>&1);
         fi
@@ -416,24 +465,17 @@ do
         then
             [ -z "$quiet" ] && echo "Computing Echogram Images";
             $python_path $echogram \
+                -t ${echogramType} \
                 --inpDir ${dbdRoot} \
-                --inpFile ${segment}.?[bB][dD] \
+                --inpFile ${segment} \
                 --cacheDir $local_cac_dir \
-                --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.scatter.png" \
-                --useScatterPlot \
-                --echosounderRange "$echosounderRange" \
-                --title "$segment - Scatter"
+                --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.png" \
+                --echogramRange "$echogramRange" \
+                --echogramBins "$echogramBins" \
+                --plotType "$computeEchogramImages"
 
-            $python_path $echogram \
-                --inpDir ${dbdRoot} \
-                --inpFile ${segment}.?[bB][dD] \
-                --cacheDir $local_cac_dir \
-                --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.binned.png" \
-                --echosounderRange "$echosounderRange" \
-                --title "$segment - Binned"
             status=$(mv ${tmpDir}/*.png $ascDest 2>&1);
         fi
-
 
         [ -z "$quiet" ] && echo "Converting & Merging flight and science files";
 

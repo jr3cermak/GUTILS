@@ -166,7 +166,7 @@ class TestSlocumExportDelayed(GutilsTestClass):
 
 
 @pytest.mark.long
-class TestEcodroidOne(GutilsTestClass):
+class TestEchodroidOne(GutilsTestClass):
 
     def setUp(self):
         super().setUp()
@@ -229,7 +229,7 @@ class TestEcodroidOne(GutilsTestClass):
 
 
 @pytest.mark.long
-class TestEcodroidTwo(GutilsTestClass):
+class TestEchodroidTwo(GutilsTestClass):
 
     def setUp(self):
         super().setUp()
@@ -518,7 +518,9 @@ class TestEchoMetricsFour(GutilsTestClass):
             create_dataset(**args)
 
         assert os.path.exists(self.netcdf_path)
+        assert os.path.exists(self.ascii_path)
 
+        # Check number of profiles in netcdf directory
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
         assert len(output_files) == 12
@@ -537,6 +539,21 @@ class TestEchoMetricsFour(GutilsTestClass):
         ds = namedtuple('Arguments', ['file'])
         for o in output_files:
             assert check_dataset(ds(file=o)) == 0
+
+        # Echogram check
+        output_files = {
+            '.dat': 0,
+            '.echogram': 0,
+            '.png': 0
+        }
+        output_file_keys = output_files.keys()
+        for o in sorted(os.listdir(self.ascii_path)):
+            _, ext = os.path.splitext(o)
+            if ext in output_file_keys:
+                output_files[ext] += 1
+        assert output_files['.dat'] == 10
+        assert output_files['.png'] == 0
+        assert output_files['.echogram'] == 0
 
 
 @pytest.mark.long
@@ -578,6 +595,7 @@ class TestEchoMetricsFive(GutilsTestClass):
             create_dataset(**args)
 
         assert os.path.exists(self.netcdf_path)
+        assert os.path.exists(self.ascii_path)
 
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
@@ -603,3 +621,19 @@ class TestEchoMetricsFive(GutilsTestClass):
                 assert 'sci_echodroid_sa' in ncd.variables
                 assert 'sci_echodroid_sv' in ncd.variables
                 assert 'echogram_sv' in ncd.variables
+
+        # Echogram check
+        output_files = {
+            '.dat': 0,
+            '.echogram': 0,
+            '.png': 0
+        }
+        output_file_keys = output_files.keys()
+        for o in sorted(os.listdir(self.ascii_path)):
+            _, ext = os.path.splitext(o)
+            if ext in output_file_keys:
+                output_files[ext] += 1
+        assert output_files['.dat'] == 10
+        assert output_files['.png'] == 5
+        assert output_files['.echogram'] == 5
+

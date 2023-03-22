@@ -10,12 +10,16 @@
     },
     "extra_kwargs": {
         "echograms": {
-            "enable_nc": false,
+            "enable_nc": true,
             "enable_ascii": true,
-            "enable_image": false,
-            "echosounderRange": 60.0,
-            "echosounderDirection": "up",
-            "echosounderRangeUnits": "meters"
+            "enable_image": true,
+            "plot_type": "pcolormesh",
+            "plot_cmap": "ek80",
+            "svb_thresholds": [-10,-20,-25,-30,-35,-45,-55],
+            "svb_limits": [-10.0, -55.0],
+            "echogram_range_bins": 20,
+            "echogram_range": -60.0,
+            "echogram_range_units": "meters"
         }
     },
     "attributes": {
