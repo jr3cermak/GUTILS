@@ -160,7 +160,7 @@ def sussFileType(args):
     Suss out file types we are attempting to work with based on the output directory path.
     '''
 
-    print("ARGS:",args)
+    #print("ARGS:",args)
 
     return None
 
@@ -177,10 +177,10 @@ on a single file or a whole deployment of files.
     parser.add_argument("--inpDir", help="full or relative path to glider input files", type=str, default=None)
     parser.add_argument("--inpFile", help="glider input file(s)", type=str, default=None)
     parser.add_argument("-t", help="glider file type: sfmc, rt or delayed", type=str, default=None)
-    parser.add_argument("--tbdFile", help="full or relative path with filename to glider tbd binary input file", type=str, default=None)
-    parser.add_argument("--sbdFile", help="full or relative path with filename to glider sbd binary input file", type=str, default=None)
+    parser.add_argument("--tbdFile", help="full or relative path with filename to glider tbd binary input file (DEPRECATED)", type=str, default=None)
+    parser.add_argument("--sbdFile", help="full or relative path with filename to glider sbd binary input file (DEPRECATED)", type=str, default=None)
     parser.add_argument("--cacheDir", help="Directory with glider cache files; default current directory", type=str, default=None)
-    parser.add_argument("--dbd2asc", help="full or relative path with filename to glider dbd2asc binary", type=str, default=None)
+    parser.add_argument("--dbd2asc", help="full or relative path with filename to glider dbd2asc binary (DEPRECATED)", type=str, default=None)
     parser.add_argument("--csvOut", help="full or relative path with filename to write CSV output or 'stdout'; default None", type=str, default=None)
     parser.add_argument("--csvHeader", help="(flag) include header with CSV output; default False", action="store_true", default=False)
     parser.add_argument("--ncDir", help="full or relative path with filename to write netCDF output; default None", type=str, default=None)
@@ -189,10 +189,10 @@ on a single file or a whole deployment of files.
     parser.add_argument("--outDir", help="output directory for csv and plot files", type=str, default=None)
     parser.add_argument("--debug", help="(flag) show extra debugging for this python script; default False", action="store_true", default=False)
     parser.add_argument("--echogramBins",
-            help="Echogram bins; default 20", type=int, default=20)
+            help="Echogram bins; default 20", type=int, default=None)
     parser.add_argument("--echogramRange",
             help="Echogram range; default -60.0 (meters) instrument facing up; positive values instrument facing down",
-            type=float, default=-60.0)
+            type=float, default=None)
     parser.add_argument("--plotType", help="Use one or more of binned, scatter, pcolormesh or all; default binned", type=str, default="binned")
     parser.add_argument("--binnedDepthLabels", help="(flag) Use the original depth bin labels instead of the adjusted depth labels for the time/depth binned plot; default False", action="store_true", default=False)
     parser.add_argument("--title", help="optional figure title; default None", type=str)
@@ -201,6 +201,8 @@ on a single file or a whole deployment of files.
     parser.add_argument("--templateDir", help="full or relative path to metadata template directory", type=str, default=None)
     parser.add_argument("--dacOverlay", help="full or relative path to an overlay configuration file", type=str, default=None)
     parser.add_argument("--saveBits", help="full or relative path to save the bit encoding of the echogram", type=str, default=None)
+    parser.add_argument("--vbsBins", help="python list of VBS threshold bins (7 values)", type=str, default=None)
+    parser.add_argument("--dBLimits", help="python list of dB plot limits (2 values; [max,min])", type=str, default=None)
     args = parser.parse_args()
     args = vars(args)
 
@@ -218,7 +220,9 @@ on a single file or a whole deployment of files.
     if not(file_type in allowed_file_types):
         file_type = sussFileType(args)
         if not(file_type in allowed_file_types):
-            print("Allowed file types (-t):", allowed_file_types)
+            print("ERROR: A file type is required (-t):", allowed_file_types)
+            print("")
+            parser.print_help()
             sys.exit()
 
     # Set the file and ext mask to use
@@ -331,7 +335,60 @@ on a single file or a whole deployment of files.
         # Auxillary configuration/DAC file: in the same path as the deployment directory
         glider.loadMetadata()
         args = glider.updateArgumentsFromMetadata()
+
+        # Apply any missing defaults
+        if args.get('echogramBins', None) is None:
+            args['echogramBins'] = 20
+        if args.get('echogramRange', None) is None:
+            args['echogramRange'] = -60.0
+        if args.get('plotType', None) is None:
+            args['plotType'] = "binned"
+
         glider.calculateMissionPlan()
+
+        # Convert vbsBins to a python list() if a str is provided
+        if args.get('vbsBins', None):
+            vbsBins = args.get('vbsBins')
+            if isinstance(vbsBins, str):
+                if len(vbsBins) < 40:
+                    if vbsBins[0] == '[' and vbsBins[-1] == ']':
+                        try:
+                            vbsBins = eval(vbsBins)
+                            if len(vbsBins) != 7:
+                                vbsBins = None
+                        except:
+                            vbsBins = None
+
+            if not(isinstance(vbsBins, list)):
+                vbsBins = None
+
+            args['vbsBins'] = vbsBins
+
+        # Last ditch effort to assign the defaults
+        if args.get('vbsBins', None) is None:
+            args['vbsBins'] = [-34,-40,-46,-52,-58,-64,-70]
+
+        # Convert dBLimits to a python list() if a str is provided
+        if args.get('dBLimits', None):
+            dBLimits = args.get('dBLimits')
+            if isinstance(dBLimits, str):
+                if len(dBLimits) < 40:
+                    if dBLimits[0] == '[' and dBLimits[-1] == ']':
+                        try:
+                            dBLimits = eval(dBLimits)
+                            if len(dBLimits) != 2:
+                                dBLimits = None
+                        except:
+                            dBLimits = None
+
+            if not(isinstance(dBLimits, list)):
+                dBLimits = None
+
+            args['dBLimits'] = dBLimits
+
+        # Last ditch effort to assign the defaults
+        if args.get('dBLimits', None) is None:
+            args['dBLimits'] = [-30.0,-80.0]
 
         # Final arguments
         if debugFlag:

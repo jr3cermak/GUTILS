@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 import matplotlib as mpl
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 import matplotlib.dates as dates
+import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 import json
 import xarray as xr
@@ -93,6 +94,7 @@ class Glider:
         self.data['units'] = {}
         self.data['input'] = {}
         self.data['timestamp'] = {}
+        self.data['segment'] = None
         self.data['inventory'] = None
         self.data['inventory_paths'] = []
         self.data['inventory_cache_path'] = None
@@ -108,7 +110,7 @@ class Glider:
 
         # Plotting
         self.availablePlotTypes = ['binned', 'scatter', 'pcolormesh']
-        self.defaultPlotType = 'pcolormesh'
+        self.defaultPlotType = 'binned'
 
         # Define colormaps
         self.cmaps = {}
@@ -400,6 +402,112 @@ class Glider:
 
         return groupList, inv
 
+
+    def findTimeInterval(self, timeAxis, plotType, ax, nticks=10):
+        '''
+        For a given time axis and number of ticks, return
+        an array of axisLocations and axisLabels.
+
+        timeAxis is an array of timestamps in seconds.
+        '''
+
+        xtickLocs = ax.get_xticks()
+        newLocs = []
+        xtickLabels = ax.get_xticklabels()
+        newLabels = []
+
+        #print(plotType)
+        #print(xtickLocs)
+        #print(xtickLabels)
+
+        mint = timeAxis.min()
+        maxt = timeAxis.max()
+        tott = maxt - mint
+        bint = tott / len(timeAxis)
+
+        tickIntervals = {
+                "1s": 1.0,
+                "2s": 2.0,
+                "5s": 5.0,
+                "10s": 10.0,
+                "20s": 20.0,
+                "30s": 30.0,
+                "1m": 60.0,
+                "2m": 120.0,
+                "5m": 300.0,
+                "10m": 600.0,
+                "20m": 1200.0,
+                "30m": 1800.0,
+                "1h": 3600.0,
+                "2h": 7200.0,
+                "3h": 10800.0,
+                "6h": 21600.0,
+                "12h": 43200.0,
+                "1d": 86400.0,
+                "2d": 172800.0,
+                "3d": 259200.0,
+                "5d": 432000.0,
+                "10d": 864000.0,
+                "20d": 1728000.0,
+                "30d": 2592000.0,
+        }
+
+        # Determine interval that is nticks or less
+        for intv in tickIntervals.keys():
+            nsec = tickIntervals[intv]
+            nint = tott / nsec
+            if nint <= nticks:
+                break
+
+        if self.debugFlag:
+            print("Selected time interval:", intv, nsec, nint)
+
+        # Get the fractional portion of the selected interval
+        # and go back one step to begin timestamping.
+        fraction, whole = np.modf(timeAxis[0]/nsec)
+        # If the fraction is small enough, just drop back an entire
+        # interval
+        if fraction < 0.005:
+            fraction = (fraction*nsec) + nsec
+        else:
+            fraction = (fraction*nsec)
+        taxis = timeAxis[0] - fraction
+
+        if plotType != 'binned':
+            # Convert time axis to matplotlib values
+            #mTimeAxis = dates.date2num(pd.to_datetime(timeAxis,unit='s'))
+
+            for i in range(0, int(nint)+1):
+                taxis = taxis + nsec
+                ttime = datetime.datetime.utcfromtimestamp(taxis).strftime("%Y-%m-%d\n%H:%M:%S")
+                tloc = dates.date2num(pd.to_datetime(taxis,unit='s'))
+
+                newLabels.append(ttime)
+                newLocs.append(tloc)
+
+        else:
+            # Otherwise, the time axis is in relation to pixel values
+            # for imshow()
+
+            # matplotlib is a bit mysterious when plotting binned data.
+            # When given 56 xaxis points, the labels are arranged from
+            # -10 to +60.
+
+            for i in range(0, int(nint)+1):
+                taxis = taxis + nsec
+                ttime = datetime.datetime.utcfromtimestamp(taxis).strftime("%Y-%m-%d\n%H:%M:%S")
+                tloc = (taxis - timeAxis[0]) / bint
+
+                newLabels.append(ttime)
+                newLocs.append(tloc)
+
+
+
+        #breakpoint()
+
+        return newLocs, newLabels
+
+
     def findTimeVariable(self, parameterList):
         '''
         Determine the time variable for a given parameter list.
@@ -671,26 +779,33 @@ class Glider:
                 for ckey in echoconf.keys():
                     modKey = False
                     if ckey == 'plot_type':
-                        modKey = True
-                        self.args['plotType'] = echoconf[ckey]
+                        if self.args.get('plotType', None) is None:
+                            modKey = True
+                            self.args['plotType'] = echoconf[ckey]
                     if ckey == 'plot_cmap':
-                        modKey = True
-                        self.args['cmap'] = echoconf[ckey]
+                        if self.args.get('cmap', None) is None:
+                            modKey = True
+                            self.args['cmap'] = echoconf[ckey]
                     if ckey == 'svb_limits':
-                        modKey = True
-                        self.args['dBLimits'] = echoconf[ckey]
+                        if self.args.get('dBLimits', None) is None:
+                            modKey = True
+                            self.args['dBLimits'] = echoconf[ckey]
                     if ckey == 'svb_thresholds':
-                        modKey = True
-                        self.args['vbsBins'] = echoconf[ckey]
+                        if self.args.get('vbsBins', None) is None:
+                            modKey = True
+                            self.args['vbsBins'] = echoconf[ckey]
                     if ckey == 'echogram_range':
-                        modKey = True
-                        self.args['echogramRange'] = echoconf[ckey]
+                        if self.args.get('echogramRange', None) is None:
+                            modKey = True
+                            self.args['echogramRange'] = echoconf[ckey]
                     if ckey == 'echogram_range_units':
-                        modKey = True
-                        self.args['echogramRangeUnits'] = echoconf[ckey]
+                        if self.args.get('echogramRangeUnits', None) is None:
+                            modKey = True
+                            self.args['echogramRangeUnits'] = echoconf[ckey]
                     if ckey == 'echogram_range_bins':
-                        modKey = True
-                        self.args['echogramBins'] = echoconf[ckey]
+                        if self.args.get('echogramBins', None) is None:
+                            modKey = True
+                            self.args['echogramBins'] = echoconf[ckey]
 
                     if self.debugFlag and modKey:
                         print("DEBUG: deployment.conf(%s) = %s" % (ckey, echoconf[ckey]))
@@ -952,6 +1067,9 @@ class Glider:
                 print("HINT: Include a sbd file if available.")
             return
 
+        # We need to know the time indexes for the graphics below too
+        timeIndexes = np.unique(dataSpreadsheet[:,0])
+
         # Determine plot type requested
         # Default: binned
         plotTypes = [self.defaultPlotType]
@@ -1020,14 +1138,18 @@ class Glider:
             # is provided.
             outFilename = self.args['imageOut']
             if 'default' in outFilename:
-                timeToUse = None
-                if 'tbd' in self.data['timestamp']:
-                    timeToUse = self.data['timestamp']['tbd']
-                if 'ebd' in self.data['timestamp']:
-                    timeToUse = self.data['timestamp']['ebd']
-                outFilename = outFilename.replace('default',
-                    "%s_%s" % (self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
-                        fmt="%Y%m%d_%H%M%S"), plotType))
+                if self.data['segment']:
+                    outFilename = outFilename.replace('default', "%s_%s" % \
+                        (self.data['segment'], plotType))
+                else:
+                    timeToUse = None
+                    if 'tbd' in self.data['timestamp']:
+                        timeToUse = self.data['timestamp']['tbd']
+                    if 'ebd' in self.data['timestamp']:
+                        timeToUse = self.data['timestamp']['ebd']
+                    outFilename = outFilename.replace('default',
+                        "%s_%s" % (self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
+                            fmt="%Y%m%d_%H%M%S"), plotType))
 
             # pcolormesh plot
             if plotType == 'pcolormesh':
@@ -1061,10 +1183,10 @@ class Glider:
 
                 fig, ax = plt.subplots(figsize=(10,8))
 
-                ax.xaxis.set_minor_locator(dates.MinuteLocator(interval=10))# every 10 minutes
-                ax.xaxis.set_minor_formatter(dates.DateFormatter('%H:%M'))  # hours and minutes
-                ax.xaxis.set_major_locator(dates.DayLocator(interval=1))    # every day
-                ax.xaxis.set_major_formatter(dates.DateFormatter('\n%m-%d-%Y'))
+                #ax.xaxis.set_minor_locator(dates.MinuteLocator(interval=10))# every 10 minutes
+                #ax.xaxis.set_minor_formatter(dates.DateFormatter('%H:%M'))  # hours and minutes
+                #ax.xaxis.set_major_locator(dates.DayLocator(interval=1))    # every day
+                #ax.xaxis.set_major_formatter(dates.DateFormatter('\n%m-%d-%Y'))
 
                 if 'dBLimits' in self.args:
                     px = ax.pcolormesh(xx, yy, zz, shading='nearest',
@@ -1082,6 +1204,12 @@ class Glider:
                 ax.set_xlabel('Date/Time (UTC)')
                 ax.invert_yaxis()
 
+                # Adjust x ticks
+                xtickLocs, xtickLabels = self.findTimeInterval(timeIndexes, plotType, ax, nticks=10)
+                ax.xaxis.set_major_locator(mticker.FixedLocator(xtickLocs))
+                ax.set_xticklabels(xtickLabels)
+                plt.xticks(rotation = 45.0)
+
                 # Color bar using vmin,vmax
                 #cx = fig.colorbar(px, ticks=dB_ticks)
                 #cx = fig.colorbar(px, shrink=default_cb_shrink)
@@ -1094,6 +1222,7 @@ class Glider:
                 if self.args['title']:
                     plt.title(self.args['title'])
 
+                '''
                 # Determine if we are writing to stdout
                 if stdoutFlag:
                     plt.savefig(sys.stdout.buffer, bbox_inches='tight', dpi=100)
@@ -1109,6 +1238,7 @@ class Glider:
                             print("DEBUG: Wrote to",outFilename)
                         plt.savefig(outFilename, bbox_inches='tight', dpi=100)
 
+                '''
                 if self.debugFlag:
                     print("DEBUG: End of pcolormesh plotting routine.")
 
@@ -1120,10 +1250,10 @@ class Glider:
 
                 # Plot simply x, y, z data (time, depth, dB)
                 fig, ax = plt.subplots(figsize=(10,8))
-                ax.xaxis.set_minor_locator(dates.MinuteLocator(interval=10))# every 10 minutes
-                ax.xaxis.set_minor_formatter(dates.DateFormatter('%H:%M'))  # hours and minutes
-                ax.xaxis.set_major_locator(dates.DayLocator(interval=1))    # every day
-                ax.xaxis.set_major_formatter(dates.DateFormatter('\n%m-%d-%Y'))
+                #ax.xaxis.set_minor_locator(dates.MinuteLocator(interval=10))# every 10 minutes
+                #ax.xaxis.set_minor_formatter(dates.DateFormatter('%H:%M'))  # hours and minutes
+                #ax.xaxis.set_major_locator(dates.DayLocator(interval=1))    # every day
+                #ax.xaxis.set_major_formatter(dates.DateFormatter('\n%m-%d-%Y'))
                 ax.set_facecolor('lightgray')
                 im = plt.scatter(pd.to_datetime(scatterData[:,0], unit='s'), scatterData[:,1], c=scatterData[:,2],
                         cmap=cmap, norm=norm, s=40.0)
@@ -1134,8 +1264,16 @@ class Glider:
                 plt.ylabel('depth (m)')
                 plt.xlabel('Date/Time (UTC)')
 
+                # Adjust x ticks
+                xtickLocs, xtickLabels = self.findTimeInterval(timeIndexes, plotType, ax, nticks=10)
+                ax.xaxis.set_major_locator(mticker.FixedLocator(xtickLocs))
+                ax.set_xticklabels(xtickLabels)
+                plt.xticks(rotation = 45.0)
+
                 if self.args['title']:
                     plt.title(self.args['title'])
+
+                '''
                 # Determine if we are writing to stdout
                 if stdoutFlag:
                     plt.savefig(sys.stdout.buffer, bbox_inches='tight', dpi=100)
@@ -1150,15 +1288,13 @@ class Glider:
                         if self.debugFlag:
                             print("DEBUG: Wrote to",outFilename)
                         plt.savefig(outFilename, bbox_inches='tight', dpi=100)
+                '''
 
                 if self.debugFlag:
                     print("DEBUG: End of scatter plot routine.")
 
             # binned plot
             if plotType == 'binned':
-
-                # We need to know the time indexes for the final graphic below too
-                timeIndexes = np.unique(dataSpreadsheet[:,0])
 
                 # Loop through each time on the spreadsheet
                 # Each scan is a pre-generated array with -90.0 dB values (above most thresholds)
@@ -1195,9 +1331,9 @@ class Glider:
                     if self.debugFlag:
                         print("WARNING: Not enough pings to produce binned plot.")
                     return
+                #breakpoint()
                 im = plt.imshow(plotData, cmap=cmap, interpolation='none')
                 plt.clim(dB_limit[1], dB_limit[0])
-                #cbar = plt.colorbar(orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
                 cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
                     orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
 
@@ -1209,12 +1345,14 @@ class Glider:
                 #print(self.data['pseudogram_bins'])
                 #plt.clim(dB_limit[0], dB_limit[1])
 
-                # Adjust x tick labels: time bin -> time string
-                # Make sure these ticks line up with integer time bins
-                xtickLabels = []
-                xtickLocs = ax.get_xticks()
+                # Adjust x ticks
+                xtickLocs, xtickLabels = self.findTimeInterval(timeIndexes, plotType, ax, nticks=10)
+                ax.xaxis.set_major_locator(mticker.FixedLocator(xtickLocs))
+                ax.set_xticklabels(xtickLabels)
+                plt.xticks(rotation = 45.0)
 
-                xtickLocsNew = []
+                '''
+
                 for timeTick in xtickLocs:
                     # Skip non integer time ticks
                     if int(timeTick) != timeTick:
@@ -1234,6 +1372,7 @@ class Glider:
                 ax.xaxis.set_major_locator(mticker.FixedLocator(xtickLocsNew))
                 ax.set_xticklabels(xtickLabels)
                 plt.xticks(rotation = 45.0)
+                '''
 
                 # Adjust y tick labels: depth bin -> depth (meters)
                 ytickLabels = []
@@ -1279,7 +1418,7 @@ class Glider:
                         depth = depth + selectedDepthInterval
                         ytickLoc = depth * binToDepthSlope - yOffset
                         ytickLocs.append(ytickLoc)
-                        ytickLabels.append(str(depth))
+                        ytickLabels.append("%d" % (depth))
 
                     #self.stopToDebug()
 
@@ -1290,23 +1429,23 @@ class Glider:
                 if self.args['title']:
                     plt.title(self.args['title'])
 
-                # Determine if we are writing to stdout
-                if stdoutFlag:
-                    plt.savefig(sys.stdout.buffer, bbox_inches='tight', dpi=100)
-                else:
-                    # Plot image
-                    if self.args['outDir']:
-                        if self.debugFlag:
-                            print("DEBUG: Wrote to",os.path.join(self.args['outDir'], outFilename))
-                        plt.savefig(os.path.join(self.args['outDir'], outFilename),
-                            bbox_inches='tight', dpi=100)
-                    else:
-                        if self.debugFlag:
-                            print("DEBUG: Wrote to",outFilename)
-                        plt.savefig(outFilename, bbox_inches='tight', dpi=100)
-
                 if self.debugFlag:
                     print("DEBUG: End of binned plotting routine.")
+
+            # Determine if we are writing to stdout
+            if stdoutFlag:
+                plt.savefig(sys.stdout.buffer, bbox_inches='tight', dpi=100)
+            else:
+                # Plot image
+                if self.args['outDir']:
+                    if self.debugFlag:
+                        print("DEBUG: Wrote to",os.path.join(self.args['outDir'], outFilename))
+                    plt.savefig(os.path.join(self.args['outDir'], outFilename),
+                        bbox_inches='tight', dpi=100)
+                else:
+                    if self.debugFlag:
+                        print("DEBUG: Wrote to",outFilename)
+                    plt.savefig(outFilename, bbox_inches='tight', dpi=100)
 
 
     # Glider functions
@@ -1554,7 +1693,9 @@ class Glider:
             print("ERROR: Glider DBD file not found: %s" % (inputFile))
             sys.exit()
 
-        dbdType = inputFile[-3:].lower()
+        (fpath, fext) = os.path.splitext(inputFile)
+        self.data['segment'] = os.path.basename(fpath)
+        dbdType = fext[1:].lower()
 
         # Skip these file types for now
         if dbdType in ['mbd', 'nbd', 'mlg', 'nlg']:

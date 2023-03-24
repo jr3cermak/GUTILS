@@ -456,7 +456,8 @@ do
                 --csvOut "${tmpDir}/${dbdSeg}_${asciiExt}.echogram" \
                 --csvHeader \
                 --echogramRange "$echogramRange" \
-                --echogramBins "$echogramBins"
+                --echogramBins "$echogramBins" \
+                --title "${segment}"
 
             status=$(mv ${tmpDir}/*.echogram $ascDest 2>&1);
         fi
@@ -472,7 +473,8 @@ do
                 --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.png" \
                 --echogramRange "$echogramRange" \
                 --echogramBins "$echogramBins" \
-                --plotType "$computeEchogramImages"
+                --plotType "$computeEchogramImages" \
+                --title "${segment}"
 
             status=$(mv ${tmpDir}/*.png $ascDest 2>&1);
         fi
