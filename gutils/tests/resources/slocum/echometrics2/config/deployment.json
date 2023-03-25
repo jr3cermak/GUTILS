@@ -1,14 +1,18 @@
 {
     "glider": "unit_507",
-    "trajectory_date": "20220212T0000",
+    "trajectory_date": "20230321T1655",
     "extra_kwargs": {
         "echograms": {
             "enable_nc": true,
             "enable_ascii": true,
-            "enable_image": false,
-            "echosounderRange": 60.0,
-            "echosounderDirection": "down",
-            "echosounderRangeUnits": "meters"
+            "enable_image": true,
+            "plot_type": "binned",
+            "plot_cmap": "ek80",
+            "svb_thresholds": [-34,-40,-46,-52,-58,-64,-70],
+            "svb_limits": [-30.0, -80.0],
+            "echogram_range_bins": 20,
+            "echogram_range": -60.0,
+            "echogram_range_units": "meters"
         }
     },
     "attributes": {
@@ -38,12 +42,12 @@
         "references": "",
         "sea_name": "North Pacific Ocean",
         "source": "Observational data from a profiling glider",
-        "summary": "UAF G507 Glider deployment in the North Pacific Ocean (Feb 2022)",
+        "summary": "UAF G507 Glider deployment in the North Pacific Ocean (March 2023)",
         "support_email": "dmac@aoos.org,ioos.glider.data@noaa.gov,ioos.glider.data@noaa.gov",
         "support_name": "aoos,ioos,noaa",
         "support_role": "fiscal,fiscal,fiscal",
         "support_type": "ra,federal,federal",
-        "title": "G507 Slocum Glider Dataset (Feb 2022)",
+        "title": "G507 Slocum Glider Dataset (March 2023)",
         "wmo_id": 4802989
     },
     "variables": {

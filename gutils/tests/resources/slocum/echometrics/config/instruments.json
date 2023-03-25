@@ -89,6 +89,26 @@
                 "platform": "platform",
                 "type": "instrument"
             }
+        },
+        "instrument_acoustics": {
+            "type": "i4",
+            "attributes": {
+                "serial_number": "269615",
+                "make_model": "Simrad WBT Mini",
+                "serial_number_2": "167",
+                "make_model_2": "ES200-CDK-split",
+                "comment": "Slocum Glider UAF G507",
+                "long_name": "Kongsberg Simrad WBT Mini",
+                "mode_operation": "EK80",
+                "echogram_range_bins": 20,
+                "echogram_range": -60.0,
+                "echogram_range_units": "meters",
+                "calibration_date": "",
+                "factory_calibrated": "",
+                "calibration_report": "",
+                "platform": "platform",
+                "type": "instrument"
+            }
         }
     }
 }

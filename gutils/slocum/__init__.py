@@ -521,6 +521,7 @@ class SlocumMerger(object):
         # of a reader.
         self.extra_kwargs = self.attrs.pop('extra_kwargs', {})
 
+
     def __del__(self):
         # Remove tmpdir
         shutil.rmtree(self.tmpdir, ignore_errors=True)
@@ -549,6 +550,8 @@ class SlocumMerger(object):
 
         echograms_attrs = self.extra_kwargs.get('echograms', {})
         enable_ascii = echograms_attrs.get('enable_ascii', False)
+        enable_image = echograms_attrs.get('enable_image', False)
+
         if enable_ascii:
             # Perform echograms if this ASCII file matches the deployment
             # name of things we know to have the data. There needs to be a
@@ -564,28 +567,52 @@ class SlocumMerger(object):
             # https://github.com/smerckel/dbdreader
 
             # Defaults
-            enable_image = echograms_attrs.get('enable_image', False)
-            echosounderRange = echograms_attrs.get('echosounderRange', 60.0)
-            echosounderDirection = echograms_attrs.get('echosounderDirection', 'down')
-            if echosounderDirection == 'up':
-                echosounderRange = - (echosounderRange)
+            echogramBins = echograms_attrs.get('echogram_range_bins', 20)
+            echogramRange = echograms_attrs.get('echogram_range', 60.0)
+            #echogramDirection = echograms_attrs.get('echogramDirection', 'down')
+            #if echogramDirection == 'up':
+            #    echogramRange = - (echogramRange)
+
+            # Attempt to suss out the data type 'rt' or 'delayed' using
+            # self.destination_directory.  Default to 'rt'.
+            echogramType = 'rt'
+            try:
+                dest_split_path = self.destination_directory.split('/')
+                foundType = dest_split_path[-2]
+                allowedEchogramTypes = ['sfmc', 'rt', 'delayed']
+                if foundType in allowedEchogramTypes:
+                    echogramType = foundType
+            except BaseException as e:
+                L.warning(f"Could not determine echogram data type: {e}")
 
             pargs = pargs + [
                 '-y', sys.executable,
-                '-g',  # Makes the echogram ASCII
-                '-r', f"{echosounderRange}"
+                '-g', # Makes the echogram ASCII
+                '-t', f"{echogramType}",
+                '-r', f"{echogramRange}",
+                '-n', f"{echogramBins}"
             ]
             if enable_image:
+                echogramPlotType = echograms_attrs.get('plot_type', 'pcolormesh')
+                echogramPlotCmap = echograms_attrs.get('plot_cmap', 'ek80')
                 pargs.append('-i')  # Makes the echogram images. This is slow!
+                pargs.append(f"{echogramPlotType}")
+                pargs.append('-C')
+                pargs.append(f"{echogramPlotCmap}")
 
         pargs.append(self.tmpdir)
         pargs.append(self.destination_directory)
+        # DEBUG
+        #print("PARGS:"," ".join(pargs))
 
         command_output, return_code = generate_stream(pargs)
 
         # Return
         processed = []
         output_files = command_output.read().split('\n')
+        #print("\n".join(output_files))
+        #breakpoint()
+        #sys.exit()
         # iterate and every time we hit a .dat file we return the cache
         binary_files = []
         for x in output_files:
