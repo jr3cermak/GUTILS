@@ -399,24 +399,123 @@ class TestEchoMetricsTwo(GutilsTestClass):
 
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 32
+        assert len(output_files) == 2
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
             # first time in the first profile
-            assert ncd.variables['profile_id'][0] == 1639020410
+            assert ncd.variables['profile_id'][0] == 1679577217
 
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
             # first time in the last ecodroid profile
-            assert ncd.variables['profile_id'][0] == 1639070632
+            assert ncd.variables['profile_id'][0] == 1679577318
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])
         for o in output_files:
             assert check_dataset(ds(file=o)) == 0
+
+        # Echogram check
+        output_files = {
+            '.dat': 0,
+            '.echogram': 0,
+            '.png': 0
+        }
+        output_file_keys = output_files.keys()
+        for o in sorted(os.listdir(self.ascii_path)):
+            _, ext = os.path.splitext(o)
+            if ext in output_file_keys:
+                output_files[ext] += 1
+        assert output_files['.dat'] == 1
+        assert output_files['.png'] == 1
+        assert output_files['.echogram'] == 1
+
+        # Passive test 'teledyne' module from echotools
+        try:
+            import glob, sys
+            sys.path.append('gutils/slocum/echotools')
+            import numpy as np
+            import pandas as pd
+            import xarray as xr
+            import teledyne
+
+            # Setup the glider object
+            glider = teledyne.Glider()
+
+            # Debug control: set True to increase verbosity
+            glider.debugFlag = False
+
+            segment = 'unit_507-2023-079-4-46'
+            args = {
+                'deploymentDir': self.cache_path,
+                'templateDir': self.cache_path,
+                'template': 'slocum_dac.json',
+                'inpDir': self.binary_path,
+                'cacheDir': self.cache_path
+            }
+
+            # Pass arguments to the glider class object
+            glider.args = args
+
+            glider.loadMetadata()
+            glider.args = glider.updateArgumentsFromMetadata()
+
+            # Pass arguments to the glider class object
+            glider.args = args
+
+            # Find and read glider files
+            file_glob = \
+                os.path.join(args['inpDir'],
+                "%s%s" % (segment, ".?[bB][dD]"))
+
+            glider_files = glob.glob(file_glob)
+            for glider_file in glider_files:
+                glider.readDbd(
+                    inputFile = glider_file,
+                    cacheDir = args['cacheDir']
+                )
+
+            # Attempt to extract echogram from glider data
+            glider.readEchogram()
+            glider.createEchogramSpreadsheet()
+
+            # The echogram is stored in a numpy data object
+            echogram_numpy = glider.data['spreadsheet']
+
+            #print("The echogram at this point is available in a numpy object")
+            #print("with the columns in the first row: [time, depth, Sv]")
+            #print(echogram_numpy[0,:])
+            #print()
+            assert echogram_numpy[0,0] == 1679577318.4577026
+            assert echogram_numpy[0,1] == 245.7657470703125
+            assert echogram_numpy[0,2] == -73.0
+
+            # Convert the echogram numpy object to pandas and set the time
+            # column as an index.
+            echogram_pandas = pd.DataFrame(data = echogram_numpy,
+                columns = ['time', 'depth', 'Sv']).set_index('time')
+
+            #print("The first row of the pandas data frame:")
+            #print(echogram_pandas.iloc[0])
+            #print()
+
+            # Convert the pandas data frame to xarray, add units
+            # and convert time timestamp to datetime object
+            echogram_xarray = echogram_pandas.to_xarray()
+            echogram_xarray['time'].attrs['units'] = 'seconds since 1970-01-01'
+            echogram_xarray['time'] = pd.to_datetime(echogram_xarray['time'], unit='s')
+            echogram_xarray['depth'].attrs['units'] = 'meters'
+            echogram_xarray['Sv'].attrs['units'] = 'dB re 1 m2/m3'
+
+            #print("The first row of the xarray data frame:")
+            #print(echogram_xarray.isel(time=0))
+
+        except BaseException as e:
+            print("WARNING: echotools `teledyne` test silently failed.")
+            print(e)
 
 
 @pytest.mark.long

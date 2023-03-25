@@ -1,6 +1,8 @@
 import io, os, sys, struct, datetime
 import subprocess
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
@@ -63,7 +65,7 @@ class Glider:
         self.data = {
             'asc': None,
             'sbd': None,
-            'pseudogram': None,
+            'echogram': None,
             'columns': [],
             'byteSize': [],
             'units': [],
@@ -678,7 +680,7 @@ class Glider:
             sys.exit()
 
         # Attempt to read auxillary metadata file (if specified)
-        if self.args['dacOverlay']:
+        if self.args.get('dacOverlay', None):
             # Attempt to read <dacOverlay>.json
             try:
                 dacOverlayFile = os.path.join(self.args['deploymentDir'], self.args['dacOverlay'])
@@ -930,7 +932,7 @@ class Glider:
               CSV output to file or standard out.
         '''
 
-        # Skip if pseudogram is not present
+        # Skip if echogram is not present
         if self.data['spreadsheet'] is None:
             return
 
@@ -1047,8 +1049,9 @@ class Glider:
         # If args.imageOut is not "stdout" assume this is a filename
         stdoutFlag = True
 
-        if self.args['imageOut'] != "stdout":
-            stdoutFlag = False
+        if self.args.get('imageOut', None):
+            if self.args['imageOut'] != "stdout":
+                stdoutFlag = False
 
         #depthBinSize = int(abs(self.data['depthBinLength']))
         depthBinSize = int(abs(self.mission_plan['bin_range']))
@@ -1123,7 +1126,7 @@ class Glider:
             depthTicks.append(midPixelDepth)
 
         # Setup rigid colorbar and plotting limits
-        dB_limit = (self.data['pseudogram_bins'][0], self.data['pseudogram_bins'][7])
+        dB_limit = (self.data['echogram_bins'][0], self.data['echogram_bins'][7])
         if 'dBLimits' in self.args:
             dB_limit = self.args['dBLimits']
 
@@ -1341,8 +1344,8 @@ class Glider:
                 plt.ylabel('depth (m)')
                 plt.xlabel('Date/Time (UTC)')
                 #plt.clim(0, -60)
-                #plt.clim(0, self.data['pseudogram_bins'][7])
-                #print(self.data['pseudogram_bins'])
+                #plt.clim(0, self.data['echogram_bins'][7])
+                #print(self.data['echogram_bins'])
                 #plt.clim(dB_limit[0], dB_limit[1])
 
                 # Adjust x ticks
@@ -1384,7 +1387,7 @@ class Glider:
                     ytickNew = ("%.1f" % (midPixelDepth))
                     ytickLabels.append(ytickNew)
 
-                if not(self.args['binnedDepthLabels']):
+                if not(self.args.get('binnedDepthLabels', False)):
                     # Ensure y-axis is limited to about 10 major ticks.
                     depthIntervals = [10.0, 20.0, 25.0, 50.0, 100.0, 150.0, 200.0]
 
@@ -1451,9 +1454,9 @@ class Glider:
     # Glider functions
 
 
-    def createPseudogramSpreadsheet(self):
+    def createEchogramSpreadsheet(self):
         '''
-        This function reads GLIDER.data['pseudogram'] and
+        This function reads GLIDER.data['echogram'] and
         places it in a spreadsheet format in
         GLIDER.data['spreadsheet'].  The function is
         expecting at least two fields to have been read
@@ -1468,11 +1471,11 @@ class Glider:
         '''
 
         # Code from echoGenNew.py
-        eData = self.data['pseudogram']
+        eData = self.data['echogram']
         #print(self.data['echogram_bits'][0][1:])
         #breakpoint()
 
-        # Skip if there isn't a pseudogram
+        # Skip if there isn't a echogram
         if eData is None:
             self.data['spreadsheet'] = None
             return
@@ -1480,8 +1483,8 @@ class Glider:
         # We extract the columns from decoded dbd2asc instead of
         # requiring another Teledyne program (dba_sensor_filter)
         if self.debugFlag:
-            print("First depth data source:", self.data['pseudogram_source'])
-        barData = self.extractColumns(self.data['pseudogram_source'], columns=['sci_m_present_time','sci_water_pressure'],
+            print("First depth data source:", self.data['echogram_source'])
+        barData = self.extractColumns(self.data['echogram_source'], columns=['sci_m_present_time','sci_water_pressure'],
             ignoreNaNColumns=['sci_water_pressure'])
 
         # Bar data may not be available from the tbd file, ether there will be zero rows
@@ -2060,7 +2063,7 @@ class Glider:
                 chRead = bdFile.read(1)
                 ch = chRead.decode('utf-8','replace')
             except:
-                print("Glider.readPseudogram(): Binary read error.")
+                print("Glider.readEchogram(): Binary read error.")
                 sys.exit()
 
             if not ch:
@@ -2117,9 +2120,9 @@ class Glider:
                     #print('')
                     #self.stopToDebug()
                     if numRecords == 0:
-                        self.data['pseudogram'] = np.column_stack(dataRec)
+                        self.data['echogram'] = np.column_stack(dataRec)
                     else:
-                        self.data['pseudogram'] = np.append(self.data['pseudogram'], np.column_stack(dataRec), axis=0)
+                        self.data['echogram'] = np.append(self.data['echogram'], np.column_stack(dataRec), axis=0)
                     numRecords = numRecords + 1
 
         bdFile.close()
@@ -2143,52 +2146,52 @@ class Glider:
 
         #dbd = dbdreader.DBD(self.tbdFile, cacheDir=self.cacheDir)
 
-        # The pseudogram is contained within the tdb file (during deployment and
+        # The echogram is contained within the tdb file (during deployment and
         # transmitted via iridium).  When the glider data is obtained, the pseduogram
         # will be also available in the ebd file.
         # If the tbd or ebd does not exist, return.
-        pseudogram_source = None
+        echogram_source = None
 
         if 'tbd' in self.data.keys():
-            pseudogram_source = 'tbd'
+            echogram_source = 'tbd'
 
         # If both types are available, prefer the ebd file
         if 'ebd' in self.data.keys():
-            pseudogram_source = 'ebd'
+            echogram_source = 'ebd'
 
         if self.debugFlag:
-            print("Echogram source:", pseudogram_source)
+            print("Echogram source:", echogram_source)
 
-        if not(pseudogram_source):
-            self.data['pseudogram'] = None
+        if not(echogram_source):
+            self.data['echogram'] = None
             return
 
-        self.data['pseudogram_source'] = pseudogram_source
-        self.data['pseudogram_source_file'] = self.data['input'][pseudogram_source]
+        self.data['echogram_source'] = echogram_source
+        self.data['echogram_source_file'] = self.data['input'][echogram_source]
 
         # Repack floats as integers for decoding below
         # We have to pre-pad a 0 to match Method 1
         self.data['psu'] = None
 
-        tmVar = self.findTimeVariable(self.data['columns'][pseudogram_source])
+        tmVar = self.findTimeVariable(self.data['columns'][echogram_source])
         if self.debugFlag:
             print("Time variable:", tmVar)
         if tmVar is None:
-            self.data['pseudogram'] = None
+            self.data['echogram'] = None
             return
 
         #self.stopToDebug()
 
-        tmData = self.data[pseudogram_source][tmVar]
+        tmData = self.data[echogram_source][tmVar]
         nanMask = None
         for idx in dataOrder:
             try:
-                dbdData = self.data[pseudogram_source][idx]
+                dbdData = self.data[echogram_source][idx]
             except:
-                self.data['pseudogram'] = None
+                self.data['echogram'] = None
                 return
             #self.stopToDebug()
-            # Obtain a NaN mask for the pseudogram.  For gliders, the acoustics can
+            # Obtain a NaN mask for the echogram.  For gliders, the acoustics can
             # be turned on and off at different points in the dive.
             if nanMask is None:
                 nanMask = dbdData.isnull()
@@ -2214,11 +2217,11 @@ class Glider:
         # Concatenate columns of data together for processing below
         self.data['psu'] = np.append(self.data['psu'], np.row_stack(tmData), axis=1)
 
-        # Use method 2 for pseudogram
-        self.data['pseudogram'] = self.data['psu']
+        # Use method 2 for echogram
+        self.data['echogram'] = self.data['psu']
 
         # Perform reorder step
-        (numRows, numCols) = self.data['pseudogram'].shape
+        (numRows, numCols) = self.data['echogram'].shape
 
         # Density (Sv) (dB) bins are categorized 0 to 7
         #bins = {0: '-5.0', 1:'-15.0', 2:'-22.5', 3:'-27.5', 4:'-32.5', 5:'-40.0', 6:'-50.0', 7:'-60.0' }
@@ -2239,7 +2242,7 @@ class Glider:
             # Default bins (if not defined)
             bins = {0: -5.0, 1:-15.0, 2:-22.5, 3:-27.5, 4:-32.5, 5:-40.0, 6:-50.0, 7:-60.0 }
 
-        self.data['pseudogram_bins'] = bins
+        self.data['echogram_bins'] = bins
 
         # Data is hidden in the last three bits of data sent over iridium
         #mask of 7(binary 111) for 3bit vals
@@ -2247,7 +2250,7 @@ class Glider:
 
         # No data is numRows = 1
         if numRows == 1:
-            self.data['pseudogram'] = None
+            self.data['echogram'] = None
             return
 
         #self.stopToDebug()
@@ -2257,7 +2260,7 @@ class Glider:
         # validation of routine.
         fullPseudogram = None
         for row in range(1, numRows):
-            words = self.data['pseudogram'][row, :]
+            words = self.data['echogram'][row, :]
             if len(words) != 0:
                 #print(words)
                 # Skip apparent missing data
@@ -2402,10 +2405,10 @@ class Glider:
             #fullPseudogram[:,1:] = np.stack(np.vectorize(apply_thresholds)(fullPseudogram[:,1:]), axis=1).T
             fullPseudogram[:,1:] = np.stack(np.vectorize(apply_thresholds)(bitsPseudogram[:,1:]), axis=1).T
 
-        # Return the final pseudogram data
+        # Return the final echogram data
         #if not(fullPseudogram is None):
         #    fullPseudogram = fullPseudogram.astype(float)
-        self.data['pseudogram'] = fullPseudogram
+        self.data['echogram'] = fullPseudogram
         self.data['echogram_bits'] = bitsPseudogram
 
 
@@ -2772,9 +2775,9 @@ class Glider:
         return ncDS
 
 
-    def collectPseudogram(self, ncDS):
+    def collectEchogram(self, ncDS):
         '''
-        This function collects the pseudogram and adds it to the
+        This function collects the echogram and adds it to the
         xarray Dataset object.
         '''
 
@@ -2783,7 +2786,7 @@ class Glider:
         # Map sensor times to the new dimension times
         # This slow process only needs to be done once (skip if
         # we are storing this separately)
-        if not(self.args['ncSeparate']):
+        if not(self.args.get('ncSeparate', True)):
             newTimeIdx = []
             timeDimList = list(ncDS['time'].values)
             for sTime in sensorTimes:
@@ -2799,15 +2802,15 @@ class Glider:
         else:
             sensorTimes = self.data['spreadsheet'][:,0]
             newTimeIdx = range(0,len(sensorTimes))
-            ncDS['pseudogram_time'] = (("time"), sensorTimes)
-            ncDS['pseudogram_time'].attrs['units'] = "seconds since 1970-01-01"
-            ncDS.attrs['source_file'] = self.data['pseudogram_source_file']
+            ncDS['echogram_time'] = (("time"), sensorTimes)
+            ncDS['echogram_time'].attrs['units'] = "seconds since 1970-01-01"
+            ncDS.attrs['source_file'] = self.data['echogram_source_file']
             self.fillValues = {}
-            self.fillValues['pseudogram_time'] = {'_FillValue': -9999.9, 'dtype': 'double'}
-            timeDimList = list(ncDS['pseudogram_time'].values)
+            self.fillValues['echogram_time'] = {'_FillValue': -9999.9, 'dtype': 'double'}
+            timeDimList = list(ncDS['echogram_time'].values)
 
-        # Collect pseudogram_depth [:,1]
-        varName = self.obtainVariableName('pseudogram_depth')
+        # Collect echogram_depth [:,1]
+        varName = self.obtainVariableName('echogram_depth')
         (fillValue, fillValueDtype) = self.obtainFillValue(varName)
         varData = np.full(len(timeDimList), fillValue)
         self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
@@ -2820,8 +2823,8 @@ class Glider:
         # Add variable attributes
         self.addAttributes(ncDS, varName)
 
-        # Collect pseudogram_sv [:,2]
-        varName = self.obtainVariableName('pseudogram_sv')
+        # Collect echogram_sv [:,2]
+        varName = self.obtainVariableName('echogram_sv')
         (fillValue, fillValueDtype) = self.obtainFillValue(varName)
         varData = np.full(len(timeDimList), fillValue)
         self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
@@ -2860,6 +2863,12 @@ class Glider:
         '''
         Write out an IOOS DAC compatable netCDF file.
         '''
+
+        # self.args['ncDir'] must be defined to write
+        # out netcdf files
+        if self.args.get('ncDir', None) is None:
+            return
+
         # Start with an empty xarray Dataset object
         ncDS = xr.Dataset()
 
@@ -2904,8 +2913,8 @@ class Glider:
         # NOTE: creating one monolithic file leads to large files! Not recommended.
         '''
         if not(self.data['spreadsheet'] is None) and not(self.args.ncSeparate):
-            # Try to align pseudogram spreadsheet with tbd or sbd times
-            # This is due to reading the binary directly to decode the pseudogram
+            # Try to align echogram spreadsheet with tbd or sbd times
+            # This is due to reading the binary directly to decode the echogram
             # and the clipped bits produced by dbd2asc
             timeTolerance = 1e-05
             timeMap = []
@@ -2917,7 +2926,7 @@ class Glider:
                 if minTimeTbd > timeTolerance and minTimeSbd > timeTolerance:
                     sys.exit("ERROR: Time tolerance exceeded (tbd, sbd): (%f, %f)" % (minTimeTbd, minTimeSbd))
 
-                # Use the nearest time to align the pseudogram Sv value
+                # Use the nearest time to align the echogram Sv value
                 if minTimeTbd < minTimeSbd:
                     idx = timediffTbd.argmin()
                     self.data['spreadsheet'][:,0] = np.where(self.data['spreadsheet'][:,0] == timept, \
@@ -2930,8 +2939,8 @@ class Glider:
 
         # We now have to determine the full size of the time coordinate
         # with repeating times to store
-        # the pseudogram to sci_echodroid_sv_depth
-        # One row of the pseudogram can overlap with either a tbd or sbd data row
+        # the echogram to sci_echodroid_sv_depth
+        # One row of the echogram can overlap with either a tbd or sbd data row
         timeDim = []
 
         #self.stopToDebug()
@@ -2965,7 +2974,7 @@ class Glider:
 
         # Only do this if we are creating a monolithic netCDF file
         timesPg = None
-        if not(self.args['ncSeparate']):
+        if not(self.args.get('ncSeparate', True)):
             if not(timesTbd is None) and not(timesSbd is None):
                 allTimes = np.sort(np.append(timesTbd, timesSbd))
             else:
@@ -2981,8 +2990,8 @@ class Glider:
 
             # Construct the time variable
             for tval in allTimes:
-                # If a time overlaps with the pseudogram, use the block of times from
-                # the pseudogram otherwise keep a single value
+                # If a time overlaps with the echogram, use the block of times from
+                # the echogram otherwise keep a single value
                 #self.stopToDebug()
                 if timesPg is None:
                     nPg = 0
@@ -3005,7 +3014,7 @@ class Glider:
             if self.debugFlag:
                 print("Collecting tbd variables")
             ncDS = self.collectTbdVariables(ncDS)
-            if self.args['ncSeparate']:
+            if self.args.get('ncSeparate', True):
                 timeShape = ncDS['time'].shape
                 timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
@@ -3034,7 +3043,7 @@ class Glider:
             if self.debugFlag:
                 print("Collecting dbd variables")
             ncDS = self.collectDbdVariables(ncDS)
-            if self.args['ncSeparate']:
+            if self.args.get('ncSeparate', True):
                 timeShape = ncDS['time'].shape
                 timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
@@ -3062,7 +3071,7 @@ class Glider:
             if self.debugFlag:
                 print("Collecting sbd variables")
             ncDS = self.collectSbdVariables(ncDS)
-            if self.args['ncSeparate']:
+            if self.args.get('ncSeparate', True):
                 timeShape = ncDS['time'].shape
                 timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
@@ -3090,7 +3099,7 @@ class Glider:
             if self.debugFlag:
                 print("Collecting ebd variables")
             ncDS = self.collectEbdVariables(ncDS)
-            if self.args['ncSeparate']:
+            if self.args.get('ncSeparate', True):
                 timeShape = ncDS['time'].shape
                 timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
@@ -3114,14 +3123,14 @@ class Glider:
                 # Reset after saving tbd netCDF
                 ncDS = xr.Dataset()
 
-        # Collect pseudogram
+        # Collect echogram
         if not(timesPg is None):
             if self.debugFlag:
                 print("Collecting echogram")
-            ncDS = self.collectPseudogram(ncDS)
-            if self.args['ncSeparate']:
-                timeShape = ncDS['pseudogram_time'].shape
-                timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['pseudogram_time'].min().values + 0.0),
+            ncDS = self.collectEchogram(ncDS)
+            if self.args.get('ncSeparate', True):
+                timeShape = ncDS['echogram_time'].shape
+                timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['echogram_time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
                 svFilename = os.path.join(self.args['ncDir'], "%s_sv.nc" % (timeStamp))
                 ncDS = self.applyGlobalMetadata(ncDS)
@@ -3131,7 +3140,7 @@ class Glider:
                 # Reset after saving tbd netCDF
                 ncDS = xr.Dataset()
 
-        if not(self.args['ncSeparate']):
+        if not(self.args.get('ncSeparate', True)):
             ncDS = self.applyGlobalMetadata(ncDS)
             timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")

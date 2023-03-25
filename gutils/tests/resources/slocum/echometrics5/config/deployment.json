@@ -13,7 +13,7 @@
             "enable_nc": true,
             "enable_ascii": true,
             "enable_image": true,
-            "plot_type": "pcolormesh",
+            "plot_type": "binned",
             "plot_cmap": "ek80",
             "svb_thresholds": [-10,-20,-25,-30,-35,-45,-55],
             "svb_limits": [-10.0, -55.0],

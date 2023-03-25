@@ -405,8 +405,8 @@ on a single file or a whole deployment of files.
         # can now read the echogram from tbd data (if available)
         glider.readEchogram()
 
-        # Code from echoGenNew.py in teledyne.createPseudogramSpreadsheet
-        glider.createPseudogramSpreadsheet()
+        # Code from echoGenNew.py in teledyne.createEchogramSpreadsheet
+        glider.createEchogramSpreadsheet()
         #glider.stopToDebug()
 
         # Handle spreadsheet: send to stdout or write to file
