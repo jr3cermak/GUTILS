@@ -731,4 +731,3 @@ class TestEchoMetricsFive(GutilsTestClass):
         assert output_files['.dat'] == 10
         assert output_files['.png'] == 5
         assert output_files['.echogram'] == 5
-
