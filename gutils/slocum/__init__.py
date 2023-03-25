@@ -521,7 +521,6 @@ class SlocumMerger(object):
         # of a reader.
         self.extra_kwargs = self.attrs.pop('extra_kwargs', {})
 
-
     def __del__(self):
         # Remove tmpdir
         shutil.rmtree(self.tmpdir, ignore_errors=True)

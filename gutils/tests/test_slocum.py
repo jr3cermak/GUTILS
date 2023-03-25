@@ -435,7 +435,8 @@ class TestEchoMetricsTwo(GutilsTestClass):
 
         # Passive test 'teledyne' module from echotools
         try:
-            import glob, sys
+            import glob
+            import sys
             sys.path.append('gutils/slocum/echotools')
             import pandas as pd
             import teledyne
@@ -465,9 +466,7 @@ class TestEchoMetricsTwo(GutilsTestClass):
             glider.args = args
 
             # Find and read glider files
-            file_glob = \
-                os.path.join(args['inpDir'],
-                "%s%s" % (segment, ".?[bB][dD]"))
+            file_glob = os.path.join(args['inpDir'], "%s%s" % (segment, ".?[bB][dD]"))
 
             glider_files = glob.glob(file_glob)
             for glider_file in glider_files:
@@ -493,8 +492,7 @@ class TestEchoMetricsTwo(GutilsTestClass):
 
             # Convert the echogram numpy object to pandas and set the time
             # column as an index.
-            echogram_pandas = pd.DataFrame(data = echogram_numpy,
-                columns = ['time', 'depth', 'Sv']).set_index('time')
+            echogram_pandas = pd.DataFrame(data = echogram_numpy, columns = ['time', 'depth', 'Sv']).set_index('time')
 
             #print("The first row of the pandas data frame:")
             #print(echogram_pandas.iloc[0])
