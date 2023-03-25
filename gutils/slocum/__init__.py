@@ -587,11 +587,12 @@ class SlocumMerger(object):
 
             pargs = pargs + [
                 '-y', sys.executable,
-                '-g', # Makes the echogram ASCII
+                '-g',  # Makes the echogram ASCII
                 '-t', f"{echogramType}",
                 '-r', f"{echogramRange}",
                 '-n', f"{echogramBins}"
             ]
+
             if enable_image:
                 echogramPlotType = echograms_attrs.get('plot_type', 'pcolormesh')
                 echogramPlotCmap = echograms_attrs.get('plot_cmap', 'ek80')

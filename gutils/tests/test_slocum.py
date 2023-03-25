@@ -437,9 +437,7 @@ class TestEchoMetricsTwo(GutilsTestClass):
         try:
             import glob, sys
             sys.path.append('gutils/slocum/echotools')
-            import numpy as np
             import pandas as pd
-            import xarray as xr
             import teledyne
 
             # Setup the glider object
@@ -487,11 +485,11 @@ class TestEchoMetricsTwo(GutilsTestClass):
 
             #print("The echogram at this point is available in a numpy object")
             #print("with the columns in the first row: [time, depth, Sv]")
-            #print(echogram_numpy[0,:])
+            #print(echogram_numpy[0, :])
             #print()
-            assert echogram_numpy[0,0] == 1679577318.4577026
-            assert echogram_numpy[0,1] == 245.7657470703125
-            assert echogram_numpy[0,2] == -73.0
+            assert echogram_numpy[0, 0] == 1679577318.4577026
+            assert echogram_numpy[0, 1] == 245.7657470703125
+            assert echogram_numpy[0, 2] == -73.0
 
             # Convert the echogram numpy object to pandas and set the time
             # column as an index.
