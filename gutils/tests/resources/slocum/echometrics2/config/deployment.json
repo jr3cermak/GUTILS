@@ -42,12 +42,12 @@
         "references": "",
         "sea_name": "North Pacific Ocean",
         "source": "Observational data from a profiling glider",
-        "summary": "UAF G507 Glider deployment in the North Pacific Ocean (Feb 2023)",
+        "summary": "UAF G507 Glider deployment in the North Pacific Ocean (March 2023)",
         "support_email": "dmac@aoos.org,ioos.glider.data@noaa.gov,ioos.glider.data@noaa.gov",
         "support_name": "aoos,ioos,noaa",
         "support_role": "fiscal,fiscal,fiscal",
         "support_type": "ra,federal,federal",
-        "title": "G507 Slocum Glider Dataset (Feb 2023)",
+        "title": "G507 Slocum Glider Dataset (March 2023)",
         "wmo_id": 4802989
     },
     "variables": {
