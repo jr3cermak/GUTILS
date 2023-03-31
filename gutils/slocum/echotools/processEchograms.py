@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-'''
+"""
 This script contains functions that decode an echogram from
 the echometrics data stream (if present). The resultant
 information can be:
@@ -29,6 +29,7 @@ a PNG formatted image.
 
 Metadata
 --------
+
     Here is the metadata description for each of the coloums
     of this dataset (ASCII, spreadsheet):
 
@@ -45,7 +46,7 @@ Metadata
 Command line arguments
 ----------------------
 
-::
+.. code-block:: text
 
     -h, --help            show this help message and exit
     --inpDir INPDIR       full or relative path to directory with
@@ -90,7 +91,7 @@ Command line arguments
                           template directory; default None
     --saveBits            output the echogram bits for
                           validation.
-'''
+"""
 
 import os, sys, datetime, glob, json
 import argparse

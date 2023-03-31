@@ -212,7 +212,7 @@ class Glider:
         #simrad_cmap.set_bad(color='k')
         self.cmaps['simrad'] = simrad_cmap
 
-        self.defaultCmapType = self.cmaps['simrad']
+        self.defaultCmapType = 'ek80'
         self.availableCmapTypes = list(self.cmaps.keys())
 
 
@@ -418,10 +418,6 @@ class Glider:
         xtickLabels = ax.get_xticklabels()
         newLabels = []
 
-        #print(plotType)
-        #print(xtickLocs)
-        #print(xtickLabels)
-
         mint = timeAxis.min()
         maxt = timeAxis.max()
         tott = maxt - mint
@@ -475,13 +471,21 @@ class Glider:
             fraction = (fraction*nsec)
         taxis = timeAxis[0] - fraction
 
+        # Test the time axis, if nsec >= 86400 and
+        # we are at 00:00:00, don't show the time
+        time_format_string = "%Y-%m-%d\n%H:%M:%S"
+        if nsec >= 86400:
+            ttime = datetime.datetime.utcfromtimestamp(taxis).strftime(time_format_string)
+            if ttime[-8:] == "00:00:00":
+                time_format_string = "%Y-%m-%d"
+
         if plotType != 'binned':
             # Convert time axis to matplotlib values
             #mTimeAxis = dates.date2num(pd.to_datetime(timeAxis,unit='s'))
 
             for i in range(0, int(nint)+1):
                 taxis = taxis + nsec
-                ttime = datetime.datetime.utcfromtimestamp(taxis).strftime("%Y-%m-%d\n%H:%M:%S")
+                ttime = datetime.datetime.utcfromtimestamp(taxis).strftime(time_format_string)
                 tloc = dates.date2num(pd.to_datetime(taxis,unit='s'))
 
                 newLabels.append(ttime)
@@ -497,15 +501,11 @@ class Glider:
 
             for i in range(0, int(nint)+1):
                 taxis = taxis + nsec
-                ttime = datetime.datetime.utcfromtimestamp(taxis).strftime("%Y-%m-%d\n%H:%M:%S")
+                ttime = datetime.datetime.utcfromtimestamp(taxis).strftime(time_format_string)
                 tloc = (taxis - timeAxis[0]) / bint
 
                 newLabels.append(ttime)
                 newLocs.append(tloc)
-
-
-
-        #breakpoint()
 
         return newLocs, newLabels
 
@@ -1096,7 +1096,7 @@ class Glider:
             print("DEBUG: Selected plot type(s):", plotTypes)
 
         # Determine color map requested
-        cmap = self.defaultCmapType
+        cmap = self.cmaps[self.defaultCmapType]
         if 'cmap' in self.args:
             if self.args['cmap'] in self.availableCmapTypes:
                 cmap = self.cmaps[self.args['cmap']]
@@ -1137,6 +1137,10 @@ class Glider:
 
             # Determine output filename
 
+            plot_title = None
+            if self.args['title']:
+                plot_title = self.args['title']
+
             # See if we need to substitute the filename if the default
             # is provided.
             outFilename = self.args['imageOut']
@@ -1150,9 +1154,16 @@ class Glider:
                         timeToUse = self.data['timestamp']['tbd']
                     if 'ebd' in self.data['timestamp']:
                         timeToUse = self.data['timestamp']['ebd']
-                    outFilename = outFilename.replace('default',
-                        "%s_%s" % (self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
-                            fmt="%Y%m%d_%H%M%S"), plotType))
+                    if timeToUse:
+                        outFilename = outFilename.replace('default',
+                            "%s_%s" % (self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
+                                fmt="%Y%m%d_%H%M%S"), plotType))
+                    else:
+                        outFilename = outFilename.replace('default', plotType)
+
+                if plot_title:
+                    if 'default' in plot_title:
+                        plot_title = plot_title.replace('default', plotType)
 
             # pcolormesh plot
             if plotType == 'pcolormesh':
@@ -1222,9 +1233,6 @@ class Glider:
 
                 plt.tight_layout()
 
-                if self.args['title']:
-                    plt.title(self.args['title'])
-
                 '''
                 # Determine if we are writing to stdout
                 if stdoutFlag:
@@ -1272,9 +1280,6 @@ class Glider:
                 ax.xaxis.set_major_locator(mticker.FixedLocator(xtickLocs))
                 ax.set_xticklabels(xtickLabels)
                 plt.xticks(rotation = 45.0)
-
-                if self.args['title']:
-                    plt.title(self.args['title'])
 
                 '''
                 # Determine if we are writing to stdout
@@ -1428,12 +1433,12 @@ class Glider:
                 ax.yaxis.set_major_locator(mticker.FixedLocator(ytickLocs))
                 ax.set_yticklabels(ytickLabels)
 
-                # Set plot title (if available)
-                if self.args['title']:
-                    plt.title(self.args['title'])
-
                 if self.debugFlag:
                     print("DEBUG: End of binned plotting routine.")
+
+            # Plot title is generic
+            if plot_title:
+                plt.title(plot_title)
 
             # Determine if we are writing to stdout
             if stdoutFlag:
@@ -1445,10 +1450,12 @@ class Glider:
                         print("DEBUG: Wrote to",os.path.join(self.args['outDir'], outFilename))
                     plt.savefig(os.path.join(self.args['outDir'], outFilename),
                         bbox_inches='tight', dpi=100)
+                    plt.close()
                 else:
                     if self.debugFlag:
                         print("DEBUG: Wrote to",outFilename)
                     plt.savefig(outFilename, bbox_inches='tight', dpi=100)
+                    plt.close()
 
 
     # Glider functions
@@ -2014,10 +2021,8 @@ class Glider:
         recommend using the python `dbdreader` module.
 
         This function automatically determines if the glider
-        was in "echo" or "combo" mode.  Prior knowledge of the
+        was in "egram" or "combo" mode.  Prior knowledge of the
         operational mode is not necessary.
-
-        TODO: Allow decoding of "egram" mode.
         '''
 
         # Obtain timestamp and water depth (bar)
@@ -2182,6 +2187,7 @@ class Glider:
 
         #self.stopToDebug()
 
+        # Convert float data to integer for processing (if egram is embedded)
         tmData = self.data[echogram_source][tmVar]
         nanMask = None
         for idx in dataOrder:
@@ -2190,6 +2196,7 @@ class Glider:
             except:
                 self.data['echogram'] = None
                 return
+
             #self.stopToDebug()
             # Obtain a NaN mask for the echogram.  For gliders, the acoustics can
             # be turned on and off at different points in the dive.
@@ -2243,6 +2250,7 @@ class Glider:
             bins = {0: -5.0, 1:-15.0, 2:-22.5, 3:-27.5, 4:-32.5, 5:-40.0, 6:-50.0, 7:-60.0 }
 
         self.data['echogram_bins'] = bins
+        self.data['echogram_mode'] = None
 
         # Data is hidden in the last three bits of data sent over iridium
         #mask of 7(binary 111) for 3bit vals
@@ -2258,7 +2266,7 @@ class Glider:
         # reord.py reads off the first row to skip it
         # Collect the bit values 0 to 7 first to allow for
         # validation of routine.
-        fullPseudogram = None
+        fullEchogram = None
         for row in range(1, numRows):
             words = self.data['echogram'][row, :]
             if len(words) != 0:
@@ -2267,149 +2275,196 @@ class Glider:
                 if np.all(words[0:7]==[0,0,0,0,0,0,0]) == True:
                    continue
                 if int(words[2]) == -1032813281:
-                    # This decodes regular echometrics mode
-                    #print('echo')
-                    #time
+                    self.data['echogram_mode'] = "egram"
+                    # This decodes "egram" mode
+                    # time
                     #print(words[7] + ' ', end=''),
                     #print("%f " % (words[7]), end=''),
-                    decodedPseudogram = np.array(words[7])
-                    #decodedPseudogram = np.array(words[7])
-                    #2 32bit vals two high bits are don't cares, read off 3 at time
+                    decodedEchogram = np.array(words[7])
+                    #decodedEchogram = np.array(words[7])
+                    #2 32bit vals two high bits are left over, read off 3 at time
                     for i in range(0, 30, 3):
                         #print(str((int(words[6])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[6])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[6])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[6])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[6])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[6])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[6])>>i) & mask))
                     for i in range(0, 30, 3):
                         #print(str((int(words[3])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[3])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[3])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[3])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[3])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[3])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[4])>>i) & mask))
                     #print('\n')
-                    if fullPseudogram is None:
-                        fullPseudogram = np.column_stack(decodedPseudogram)
+                    '''
+                    if fullEchogram is None:
+                        fullEchogram = np.column_stack(decodedEchogram)
                     else:
-                        fullPseudogram = np.append(fullPseudogram, np.column_stack(decodedPseudogram), axis=0)
+                        fullEchogram = np.append(fullEchogram, np.column_stack(decodedEchogram), axis=0)
+                    '''
                     #time
                     #print(words[7] + ' ', end=''),
                     #print("%f " % (words[7]), end=''),
-                    decodedPseudogram = np.array(words[7])
-                    #2 32bit vals two high bits are don't cares, read off 3 at time
+                    #decodedEchogram = np.array(words[7])
+                    #2 32bit vals two high bits are left over, read off 3 at time
                     for i in range(0, 30, 3):
                         #print(str((int(words[0])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[0])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[0])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[0])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[0])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[0])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[0])>>i) & mask))
                     for i in range(0, 30, 3):
                         #print(str((int(words[5])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[5])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[5])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[5])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[5])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[5])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[5])>>i) & mask))
                     #print('\n')
-                    if fullPseudogram is None:
-                        fullPseudogram = np.column_stack(decodedPseudogram)
+                    '''
+                    if fullEchogram is None:
+                        fullEchogram = np.column_stack(decodedEchogram)
                     else:
-                        fullPseudogram = np.append(fullPseudogram, np.column_stack(decodedPseudogram), axis=0)
+                        fullEchogram = np.append(fullEchogram, np.column_stack(decodedEchogram), axis=0)
+                    '''
                     #time
                     #print(words[7] + ' ', end=''),
                     #print("%f " % (words[7]), end=''),
-                    decodedPseudogram = np.array(words[7])
-                    #2 32bit vals two high bits are don't cares, read off 3 at time
+                    #decodedEchogram = np.array(words[7])
+                    #2 32bit vals two high bits are left over, read off 3 at time
                     for i in range(0, 30, 3):
                         #print(str((int(words[1])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[1])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[1])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[1])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[1])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[1])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[1])>>i) & mask))
                     for i in range(0, 30, 3):
                         #print(str((int(words[4])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[4])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[4])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[4])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[4])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[4])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[3])>>i) & mask))
                     #print('\n')
-                    if fullPseudogram is None:
-                        fullPseudogram = np.column_stack(decodedPseudogram)
+                    if fullEchogram is None:
+                        fullEchogram = np.column_stack(decodedEchogram)
                     else:
-                        fullPseudogram = np.append(fullPseudogram, np.column_stack(decodedPseudogram), axis=0)
+                        fullEchogram = np.append(fullEchogram, np.column_stack(decodedEchogram), axis=0)
                 else:
                     # This decodes combo mode
+                    self.data['echogram_mode'] = "combo"
                     #print('combo')
                     #time
                     #print("%f " % (words[7]), end=''),
-                    decodedPseudogram = np.array(words[7])
+                    decodedEchogram = np.array(words[7])
                     #print(words[7] + ' ', end=''),
                     #2 32bit vals are metrics with LS 9bits used for 3 layer values
                     for i in range(0, 9, 3):
                         #print(str((int(words[6])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[6])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[6])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[6])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[6])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[6])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[6])>>i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[4])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[4])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[4])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[4])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[4])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[4])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[4])>>i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[0])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[0])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[0])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[0])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[0])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[0])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[0])>>i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[5])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[5])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[5])>>i) & mask]), end=''),
-                        #decodedPseudogram = np.append(decodedPseudogram, (bins[(int(words[5])>>i) & mask]))
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[5])>>i) & mask))
+                        #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[5])>>i) & mask]))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[5])>>i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[1])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[1])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[1])>>i) & mask]), end=''),
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[1])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[1])>>i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[3])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[3])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[3])>>i) & mask]), end=''),
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[3])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[3])>>i) & mask))
                     for i in range(0, 6, 3):
                         #print(str((int(words[2])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[2])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[2])>>i) & mask]), end=''),
-                        decodedPseudogram = np.append(decodedPseudogram, ((int(words[2])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[2])>>i) & mask))
                     #print('\n')
                     #self.stopToDebug()
                     # Temporary kludge to mask the -5.0 bins at the end
-                    #if decodedPseudogram[21] == '-5.0':
-                    #    decodedPseudogram[21] = '-60.0'
-                    if fullPseudogram is None:
-                        fullPseudogram = np.column_stack(decodedPseudogram)
+                    #if decodedEchogram[21] == '-5.0':
+                    #    decodedEchogram[21] = '-60.0'
+                    if fullEchogram is None:
+                        fullEchogram = np.column_stack(decodedEchogram)
                     else:
-                        fullPseudogram = np.append(fullPseudogram, np.column_stack(decodedPseudogram), axis=0)
+                        fullEchogram = np.append(fullEchogram, np.column_stack(decodedEchogram), axis=0)
+
+        # What type of echogram do we have here?
+        # Make the time adjustment appropriate for the mode the glider
+        # is in.
+        if self.data['echogram_mode']:
+            if self.data['echogram_mode'] == 'combo':
+                # In combo mode, the VBS scan is #10 for a given time at VBS scan #30
+                # Offset is -20.0 seconds
+                fullEchogram[:,0] = fullEchogram[:,0] - 20.0
+            if self.data['echogram_mode'] == 'egram':
+                # In egram mode, the time is for VBS scan #30, the three scans of information
+                # are VBS scan #0 (-30.0 seconds); VBS scan #10 (-20.0 seconds)
+                # and VBS scan #20 (-10.0 seconds)
+
+                # Reshape echogram and adjust time
+
+                # Initialize row 0
+                # Grab the time of the metric recording
+                techo = fullEchogram[0, 0]
+                reshapeEchogram = fullEchogram[0, 0:21]
+                reshapeEchogram = reshapeEchogram.reshape(-1,reshapeEchogram.shape[0])
+                reshapeEchogram[0, 0] = techo - 30.0
+
+                # Row 1
+                rec = np.append([techo - 20.0], fullEchogram[0, 21:41])
+                reshapeEchogram = np.append(reshapeEchogram, np.column_stack(rec), axis=0)
+
+                # Row 2
+                rec = np.append([techo - 10.0], fullEchogram[0, 41:61])
+                reshapeEchogram = np.append(reshapeEchogram, np.column_stack(rec), axis=0)
+
+                # Perform the same to the remaining rows
+                for z in range(1, fullEchogram.shape[0]):
+                    # Grab the time reading
+                    techo = fullEchogram[z, 0]
+                    for s in range(0, 3):
+                        rec = np.append([techo - ((3 - s) * 10.0)],
+                            fullEchogram[z, (s*20) + 1: ((s+1)*20) + 1])
+                        #breakpoint()
+                        reshapeEchogram = np.append(reshapeEchogram, np.column_stack(rec), axis=0)
+
+                fullEchogram = reshapeEchogram
 
         # Copy the bits before we change them
-        if fullPseudogram is None:
-            bitsPseudogram = None
+        if fullEchogram is None:
+            bitsEchogram = None
         else:
-            bitsPseudogram = fullPseudogram.copy()
+            bitsEchogram = fullEchogram.copy()
 
             # Convert echogram from bits to values
             #https://stackoverflow.com/questions/62864282/numpy-apply-function-to-every-item-in-array
             apply_thresholds = lambda b: bins[b]
-            #fullPseudogram[:,1:] = np.stack(np.vectorize(apply_thresholds)(fullPseudogram[:,1:]), axis=1).T
-            fullPseudogram[:,1:] = np.stack(np.vectorize(apply_thresholds)(bitsPseudogram[:,1:]), axis=1).T
+            #fullEchogram[:,1:] = np.stack(np.vectorize(apply_thresholds)(fullEchogram[:,1:]), axis=1).T
+            fullEchogram[:,1:] = np.stack(np.vectorize(apply_thresholds)(bitsEchogram[:,1:]), axis=1).T
 
         # Return the final echogram data
-        #if not(fullPseudogram is None):
-        #    fullPseudogram = fullPseudogram.astype(float)
-        self.data['echogram'] = fullPseudogram
-        self.data['echogram_bits'] = bitsPseudogram
+        #if not(fullEchogram is None):
+        #    fullEchogram = fullEchogram.astype(float)
+        self.data['echogram'] = fullEchogram
+        self.data['echogram_bits'] = bitsEchogram
 
 
     def applyDeploymentGlobalMetadata(self, ncDS):

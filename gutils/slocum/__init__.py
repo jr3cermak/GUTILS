@@ -568,9 +568,6 @@ class SlocumMerger(object):
             # Defaults
             echogramBins = echograms_attrs.get('echogram_range_bins', 20)
             echogramRange = echograms_attrs.get('echogram_range', 60.0)
-            #echogramDirection = echograms_attrs.get('echogramDirection', 'down')
-            #if echogramDirection == 'up':
-            #    echogramRange = - (echogramRange)
 
             # Attempt to suss out the data type 'rt' or 'delayed' using
             # self.destination_directory.  Default to 'rt'.
@@ -593,12 +590,13 @@ class SlocumMerger(object):
             ]
 
             if enable_image:
-                echogramPlotType = echograms_attrs.get('plot_type', 'pcolormesh')
+                echogramPlotType = echograms_attrs.get('plot_type', 'binned')
                 echogramPlotCmap = echograms_attrs.get('plot_cmap', 'ek80')
                 pargs.append('-i')  # Makes the echogram images. This is slow!
                 pargs.append(f"{echogramPlotType}")
                 pargs.append('-C')
                 pargs.append(f"{echogramPlotCmap}")
+                L.info(f"Creating echogram {echogramPlotType} images with colormap {echogramPlotCmap}")
 
         pargs.append(self.tmpdir)
         pargs.append(self.destination_directory)

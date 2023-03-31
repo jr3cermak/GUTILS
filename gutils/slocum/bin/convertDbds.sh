@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# DEBUG
-#set -x
-
 PATH=/bin:/usr/bin
 
 # Script basename
@@ -163,8 +160,6 @@ do
             ;;
     esac
 done
-# DEBUG
-quiet=0
 
 # Remove options from ARGV
 shift $((OPTIND-1));
