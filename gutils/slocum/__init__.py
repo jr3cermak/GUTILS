@@ -590,7 +590,7 @@ class SlocumMerger(object):
             ]
 
             if enable_image:
-                echogramPlotType = echograms_attrs.get('plot_type', 'binned')
+                echogramPlotType = echograms_attrs.get('plot_type', 'profile')
                 echogramPlotCmap = echograms_attrs.get('plot_cmap', 'ek80')
                 pargs.append('-i')  # Makes the echogram images. This is slow!
                 pargs.append(f"{echogramPlotType}")

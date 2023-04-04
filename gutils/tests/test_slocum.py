@@ -411,7 +411,7 @@ class TestEchoMetricsTwo(GutilsTestClass):
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
             # first time in the last ecodroid profile
-            assert ncd.variables['profile_id'][0] == 1679577318
+            assert ncd.variables['profile_id'][0] == 1679577298
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])

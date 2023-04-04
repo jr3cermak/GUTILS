@@ -111,7 +111,7 @@ class Glider:
         }
 
         # Plotting
-        self.availablePlotTypes = ['binned', 'scatter', 'pcolormesh']
+        self.availablePlotTypes = ['binned', 'scatter', 'pcolormesh', 'profile']
         self.defaultPlotType = 'binned'
 
         # Define colormaps
@@ -962,6 +962,7 @@ class Glider:
                     timeToUse = self.data['timestamp']['tbd']
                 if 'ebd' in self.data['timestamp']:
                     timeToUse = self.data['timestamp']['ebd']
+
                 outFilename = outFilename.replace('default',
                     self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
                         fmt="%Y%m%d_%H%M%S"))
@@ -1070,7 +1071,7 @@ class Glider:
                 print("HINT: Include a sbd file if available.")
             return
 
-        # We need to know the time indexes for the graphics below too
+        # We need to know the time indexes for the graphics below
         timeIndexes = np.unique(dataSpreadsheet[:,0])
 
         # Determine plot type requested
@@ -1104,7 +1105,7 @@ class Glider:
         # Default colorbar ylabel and size
         #default_cb_ylabel = r'Sv (dB re 1 $\bf{m^2}$/$\bf{m^3}$)'
         default_cb_ylabel = r'$\bf{Sv}$ $\bf{(dB}$ $\bf{re}$ $\bf{1}$ $\bf{m^2}$/$\bf{m^3}$$\bf{)}$'
-        default_cb_shrink = 0.40
+        default_cb_shrink = 0.60
 
         # Default plot parameters
 
@@ -1141,9 +1142,42 @@ class Glider:
             if self.args['title']:
                 plot_title = self.args['title']
 
-            # See if we need to substitute the filename if the default
-            # is provided.
+            # See if we need to substitute strings in the filename or
+            # plot title.
+
+            # {plottype} => ['binned', 'scatter', 'profile', 'pcolormesh']
+            # {segment} => unit_507-2023-085-2-99
+            # {timestamp} => 
+            #   Filename: yyyymmdd_hhmmss
+            #   Title: yyyy/mm/dd hh:mm:ss
             outFilename = self.args['imageOut']
+            timeToUse = None
+            if 'tbd' in self.data['timestamp']:
+                timeToUse = self.data['timestamp']['tbd']
+            if 'ebd' in self.data['timestamp']:
+                timeToUse = self.data['timestamp']['ebd']
+
+            if outFilename:
+                if 'plottype' in outFilename:
+                    outFilename = outFilename.replace('plottype', plotType)
+                if 'segment' in outFilename:
+                    outFilename = outFilename.replace('segment', self.data['segment'])
+                if 'timestamp' in outFilename:
+                    outFilename = outFilename.replace('timestamp',
+                        self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
+                        fmt="%Y%m%d_%H%M%S"))
+
+            if plot_title:
+                if 'plottype' in plot_title:
+                    plot_title = plot_title.replace('plottype', plotType)
+                if 'segment' in plot_title:
+                    plot_title = plot_title.replace('segment', self.data['segment'])
+                if 'timestamp' in plot_title:
+                    plot_title = plot_title.replace('timestamp',
+                        self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
+                        fmt="%Y/%m/%d %H:%M:%S"))
+
+            """
             if 'default' in outFilename:
                 if self.data['segment']:
                     outFilename = outFilename.replace('default', "%s_%s" % \
@@ -1164,9 +1198,11 @@ class Glider:
                 if plot_title:
                     if 'default' in plot_title:
                         plot_title = plot_title.replace('default', plotType)
+            """
+
 
             # pcolormesh plot
-            if plotType == 'pcolormesh':
+            if plotType in ['pcolormesh']:
 
                 unique_times = np.unique(dataSpreadsheet[:,0])
                 # matrix size = (time, bins)
@@ -1193,9 +1229,10 @@ class Glider:
                     for i in range(len(zzz), self.mission_plan['bins']):
                         zz[i,tindex] = np.nan
 
-                xx = np.array(pd.to_datetime(xx.ravel(), unit='s')).reshape(len(unique_times),self.mission_plan['bins']).T
+                xx = np.array(pd.to_datetime(xx.ravel(), unit='s'))\
+                    .reshape(len(unique_times),self.mission_plan['bins']).T
 
-                fig, ax = plt.subplots(figsize=(10,8))
+                fig, ax = plt.subplots(figsize=(5, 4))
 
                 #ax.xaxis.set_minor_locator(dates.MinuteLocator(interval=10))# every 10 minutes
                 #ax.xaxis.set_minor_formatter(dates.DateFormatter('%H:%M'))  # hours and minutes
@@ -1219,7 +1256,7 @@ class Glider:
                 ax.invert_yaxis()
 
                 # Adjust x ticks
-                xtickLocs, xtickLabels = self.findTimeInterval(timeIndexes, plotType, ax, nticks=10)
+                xtickLocs, xtickLabels = self.findTimeInterval(timeIndexes, plotType, ax, nticks=5)
                 ax.xaxis.set_major_locator(mticker.FixedLocator(xtickLocs))
                 ax.set_xticklabels(xtickLabels)
                 plt.xticks(rotation = 45.0)
@@ -1231,43 +1268,58 @@ class Glider:
                 cx.ax.get_yaxis().labelpad = 15
                 cx.ax.set_ylabel(default_cb_ylabel)
 
-                plt.tight_layout()
-
-                '''
-                # Determine if we are writing to stdout
-                if stdoutFlag:
-                    plt.savefig(sys.stdout.buffer, bbox_inches='tight', dpi=100)
-                else:
-                    # Plot image
-                    if self.args['outDir']:
-                        if self.debugFlag:
-                            print("DEBUG: Wrote to",os.path.join(self.args['outDir'], outFilename))
-                        plt.savefig(os.path.join(self.args['outDir'], outFilename),
-                            bbox_inches='tight', dpi=100)
-                    else:
-                        if self.debugFlag:
-                            print("DEBUG: Wrote to",outFilename)
-                        plt.savefig(outFilename, bbox_inches='tight', dpi=100)
-
-                '''
                 if self.debugFlag:
                     print("DEBUG: End of pcolormesh plotting routine.")
 
+            # profile plots are just depth vs bin!
+            if plotType == 'profile':
+
+                dot_size = 70.0
+
+                scatterData = dataSpreadsheet.copy()
+
+                # Replace time index with bin #
+                for timeIdx in timeIndexes:
+                    cond = np.where(scatterData[:,0]==timeIdx)[0]
+                    cond_min = cond.min()
+                    scatterData[cond,0] = cond - cond_min
+
+                # Plot higher reflective echoes on top of plot
+                scatterData = scatterData[np.argsort(scatterData[:,2])]
+
+                fig, ax = plt.subplots(figsize=(3, 6))
+
+                im = plt.scatter(scatterData[:,0], scatterData[:,1], c=scatterData[:,2],
+                        cmap=cmap, norm=norm, s=dot_size)
+
+                cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+                    orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
+                plt.gca().invert_yaxis()
+                plt.ylabel('depth (m)')
+
+                gca_ax = plt.gca()
+                gca_ax.get_xaxis().set_visible(False)
+
+                if self.debugFlag:
+                    print("DEBUG: End of profile plot routine.")
+
             # scatter plot
-            if plotType == 'scatter':
+            if plotType in ['scatter']:
+
+                dot_size = 40.0
 
                 # Sort Sv(dB) from lowest to highest so higher values are plotted last
                 scatterData = dataSpreadsheet[np.argsort(dataSpreadsheet[:,2])]
 
                 # Plot simply x, y, z data (time, depth, dB)
-                fig, ax = plt.subplots(figsize=(10,8))
+                fig, ax = plt.subplots(figsize=(5, 4))
                 #ax.xaxis.set_minor_locator(dates.MinuteLocator(interval=10))# every 10 minutes
                 #ax.xaxis.set_minor_formatter(dates.DateFormatter('%H:%M'))  # hours and minutes
                 #ax.xaxis.set_major_locator(dates.DayLocator(interval=1))    # every day
                 #ax.xaxis.set_major_formatter(dates.DateFormatter('\n%m-%d-%Y'))
                 ax.set_facecolor('lightgray')
                 im = plt.scatter(pd.to_datetime(scatterData[:,0], unit='s'), scatterData[:,1], c=scatterData[:,2],
-                        cmap=cmap, norm=norm, s=40.0)
+                        cmap=cmap, norm=norm, s=dot_size)
                 #cbar = plt.colorbar(orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
                 cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
                     orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
@@ -1276,33 +1328,16 @@ class Glider:
                 plt.xlabel('Date/Time (UTC)')
 
                 # Adjust x ticks
-                xtickLocs, xtickLabels = self.findTimeInterval(timeIndexes, plotType, ax, nticks=10)
+                xtickLocs, xtickLabels = self.findTimeInterval(timeIndexes, plotType, ax, nticks=5)
                 ax.xaxis.set_major_locator(mticker.FixedLocator(xtickLocs))
                 ax.set_xticklabels(xtickLabels)
                 plt.xticks(rotation = 45.0)
-
-                '''
-                # Determine if we are writing to stdout
-                if stdoutFlag:
-                    plt.savefig(sys.stdout.buffer, bbox_inches='tight', dpi=100)
-                else:
-                    # Plot image
-                    if self.args['outDir']:
-                        if self.debugFlag:
-                            print("DEBUG: Wrote to",os.path.join(self.args['outDir'], outFilename))
-                        plt.savefig(os.path.join(self.args['outDir'], outFilename),
-                            bbox_inches='tight', dpi=100)
-                    else:
-                        if self.debugFlag:
-                            print("DEBUG: Wrote to",outFilename)
-                        plt.savefig(outFilename, bbox_inches='tight', dpi=100)
-                '''
 
                 if self.debugFlag:
                     print("DEBUG: End of scatter plot routine.")
 
             # binned plot
-            if plotType == 'binned':
+            if plotType in ['binned']:
 
                 # Loop through each time on the spreadsheet
                 # Each scan is a pre-generated array with -90.0 dB values (above most thresholds)
@@ -1314,10 +1349,12 @@ class Glider:
                     for recIdx in cond:
                         (timeRec, depthRec, dBRec) = dataSpreadsheet[recIdx,:]
                         depthBin = self.getDepthPixel(depthRec, minDepth, maxDepth, depthBinSize)
+
                         # DEBUG
                         #if self.debugFlag:
                         #    print("  Timestamp(%.1f) Depth(%.1f meters) Sv(%.1f dB) DepthPixel(%d)" %\
                         #            (timeRec, depthRec, dBRec, depthBin))
+
                         sample[depthBin] = dBRec
                     if numDataRecords == 0:
                         imageData = sample
@@ -1331,7 +1368,7 @@ class Glider:
                 imageData[np.where(imageData == -90.0)] = np.nan
 
                 # Axis labels are centered on the pixel
-                fig, ax = plt.subplots(figsize=(10,8))
+                fig, ax = plt.subplots(figsize=(5, 4))
 
                 plotData = np.transpose(imageData)
                 plotDataShape = plotData.shape
@@ -1354,33 +1391,10 @@ class Glider:
                 #plt.clim(dB_limit[0], dB_limit[1])
 
                 # Adjust x ticks
-                xtickLocs, xtickLabels = self.findTimeInterval(timeIndexes, plotType, ax, nticks=10)
+                xtickLocs, xtickLabels = self.findTimeInterval(timeIndexes, plotType, ax, nticks=5)
                 ax.xaxis.set_major_locator(mticker.FixedLocator(xtickLocs))
                 ax.set_xticklabels(xtickLabels)
                 plt.xticks(rotation = 45.0)
-
-                '''
-
-                for timeTick in xtickLocs:
-                    # Skip non integer time ticks
-                    if int(timeTick) != timeTick:
-                        continue
-
-                    if int(timeTick) >= 0.0 and int(timeTick) < len(timeIndexes):
-                        startTime = timeIndexes[int(timeTick)]
-                        endTime = startTime + timeBinSize
-                        midPixelTime = (startTime + endTime) / 2.0
-                        xtickNew = datetime.datetime.utcfromtimestamp(midPixelTime).strftime("%Y-%m-%d\n%H:%M:%S")
-                    else:
-                        xtickNew = "%s" % (timeTick)
-
-                    xtickLocsNew.append(timeTick)
-                    xtickLabels.append(xtickNew)
-
-                ax.xaxis.set_major_locator(mticker.FixedLocator(xtickLocsNew))
-                ax.set_xticklabels(xtickLabels)
-                plt.xticks(rotation = 45.0)
-                '''
 
                 # Adjust y tick labels: depth bin -> depth (meters)
                 ytickLabels = []
@@ -1442,19 +1456,18 @@ class Glider:
 
             # Determine if we are writing to stdout
             if stdoutFlag:
-                plt.savefig(sys.stdout.buffer, bbox_inches='tight', dpi=100)
+                plt.savefig(sys.stdout.buffer, dpi=100)
             else:
                 # Plot image
                 if self.args['outDir']:
                     if self.debugFlag:
-                        print("DEBUG: Wrote to",os.path.join(self.args['outDir'], outFilename))
-                    plt.savefig(os.path.join(self.args['outDir'], outFilename),
-                        bbox_inches='tight', dpi=100)
+                        print("DEBUG: Wrote to", os.path.join(self.args['outDir'], outFilename))
+                    plt.savefig(os.path.join(self.args['outDir'], outFilename), dpi=100, bbox_inches='tight')
                     plt.close()
                 else:
                     if self.debugFlag:
-                        print("DEBUG: Wrote to",outFilename)
-                    plt.savefig(outFilename, bbox_inches='tight', dpi=100)
+                        print("DEBUG: Wrote to", outFilename)
+                    plt.savefig(outFilename, dpi=100, bbox_inches='tight')
                     plt.close()
 
 
@@ -1474,7 +1487,7 @@ class Glider:
             * args['debugFlag']: Boolean flag.  If True, additional
               output is printed to standard output.
             * args['plotType']: String.  Available plot types are:
-              binned, scatter and pcolormesh.
+              binned, scatter, pcolormesh or profile.
         '''
 
         # Code from echoGenNew.py
@@ -2857,15 +2870,15 @@ class Glider:
         else:
             sensorTimes = self.data['spreadsheet'][:,0]
             newTimeIdx = range(0,len(sensorTimes))
-            ncDS['echogram_time'] = (("time"), sensorTimes)
-            ncDS['echogram_time'].attrs['units'] = "seconds since 1970-01-01"
+            ncDS['time'] = (("time"), sensorTimes)
+            ncDS['time'].attrs['units'] = "seconds since 1970-01-01"
             ncDS.attrs['source_file'] = self.data['echogram_source_file']
             self.fillValues = {}
-            self.fillValues['echogram_time'] = {'_FillValue': -9999.9, 'dtype': 'double'}
-            timeDimList = list(ncDS['echogram_time'].values)
+            self.fillValues['time'] = {'_FillValue': -9999.9, 'dtype': 'double'}
+            timeDimList = list(ncDS['time'].values)
 
         # Collect echogram_depth [:,1]
-        varName = self.obtainVariableName('echogram_depth')
+        varName = self.obtainVariableName('depth')
         (fillValue, fillValueDtype) = self.obtainFillValue(varName)
         varData = np.full(len(timeDimList), fillValue)
         self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
@@ -3184,8 +3197,8 @@ class Glider:
                 print("Collecting echogram")
             ncDS = self.collectEchogram(ncDS)
             if self.args.get('ncSeparate', True):
-                timeShape = ncDS['echogram_time'].shape
-                timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['echogram_time'].min().values + 0.0),
+                timeShape = ncDS['time'].shape
+                timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
                 svFilename = os.path.join(self.args['ncDir'], "%s_sv.nc" % (timeStamp))
                 ncDS = self.applyGlobalMetadata(ncDS)

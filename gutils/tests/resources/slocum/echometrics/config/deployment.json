@@ -6,7 +6,7 @@
             "enable_nc": false,
             "enable_ascii": false,
             "enable_image": false,
-            "plot_type": "binned",
+            "plot_type": "profile",
             "plot_cmap": "ek80",
             "svb_thresholds": [-10,-20,-25,-30,-35,-45,-55],
             "svb_limits": [-10.0, -55.0],
