@@ -1147,7 +1147,7 @@ class Glider:
 
             # {plottype} => ['binned', 'scatter', 'profile', 'pcolormesh']
             # {segment} => unit_507-2023-085-2-99
-            # {timestamp} => 
+            # {timestamp} =>
             #   Filename: yyyymmdd_hhmmss
             #   Title: yyyy/mm/dd hh:mm:ss
             outFilename = self.args['imageOut']
