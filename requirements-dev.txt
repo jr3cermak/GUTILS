@@ -1,3 +1,4 @@
 ipdb
 pre-commit
 pytest
+pytest-sugar

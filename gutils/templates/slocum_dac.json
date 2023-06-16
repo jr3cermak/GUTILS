@@ -1018,7 +1018,7 @@
       "type": "double",
       "attributes": {
         "units": "db",
-        "long_name": "Pseudogram SV",
+        "long_name": "Echogram SV",
         "colorBarMinimum": -200.0,
         "colorBarMaximum": 200.0,
         "ioos_category": "Other",

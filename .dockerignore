@@ -4,5 +4,4 @@
 .gitignore
 .travis.yml
 example/
-gutils/tests/
 .envrc

@@ -123,7 +123,7 @@ jobs:
         outputs: type=docker
 
     - name: Run tests from the Docker image
-      run: docker run axiom/gutils:latest pytest -m "not long and not watch"
+      run: docker run axiom/gutils:latest pytest -m "not long"
 
   docker-push:
     name: Push latest image to Docker Hub

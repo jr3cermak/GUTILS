@@ -125,6 +125,7 @@ class TestSlocumReaderWithGPS(GutilsTestClass):
         assert 'z' in enh.columns
 
 
+@pytest.mark.long
 class TestSlocumExportDelayed(GutilsTestClass):
 
     def setUp(self):
