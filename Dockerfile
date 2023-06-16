@@ -1,4 +1,4 @@
-FROM phusion/baseimage:focal-1.2.0
+FROM phusion/baseimage:jammy-1.0.1
 
 LABEL maintainer="Kyle Wilcox <kyle@axiomdatascience.com>" \
       description='The GUTILS container'
@@ -28,19 +28,14 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
-ENV MINICONDA_VERSION py39_4.11.0
-ENV MINICONDA_SHA256 4ee9c3aa53329cd7a63b49877c0babb49b19b7e5af29807b793a76bdb1d362b4
-RUN curl -k -o /miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
-    echo $MINICONDA_SHA256 /miniconda.sh | sha256sum --check && \
-    /bin/bash /miniconda.sh -b -p /opt/conda && \
-    rm /miniconda.sh && \
-    /opt/conda/bin/conda update -c conda-forge -n base conda && \
-    /opt/conda/bin/conda clean -afy && \
-    /opt/conda/bin/conda init && \
-    find /opt/conda/ -follow -type f -name '*.a' -delete && \
-    find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
-    /opt/conda/bin/conda install -y -c conda-forge -n base mamba && \
-    /opt/conda/bin/conda clean -afy
+ENV MAMBAFORGE_VERSION 23.1.0-1
+ENV MAMBAFORGE_DOWNLOAD Mambaforge-${MAMBAFORGE_VERSION}-Linux-x86_64.sh
+RUN curl -k -L -O "https://github.com/conda-forge/miniforge/releases/download/${MAMBAFORGE_VERSION}/${MAMBAFORGE_DOWNLOAD}" && \
+    curl -k -L -O "https://github.com/conda-forge/miniforge/releases/download/${MAMBAFORGE_VERSION}/${MAMBAFORGE_DOWNLOAD}.sha256" && \
+    sha256sum --check "${MAMBAFORGE_DOWNLOAD}.sha256" && \
+    /bin/bash ${MAMBAFORGE_DOWNLOAD} -b -p /opt/conda && \
+    rm ${MAMBAFORGE_DOWNLOAD} && \
+    /opt/conda/bin/mamba clean -afy
 
 ENV PATH /opt/conda/bin:$PATH
 
