@@ -1,4 +1,5 @@
 import io, os, sys, struct, datetime
+import logging
 import subprocess
 import numpy as np
 import matplotlib
@@ -14,6 +15,10 @@ import xarray as xr
 import pandas as pd
 # https://github.com/smerckel/dbdreader
 import dbdreader
+
+# scale down logging for matplotlib and dbdreader
+logging.getLogger("dbdreader").setLevel(logging.WARNING)
+logging.getLogger("matplotlib").setLevel(logging.WARNING)
 
 class Glider:
     '''
@@ -51,6 +56,7 @@ class Glider:
         self.cacheDir = cacheDir
         self.dbd2asc = dbd2asc
         self.debugFlag = debugFlag
+        self.echotools = None
         self.ncDir = None
         self.ncUnlimitedDims = []
         self.fillValues = {}
@@ -66,6 +72,8 @@ class Glider:
             'asc': None,
             'sbd': None,
             'echogram': None,
+            'echogram_bits': None,
+            'calibration': {},
             'columns': [],
             'byteSize': [],
             'units': [],
@@ -95,8 +103,9 @@ class Glider:
         self.data['columns'] = {}
         self.data['units'] = {}
         self.data['input'] = {}
-        self.data['timestamp'] = {}
+        self.data['process'] = None
         self.data['segment'] = None
+        self.data['timestamp'] = {}
         self.data['inventory'] = None
         self.data['inventory_paths'] = []
         self.data['inventory_cache_path'] = None
@@ -218,6 +227,15 @@ class Glider:
 
     # General functions
 
+    def appendFilenameSuffix(self, fname, word):
+        '''
+        Appends word to end of a filename.
+        Ex: 20201213.csv => 20201213_{word}.csv
+        '''
+
+        fn, ext = os.path.splitext(fname)
+        return f"{fn}_{word}{ext}"
+
 
     def calculateMissionPlan(self):
         '''
@@ -226,18 +244,20 @@ class Glider:
 
         # See if any parameters changed
         updateFlag = False
-        if self.args['echogramBins'] != self.mission_plan['bins']:
-            updateFlag = True
-            self.mission_plan['bins'] = self.args['echogramBins']
+        if self.args.get('echogramBins'):
+            if self.args['echogramBins'] != self.mission_plan['bins']:
+                updateFlag = True
+                self.mission_plan['bins'] = self.args['echogramBins']
 
-        if self.args['echogramRange'] != self.mission_plan['range']:
-            updateFlag = True
-            if self.args['echogramRange'] >= 0:
-                self.mission_plan['direction'] = +1
-            else:
-                self.mission_plan['direction'] = -1
-            # Mission plan range is absolute value
-            self.mission_plan['range'] = abs(self.args['echogramRange'])
+        if self.args.get('echogramRange'):
+            if self.args['echogramRange'] != self.mission_plan['range']:
+                updateFlag = True
+                if self.args['echogramRange'] >= 0:
+                    self.mission_plan['direction'] = +1
+                else:
+                    self.mission_plan['direction'] = -1
+                # Mission plan range is absolute value
+                self.mission_plan['range'] = abs(self.args['echogramRange'])
 
         if updateFlag:
             self.mission_plan['bin_range'] = \
@@ -291,6 +311,8 @@ class Glider:
             start_string = datetime.datetime.utcfromtimestamp(tmin).strftime("%Y-%m-%d %H:%M:%S")
             if tmax:
                 end_string = datetime.datetime.utcfromtimestamp(tmax).strftime("%Y-%m-%d %H:%M:%S")
+                if end_string == "nan":
+                    end_string = "0000-00-00 00:00:00"
             else:
                 end_string = "0000-00-00 00:00:00"
 
@@ -376,9 +398,11 @@ class Glider:
             else:
                 df = df_start
 
+        # This does not work!
         #Convert nans back to 0000-00-00 00:00:00
-        mask = df['End'].isna()
-        df.loc[mask, 'End'] = '0000-00-00 00:00:00'
+        #mask = df['End'].isna()
+        #df.loc[mask, 'End'] = '0000-00-00 00:00:00'
+        #breakpoint()
 
         inv = Glider()
 
@@ -629,19 +653,26 @@ class Glider:
         This function generically loads deployment and other metadata required
         for processing glider files into uniform netCDF files.
         '''
-        if self.args['deploymentDir'] is None:
-            if self.args['ncDir']:
+        if self.args.get('deploymentDir', None) is None:
+            if self.args.get('ncDir', None):
                 print("ERROR: A deployment configuration directory is required to write output to a netCDF file.")
                 sys.exit()
             return
         else:
             if not(os.path.isdir(self.args['deploymentDir'])):
-                if self.args['ncDir']:
-                    print("ERROR: The deployment configuration directory was not found: %s" % (self.args['deploymentDir']))
-                    print("ERROR: This is required to write output to a netCDF file.")
-                    sys.exit()
-                else:
-                    return
+                print("ERROR: The deployment configuration directory was not found: %s" % (self.args['deploymentDir']))
+                if self.args.get('ncDir', None) is None:
+                    print("ERROR: A deployment configuration directory required to write output to a netCDF file.")
+                sys.exit()
+
+        # Attempt to read echotools.json configuration file
+        try:
+            echotoolsFile = os.path.join(self.args['deploymentDir'], 'echotools.json')
+            testLoad = json.load(open(echotoolsFile))
+            self.echotools = testLoad
+        except:
+            print("ERROR: Unable to parse json echotools file: %s" % (echotoolsFile))
+            sys.exit()
 
         # Attempt to read deployment.json
         try:
@@ -657,27 +688,28 @@ class Glider:
             instrumentsFile = os.path.join(self.args['deploymentDir'], 'instruments.json')
             testLoad = json.load(open(instrumentsFile))
             self.instruments = testLoad
-        except:
-            print("ERROR: Unable to parse json instruments file: %s" % (instrumentsFile))
+        except Exception as err:
+            print(f"ERROR: Unable to parse json instruments file: {instrumentsFile} {err=}")
             sys.exit()
 
-        if self.args['templateDir'] is None:
-            if not(self.args['ncDir']):
+        if self.args.get('ncDir', None):
+            if self.args.get('templateDir', None) is None:
                 print("ERROR: A template file is required to write output to a netCDF file.")
                 sys.exit()
 
-        if not(os.path.isdir(self.args['templateDir'])):
-            print("ERROR: The template directory was not found: %s" % (self.args['templateDir']))
-            sys.exit()
+        if self.args.get('templateDir'):
+            if not(os.path.isdir(self.args['templateDir'])):
+                print("ERROR: The template directory was not found: %s" % (self.args['templateDir']))
+                sys.exit()
 
-        # Attempt to read <template>.json
-        try:
-            templateFile = os.path.join(self.args['templateDir'], self.args['template'])
-            testLoad = json.load(open(templateFile))
-            self.template = testLoad
-        except:
-            print("ERROR: Unable to parse json instruments file: %s" % (instrumentsFile))
-            sys.exit()
+            # Attempt to read <template>.json
+            try:
+                templateFile = os.path.join(self.args['templateDir'], self.args['template'])
+                testLoad = json.load(open(templateFile))
+                self.template = testLoad
+            except:
+                print("ERROR: Unable to parse json template file: %s" % (templateFile))
+                sys.exit()
 
         # Attempt to read auxillary metadata file (if specified)
         if self.args.get('dacOverlay', None):
@@ -744,12 +776,20 @@ class Glider:
 
         fo = open(invFile, 'w')
         for index, row in self.data['inventory'].iterrows():
-            fo.write("%s %s %s %s\n" % (
-                row['Start'],
-                row['End'],
-                row['File'],
-                row['Cache']
-            ))
+            if pd.isna(row['End']):
+                fo.write("%s %s %s %s\n" % (
+                    row['Start'],
+                    "0000-00-00 00:00:00",
+                    row['File'],
+                    row['Cache']
+                ))
+            else:
+                fo.write("%s %s %s %s\n" % (
+                    row['Start'],
+                    row['End'],
+                    row['File'],
+                    row['Cache']
+                ))
 
         if self.data['inventory_cache_path']:
             cache_dir = self.data['inventory_cache_path']
@@ -963,9 +1003,13 @@ class Glider:
                 if 'ebd' in self.data['timestamp']:
                     timeToUse = self.data['timestamp']['ebd']
 
-                outFilename = outFilename.replace('default',
+                outFilename = outFilename.replace('timestamp',
                     self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
                         fmt="%Y%m%d_%H%M%S"))
+
+            # One last adjustment to CSV if reprocess is being used
+            if self.data['process']:
+                outFilename = self.appendFilenameSuffix(outFilename, self.data['process'])
 
             # Use the input filename as the csv output filename
             try:
@@ -1177,6 +1221,10 @@ class Glider:
                         self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
                         fmt="%Y/%m/%d %H:%M:%S"))
 
+            # One last adjustment to filename if reprocess is being used
+            if self.data['process']:
+                outFilename = self.appendFilenameSuffix(outFilename, self.data['process'])
+
             """
             if 'default' in outFilename:
                 if self.data['segment']:
@@ -1287,12 +1335,18 @@ class Glider:
                 # Plot higher reflective echoes on top of plot
                 scatterData = scatterData[np.argsort(scatterData[:,2])]
 
+                # Mask any high data points that plot white over the image
+                # data.  Any pts < dB_limit[0]
+                mask = scatterData[:,2] > dB_limit[0]
+                scatterData[mask, 2] = np.nan
+
                 fig, ax = plt.subplots(figsize=(3, 6))
 
                 im = plt.scatter(scatterData[:,0], scatterData[:,1], c=scatterData[:,2],
                         cmap=cmap, norm=norm, s=dot_size)
 
                 cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+                    ax=plt.gca(),
                     orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
                 plt.gca().invert_yaxis()
                 plt.ylabel('depth (m)')
@@ -1380,6 +1434,7 @@ class Glider:
                 im = plt.imshow(plotData, cmap=cmap, interpolation='none')
                 plt.clim(dB_limit[1], dB_limit[0])
                 cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+                    ax=plt.gca(),
                     orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
 
                 # x and y axis labels
@@ -2247,7 +2302,7 @@ class Glider:
         #bins = {0: '-5.0', 1:'-15.0', 2:'-22.5', 3:'-27.5', 4:'-32.5', 5:'-40.0', 6:'-50.0', 7:'-60.0' }
         if 'vbsBins' in self.args:
             vbs = np.array([np.nan] * 15)
-            vbs[1::2]=self.args['vbsBins']
+            vbs[1::2] = self.args['vbsBins']
             not_nan = np.logical_not(np.isnan(vbs))
             indices = np.arange(len(vbs))
             vbsNew = np.interp(indices, indices[not_nan], vbs[not_nan])
@@ -2461,10 +2516,27 @@ class Glider:
 
                 fullEchogram = reshapeEchogram
 
+        # Check for reprocess and test pattern arguments here
+        process = self.args.get('reprocess', None)
+        testPattern = self.args.get('testPattern', None)
+
         # Copy the bits before we change them
         if fullEchogram is None:
             bitsEchogram = None
         else:
+            # Apply --testPattern and/or --process options here
+            # If --testPattern is set then change the bits to a test pattern.
+            # Don't do anything if --process is also set, the test pattern will
+            # already be applied.
+            if testPattern and not(process):
+                # Replace echogram with 0-7 bit values in sequence
+                bitValue = -1.0
+                for i in range(0, fullEchogram.shape[0]):
+                    bitValue = bitValue + 1.0
+                    if bitValue >= 8.0:
+                        bitValue = 0.0
+                    fullEchogram[i, 1:21] = [bitValue] * 20
+
             bitsEchogram = fullEchogram.copy()
 
             # Convert echogram from bits to values
@@ -2478,6 +2550,182 @@ class Glider:
         #    fullEchogram = fullEchogram.astype(float)
         self.data['echogram'] = fullEchogram
         self.data['echogram_bits'] = bitsEchogram
+
+        # If the reprocess flag is set, at this point we only search for valid VBS data
+        # and place it in self.data['echogram_*'].  An echogram also should be detected
+        # in the data stream.
+        if process and np.all(fullEchogram):
+            self.findRawVBS(fullEchogram, process)
+
+
+    def getRawVBSFilename(self, process):
+        '''
+        Determine raw VBS filename
+
+        NOTE: Pull out the output types here too
+        '''
+
+        # If configuration file was not found, return
+        if not(self.echotools):
+            return None
+
+        # default search path is {deployments}/{glider}/{date}/echotools/eit/{data}.vbs
+        # otherwise specified by {deployments}/{glider}/{date}/{raw_vbs}
+
+        # Look for a reprocess configuration
+        if self.echotools.get('echotools', None):
+            # Obtain deployment path
+            deploymentPath = self.echotools['echotools']['paths']['deployments']
+            # Get deployment name and glider name
+            deployment = self.echotools['echotools'].get('deployment_name', None)
+            glider = self.echotools['echotools'].get('teledyne_webb_vehicle_name', None)
+            if self.echotools['echotools'].get('reprocessing', None):
+                if self.echotools['echotools']['reprocessing'].get(process, None):
+                    processConfig = self.echotools['echotools']['reprocessing'][process]
+                    self.echotools['processConfig'] = processConfig
+
+        # Assemble path
+        fname = os.path.join(deploymentPath, glider, deployment, processConfig['raw_vbs'])
+        if os.path.isfile(fname):
+            return fname
+
+        return None
+
+
+    def findRawVBS(self, fullEchogram, process):
+        '''
+        Search for the raw VBS from the specified vbs file.
+        '''
+
+        vbsFilename = self.getRawVBSFilename(process)
+        processConfig = self.echotools['processConfig']
+        outputs = processConfig['output']
+        bins = processConfig.get('svb_thresholds', None)
+
+        # Create the unbin values
+        vbs = np.array([np.nan] * 15)
+        vbs[1::2] = bins
+        not_nan = np.logical_not(np.isnan(vbs))
+        indices = np.arange(len(vbs))
+        vbsNew = np.interp(indices, indices[not_nan], vbs[not_nan])
+        # Fill in the edge points with proper values
+        vbsNew[0] = vbsNew[0] - (vbsNew[2] - vbsNew[1])
+        vbsNew[-1] = vbsNew[-1] + (vbsNew[-2] - vbsNew[-3])
+        # Save bin assignments
+        unbins = {}
+        for i in range(0,8):
+            unbins[i] = vbsNew[i*2]
+
+        apply_thresholds = lambda b: unbins[b]
+
+        # Thresholds must be set even if they are the same as the deployment!
+        if not(bins):
+            return
+
+        # No filename, return
+        if not(vbsFilename):
+            return
+
+        # Hunt for the first matching profile => fullEchogram[timeDim, 0]
+        # Should be approximately 30 sec prior
+        tsMetric = fullEchogram[0,0] - 30.0
+        vbsFP = open(vbsFilename, 'r')
+        tsVbs = 0.0
+
+        success = True
+        while tsVbs < tsMetric:
+            ln = vbsFP.readline()
+            ln = ln.strip()
+            if ln:
+                data = ln.split(" ")
+                tsVbs = float(data[2])
+            else:
+                success = False
+                break
+
+        # Sync failed
+        if not(success):
+            return
+
+        #print(tsMetric, data)
+        # Now we can read the groups of 30, if we encounter a problem
+        # we flag it as a QC problem and continue.
+
+        endOfFile = False
+        ct = 0
+        for t in range(0, fullEchogram.shape[0]):
+            tsMetric = fullEchogram[t,0]
+            vbsData = []
+
+            while tsVbs < tsMetric:
+                vbsArray = data[5].split(',')
+                nbins = int(vbsArray[5])
+                vbsValues = [tsVbs]
+                vbsValues = vbsValues + [float(vbsArray[6+i]) for i in range(0,nbins)]
+                vbsData.append(vbsValues)
+
+                ln = vbsFP.readline()
+                ln = ln.strip()
+                if ln:
+                    data = ln.split(" ")
+                    tsVbs = float(data[2])
+                else:
+                    # Unexpected end of file
+                    endOfFile = True
+                    break
+                # If we have read 30 values, assume we are done
+                # as well.
+                if len(vbsData) == 30:
+                    break
+
+            # We do not need to generate the metrics, only the digitized bits
+            # according to the thresholds provided! Skip any data block that
+            # does not contain 30 scans.
+
+            echodata = np.array(vbsData)
+            #print(echodata.shape)
+            if echodata.shape[0] == 30:
+                # Determine output types to create
+                for outType in outputs:
+                    if outType == "vbs":
+                        if ct == 0:
+                            #self.data['echogram_vbs'] = np.column_stack(echodata)
+                            self.data['echogram_vbs'] = echodata
+                        else:
+                            self.data['echogram_vbs'] = np.append(self.data['echogram_vbs'], echodata, axis=0)
+                            #breakpoint()
+
+                    if outType == "combo":
+                        digitized = np.digitize(echodata[10][1:], bins)
+                        norm = np.vectorize(apply_thresholds)(digitized)
+                        newdata = np.append(echodata[10][0], norm)
+                        if ct == 0:
+                            self.data['echogram_combo'] = np.column_stack(newdata)
+                        else:
+                            self.data['echogram_combo'] = np.append(self.data['echogram_combo'], np.column_stack(newdata), axis=0)
+
+                    if outType == "egram":
+                        digitized = np.digitize(echodata[0][1:], bins)
+                        norm = np.vectorize(apply_thresholds)(digitized)
+                        newdata = np.append(echodata[0][0], norm)
+                        if ct == 0:
+                            self.data['echogram_egram'] = np.column_stack(newdata)
+                        else:
+                            self.data['echogram_egram'] = np.append(self.data['echogram_egram'], np.column_stack(newdata), axis=0)
+
+                        digitized = np.digitize(echodata[10][1:], bins)
+                        norm = np.vectorize(apply_thresholds)(digitized)
+                        newdata = np.append(echodata[10][0], norm)
+                        self.data['echogram_egram'] = np.append(self.data['echogram_egram'], np.column_stack(newdata), axis=0)
+
+                        digitized = np.digitize(echodata[20][1:], bins)
+                        norm = np.vectorize(apply_thresholds)(digitized)
+                        newdata = np.append(echodata[20][0], norm)
+                        self.data['echogram_egram'] = np.append(self.data['echogram_egram'], np.column_stack(newdata), axis=0)
+                ct = ct + 1
+
+            if endOfFile:
+                break
 
 
     def applyDeploymentGlobalMetadata(self, ncDS):
@@ -3202,6 +3450,11 @@ class Glider:
                     fmt="%Y%m%d_%H%M%S")
                 svFilename = os.path.join(self.args['ncDir'], "%s_sv.nc" % (timeStamp))
                 ncDS = self.applyGlobalMetadata(ncDS)
+
+                # One last adjustment to filename if reprocessing is being used
+                if self.data['process']:
+                    svFilename = self.appendFilenameSuffix(svFilename, self.data['process'])
+
                 if self.debugFlag:
                     print("Writing netCDF: %s" % (svFilename))
                 ncDS.to_netcdf(svFilename, unlimited_dims=self.ncUnlimitedDims, encoding=self.fillValues)

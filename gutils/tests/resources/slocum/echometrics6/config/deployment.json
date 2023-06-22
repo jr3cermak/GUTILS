@@ -9,10 +9,11 @@
         "filter_distance": 1
     },
     "extra_kwargs": {
+        "enable_parquet": true,
         "echograms": {
-            "enable_nc": false,
-            "enable_ascii": false,
-            "enable_image": false,
+            "enable_nc": true,
+            "enable_ascii": true,
+            "enable_image": true,
             "plot_type": "binned,profile",
             "plot_cmap": "ek80",
             "svb_thresholds": [-10,-20,-25,-30,-35,-45,-55],
@@ -103,7 +104,42 @@
                 "instrument": "instrument_altitude"
             }
         },
-        "acoustics": {
+        "sci_echodroid_sv": {
+            "attributes": {
+                "instrument": "instrument_acoustics"
+            }
+        },
+        "sci_echodroid_propocc": {
+            "attributes": {
+                "instrument": "instrument_acoustics"
+            }
+        },
+        "sci_echodroid_aggindex": {
+            "attributes": {
+                "instrument": "instrument_acoustics"
+            }
+        },
+        "sci_echodroid_sa": {
+            "attributes": {
+                "instrument": "instrument_acoustics"
+            }
+        },
+        "sci_echodroid_ctrmass": {
+            "attributes": {
+                "instrument": "instrument_acoustics"
+            }
+        },
+        "sci_echodroid_inertia": {
+            "attributes": {
+                "instrument": "instrument_acoustics"
+            }
+        },
+        "sci_echodroid_eqarea": {
+            "attributes": {
+                "instrument": "instrument_acoustics"
+            }
+        },
+        "echogram_sv": {
             "attributes": {
                 "instrument": "instrument_acoustics"
             }

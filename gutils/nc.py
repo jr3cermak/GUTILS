@@ -371,10 +371,11 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
 
             removable_columns = all_columns - set(reserved_columns)
             orphans = removable_columns - set(attrs.get('variables', {}).keys())
-            L.debug(
-                "Excluded from output (absent from JSON config):\n  * {}".format('\n  * '.join(orphans))
-            )
-            df.drop(orphans, axis=1, inplace=True)
+            if orphans != set():
+                L.debug(
+                    "Excluded from output (absent from JSON config):\n  * {}".format('\n  * '.join(orphans))
+                )
+                df.drop(orphans, axis=1, inplace=True)
 
         # Change to the datatype defined in the JSON. This is so
         # all netCDF files have the same dtypes for the variables in the end
@@ -386,10 +387,13 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
     for pi, profile in data.groupby('profile'):
 
         # Fill in regular profile with empty data
+        # Q: Is cross filling required by the DAC?
+        """
         for c in extras_df:
             if c not in profile:
                 profile.loc[:, c] = np.nan
                 profile.loc[:, c] = profile[c].astype(extras_df[c].dtype)
+        """
 
         if not extras_df.empty:
 
@@ -409,10 +413,13 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
                 profile_extras.loc[:, 'y'] = profile.y.dropna().iloc[0]
 
             # Fill in extras with empty data
+            # Q: Is cross filling required by the DAC?
+            """
             for c in profile:
                 if c not in profile_extras:
                     profile_extras.loc[:, c] = np.nan
                     profile_extras.loc[:, c] = profile_extras[c].astype(profile[c].dtype)
+            """
 
             try:
                 cr = create_profile_netcdf(attrs, profile_extras, output_path, mode + '_extra', profile_id_type)

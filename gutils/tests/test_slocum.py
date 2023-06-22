@@ -417,6 +417,8 @@ class TestEchoMetricsTwo(GutilsTestClass):
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])
         for o in output_files:
+            if o.endswith('_extra.nc'):
+                continue
             assert check_dataset(ds(file=o)) == 0
 
         # Echogram check
@@ -430,9 +432,9 @@ class TestEchoMetricsTwo(GutilsTestClass):
             _, ext = os.path.splitext(o)
             if ext in output_file_keys:
                 output_files[ext] += 1
-        assert output_files['.dat'] == 1
-        assert output_files['.png'] == 1
-        assert output_files['.echogram'] == 1
+        assert output_files['.dat'] == 1, "expected 1 data file"
+        assert output_files['.png'] == 1, "expected 1 echogram image"
+        assert output_files['.echogram'] == 1, "expected 1 echogram file"
 
         # Passive test 'teledyne' module from echotools
         try:
@@ -677,7 +679,7 @@ class TestEchoMetricsFive(GutilsTestClass):
         )
         _ = merger.convert()
 
-        dat_files = [ p for p in os.listdir(self.ascii_path) if p.endswith('.dat')]
+        dat_files = [ p for p in os.listdir(self.ascii_path) if p.endswith('.dat') ]
         for ascii_file in dat_files:
             args = dict(
                 file=os.path.join(self.ascii_path, ascii_file),
@@ -698,25 +700,24 @@ class TestEchoMetricsFive(GutilsTestClass):
 
         for f in output_files:
             with nc4.Dataset(f) as ncd:
-                assert 'time' in ncd.variables
-                assert 'depth' in ncd.variables
-                assert 'lat' in ncd.variables
-                assert 'lon' in ncd.variables
-                assert 'salinity' in ncd.variables
-                assert 'pressure' in ncd.variables
-                assert 'temperature' in ncd.variables
-                assert 'profile_time' in ncd.variables
-                assert 'profile_lat' in ncd.variables
-                assert 'profile_lon' in ncd.variables
-                assert 'profile_id' in ncd.variables
-                assert 'sci_echodroid_aggindex' in ncd.variables
-                assert 'sci_echodroid_ctrmass' in ncd.variables
-                assert 'sci_echodroid_eqarea' in ncd.variables
-                assert 'sci_echodroid_inertia' in ncd.variables
-                assert 'sci_echodroid_propocc' in ncd.variables
-                assert 'sci_echodroid_sa' in ncd.variables
-                assert 'sci_echodroid_sv' in ncd.variables
-                assert 'echogram_sv' in ncd.variables
+                ncd_varlist = list(ncd.variables)
+                if f.endswith('rt.nc'):
+                    required_columns = [
+                        'time', 'depth', 'lat', 'lon', 'salinity', 'pressure',
+                        'temperature', 'profile_time', 'profile_lat', 'profile_lon',
+                        'profile_id'
+                    ]
+                    for rc in required_columns:
+                        assert rc in ncd_varlist, f"Column {rc} not found in {f}!"
+                if f.endswith('rt_extra.nc'):
+                    required_columns = [
+                        'sci_echodroid_aggindex', 'sci_echodroid_ctrmass',
+                        'sci_echodroid_eqarea', 'sci_echodroid_inertia',
+                        'sci_echodroid_propocc', 'sci_echodroid_sv',
+                        'echogram_sv'
+                    ]
+                    for rc in required_columns:
+                        assert rc in ncd_varlist, f"Column {rc} not found in {f}!"
 
         # Echogram check
         output_files = {
@@ -732,3 +733,216 @@ class TestEchoMetricsFive(GutilsTestClass):
         assert output_files['.dat'] == 10
         assert output_files['.png'] == 5
         assert output_files['.echogram'] == 5
+
+
+@pytest.mark.long
+class TestEchoMetricsSix(GutilsTestClass):
+
+    def setUp(self):
+        super().setUp()
+        self.binary_path = resource('slocum', 'echometrics6', 'rt', 'binary')
+        self.ascii_path = resource('slocum', 'echometrics6', 'rt', 'ascii')
+        self.netcdf_path = resource('slocum', 'echometrics6', 'rt', 'netcdf')
+        self.cache_path = resource('slocum', 'echometrics6', 'config')
+
+    def tearDown(self):
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+
+    def test_echogram(self):
+        merger = SlocumMerger(
+            self.binary_path,
+            self.ascii_path,
+            cache_directory=self.cache_path,
+            globs=['*'],
+            deployments_path=resource('slocum'),
+            template='slocum_dac'
+        )
+        _ = merger.convert()
+
+        dat_files = [ p for p in os.listdir(self.ascii_path) if p.endswith('.dat') ]
+        for ascii_file in dat_files:
+            args = dict(
+                file=os.path.join(self.ascii_path, ascii_file),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=True,
+                template='slocum_dac',
+                profile_id_type=1,
+                z_axis_method=1
+            )
+            create_dataset(**args)
+
+        assert os.path.exists(self.netcdf_path)
+        assert os.path.exists(self.ascii_path)
+
+        output_files = sorted(os.listdir(self.netcdf_path))
+        output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
+
+        for f in output_files:
+            with nc4.Dataset(f) as ncd:
+                ncd_varlist = list(ncd.variables)
+                if f.endswith('rt.nc'):
+                    required_columns = [
+                        'time', 'depth', 'lat', 'lon', 'salinity', 'pressure',
+                        'temperature', 'profile_time', 'profile_lat', 'profile_lon',
+                        'profile_id'
+                    ]
+                    for rc in required_columns:
+                        assert rc in ncd_varlist, f"Column {rc} not found in {f}!"
+                if f.endswith('rt_extra.nc'):
+                    required_columns = [
+                        'sci_echodroid_aggindex', 'sci_echodroid_ctrmass',
+                        'sci_echodroid_eqarea', 'sci_echodroid_inertia',
+                        'sci_echodroid_propocc', 'sci_echodroid_sv',
+                        'echogram_sv'
+                    ]
+                    for rc in required_columns:
+                        assert rc in ncd_varlist, f"Column {rc} not found in {f}!"
+
+        # Echogram check
+        output_files = {
+            '.dat': 0,
+            '.pq': 0,
+            '.png': 0
+        }
+        output_file_keys = output_files.keys()
+        for o in sorted(os.listdir(self.ascii_path)):
+            _, ext = os.path.splitext(o)
+            if ext in output_file_keys:
+                output_files[ext] += 1
+        assert output_files['.dat'] == 10, "expected 10 data files"
+        assert output_files['.png'] == 10, "expected 10 echogram images"
+        assert output_files['.pq'] == 10, "expected 10 parquet files"
+
+
+@pytest.mark.long
+class TestEchoMetricsSeven(GutilsTestClass):
+
+    def setUp(self):
+        super().setUp()
+        self.binary_path = resource('slocum', 'echometrics7', 'delayed', 'binary')
+        self.ascii_path = resource('slocum', 'echometrics7', 'delayed', 'ascii')
+        self.netcdf_path = resource('slocum', 'echometrics7', 'delayed', 'netcdf')
+        self.cache_path = resource('slocum', 'echometrics7', 'config')
+
+    def tearDown(self):
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+
+    def test_echogram(self):
+        merger = SlocumMerger(
+            self.binary_path,
+            self.ascii_path,
+            cache_directory=self.cache_path,
+            deployments_path=resource('slocum'),
+            globs=['*']
+        )
+        _ = merger.convert()
+
+        dat_files = [ p for p in os.listdir(self.ascii_path) if p.endswith('.dat')]
+        for ascii_file in dat_files:
+            args = dict(
+                file=os.path.join(self.ascii_path, ascii_file),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=True,
+                template='slocum_dac',
+                profile_id_type=1,
+                tsint=10,
+                filter_distance=1,
+                filter_points=5,
+                filter_time=10,
+                filter_z=1,
+                z_axis_method=2
+            )
+            create_dataset(**args)
+
+        assert os.path.exists(self.netcdf_path)
+
+        output_files = sorted(os.listdir(self.netcdf_path))
+        output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
+        assert len(output_files) == 20, "expected 20 output files"
+
+        # First profile
+        with nc4.Dataset(output_files[0]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1647789925, "First profile id does not match"
+
+        # Last profile
+        with nc4.Dataset(output_files[-1]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1647833177, "Last profile id does not match"
+
+        # Check netCDF file for compliance
+        ds = namedtuple('Arguments', ['file'])
+        for o in output_files:
+            if o.endswith('_extra.nc'):
+                continue
+            assert check_dataset(ds(file=o)) == 0
+
+
+@pytest.mark.long
+class TestEchoMetricsEight(GutilsTestClass):
+
+    def setUp(self):
+        super().setUp()
+        self.binary_path = resource('slocum', 'echometrics8', 'delayed', 'binary')
+        self.ascii_path = resource('slocum', 'echometrics8', 'delayed', 'ascii')
+        self.netcdf_path = resource('slocum', 'echometrics8', 'delayed', 'netcdf')
+        self.cache_path = resource('slocum', 'echometrics8', 'config')
+
+    def tearDown(self):
+        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+
+    def test_echogram(self):
+        merger = SlocumMerger(
+            self.binary_path,
+            self.ascii_path,
+            cache_directory=self.cache_path,
+            deployments_path=resource('slocum'),
+            globs=['*']
+        )
+        _ = merger.convert()
+
+        dat_files = [ p for p in os.listdir(self.ascii_path) if p.endswith('.dat')]
+        for ascii_file in dat_files:
+            args = dict(
+                file=os.path.join(self.ascii_path, ascii_file),
+                reader_class=SlocumReader,
+                deployments_path=resource('slocum'),
+                subset=True,
+                template='slocum_dac',
+                profile_id_type=1,
+                tsint=10,
+                filter_distance=1,
+                filter_points=5,
+                filter_time=10,
+                filter_z=1,
+                z_axis_method=2
+            )
+            create_dataset(**args)
+
+        assert os.path.exists(self.netcdf_path)
+
+        output_files = sorted(os.listdir(self.netcdf_path))
+        output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
+        assert len(output_files) == 20
+
+        # First profile
+        with nc4.Dataset(output_files[0]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1647789925, "First profile id does not match"
+
+        # Last profile
+        with nc4.Dataset(output_files[-1]) as ncd:
+            assert ncd.variables['profile_id'].ndim == 0
+            assert ncd.variables['profile_id'][0] == 1647833177, "Last profile id does not match"
+
+        # Check netCDF file for compliance
+        ds = namedtuple('Arguments', ['file'])
+        for o in output_files:
+            if o.endswith('_extra.nc'):
+                continue
+            assert check_dataset(ds(file=o)) == 0

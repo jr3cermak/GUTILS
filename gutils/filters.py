@@ -113,13 +113,13 @@ def process_dataset(file,
         raise ValueError('Must specify path to combined ASCII file')
 
     try:
-        reader = reader_class(file)
+        reader = reader_class(file, kwargs=extra_kwargs)
         data = reader.standardize(z_axis_method=z_axis_method)
 
         # The data section is also passed to extras processing.
         # In certain circumstances, the dimension for certain
         # variables are reassigned with the extras dimension.
-        extras, data = reader.extras(data, **extra_kwargs)
+        extras, data = reader.extras(data)
 
         if 'z' not in data.columns:
             L.warning("No Z axis found - Skipping {}".format(file))

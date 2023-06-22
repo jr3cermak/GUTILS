@@ -21,6 +21,7 @@ from pocean.utils import (
 
 import logging
 L = logging.getLogger(__name__)
+L.setLevel(logging.INFO)
 
 __version__ = "3.2.0"
 

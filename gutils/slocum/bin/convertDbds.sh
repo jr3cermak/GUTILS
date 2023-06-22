@@ -100,7 +100,7 @@ dba_extension='dat';
 # Process options
 # while getopts hgqpmf:c:e:b:y::r:: option
 # while getopts hf:c:me:b:y::t:r:n::gi:qp option
-while getopts hf:c:me:b:r:y:t:r:n:i:C:qpg option
+while getopts hf:c:me:b:r:y:t:r:n:i:C:V:L:qpg option
 do
 
     case "$option" in
@@ -135,6 +135,12 @@ do
             ;;
         "n")
             echogramBins=$OPTARG;
+            ;;
+        "L")
+            dBLimits=$OPTARG;
+            ;;
+        "V")
+            vbsBins=$OPTARG;
             ;;
         "g")
             computeEchograms=1;
@@ -218,6 +224,21 @@ then
     echo "Setting default echogramRange: 60.0" >&1;
     echosounderRange=60.0
 fi
+if [ ! -n "$echogramBins" ]
+then
+    echo "Setting default echogramBins: 20" >&1;
+    echosounderBins=20
+fi
+if [ ! -n "$dBLimits" ]
+then
+    echo "Setting default dBLimits: [-30.0, -80.0]" >&1;
+    dBLimits="[-30.0, -80.0]"
+fi
+if [ ! -n "$vbsBins" ]
+then
+    echo "Setting default vbsBins: [-34, -40, -46, -52, -58, -64, -70]" >&1;
+    vbsBins="[-34, -40, -46, -52, -58, -64, -70]"
+fi
 if [ ! -n "$computeEchogramImages" ]
 then
     echo "Setting default computeEchogramImages: None" >&1;
@@ -281,6 +302,8 @@ fi
 [ -z "$quiet" ] && echo "echogramType: $echogramType";
 [ -z "$quiet" ] && echo "echogramBins: $echogramBins";
 [ -z "$quiet" ] && echo "echogramRange: $echogramRange";
+[ -z "$quiet" ] && echo "dBLimits: $dBLimits";
+[ -z "$quiet" ] && echo "vbsBins: $vbsBins";
 [ -z "$quiet" ] && echo "echogramColormap: $echogramColormap";
 [ -z "$quiet" ] && echo "computeEchograms: $computeEchograms";
 [ -z "$quiet" ] && echo "computeEchogramImages: $computeEchogramImages";
@@ -452,7 +475,9 @@ do
                 --csvHeader \
                 --echogramRange "$echogramRange" \
                 --echogramBins "$echogramBins" \
-                --title "${segment}"
+                --dBLimits "$dBLimits" \
+                --vbsBins "$vbsBins" \
+                --title "${segment} (plottype)"
 
             status=$(mv ${tmpDir}/*.echogram $ascDest 2>&1);
         fi
@@ -468,8 +493,10 @@ do
                 --imageOut "${tmpDir}/${dbdSeg}_${asciiExt}.png" \
                 --echogramRange "$echogramRange" \
                 --echogramBins "$echogramBins" \
+                --dBLimits "$dBLimits" \
+                --vbsBins "$vbsBins" \
                 --plotType "$computeEchogramImages" \
-                --title "${segment}"
+                --title "${segment} (plottype)"
 
             status=$(mv ${tmpDir}/*.png $ascDest 2>&1);
         fi
