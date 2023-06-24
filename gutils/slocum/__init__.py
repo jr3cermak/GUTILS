@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import datetime
+import dbdreader
 import os
+import pyarrow
 import sys
 import shutil
 import warnings
@@ -9,7 +11,6 @@ from pathlib import Path
 from tempfile import mkdtemp
 from collections import OrderedDict
 
-import dbdreader
 import numpy as np
 import pandas as pd
 import pyarrow.parquet as pq
@@ -153,7 +154,7 @@ class SlocumReader(object):
                 try:
                     from gutils.slocum.echotools import teledyne
                     have_teledyne = True
-                except:
+                except ModuleNotFoundError:
                     L.error("Echotools teledyne python package missing.")
 
                 if have_teledyne:
@@ -208,7 +209,7 @@ class SlocumReader(object):
                         L.debug(f"Echogram read via parquet: {segment}")
                         for i in range(0, len(ECHOGRAM_CSV_COLUMNS)):
                             echogram_data[ECHOGRAM_CSV_COLUMNS[i]] =\
-                                glider.data['spreadsheet'][:,i]
+                                glider.data['spreadsheet'][:, i]
                         echogram_data['echogram_time'] = pd.to_datetime(
                             echogram_data['echogram_time'], unit='s', origin='unix'
                         )
@@ -216,7 +217,7 @@ class SlocumReader(object):
                     # Determine if graphics need to be generated
                     if enable_image:
                         # Handle image: send to stdout or write to file
-                        image_file = f"segment_plottype.png"
+                        image_file = "segment_plottype.png"
                         glider.args['plotType'] = "binned,profile"
                         glider.args['outDir'] = os.path.dirname(self.ascii_file)
                         glider.args['imageOut'] = image_file
@@ -336,10 +337,10 @@ class SlocumReader(object):
                 try:
                     df = pq.read_table(self.ascii_file).to_pandas()
                     read_ok = True
-                except (ArrowInvalid):
+                except (pyarrow.ArrowInvalid):
                     L.error(f"Unable to read parquet file {self.ascii_file}")
 
-            if not(read_ok):
+            if not read_ok:
                 # File does not exist, return empty objects
                 return metadata, pd.DataFrame()
 
@@ -611,7 +612,6 @@ class SlocumMerger(object):
                 )
             )
 
-
         def slocum_binary_sorter(x):
             """ Sort slocum binary files correctly, using leading zeros.leading """
             'usf-bass-2014-048-2-1.tbd -> 2014_048_00000002_000000001'
@@ -672,11 +672,9 @@ class SlocumMerger(object):
         # of a reader.
         self.extra_kwargs = self.attrs.pop('extra_kwargs', {})
 
-
     def __del__(self):
         # Remove tmpdir
         shutil.rmtree(self.tmpdir, ignore_errors=True)
-
 
     def block_read(self, dbd, duplicate_columns=dict()):
         """ Block read dbdreader information to pandas """
@@ -747,7 +745,6 @@ class SlocumMerger(object):
         fn.close()
         return (full_filename, filename_extension, is_dbd, cac)
 
-
     def convert(self):
         # Convert DBDs: self.extra_kwargs
         #  (1) ascii: enable_parquet: false
@@ -789,12 +786,11 @@ class SlocumMerger(object):
 
             dbdCount = 0
             dbdRoot = self.tmpdir
-            local_cac_dir = os.path.join(dbdRoot, 'cache')
             for dbdSource in os.listdir(self.tmpdir):
                 fliSource = os.path.join(self.tmpdir, dbdSource)
 
                 # Files only
-                if not(os.path.isfile(fliSource)):
+                if not os.path.isfile(fliSource):
                     continue
 
                 # File must be of type data
@@ -802,7 +798,7 @@ class SlocumMerger(object):
                 command_output, return_code = generate_stream(pargs)
                 if return_code == 0:
                     output = command_output.read().strip()
-                    if not(output.endswith('data')):
+                    if not output.endswith('data'):
                         continue
                 else:
                     continue
@@ -817,7 +813,7 @@ class SlocumMerger(object):
                 # Get the real extension from the binary file header
                 dbdSeg, fType, is_dbd, cac = self.read_header(fliSource)
 
-                if not(is_dbd.startswith('DBD')):
+                if not is_dbd.startswith('DBD'):
                     L.error(f"Invalid flight source file: {dbdSource}")
                     continue
 
@@ -873,7 +869,7 @@ class SlocumMerger(object):
                 # a *.pq file and link with to *.dat file
                 try:
                     os.symlink(pqFile, datFile)
-                except (FileExistsError) as e:
+                except FileExistsError:
                     L.error(f"Symlink already exists for {datFile}")
         else:
             # Run conversion script
@@ -892,6 +888,11 @@ class SlocumMerger(object):
             echograms_attrs = self.extra_kwargs.get('echograms', {})
             enable_ascii = echograms_attrs.get('enable_ascii', False)
             enable_image = echograms_attrs.get('enable_image', False)
+            enable_debug = echograms_attrs.get('enable_debug', False)
+
+            if enable_debug:
+                pargs.remove('-q')
+                pargs.append('-D')
 
             if enable_ascii:
                 # Perform echograms if this ASCII file matches the deployment
@@ -951,6 +952,9 @@ class SlocumMerger(object):
 
             # Process returned files
             command_output_string = command_output.read()
+            if enable_debug:
+                L.setLevel(logging.DEBUG)
+                L.debug(command_output_string)
             output_files = command_output_string.split('\n')
 
             # iterate and every time we hit a .dat file we return the cache

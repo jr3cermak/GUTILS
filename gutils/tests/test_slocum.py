@@ -412,7 +412,7 @@ class TestEchoMetricsTwo(GutilsTestClass):
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
             # first time in the last ecodroid profile
-            assert ncd.variables['profile_id'][0] == 1679577298
+            assert ncd.variables['profile_id'][0] == 1679577296
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])
@@ -489,9 +489,9 @@ class TestEchoMetricsTwo(GutilsTestClass):
             #print("with the columns in the first row: [time, depth, Sv]")
             #print(echogram_numpy[0, :])
             #print()
-            assert echogram_numpy[0, 0] == 1679577318.4577026
-            assert echogram_numpy[0, 1] == 245.7657470703125
-            assert echogram_numpy[0, 2] == -73.0
+            assert echogram_numpy[0, 0] == 1679577296.4503784
+            assert echogram_numpy[0, 1] == 246.88267517089844
+            assert echogram_numpy[0, 2] == -31.0
 
             # Convert the echogram numpy object to pandas and set the time
             # column as an index.
@@ -512,9 +512,9 @@ class TestEchoMetricsTwo(GutilsTestClass):
             #print("The first row of the xarray data frame:")
             #print(echogram_xarray.isel(time=0))
 
-        except BaseException as e:
+        except Exception:
             print("WARNING: echotools `teledyne` test silently failed.")
-            print(e)
+            raise
 
 
 @pytest.mark.long
@@ -592,6 +592,9 @@ class TestEchoMetricsFour(GutilsTestClass):
         shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
+        """
+        This test contains empty echograms potentially from a bad startup sequence.
+        """
         merger = SlocumMerger(
             self.binary_path,
             self.ascii_path,
@@ -621,21 +624,23 @@ class TestEchoMetricsFour(GutilsTestClass):
         # Check number of profiles in netcdf directory
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 12
+        assert len(output_files) == 8, "Expected 8 netcdf files."
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1647110555
+            assert ncd.variables['profile_id'][0] == 1647114323, "First profile id does not match"
 
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1647141015
+            assert ncd.variables['profile_id'][0] == 1647141150, "Last profile id does not match"
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])
         for o in output_files:
+            if o.endswith("_extra.nc"):
+                continue
             assert check_dataset(ds(file=o)) == 0
 
         # Echogram check
@@ -649,9 +654,9 @@ class TestEchoMetricsFour(GutilsTestClass):
             _, ext = os.path.splitext(o)
             if ext in output_file_keys:
                 output_files[ext] += 1
-        assert output_files['.dat'] == 10
-        assert output_files['.png'] == 0
-        assert output_files['.echogram'] == 0
+        assert output_files['.dat'] == 10, "Expected 10 data files"
+        assert output_files['.png'] == 0, "No echogram graphics expected"
+        assert output_files['.echogram'] == 4, "Expected 4 echograms"
 
 
 @pytest.mark.long

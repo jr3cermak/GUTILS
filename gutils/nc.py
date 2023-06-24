@@ -14,7 +14,6 @@ from pathlib import Path
 from datetime import datetime
 from collections import OrderedDict
 
-import numpy as np
 import pandas as pd
 import netCDF4 as nc4
 from compliance_checker.runner import ComplianceChecker, CheckSuite

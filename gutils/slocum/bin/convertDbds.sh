@@ -18,7 +18,7 @@ NAME
     $app - Convert and merge native Slocum glider binary flight and science data files
 
 SYNOPSIS
-    $app [-h] [-f SENSOR_LIST] [-c DBD_CACHE_DIR] [-m] [-e EXTENSION] [-b TWRC_EXE_DIR] [-y PYTHON_PATH] [-g] [-t EGRAM_TYPE] [-r EGRAM_RANGE] [-n EGRAM_BINS] [-q] SOURCEDIR DESTDIR
+    $app [-h] [-f SENSOR_LIST] [-c DBD_CACHE_DIR] [-m] [-e EXTENSION] [-b TWRC_EXE_DIR] [-y PYTHON_PATH] [-D] [-g] [-t EGRAM_TYPE] [-r EGRAM_RANGE] [-n EGRAM_BINS] [-L EGRAM_DB_LIMITS ] [-V EGRAM_VBS_BINS] [-q] SOURCEDIR DESTDIR
 
 DESCRIPTION
     Convert and merge all binary *.[demnst]bd files in SOURCEDIR and write the
@@ -63,6 +63,9 @@ DESCRIPTION
     -y FILE
         Path to the python interpreter to use for the echogram calculations
 
+    -D
+        Enable echotools debugging
+
     -g
         Flag to decode/compute echograms from slocum files (can be slow)
 
@@ -84,6 +87,12 @@ DESCRIPTION
         Number of echogram bins, used for determining
         bin range.
 
+    -L EGRAM_DB_LIMITS
+        Define min and max range of egram values
+
+    -V EGRAM_VBS_BINS
+        Define vbs(dB) bins for egrams
+
     -q
         Suppress STDOUT
 
@@ -100,7 +109,7 @@ dba_extension='dat';
 # Process options
 # while getopts hgqpmf:c:e:b:y::r:: option
 # while getopts hf:c:me:b:y::t:r:n::gi:qp option
-while getopts hf:c:me:b:r:y:t:r:n:i:C:V:L:qpg option
+while getopts hf:c:me:b:r:y:t:r:n:i:C:V:L:qpgD option
 do
 
     case "$option" in
@@ -141,6 +150,9 @@ do
             ;;
         "V")
             vbsBins=$OPTARG;
+            ;;
+        "D")
+            echotools_debug="--debug"
             ;;
         "g")
             computeEchograms=1;
@@ -238,6 +250,11 @@ if [ ! -n "$vbsBins" ]
 then
     echo "Setting default vbsBins: [-34, -40, -46, -52, -58, -64, -70]" >&1;
     vbsBins="[-34, -40, -46, -52, -58, -64, -70]"
+fi
+if [ ! -n "$echogram_debug" ]
+then
+    echo "Setting default echogram_debug: None" >&1;
+    echogram_debug=""
 fi
 if [ ! -n "$computeEchogramImages" ]
 then
@@ -477,7 +494,7 @@ do
                 --echogramBins "$echogramBins" \
                 --dBLimits "$dBLimits" \
                 --vbsBins "$vbsBins" \
-                --title "${segment} (plottype)"
+                --title "${segment} (plottype)" ${echotools_debug}
 
             status=$(mv ${tmpDir}/*.echogram $ascDest 2>&1);
         fi
@@ -496,7 +513,7 @@ do
                 --dBLimits "$dBLimits" \
                 --vbsBins "$vbsBins" \
                 --plotType "$computeEchogramImages" \
-                --title "${segment} (plottype)"
+                --title "${segment} (plottype)" ${echotools_debug}
 
             status=$(mv ${tmpDir}/*.png $ascDest 2>&1);
         fi

@@ -93,8 +93,10 @@ Command line arguments
                           validation.
 """
 
-import os, sys, datetime, glob, json
 import argparse
+import glob
+import os
+import sys
 
 # Teledyne Webb generic python classes
 # and functions
@@ -102,11 +104,12 @@ import argparse
 try:
     # Try to import for GUTILS first
     import teledyne
-except:
+except ModuleNotFoundError:
     # This is the conventional method for echotools
     from echotools.parsers.slocum import teledyne
 
 # Functions
+
 
 def printArgs(args):
     '''
@@ -149,12 +152,14 @@ def printAttributes(myObj):
             continue
         print("  %s: %s" % (att, getattr(myObj, att)))
 
+
 def showHelp(parser):
     '''
     This prints the program description and arguments to standard output and exits.
     '''
     parser.print_help()
     sys.exit()
+
 
 def sussFileType(args):
     '''
@@ -164,6 +169,7 @@ def sussFileType(args):
     #print("ARGS:",args)
 
     return None
+
 
 # Main Program
 
@@ -190,10 +196,10 @@ on a single file or a whole deployment of files.
     parser.add_argument("--outDir", help="output directory for csv and plot files", type=str, default=None)
     parser.add_argument("--debug", help="(flag) show extra debugging for this python script; default False", action="store_true", default=False)
     parser.add_argument("--echogramBins",
-            help="Echogram bins; default 20", type=int, default=None)
+                        help="Echogram bins; default 20", type=int, default=None)
     parser.add_argument("--echogramRange",
-            help="Echogram range; default -60.0 (meters) instrument facing up; positive values instrument facing down",
-            type=float, default=None)
+                        help="Echogram range; default -60.0 (meters) instrument facing up; positive values instrument facing down",
+                        type=float, default=None)
     parser.add_argument("--plotType", help="Use one or more of binned, scatter, pcolormesh or all; default binned", type=str, default="binned")
     parser.add_argument("--binnedDepthLabels", help="(flag) Use the original depth bin labels instead of the adjusted depth labels for the time/depth binned plot; default False", action="store_true", default=False)
     parser.add_argument("--title", help="optional figure title; default None", type=str)
@@ -218,9 +224,9 @@ on a single file or a whole deployment of files.
 
     file_type = args.get('t')
     allowed_file_types = ['sfmc', 'rt', 'delayed']
-    if not(file_type in allowed_file_types):
+    if file_type not in allowed_file_types:
         file_type = sussFileType(args)
-        if not(file_type in allowed_file_types):
+        if file_type not in allowed_file_types :
             print("ERROR: A file type is required (-t):", allowed_file_types)
             print("")
             parser.print_help()
@@ -264,9 +270,9 @@ on a single file or a whole deployment of files.
     if args['cacheDir'] is None:
         args['cacheDir'] = os.getcwd()
     else:
-       if not(os.path.isdir(args['cacheDir'])):
-           print("ERROR: Glider cache directory not found: %s\n" % (args['cacheDir']))
-           showHelp(parser)
+        if not os.path.isdir(args['cacheDir']):
+            print("ERROR: Glider cache directory not found: %s\n" % (args['cacheDir']))
+            showHelp(parser)
 
     # Make sure the Teledyne Webb linux binary is present
     ''' deprecated
@@ -357,17 +363,17 @@ on a single file or a whole deployment of files.
                             vbsBins = eval(vbsBins)
                             if len(vbsBins) != 7:
                                 vbsBins = None
-                        except:
+                        except SyntaxError:
                             vbsBins = None
 
-            if not(isinstance(vbsBins, list)):
+            if not isinstance(vbsBins, list):
                 vbsBins = None
 
             args['vbsBins'] = vbsBins
 
         # Last ditch effort to assign the defaults
         if args.get('vbsBins', None) is None:
-            args['vbsBins'] = [-34,-40,-46,-52,-58,-64,-70]
+            args['vbsBins'] = [-34, -40, -46, -52, -58, -64, -70]
 
         # Convert dBLimits to a python list() if a str is provided
         if args.get('dBLimits', None):
@@ -379,17 +385,17 @@ on a single file or a whole deployment of files.
                             dBLimits = eval(dBLimits)
                             if len(dBLimits) != 2:
                                 dBLimits = None
-                        except:
+                        except SyntaxError:
                             dBLimits = None
 
-            if not(isinstance(dBLimits, list)):
+            if not isinstance(dBLimits, list):
                 dBLimits = None
 
             args['dBLimits'] = dBLimits
 
         # Last ditch effort to assign the defaults
         if args.get('dBLimits', None) is None:
-            args['dBLimits'] = [-30.0,-80.0]
+            args['dBLimits'] = [-30.0, -80.0]
 
         # Final arguments
         if debugFlag:

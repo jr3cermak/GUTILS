@@ -1,24 +1,28 @@
-import io, os, sys, struct, datetime
+import datetime
+import dbdreader
+import json
+import io
 import logging
+import matplotlib
+import os
+import sys
+import struct
 import subprocess
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 import matplotlib.dates as dates
-import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
-import json
 import xarray as xr
 import pandas as pd
-# https://github.com/smerckel/dbdreader
-import dbdreader
+
+matplotlib.use('Agg')
 
 # scale down logging for matplotlib and dbdreader
 logging.getLogger("dbdreader").setLevel(logging.WARNING)
 logging.getLogger("matplotlib").setLevel(logging.WARNING)
+
 
 class Glider:
     '''
@@ -129,80 +133,81 @@ class Glider:
         # Colormap 1: ek80
         # based on colors from https://github.com/EchoJulia/EchogramColorSchemes.jl
         ek80_colors = [
-            [156/255, 138/255, 168/255],
-            [141/255, 125/255, 150/255],
-            [126/255, 113/255, 132/255],
-            [112/255, 100/255, 114/255],
-            [97/255, 88/255, 96/255],
-            [82/255, 76/255, 78/255],
-            [68/255, 76/255, 94/255],
-            [53/255, 83/255, 129/255],
-            [39/255, 90/255, 163/255],
-            [24/255, 96/255, 197/255],
-            [9/255, 103/255, 232/255],
-            [9/255, 102/255, 249/255],
-            [9/255, 84/255, 234/255],
-            [15/255, 66/255, 219/255],
-            [22/255, 48/255, 204/255],
-            [29/255, 30/255, 189/255],
-            [36/255, 12/255, 174/255],
-            [37/255, 49/255, 165/255],
-            [38/255, 86/255, 156/255],
-            [39/255, 123/255, 147/255],
-            [40/255, 160/255, 138/255],
-            [41/255, 197/255, 129/255],
-            [37/255, 200/255, 122/255],
-            [30/255, 185/255, 116/255],
-            [24/255, 171/255, 111/255],
-            [17/255, 156/255, 105/255],
-            [10/255, 141/255, 99/255],
-            [21/255, 139/255, 92/255],
-            [68/255, 162/255, 82/255],
-            [114/255, 185/255, 72/255],
-            [161/255, 208/255, 62/255],
-            [208/255, 231/255, 52/255],
-            [255/255, 255/255, 42/255],
-            [254/255, 229/255, 43/255],
-            [253/255, 204/255, 44/255],
-            [253/255, 179/255, 45/255],
-            [252/255, 153/255, 46/255],
-            [252/255, 128/255, 47/255],
-            [252/255, 116/255, 63/255],
-            [252/255, 110/255, 85/255],
-            [252/255, 105/255, 108/255],
-            [252/255, 99/255, 130/255],
-            [252/255, 93/255, 153/255],
-            [252/255, 85/255, 160/255],
-            [252/255, 73/255, 139/255],
-            [253/255, 61/255, 118/255],
-            [253/255, 48/255, 96/255],
-            [254/255, 36/255, 75/255],
-            [255/255, 24/255, 54/255],
-            [240/255, 30/255, 52/255],
-            [226/255, 37/255, 51/255],
-            [212/255, 44/255, 50/255],
-            [198/255, 51/255, 49/255],
-            [184/255, 57/255, 48/255],
-            [176/255, 57/255, 49/255],
-            [170/255, 54/255, 51/255],
-            [165/255, 51/255, 54/255],
-            [159/255, 47/255, 56/255],
-            [153/255, 44/255, 58/255],
-            [150/255, 39/255, 56/255],
-            [151/255, 31/255, 45/255],
-            [153/255, 23/255, 33/255],
-            [154/255, 15/255, 22/255],
-            [155/255, 7/255, 11/255],
+            [156 / 255, 138 / 255, 168 / 255],
+            [141 / 255, 125 / 255, 150 / 255],
+            [126 / 255, 113 / 255, 132 / 255],
+            [112 / 255, 100 / 255, 114 / 255],
+            [97 / 255, 88 / 255, 96 / 255],
+            [82 / 255, 76 / 255, 78 / 255],
+            [68 / 255, 76 / 255, 94 / 255],
+            [53 / 255, 83 / 255, 129 / 255],
+            [39 / 255, 90 / 255, 163 / 255],
+            [24 / 255, 96 / 255, 197 / 255],
+            [9 / 255, 103 / 255, 232 / 255],
+            [9 / 255, 102 / 255, 249 / 255],
+            [9 / 255, 84 / 255, 234 / 255],
+            [15 / 255, 66 / 255, 219 / 255],
+            [22 / 255, 48 / 255, 204 / 255],
+            [29 / 255, 30 / 255, 189 / 255],
+            [36 / 255, 12 / 255, 174 / 255],
+            [37 / 255, 49 / 255, 165 / 255],
+            [38 / 255, 86 / 255, 156 / 255],
+            [39 / 255, 123 / 255, 147 / 255],
+            [40 / 255, 160 / 255, 138 / 255],
+            [41 / 255, 197 / 255, 129 / 255],
+            [37 / 255, 200 / 255, 122 / 255],
+            [30 / 255, 185 / 255, 116 / 255],
+            [24 / 255, 171 / 255, 111 / 255],
+            [17 / 255, 156 / 255, 105 / 255],
+            [10 / 255, 141 / 255, 99 / 255],
+            [21 / 255, 139 / 255, 92 / 255],
+            [68 / 255, 162 / 255, 82 / 255],
+            [114 / 255, 185 / 255, 72 / 255],
+            [161 / 255, 208 / 255, 62 / 255],
+            [208 / 255, 231 / 255, 52 / 255],
+            [255 / 255, 255 / 255, 42 / 255],
+            [254 / 255, 229 / 255, 43 / 255],
+            [253 / 255, 204 / 255, 44 / 255],
+            [253 / 255, 179 / 255, 45 / 255],
+            [252 / 255, 153 / 255, 46 / 255],
+            [252 / 255, 128 / 255, 47 / 255],
+            [252 / 255, 116 / 255, 63 / 255],
+            [252 / 255, 110 / 255, 85 / 255],
+            [252 / 255, 105 / 255, 108 / 255],
+            [252 / 255, 99 / 255, 130 / 255],
+            [252 / 255, 93 / 255, 153 / 255],
+            [252 / 255, 85 / 255, 160 / 255],
+            [252 / 255, 73 / 255, 139 / 255],
+            [253 / 255, 61 / 255, 118 / 255],
+            [253 / 255, 48 / 255, 96 / 255],
+            [254 / 255, 36 / 255, 75 / 255],
+            [255 / 255, 24 / 255, 54 / 255],
+            [240 / 255, 30 / 255, 52 / 255],
+            [226 / 255, 37 / 255, 51 / 255],
+            [212 / 255, 44 / 255, 50 / 255],
+            [198 / 255, 51 / 255, 49 / 255],
+            [184 / 255, 57 / 255, 48 / 255],
+            [176 / 255, 57 / 255, 49 / 255],
+            [170 / 255, 54 / 255, 51 / 255],
+            [165 / 255, 51 / 255, 54 / 255],
+            [159 / 255, 47 / 255, 56 / 255],
+            [153 / 255, 44 / 255, 58 / 255],
+            [150 / 255, 39 / 255, 56 / 255],
+            [151 / 255, 31 / 255, 45 / 255],
+            [153 / 255, 23 / 255, 33 / 255],
+            [154 / 255, 15 / 255, 22 / 255],
+            [155 / 255, 7 / 255, 11 / 255],
         ]
         ek80_cm = ListedColormap(ek80_colors)
-        ek80_cm.set_over([255/255, 255/255,255/255])
-        ek80_cm.set_under([255/255, 255/255,255/255])
+        ek80_cm.set_over([255 / 255, 255 / 255, 255 / 255])
+        ek80_cm.set_under([255 / 255, 255 / 255, 255 / 255])
         self.cmaps['ek80'] = ek80_cm
 
         # Colormap 2
 
         # Set the default SIMRAD EK500 color table plus grey for NoData.
-        simrad_color_table = [(1, 1, 1),
+        simrad_color_table = [
+            (1, 1, 1),
             (0.6235, 0.6235, 0.6235),
             (0.3725, 0.3725, 0.3725),
             (0, 0, 1),
@@ -214,16 +219,17 @@ class Glider:
             (1, 0, 0.7490),
             (1, 0, 0),
             (0.6509, 0.3255, 0.2353),
-            (0.4705, 0.2353, 0.1568)]
-        simrad_cmap = (LinearSegmentedColormap.from_list
-            ('simrad', simrad_color_table))
+            (0.4705, 0.2353, 0.1568)
+        ]
+        simrad_cmap = (
+            LinearSegmentedColormap.from_list('simrad', simrad_color_table)
+        )
         simrad_cmap.set_bad(color='lightgrey')
         #simrad_cmap.set_bad(color='k')
         self.cmaps['simrad'] = simrad_cmap
 
         self.defaultCmapType = 'ek80'
         self.availableCmapTypes = list(self.cmaps.keys())
-
 
     # General functions
 
@@ -235,7 +241,6 @@ class Glider:
 
         fn, ext = os.path.splitext(fname)
         return f"{fn}_{word}{ext}"
-
 
     def calculateMissionPlan(self):
         '''
@@ -266,7 +271,6 @@ class Glider:
             if self.debugFlag:
                 print("DEBUG: MISSION PLAN:", self.mission_plan)
 
-
     def createFileInventory(self, fileList, cache_dir):
         '''
         Create a slocum file inventory from a file list.  This list must include
@@ -284,7 +288,7 @@ class Glider:
         ct = -1
         for infile in fileList:
             abspath = os.path.abspath(os.path.dirname(os.path.relpath(infile)))
-            if not(abspath in self.data['inventory_paths']):
+            if abspath not in self.data['inventory_paths']:
                 ct = ct + 1
                 plabel = f"PATH{ct:04d}"
                 self.data['inventory_paths'][abspath] = plabel
@@ -327,7 +331,6 @@ class Glider:
         self.data['inventory'] = df
         return
 
-
     def dateFormat(self, dttmObj=datetime.datetime.utcnow(), fmt="%Y-%m-%dT%H:%M:%SZ"):
         '''
         Format a given datetime.datetime object into a string of the
@@ -336,7 +339,6 @@ class Glider:
         '''
 
         return datetime.datetime.strftime(dttmObj, fmt)
-
 
     def filterFiles(self, start_time=None, end_time=None):
         '''
@@ -418,16 +420,15 @@ class Glider:
         # and pull through files that match the base file for
         # completeness.
         for gkey in groupList.keys():
-            match = "%s\." % (os.path.basename(gkey))
+            match = "%s\\." % (os.path.basename(gkey))
             ss1 = ds.loc[ds['File'].str.contains(match)]
             ss2 = df.loc[df['File'].str.contains(match)]
-            df = pd.concat([df,ss1,ss2]).drop_duplicates()
+            df = pd.concat([df, ss1, ss2]).drop_duplicates()
         inv.data['inventory'] = df
         fileList = inv.getFullFilenamesFromFileInventory()
         groupList = inv.groupFiles(fileList)
 
         return groupList, inv
-
 
     def findTimeInterval(self, timeAxis, plotType, ax, nticks=10):
         '''
@@ -437,9 +438,7 @@ class Glider:
         timeAxis is an array of timestamps in seconds.
         '''
 
-        xtickLocs = ax.get_xticks()
         newLocs = []
-        xtickLabels = ax.get_xticklabels()
         newLabels = []
 
         mint = timeAxis.min()
@@ -448,30 +447,30 @@ class Glider:
         bint = tott / len(timeAxis)
 
         tickIntervals = {
-                "1s": 1.0,
-                "2s": 2.0,
-                "5s": 5.0,
-                "10s": 10.0,
-                "20s": 20.0,
-                "30s": 30.0,
-                "1m": 60.0,
-                "2m": 120.0,
-                "5m": 300.0,
-                "10m": 600.0,
-                "20m": 1200.0,
-                "30m": 1800.0,
-                "1h": 3600.0,
-                "2h": 7200.0,
-                "3h": 10800.0,
-                "6h": 21600.0,
-                "12h": 43200.0,
-                "1d": 86400.0,
-                "2d": 172800.0,
-                "3d": 259200.0,
-                "5d": 432000.0,
-                "10d": 864000.0,
-                "20d": 1728000.0,
-                "30d": 2592000.0,
+            "1s": 1.0,
+            "2s": 2.0,
+            "5s": 5.0,
+            "10s": 10.0,
+            "20s": 20.0,
+            "30s": 30.0,
+            "1m": 60.0,
+            "2m": 120.0,
+            "5m": 300.0,
+            "10m": 600.0,
+            "20m": 1200.0,
+            "30m": 1800.0,
+            "1h": 3600.0,
+            "2h": 7200.0,
+            "3h": 10800.0,
+            "6h": 21600.0,
+            "12h": 43200.0,
+            "1d": 86400.0,
+            "2d": 172800.0,
+            "3d": 259200.0,
+            "5d": 432000.0,
+            "10d": 864000.0,
+            "20d": 1728000.0,
+            "30d": 2592000.0,
         }
 
         # Determine interval that is nticks or less
@@ -486,13 +485,13 @@ class Glider:
 
         # Get the fractional portion of the selected interval
         # and go back one step to begin timestamping.
-        fraction, whole = np.modf(timeAxis[0]/nsec)
+        fraction, whole = np.modf(timeAxis[0] / nsec)
         # If the fraction is small enough, just drop back an entire
         # interval
         if fraction < 0.005:
-            fraction = (fraction*nsec) + nsec
+            fraction = (fraction * nsec) + nsec
         else:
-            fraction = (fraction*nsec)
+            fraction = (fraction * nsec)
         taxis = timeAxis[0] - fraction
 
         # Test the time axis, if nsec >= 86400 and
@@ -507,10 +506,10 @@ class Glider:
             # Convert time axis to matplotlib values
             #mTimeAxis = dates.date2num(pd.to_datetime(timeAxis,unit='s'))
 
-            for i in range(0, int(nint)+1):
+            for i in range(0, int(nint) + 1):
                 taxis = taxis + nsec
                 ttime = datetime.datetime.utcfromtimestamp(taxis).strftime(time_format_string)
-                tloc = dates.date2num(pd.to_datetime(taxis,unit='s'))
+                tloc = dates.date2num(pd.to_datetime(taxis, unit='s'))
 
                 newLabels.append(ttime)
                 newLocs.append(tloc)
@@ -523,7 +522,7 @@ class Glider:
             # When given 56 xaxis points, the labels are arranged from
             # -10 to +60.
 
-            for i in range(0, int(nint)+1):
+            for i in range(0, int(nint) + 1):
                 taxis = taxis + nsec
                 ttime = datetime.datetime.utcfromtimestamp(taxis).strftime(time_format_string)
                 tloc = (taxis - timeAxis[0]) / bint
@@ -532,7 +531,6 @@ class Glider:
                 newLocs.append(tloc)
 
         return newLocs, newLabels
-
 
     def findTimeVariable(self, parameterList):
         '''
@@ -557,7 +555,6 @@ class Glider:
 
         return None
 
-
     def getFullFilenamesFromFileInventory(self):
         '''
         Using the loaded file inventory, return full file paths.
@@ -575,7 +572,6 @@ class Glider:
             full_file_list.append(full_path)
 
         return full_file_list
-
 
     def groupFiles(self, fileList):
         '''
@@ -603,7 +599,6 @@ class Glider:
                 groupList[fbase] = [fname]
 
         return groupList
-
 
     def loadFileInventory(self, fname):
         '''
@@ -647,7 +642,6 @@ class Glider:
 
         return
 
-
     def loadMetadata(self):
         '''
         This function generically loads deployment and other metadata required
@@ -659,7 +653,7 @@ class Glider:
                 sys.exit()
             return
         else:
-            if not(os.path.isdir(self.args['deploymentDir'])):
+            if not os.path.isdir(self.args['deploymentDir']):
                 print("ERROR: The deployment configuration directory was not found: %s" % (self.args['deploymentDir']))
                 if self.args.get('ncDir', None) is None:
                     print("ERROR: A deployment configuration directory required to write output to a netCDF file.")
@@ -670,16 +664,16 @@ class Glider:
             echotoolsFile = os.path.join(self.args['deploymentDir'], 'echotools.json')
             testLoad = json.load(open(echotoolsFile))
             self.echotools = testLoad
-        except:
-            print("ERROR: Unable to parse json echotools file: %s" % (echotoolsFile))
-            sys.exit()
+        except Exception:
+            print("WARNING: Unable to parse json echotools file: %s" % (echotoolsFile))
+            #sys.exit()
 
         # Attempt to read deployment.json
         try:
             deploymentFile = os.path.join(self.args['deploymentDir'], 'deployment.json')
             testLoad = json.load(open(deploymentFile))
             self.deployment = testLoad
-        except:
+        except Exception:
             print("ERROR: Unable to parse json deployment file: %s" % (deploymentFile))
             sys.exit()
 
@@ -698,7 +692,7 @@ class Glider:
                 sys.exit()
 
         if self.args.get('templateDir'):
-            if not(os.path.isdir(self.args['templateDir'])):
+            if not os.path.isdir(self.args['templateDir']):
                 print("ERROR: The template directory was not found: %s" % (self.args['templateDir']))
                 sys.exit()
 
@@ -707,7 +701,7 @@ class Glider:
                 templateFile = os.path.join(self.args['templateDir'], self.args['template'])
                 testLoad = json.load(open(templateFile))
                 self.template = testLoad
-            except:
+            except Exception:
                 print("ERROR: Unable to parse json template file: %s" % (templateFile))
                 sys.exit()
 
@@ -718,10 +712,9 @@ class Glider:
                 dacOverlayFile = os.path.join(self.args['deploymentDir'], self.args['dacOverlay'])
                 testLoad = json.load(open(dacOverlayFile))
                 self.dacOverlay = testLoad
-            except:
+            except Exception:
                 print("ERROR: Unable to parse json DAC overlay metadata file: %s" % (dacOverlayFile))
                 sys.exit()
-
 
     def nearest(self, array, val):
         '''
@@ -756,7 +749,6 @@ class Glider:
             idx = idx.argmin()
 
         return idx
-
 
     def saveFileInventory(self, invFile, sort_by_time=False):
         '''
@@ -801,14 +793,13 @@ class Glider:
 
         fo.close()
 
-
     def updateArgumentsFromMetadata(self):
         '''
         Adjust run time arguments based on metadata read by the glider class.
         This will only adjust arguments if self.deployment is set.
         '''
 
-        if not(self.deployment):
+        if not self.deployment:
             if self.debugFlag:
                 print("DEBUG: No deployment.conf file read.  No argument adjustments.")
             return self.args
@@ -854,9 +845,7 @@ class Glider:
 
         return self.args
 
-
     # Sorted function names here
-
 
     def stopToDebug(self):
         '''
@@ -868,9 +857,9 @@ class Glider:
         if self.debugFlag:
             try:
                 breakpoint()
-            except:
-                import pdb; pdb.set_trace()
-
+            except NameError:
+                import pdb
+                pdb.set_trace()
 
     def extractColumns(self, source, columns=[], ignoreNaNColumns=[], asDict=False):
         '''
@@ -912,11 +901,11 @@ class Glider:
                     ind = self.data['columns'][source].index(col)
                 if source == 'sbd':
                     ind = self.data['columns'][source].index(col)
-            except:
+            except Exception:
                 pass
 
             # Check for (1) non-existing column and no data
-            if not(col in self.data[source].keys()):
+            if col not in self.data[source].keys():
                 return None
             dataShape = self.data[source][col].shape
             if dataShape[0] == 0:
@@ -938,23 +927,22 @@ class Glider:
             ind = -1
             try:
                 ind = dataColumns.index(col)
-            except:
+            except Exception:
                 pass
 
             if ind != -1:
-                selectedData = selectedData[~np.isnan(selectedData[:,ind]),:]
+                selectedData = selectedData[~np.isnan(selectedData[:, ind]), :]
 
         # Split columns into a dictionary if requested
         if asDict:
             colCount = 0
             dictData = {}
             for col in columns:
-                dictData[col] = selectedData[:,colCount]
+                dictData[col] = selectedData[:, colCount]
                 colCount = colCount + 1
             selectedData = dictData
 
         return selectedData
-
 
     def handleSpreadsheet(self):
         '''
@@ -1003,9 +991,12 @@ class Glider:
                 if 'ebd' in self.data['timestamp']:
                     timeToUse = self.data['timestamp']['ebd']
 
-                outFilename = outFilename.replace('timestamp',
-                    self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
-                        fmt="%Y%m%d_%H%M%S"))
+                outFilename = outFilename.replace(
+                    'timestamp',
+                    self.dateFormat(
+                        datetime.datetime.utcfromtimestamp(timeToUse), fmt="%Y%m%d_%H%M%S"
+                    )
+                )
 
             # One last adjustment to CSV if reprocess is being used
             if self.data['process']:
@@ -1018,7 +1009,7 @@ class Glider:
                 else:
                     outptr = open(outFilename, "w")
                 stdoutFlag = False
-            except:
+            except Exception:
                 print("WARNING: Unable to open CSV output file (%s) for writing, skipping." % (self.args['csvOut']))
                 return
 
@@ -1029,7 +1020,7 @@ class Glider:
         for data in self.data['spreadsheet']:
             outptr.write("%f, %f, %f\n" % (data[0], data[1], data[2]))
 
-        if not(stdoutFlag):
+        if not stdoutFlag:
             outptr.close()
 
         return
@@ -1066,7 +1057,6 @@ class Glider:
         '''
         idx = int(reqDepth / depthBinSize) - minDepth
         return idx
-
 
     def handleImage(self):
         '''
@@ -1116,7 +1106,7 @@ class Glider:
             return
 
         # We need to know the time indexes for the graphics below
-        timeIndexes = np.unique(dataSpreadsheet[:,0])
+        timeIndexes = np.unique(dataSpreadsheet[:, 0])
 
         # Determine plot type requested
         # Default: binned
@@ -1130,7 +1120,7 @@ class Glider:
                 reqPlots = self.availablePlotTypes
             for reqPlot in reqPlots:
                 if reqPlot in self.availablePlotTypes:
-                    if not(reqPlot in plotTypes):
+                    if reqPlot not in plotTypes:
                         plotTypes.append(reqPlot)
                 # If stdout is selected, only process the first requested
                 # plot
@@ -1156,16 +1146,16 @@ class Glider:
         # Calculate how many depth pixels (bins) we need given spreadsheet data
         # minDepth = shallowest pixel
         # maxDepth = deepest pixel
-        minDepth = int(dataSpreadsheet[:,1].min() / depthBinSize)
-        maxDepth = int(np.ceil(dataSpreadsheet[:,1].max() / depthBinSize))
+        minDepth = int(dataSpreadsheet[:, 1].min() / depthBinSize)
+        maxDepth = int(np.ceil(dataSpreadsheet[:, 1].max() / depthBinSize))
 
         if self.debugFlag:
             print("Depth bins: Min(%d) Max(%d)" % (minDepth, maxDepth))
 
-        numberOfDepthPixels = (maxDepth-minDepth)+1
+        numberOfDepthPixels = (maxDepth - minDepth) + 1
         depthTicks = []
         for depthPixel in range(0, numberOfDepthPixels, 5):
-            startDepth = minDepth*depthBinSize + depthPixel*depthBinSize
+            startDepth = minDepth * depthBinSize + depthPixel * depthBinSize
             endDepth = startDepth + depthBinSize
             midPixelDepth = (startDepth + endDepth) / 2.0
             depthTicks.append(midPixelDepth)
@@ -1207,9 +1197,12 @@ class Glider:
                 if 'segment' in outFilename:
                     outFilename = outFilename.replace('segment', self.data['segment'])
                 if 'timestamp' in outFilename:
-                    outFilename = outFilename.replace('timestamp',
-                        self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
-                        fmt="%Y%m%d_%H%M%S"))
+                    outFilename = outFilename.replace(
+                        'timestamp',
+                        self.dateFormat(
+                            datetime.datetime.utcfromtimestamp(timeToUse),
+                            fmt="%Y%m%d_%H%M%S")
+                    )
 
             if plot_title:
                 if 'plottype' in plot_title:
@@ -1217,9 +1210,11 @@ class Glider:
                 if 'segment' in plot_title:
                     plot_title = plot_title.replace('segment', self.data['segment'])
                 if 'timestamp' in plot_title:
-                    plot_title = plot_title.replace('timestamp',
-                        self.dateFormat(datetime.datetime.utcfromtimestamp(timeToUse),
-                        fmt="%Y/%m/%d %H:%M:%S"))
+                    plot_title = plot_title.replace(
+                        'timestamp',
+                        self.dateFormat(
+                            datetime.datetime.utcfromtimestamp(timeToUse),
+                            fmt="%Y/%m/%d %H:%M:%S"))
 
             # One last adjustment to filename if reprocess is being used
             if self.data['process']:
@@ -1248,11 +1243,10 @@ class Glider:
                         plot_title = plot_title.replace('default', plotType)
             """
 
-
             # pcolormesh plot
             if plotType in ['pcolormesh']:
 
-                unique_times = np.unique(dataSpreadsheet[:,0])
+                unique_times = np.unique(dataSpreadsheet[:, 0])
                 # matrix size = (time, bins)
                 # matrix       => (matrix units)
                 # (xx, yy, zz) => (time, depth, dB)
@@ -1263,22 +1257,22 @@ class Glider:
                 tindex = -1
                 for tm in unique_times:
                     tindex = tindex + 1
-                    mask = (dataSpreadsheet[:,0] == tm)
-                    yyy = dataSpreadsheet[mask,1]
-                    yy[0:len(yyy),tindex] = yyy
+                    mask = (dataSpreadsheet[:, 0] == tm)
+                    yyy = dataSpreadsheet[mask, 1]
+                    yy[0:len(yyy), tindex] = yyy
                     # If not all the bins are represented, we have to add
                     # the depth shift to the missing bins just to make the
                     # matrix complete.
                     for i in range(len(yyy), self.mission_plan['bins']):
-                        yy[i,tindex] = yy[i-1,tindex] + self.mission_plan['bin_range']
-                    zzz = dataSpreadsheet[mask,2]
-                    zz[0:len(zzz),tindex] = zzz
+                        yy[i, tindex] = yy[i - 1, tindex] + self.mission_plan['bin_range']
+                    zzz = dataSpreadsheet[mask, 2]
+                    zz[0:len(zzz), tindex] = zzz
                     # If not all the bins are represented, fill blanks with NaN
                     for i in range(len(zzz), self.mission_plan['bins']):
-                        zz[i,tindex] = np.nan
+                        zz[i, tindex] = np.nan
 
                 xx = np.array(pd.to_datetime(xx.ravel(), unit='s'))\
-                    .reshape(len(unique_times),self.mission_plan['bins']).T
+                    .reshape(len(unique_times), self.mission_plan['bins']).T
 
                 fig, ax = plt.subplots(figsize=(5, 4))
 
@@ -1288,12 +1282,14 @@ class Glider:
                 #ax.xaxis.set_major_formatter(dates.DateFormatter('\n%m-%d-%Y'))
 
                 if 'dBLimits' in self.args:
-                    px = ax.pcolormesh(xx, yy, zz, shading='nearest',
+                    ax.pcolormesh(
+                        xx, yy, zz, shading='nearest',
                         vmin=dB_limit[1], vmax=dB_limit[0],
                         cmap=cmap,
                     )
                 else:
-                    px = ax.pcolormesh(xx, yy, zz, shading='nearest',
+                    ax.pcolormesh(
+                        xx, yy, zz, shading='nearest',
                         cmap=cmap,
                     )
 
@@ -1328,24 +1324,26 @@ class Glider:
 
                 # Replace time index with bin #
                 for timeIdx in timeIndexes:
-                    cond = np.where(scatterData[:,0]==timeIdx)[0]
+                    cond = np.where(scatterData[:, 0] == timeIdx)[0]
                     cond_min = cond.min()
-                    scatterData[cond,0] = cond - cond_min
+                    scatterData[cond, 0] = cond - cond_min
 
                 # Plot higher reflective echoes on top of plot
-                scatterData = scatterData[np.argsort(scatterData[:,2])]
+                scatterData = scatterData[np.argsort(scatterData[:, 2])]
 
                 # Mask any high data points that plot white over the image
                 # data.  Any pts < dB_limit[0]
-                mask = scatterData[:,2] > dB_limit[0]
+                mask = scatterData[:, 2] > dB_limit[0]
                 scatterData[mask, 2] = np.nan
 
                 fig, ax = plt.subplots(figsize=(3, 6))
 
-                im = plt.scatter(scatterData[:,0], scatterData[:,1], c=scatterData[:,2],
-                        cmap=cmap, norm=norm, s=dot_size)
+                plt.scatter(
+                    scatterData[:, 0], scatterData[:, 1], c=scatterData[:, 2],
+                    cmap=cmap, norm=norm, s=dot_size)
 
-                cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+                plt.colorbar(
+                    mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
                     ax=plt.gca(),
                     orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
                 plt.gca().invert_yaxis()
@@ -1363,7 +1361,7 @@ class Glider:
                 dot_size = 40.0
 
                 # Sort Sv(dB) from lowest to highest so higher values are plotted last
-                scatterData = dataSpreadsheet[np.argsort(dataSpreadsheet[:,2])]
+                scatterData = dataSpreadsheet[np.argsort(dataSpreadsheet[:, 2])]
 
                 # Plot simply x, y, z data (time, depth, dB)
                 fig, ax = plt.subplots(figsize=(5, 4))
@@ -1372,10 +1370,12 @@ class Glider:
                 #ax.xaxis.set_major_locator(dates.DayLocator(interval=1))    # every day
                 #ax.xaxis.set_major_formatter(dates.DateFormatter('\n%m-%d-%Y'))
                 ax.set_facecolor('lightgray')
-                im = plt.scatter(pd.to_datetime(scatterData[:,0], unit='s'), scatterData[:,1], c=scatterData[:,2],
-                        cmap=cmap, norm=norm, s=dot_size)
+                plt.scatter(
+                    pd.to_datetime(scatterData[:, 0], unit='s'), scatterData[:, 1], c=scatterData[:, 2],
+                    cmap=cmap, norm=norm, s=dot_size)
                 #cbar = plt.colorbar(orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
-                cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+                plt.colorbar(
+                    mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
                     orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
                 plt.gca().invert_yaxis()
                 plt.ylabel('depth (m)')
@@ -1399,9 +1399,9 @@ class Glider:
                 for timeIdx in timeIndexes:
                     sample = np.ones((numberOfDepthPixels,)) * -90.0
 
-                    cond = np.where(dataSpreadsheet[:,0]==timeIdx)[0]
+                    cond = np.where(dataSpreadsheet[:, 0] == timeIdx)[0]
                     for recIdx in cond:
-                        (timeRec, depthRec, dBRec) = dataSpreadsheet[recIdx,:]
+                        (timeRec, depthRec, dBRec) = dataSpreadsheet[recIdx, :]
                         depthBin = self.getDepthPixel(depthRec, minDepth, maxDepth, depthBinSize)
 
                         # DEBUG
@@ -1431,9 +1431,10 @@ class Glider:
                         print("WARNING: Not enough pings to produce binned plot.")
                     return
                 #breakpoint()
-                im = plt.imshow(plotData, cmap=cmap, interpolation='none')
+                plt.imshow(plotData, cmap=cmap, interpolation='none')
                 plt.clim(dB_limit[1], dB_limit[0])
-                cbar = plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+                plt.colorbar(
+                    mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
                     ax=plt.gca(),
                     orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
 
@@ -1455,13 +1456,13 @@ class Glider:
                 ytickLabels = []
                 ytickLocs = ax.get_yticks()
                 for depthTick in ytickLocs:
-                    startDepth = minDepth*depthBinSize + (depthTick*depthBinSize)
+                    startDepth = minDepth * depthBinSize + (depthTick * depthBinSize)
                     endDepth = startDepth + depthBinSize
                     midPixelDepth = (startDepth + endDepth) / 2.0
                     ytickNew = ("%.1f" % (midPixelDepth))
                     ytickLabels.append(ytickNew)
 
-                if not(self.args.get('binnedDepthLabels', False)):
+                if not self.args.get('binnedDepthLabels', False):
                     # Ensure y-axis is limited to about 10 major ticks.
                     depthIntervals = [10.0, 20.0, 25.0, 50.0, 100.0, 150.0, 200.0]
 
@@ -1481,10 +1482,10 @@ class Glider:
                     fullDepth = (maxDepth - minDepth) * depthBinSize
                     selectedDepthInterval = 10.0
                     for interval in depthIntervals:
-                       nIntervals = int(fullDepth / interval)
-                       selectedDepthInterval = interval
-                       if nIntervals <= 10:
-                           break
+                        nIntervals = int(fullDepth / interval)
+                        selectedDepthInterval = interval
+                        if nIntervals <= 10:
+                            break
 
                     #self.stopToDebug()
                     ytickLabels = []
@@ -1525,9 +1526,7 @@ class Glider:
                     plt.savefig(outFilename, dpi=100, bbox_inches='tight')
                     plt.close()
 
-
     # Glider functions
-
 
     def createEchogramSpreadsheet(self):
         '''
@@ -1559,18 +1558,19 @@ class Glider:
         # requiring another Teledyne program (dba_sensor_filter)
         if self.debugFlag:
             print("First depth data source:", self.data['echogram_source'])
-        barData = self.extractColumns(self.data['echogram_source'], columns=['sci_m_present_time','sci_water_pressure'],
+        barData = self.extractColumns(
+            self.data['echogram_source'], columns=['sci_m_present_time', 'sci_water_pressure'],
             ignoreNaNColumns=['sci_water_pressure'])
 
         # Bar data may not be available from the tbd file, ether there will be zero rows
         # or lack of columns.
-        if not(barData is None):
+        if barData is not None:
             dataShape = barData.shape
             if dataShape[1] < 2 or dataShape[0] == 0:
                 barData = None
 
         # Change bars to meters
-        if not(barData is None):
+        if barData is not None:
             barData[:, 1] = barData[:, 1] * 10.0
 
         # If dbd data is available, merge the dbd data with the
@@ -1579,22 +1579,23 @@ class Glider:
         # tbd barData.
         source_depth_data = 'dbd'
         depthData = None
-        if not(source_depth_data) in self.data.keys():
+        if source_depth_data not in self.data.keys():
             if 'sbd' in self.data.keys():
                 source_depth_data = 'sbd'
         if self.debugFlag:
-            print("Source depth data:",source_depth_data)
+            print("Source depth data:", source_depth_data)
         if source_depth_data in self.data.keys():
-            depthData = self.extractColumns(source_depth_data, columns=['m_present_time', 'm_depth'],
+            depthData = self.extractColumns(
+                source_depth_data, columns=['m_present_time', 'm_depth'],
                 ignoreNaNColumns=['m_depth'])
-            if not(barData is None):
+            if barData is not None:
                 #self.stopToDebug()
                 barData = np.append(barData, depthData, axis=0)
             else:
                 barData = depthData
             #self.stopToDebug()
-            if not(barData is None):
-                barData = barData[np.argsort(barData[:,0])]
+            if barData is not None:
+                barData = barData[np.argsort(barData[:, 0])]
 
         if barData is None:
             print("WARNING: No usable depth information found for %s" % (self.args['sbdFile']))
@@ -1604,15 +1605,15 @@ class Glider:
             return
 
         # Separate time from ping (echosound) data
-        pingTime = eData[:,0]
+        pingTime = eData[:, 0]
         # Columns 1 -> 21
         #   Assuming values are increasing with depth
-        pingData = eData[:,1:]
+        pingData = eData[:, 1:]
 
         # Separate time from depth (bar) data
-        depthTimes = barData[:,0]
+        depthTimes = barData[:, 0]
         # Separate depth from depth (bar) data
-        depths = barData[:,1]
+        depths = barData[:, 1]
 
         # Echogram range (meters)
         # Positive values: instrument is pointed down
@@ -1620,7 +1621,7 @@ class Glider:
         echogramRange = float(self.args['echogramRange'])
         # Number of depth bins (0-19)
         numberDepthBins = 20
-        depthBins = range(0,numberDepthBins)
+        #depthBins = range(0, numberDepthBins)
         # Currently fixed at 3.0 meters
         depthBinLength = echogramRange / numberDepthBins
 
@@ -1638,7 +1639,7 @@ class Glider:
 
         # This is the size of the time bin in which pings can be
         # collected.
-        avgDepthReading = ((depthTimes[-1]-depthTimes[0])/len(depthTimes)) / 2.0
+        avgDepthReading = ((depthTimes[-1] - depthTimes[0]) / len(depthTimes)) / 2.0
         timeBinLength = avgDepthReading * 2.0
 
         # Our time bins to collect pings extend by one average
@@ -1692,9 +1693,10 @@ class Glider:
 
             # Skip pings that do not have a matching depth reading within the time
             # tolerance of the available depth data
-            if abs(timeOffset) > (avgDepthReading*2.0):
+            if abs(timeOffset) > (avgDepthReading * 2.0):
                 if self.debugFlag:
-                    print("  WARNING: Ping (%d) skipped: Ping time (%f) Offset (%f seconds) > Time Bin (%f seconds)" %\
+                    print(
+                        "  WARNING: Ping (%d) skipped: Ping time (%f) Offset (%f seconds) > Time Bin (%f seconds)" %
                         (pingNo, pingTime[pingNo], timeOffset, avgDepthReading))
                 continue
 
@@ -1724,7 +1726,7 @@ class Glider:
                 #if self.debugFlag:
                 #    print("      Sv (%f dB) depth (%f meters)" % (ping, pingDepth))
 
-                dataRow = np.array((pingTime[pingNo]+pingOffset, pingDepth, ping))
+                dataRow = np.array((pingTime[pingNo] + pingOffset, pingDepth, ping))
                 if dataCount == 0:
                     dataSpreadsheet = np.column_stack(dataRow)
                 else:
@@ -1737,12 +1739,11 @@ class Glider:
 
         return
 
-
     def readDbd(self, **kwargs):
         '''
         This function reads any DBD glider file using the dbdreader python library.
 
-        :param \**kwargs:
+        :param \\**kwargs:
             See below
         :return: xarray Dataset or python dictionary
         :rtype: xarray Dataset() or dict()
@@ -1767,7 +1768,7 @@ class Glider:
         if 'returnDict' in kwargs.keys():
             returnDict = kwargs['returnDict']
 
-        if not(os.path.isfile(inputFile)):
+        if not os.path.isfile(inputFile):
             print("ERROR: Glider DBD file not found: %s" % (inputFile))
             sys.exit()
 
@@ -1780,9 +1781,9 @@ class Glider:
             return
 
         if self.debugFlag:
-            print("Reading file type:",dbdType)
+            print("Reading file type:", dbdType)
 
-        if not(returnDict):
+        if not returnDict:
             # Return a xarray Dataset() object
             dataObj = xr.Dataset()
         else:
@@ -1793,7 +1794,7 @@ class Glider:
         dbdFp = None
         try:
             dbdFp = dbdreader.DBD(inputFile, cacheDir=cacheDir)
-        except:
+        except Exception:
             print("WARNING: Unable to read glider DBD file: %s" % (inputFile))
 
         if dbdFp:
@@ -1838,7 +1839,7 @@ class Glider:
             if timeLen > 0:
                 self.data['timestamp'][dbdType] = dbdData[timeIdx][1][0]
 
-            if not(returnDict):
+            if not returnDict:
                 idx = 0
                 for p in dbdFp.parameterNames:
                     # skip columns that are all NaN or [0, Nan, ....]
@@ -1848,7 +1849,7 @@ class Glider:
                         continue
                     dataLen = len(data)
                     nanLen = len(data[np.isnan(data)])
-                    if data[0] == 0.0 and (nanLen+1) == dataLen:
+                    if data[0] == 0.0 and (nanLen + 1) == dataLen:
                         #print("SCREEN1: %s" % (p))
                         idx = idx + 1
                         continue
@@ -1859,7 +1860,7 @@ class Glider:
 
                     # Pad data? This is a bug in dbdreader
                     if len(dbdData[idx][1]) != timeLen:
-                        tempVar = np.array([np.nan]*timeLen)
+                        tempVar = np.array([np.nan] * timeLen)
                         tempVar[0:len(dbdData[idx][1])] = dbdData[idx][1]
                         data = tempVar
                         print("  Resized:", dbdFp.parameterNames[idx])
@@ -1883,7 +1884,6 @@ class Glider:
 
         #self.stopToDebug()
 
-
     def readTbd(self):
         '''
         This function reads a glider tbd file using the
@@ -1896,9 +1896,9 @@ class Glider:
         tbdfp = open(self.tbdFile, 'rb')
 
         # Read ascii section of tbd file
-        for i in range(0,14):
+        for i in range(0, 14):
             line = tbdfp.readline()
-            lnParts = line.decode('utf-8','replace').split(':')
+            lnParts = line.decode('utf-8', 'replace').split(':')
             if lnParts[0] == 'sensors_per_cycle':
                 self.data['cacheMetadata']['sensorCount'] = int(lnParts[1])
             if lnParts[0] == 'sensor_list_factored':
@@ -1918,10 +1918,11 @@ class Glider:
         # Column order is ASSUMED to be sequential starting at 0 and
         # not skipping integers!
 
-        cacheFile = os.path.join(self.cacheDir, '%s.cac' %\
+        cacheFile = os.path.join(
+            self.cacheDir, '%s.cac' %
             (self.data['cacheMetadata']['cacheFile']))
 
-        if not(os.path.isfile(cacheFile)):
+        if not os.path.isfile(cacheFile):
             tbdfp.close()
             sys.exit('Glider(): FATAL: Glider cache file not found: %s' % (cacheFile))
 
@@ -1931,9 +1932,9 @@ class Glider:
                 data = ln.strip().split()
                 # Sensors turned on
                 if data[1] == 'T':
-                   self.data['byteSize'].append(int(data[4]))
-                   self.data['columns'].append(data[5])
-                   self.data['units'].append(data[6])
+                    self.data['byteSize'].append(int(data[4]))
+                    self.data['columns'].append(data[5])
+                    self.data['units'].append(data[6])
                 ln = fp.readline()
 
         # Decode the tbd using the Teledyne Webb linux binary
@@ -1960,7 +1961,7 @@ class Glider:
         hdrFlag = True
         while True:
             ln = output.readline()
-            if not(ln):
+            if not ln:
                 break
             ln = ln.strip()
             data = ln.split()
@@ -1980,7 +1981,6 @@ class Glider:
         # Store the data portion of the tbd file
         self.data['asc'] = np.array(dbdData).astype(float)
 
-
     def readSbd(self):
         '''
         This function reads a glider sbd file.  This
@@ -1992,9 +1992,9 @@ class Glider:
         sbdfp = open(self.sbdFile, 'rb')
 
         # Read ascii section of tbd file
-        for i in range(0,14):
+        for i in range(0, 14):
             line = sbdfp.readline()
-            lnParts = line.decode('utf-8','replace').split(':')
+            lnParts = line.decode('utf-8', 'replace').split(':')
             if lnParts[0] == 'sensors_per_cycle':
                 self.data['sbdMetadata']['sensorCount'] = int(lnParts[1])
             if lnParts[0] == 'sensor_list_factored':
@@ -2014,10 +2014,11 @@ class Glider:
         # Column order is ASSUMED to be sequential starting at 0 and
         # not skipping integers!
 
-        cacheFile = os.path.join(self.cacheDir, '%s.cac' %\
+        cacheFile = os.path.join(
+            self.cacheDir, '%s.cac' %
             (self.data['sbdMetadata']['cacheFile']))
 
-        if not(os.path.isfile(cacheFile)):
+        if not os.path.isfile(cacheFile):
             sys.exit('Glider(): FATAL: Glider cache file not found: %s' % (cacheFile))
 
         with open(cacheFile) as fp:
@@ -2026,9 +2027,9 @@ class Glider:
                 data = ln.strip().split()
                 # Sensors turned on
                 if data[1] == 'T':
-                   self.data['sbdbyteSize'].append(int(data[4]))
-                   self.data['sbdcolumns'].append(data[5])
-                   self.data['sbdunits'].append(data[6])
+                    self.data['sbdbyteSize'].append(int(data[4]))
+                    self.data['sbdcolumns'].append(data[5])
+                    self.data['sbdunits'].append(data[6])
                 ln = fp.readline()
 
         # Decode the sbd using the Teledyne Webb linux binary
@@ -2055,7 +2056,7 @@ class Glider:
         hdrFlag = True
         while True:
             ln = output.readline()
-            if not(ln):
+            if not ln:
                 break
             ln = ln.strip()
             data = ln.split()
@@ -2074,7 +2075,6 @@ class Glider:
 
         # Store the data portion of the sbd file
         self.data['sbd'] = np.array(dbdData).astype(float)
-
 
     def readEchogram(self):
         '''
@@ -2213,7 +2213,8 @@ class Glider:
         #           echometrics.equivalent_area]
         # DBD columns are:
         #   NOTE: The order obtained from the DBD is not guaranteed!
-        dataOrder = ['sci_echodroid_aggindex', 'sci_echodroid_ctrmass',
+        dataOrder = [
+            'sci_echodroid_aggindex', 'sci_echodroid_ctrmass',
             'sci_echodroid_eqarea', 'sci_echodroid_inertia',
             'sci_echodroid_propocc', 'sci_echodroid_sa', 'sci_echodroid_sv']
 
@@ -2235,7 +2236,7 @@ class Glider:
         if self.debugFlag:
             print("Echogram source:", echogram_source)
 
-        if not(echogram_source):
+        if not echogram_source:
             self.data['echogram'] = None
             return
 
@@ -2261,7 +2262,7 @@ class Glider:
         for idx in dataOrder:
             try:
                 dbdData = self.data[echogram_source][idx]
-            except:
+            except Exception:
                 self.data['echogram'] = None
                 return
 
@@ -2271,7 +2272,7 @@ class Glider:
             if nanMask is None:
                 nanMask = dbdData.isnull()
             # Drop NaN data
-            dbdData = dbdData.where(nanMask==False, drop=True)
+            dbdData = dbdData.where(nanMask == False, drop=True)  # noqa: E712
             tmpData = [0]
             #self.stopToDebug()
             for v in [struct.unpack('>i', struct.pack('>f', v)) for v in dbdData]:
@@ -2284,7 +2285,7 @@ class Glider:
                 self.data['psu'] = np.append(self.data['psu'], np.row_stack(dbdData), axis=1)
 
         # Drop time elements that are part of the NaN mask
-        tmData = tmData.where(nanMask==False, drop=True)
+        tmData = tmData.where(nanMask == False, drop=True)  # noqa: E712
         # Pad a time element to keep the data size consistent
         tmData = np.insert([0.0], 1, tmData)
 
@@ -2311,11 +2312,11 @@ class Glider:
             vbsNew[-1] = vbsNew[-1] + (vbsNew[-2] - vbsNew[-3])
             # Save bin assignments
             bins = {}
-            for i in range(0,8):
-                bins[i] = vbsNew[i*2]
+            for i in range(0, 8):
+                bins[i] = vbsNew[i * 2]
         else:
             # Default bins (if not defined)
-            bins = {0: -5.0, 1:-15.0, 2:-22.5, 3:-27.5, 4:-32.5, 5:-40.0, 6:-50.0, 7:-60.0 }
+            bins = {0: -5.0, 1: -15.0, 2: -22.5, 3: -27.5, 4: -32.5, 5: -40.0, 6: -50.0, 7: -60.0 }
 
         self.data['echogram_bins'] = bins
         self.data['echogram_mode'] = None
@@ -2340,8 +2341,8 @@ class Glider:
             if len(words) != 0:
                 #print(words)
                 # Skip apparent missing data
-                if np.all(words[0:7]==[0,0,0,0,0,0,0]) == True:
-                   continue
+                if np.all(words[0:7] == [0, 0, 0, 0, 0, 0, 0]) is True:
+                    continue
                 if int(words[2]) == -1032813281:
                     self.data['echogram_mode'] = "egram"
                     # This decodes "egram" mode
@@ -2356,13 +2357,13 @@ class Glider:
                         #print(bins[(int(words[6])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[6])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[6])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[6])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[6]) >> i) & mask))
                     for i in range(0, 30, 3):
                         #print(str((int(words[3])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[3])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[3])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[3])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[4])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[4]) >> i) & mask))
                     #print('\n')
                     '''
                     if fullEchogram is None:
@@ -2380,13 +2381,13 @@ class Glider:
                         #print(bins[(int(words[0])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[0])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[0])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[0])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[0]) >> i) & mask))
                     for i in range(0, 30, 3):
                         #print(str((int(words[5])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[5])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[5])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[5])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[5])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[5]) >> i) & mask))
                     #print('\n')
                     '''
                     if fullEchogram is None:
@@ -2404,13 +2405,13 @@ class Glider:
                         #print(bins[(int(words[1])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[1])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[1])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[1])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[1]) >> i) & mask))
                     for i in range(0, 30, 3):
                         #print(str((int(words[4])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[4])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[4])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[4])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[3])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[3]) >> i) & mask))
                     #print('\n')
                     if fullEchogram is None:
                         fullEchogram = np.column_stack(decodedEchogram)
@@ -2430,40 +2431,40 @@ class Glider:
                         #print(bins[(int(words[6])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[6])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[6])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[6])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[6]) >> i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[4])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[4])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[4])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[4])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[4])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[4]) >> i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[0])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[0])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[0])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[0])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[0])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[0]) >> i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[5])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[5])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[5])>>i) & mask]), end=''),
                         #decodedEchogram = np.append(decodedEchogram, (bins[(int(words[5])>>i) & mask]))
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[5])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[5]) >> i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[1])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[1])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[1])>>i) & mask]), end=''),
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[1])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[1]) >> i) & mask))
                     for i in range(0, 9, 3):
                         #print(str((int(words[3])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[3])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[3])>>i) & mask]), end=''),
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[3])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[3]) >> i) & mask))
                     for i in range(0, 6, 3):
                         #print(str((int(words[2])>>i) & mask) + ' ', end=''),
                         #print(bins[(int(words[2])>>i) & mask] + ' ', end=''),
                         #print("%s " % (bins[(int(words[2])>>i) & mask]), end=''),
-                        decodedEchogram = np.append(decodedEchogram, ((int(words[2])>>i) & mask))
+                        decodedEchogram = np.append(decodedEchogram, ((int(words[2]) >> i) & mask))
                     #print('\n')
                     #self.stopToDebug()
                     # Temporary kludge to mask the -5.0 bins at the end
@@ -2481,7 +2482,7 @@ class Glider:
             if self.data['echogram_mode'] == 'combo':
                 # In combo mode, the VBS scan is #10 for a given time at VBS scan #30
                 # Offset is -20.0 seconds
-                fullEchogram[:,0] = fullEchogram[:,0] - 20.0
+                fullEchogram[:, 0] = fullEchogram[:, 0] - 20.0
             if self.data['echogram_mode'] == 'egram':
                 # In egram mode, the time is for VBS scan #30, the three scans of information
                 # are VBS scan #0 (-30.0 seconds); VBS scan #10 (-20.0 seconds)
@@ -2493,7 +2494,7 @@ class Glider:
                 # Grab the time of the metric recording
                 techo = fullEchogram[0, 0]
                 reshapeEchogram = fullEchogram[0, 0:21]
-                reshapeEchogram = reshapeEchogram.reshape(-1,reshapeEchogram.shape[0])
+                reshapeEchogram = reshapeEchogram.reshape(-1, reshapeEchogram.shape[0])
                 reshapeEchogram[0, 0] = techo - 30.0
 
                 # Row 1
@@ -2509,8 +2510,9 @@ class Glider:
                     # Grab the time reading
                     techo = fullEchogram[z, 0]
                     for s in range(0, 3):
-                        rec = np.append([techo - ((3 - s) * 10.0)],
-                            fullEchogram[z, (s*20) + 1: ((s+1)*20) + 1])
+                        rec = np.append(
+                            [techo - ((3 - s) * 10.0)],
+                            fullEchogram[z, (s * 20) + 1: ((s + 1) * 20) + 1])
                         #breakpoint()
                         reshapeEchogram = np.append(reshapeEchogram, np.column_stack(rec), axis=0)
 
@@ -2528,7 +2530,7 @@ class Glider:
             # If --testPattern is set then change the bits to a test pattern.
             # Don't do anything if --process is also set, the test pattern will
             # already be applied.
-            if testPattern and not(process):
+            if testPattern and not process:
                 # Replace echogram with 0-7 bit values in sequence
                 bitValue = -1.0
                 for i in range(0, fullEchogram.shape[0]):
@@ -2541,9 +2543,11 @@ class Glider:
 
             # Convert echogram from bits to values
             #https://stackoverflow.com/questions/62864282/numpy-apply-function-to-every-item-in-array
-            apply_thresholds = lambda b: bins[b]
+            #apply_thresholds = lambda b: bins[b]
+            def apply_thresholds(b):
+                return bins[b]
             #fullEchogram[:,1:] = np.stack(np.vectorize(apply_thresholds)(fullEchogram[:,1:]), axis=1).T
-            fullEchogram[:,1:] = np.stack(np.vectorize(apply_thresholds)(bitsEchogram[:,1:]), axis=1).T
+            fullEchogram[:, 1:] = np.stack(np.vectorize(apply_thresholds)(bitsEchogram[:, 1:]), axis=1).T
 
         # Return the final echogram data
         #if not(fullEchogram is None):
@@ -2557,7 +2561,6 @@ class Glider:
         if process and np.all(fullEchogram):
             self.findRawVBS(fullEchogram, process)
 
-
     def getRawVBSFilename(self, process):
         '''
         Determine raw VBS filename
@@ -2566,7 +2569,7 @@ class Glider:
         '''
 
         # If configuration file was not found, return
-        if not(self.echotools):
+        if not self.echotools:
             return None
 
         # default search path is {deployments}/{glider}/{date}/echotools/eit/{data}.vbs
@@ -2591,7 +2594,6 @@ class Glider:
 
         return None
 
-
     def findRawVBS(self, fullEchogram, process):
         '''
         Search for the raw VBS from the specified vbs file.
@@ -2613,22 +2615,24 @@ class Glider:
         vbsNew[-1] = vbsNew[-1] + (vbsNew[-2] - vbsNew[-3])
         # Save bin assignments
         unbins = {}
-        for i in range(0,8):
-            unbins[i] = vbsNew[i*2]
+        for i in range(0, 8):
+            unbins[i] = vbsNew[i * 2]
 
-        apply_thresholds = lambda b: unbins[b]
+        #apply_thresholds = lambda b: unbins[b]
+        def apply_thresholds(b):
+            return unbins[b]
 
         # Thresholds must be set even if they are the same as the deployment!
-        if not(bins):
+        if not bins:
             return
 
         # No filename, return
-        if not(vbsFilename):
+        if not vbsFilename:
             return
 
         # Hunt for the first matching profile => fullEchogram[timeDim, 0]
         # Should be approximately 30 sec prior
-        tsMetric = fullEchogram[0,0] - 30.0
+        tsMetric = fullEchogram[0, 0] - 30.0
         vbsFP = open(vbsFilename, 'r')
         tsVbs = 0.0
 
@@ -2644,7 +2648,7 @@ class Glider:
                 break
 
         # Sync failed
-        if not(success):
+        if not success:
             return
 
         #print(tsMetric, data)
@@ -2654,14 +2658,14 @@ class Glider:
         endOfFile = False
         ct = 0
         for t in range(0, fullEchogram.shape[0]):
-            tsMetric = fullEchogram[t,0]
+            tsMetric = fullEchogram[t, 0]
             vbsData = []
 
             while tsVbs < tsMetric:
                 vbsArray = data[5].split(',')
                 nbins = int(vbsArray[5])
                 vbsValues = [tsVbs]
-                vbsValues = vbsValues + [float(vbsArray[6+i]) for i in range(0,nbins)]
+                vbsValues = vbsValues + [float(vbsArray[6 + i]) for i in range(0, nbins)]
                 vbsData.append(vbsValues)
 
                 ln = vbsFP.readline()
@@ -2727,7 +2731,6 @@ class Glider:
             if endOfFile:
                 break
 
-
     def applyDeploymentGlobalMetadata(self, ncDS):
         '''
         This function applies the deployment.json global metadata to the xarray Dataset object.
@@ -2738,7 +2741,6 @@ class Glider:
             ncDS.attrs[dictKey] = self.deployment['attributes'][dictKey]
 
         return ncDS
-
 
     def applyTemplateGlobalMetadata(self, ncDS):
         '''
@@ -2751,7 +2753,6 @@ class Glider:
             ncDS.attrs[dictKey] = self.template['attributes'][dictKey]
 
         return ncDS
-
 
     def readTemplateUnlimitedDims(self):
         '''
@@ -2766,7 +2767,6 @@ class Glider:
                 # Dimensions with -1 are unlimited
                 if dimVal == -1:
                     self.ncUnlimitedDims.append(dictKey)
-
 
     def obtainVariableName(self, sensorName):
         '''
@@ -2783,7 +2783,6 @@ class Glider:
 
         # Otherwise return the sensor name
         return sensorName
-
 
     def obtainFillValue(self, varName):
         '''
@@ -2804,7 +2803,6 @@ class Glider:
 
         return (fillValue, fillValueDtype)
 
-
     def addAttributes(self, ncDS, varName):
         '''
         This function adds variable attributes to the netCDF variable from
@@ -2817,17 +2815,16 @@ class Glider:
                 for akey in self.template['variables'][varName]['attributes'].keys():
                     if akey != '_FillValue':
                         # If the key value is a dict()
-                        if hasattr(self.template['variables'][varName]['attributes'][akey],'keys'):
+                        if hasattr(self.template['variables'][varName]['attributes'][akey], 'keys'):
                             ncDS[varName].attrs[akey] = self.template['variables'][varName]['attributes'][akey]['data']
                         else:
                             ncDS[varName].attrs[akey] = self.template['variables'][varName]['attributes'][akey]
-
 
     def collectTbdVariables(self, ncDS):
         '''
         This function collects tbd file variables.
         '''
-        idxTime = self.data['columns']['tbd'].index('sci_m_present_time')
+        #idxTime = self.data['columns']['tbd'].index('sci_m_present_time')
         sensorTimes = self.data['tbd']['sci_m_present_time']
 
         # Map sensor times to the new dimension times
@@ -2847,7 +2844,7 @@ class Glider:
         else:
         '''
         # TODO: Convert epoch from 1970 to 1990
-        newTimeIdx = range(0,len(sensorTimes))
+        newTimeIdx = range(0, len(sensorTimes))
         ncDS['time'] = (("time"), sensorTimes.data)
         ncDS['time'].attrs['units'] = "seconds since 1970-01-01"
         self.fillValues = {}
@@ -2860,7 +2857,7 @@ class Glider:
         for sensor in self.template['variables'].keys():
             sensorName = sensor
             if sensorName in self.data['columns']['tbd']:
-                idx = self.data['columns']['tbd'].index(sensorName)
+                #idx = self.data['columns']['tbd'].index(sensorName)
                 sensorData = self.data['tbd'][sensorName]
 
                 # Create empty array
@@ -2879,12 +2876,11 @@ class Glider:
 
         return ncDS
 
-
     def collectDbdVariables(self, ncDS):
         '''
         This function collects dbd file variables.
         '''
-        idxTime = self.data['columns']['dbd'].index('m_present_time')
+        #idxTime = self.data['columns']['dbd'].index('m_present_time')
         sensorTimes = self.data['dbd']['m_present_time']
 
         # Map sensor times to the new dimension times
@@ -2904,7 +2900,7 @@ class Glider:
         else:
         '''
         # TODO: Convert epoch from 1970 to 1990
-        newTimeIdx = range(0,len(sensorTimes))
+        newTimeIdx = range(0, len(sensorTimes))
         ncDS['time'] = (("time"), sensorTimes.data)
         ncDS['time'].attrs['units'] = "seconds since 1970-01-01"
         self.fillValues = {}
@@ -2917,7 +2913,7 @@ class Glider:
         for sensor in self.template['variables'].keys():
             sensorName = sensor
             if sensorName in self.data['columns']['dbd']:
-                idx = self.data['columns']['dbd'].index(sensorName)
+                #idx = self.data['columns']['dbd'].index(sensorName)
                 sensorData = self.data['dbd'][sensorName]
 
                 # Create empty array
@@ -2936,7 +2932,6 @@ class Glider:
 
         return ncDS
 
-
     def getScale(self, sensorName):
         '''
         Check the template for a scaling factor prior to assigning the
@@ -2952,12 +2947,11 @@ class Glider:
 
         return scaleFactor
 
-
     def collectSbdVariables(self, ncDS):
         '''
         This function collects sbd file variables.
         '''
-        idxTime = self.data['columns']['sbd'].index('m_present_time')
+        #idxTime = self.data['columns']['sbd'].index('m_present_time')
         sensorTimes = self.data['sbd']['m_present_time']
 
         # Map sensor times to the new dimension times
@@ -2976,7 +2970,7 @@ class Glider:
                 newTimeIdx.append(itime)
         else:
         '''
-        newTimeIdx = range(0,len(sensorTimes))
+        newTimeIdx = range(0, len(sensorTimes))
         ncDS['time'] = (("time"), sensorTimes.data)
         ncDS['time'].attrs['units'] = "seconds since 1970-01-01"
         self.fillValues = {}
@@ -2994,13 +2988,13 @@ class Glider:
             sensorName = sensor
             sensorList.append(sensorName)
         for sensor in self.template['variables'].keys():
-            if not(sensor) in sensorList:
+            if sensor not in sensorList:
                 sensorList.append(sensor)
 
         for sensor in self.template['variables'].keys():
             sensorName = sensor
             if sensorName in self.data['columns']['sbd']:
-                idx = self.data['columns']['sbd'].index(sensorName)
+                #idx = self.data['columns']['sbd'].index(sensorName)
                 sensorData = self.data['sbd'][sensorName]
                 # Create empty array
                 varName = self.obtainVariableName(sensorName)
@@ -3009,7 +3003,7 @@ class Glider:
                 self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
                 # Map original sensor data to larger time dimension
                 scaleData = self.getScale(sensorName)
-                if not(scaleData is None):
+                if scaleData is not None:
                     sensorData = sensorData * scaleData
                 varData[newTimeIdx] = sensorData
 
@@ -3021,12 +3015,11 @@ class Glider:
 
         return ncDS
 
-
     def collectEbdVariables(self, ncDS):
         '''
         This function collects ebd file variables.
         '''
-        idxTime = self.data['columns']['ebd'].index('sci_m_present_time')
+        #idxTime = self.data['columns']['ebd'].index('sci_m_present_time')
         sensorTimes = self.data['ebd']['sci_m_present_time']
 
         # Map sensor times to the new dimension times
@@ -3045,7 +3038,7 @@ class Glider:
                 newTimeIdx.append(itime)
         else:
         '''
-        newTimeIdx = range(0,len(sensorTimes))
+        newTimeIdx = range(0, len(sensorTimes))
         ncDS['time'] = (("time"), sensorTimes.data)
         ncDS['time'].attrs['units'] = "seconds since 1970-01-01"
         self.fillValues = {}
@@ -3063,13 +3056,13 @@ class Glider:
             sensorName = sensor
             sensorList.append(sensorName)
         for sensor in self.template['variables'].keys():
-            if not(sensor) in sensorList:
+            if sensor not in sensorList:
                 sensorList.append(sensor)
 
         for sensor in self.template['variables'].keys():
             sensorName = sensor
             if sensorName in self.data['columns']['ebd']:
-                idx = self.data['columns']['ebd'].index(sensorName)
+                #idx = self.data['columns']['ebd'].index(sensorName)
                 sensorData = self.data['ebd'][sensorName]
                 # Create empty array
                 varName = self.obtainVariableName(sensorName)
@@ -3078,7 +3071,7 @@ class Glider:
                 self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
                 # Map original sensor data to larger time dimension
                 scaleData = self.getScale(sensorName)
-                if not(scaleData is None):
+                if scaleData is not None:
                     sensorData = sensorData * scaleData
                 varData[newTimeIdx] = sensorData
 
@@ -3090,19 +3083,18 @@ class Glider:
 
         return ncDS
 
-
     def collectEchogram(self, ncDS):
         '''
         This function collects the echogram and adds it to the
         xarray Dataset object.
         '''
 
-        sensorTimes = np.unique(self.data['spreadsheet'][:,0])
+        sensorTimes = np.unique(self.data['spreadsheet'][:, 0])
 
         # Map sensor times to the new dimension times
         # This slow process only needs to be done once (skip if
         # we are storing this separately)
-        if not(self.args.get('ncSeparate', True)):
+        if not self.args.get('ncSeparate', True):
             newTimeIdx = []
             timeDimList = list(ncDS['time'].values)
             for sTime in sensorTimes:
@@ -3116,8 +3108,8 @@ class Glider:
                         newTimeIdx.append(itime)
                         itime = itime + 1
         else:
-            sensorTimes = self.data['spreadsheet'][:,0]
-            newTimeIdx = range(0,len(sensorTimes))
+            sensorTimes = self.data['spreadsheet'][:, 0]
+            newTimeIdx = range(0, len(sensorTimes))
             ncDS['time'] = (("time"), sensorTimes)
             ncDS['time'].attrs['units'] = "seconds since 1970-01-01"
             ncDS.attrs['source_file'] = self.data['echogram_source_file']
@@ -3131,7 +3123,7 @@ class Glider:
         varData = np.full(len(timeDimList), fillValue)
         self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
         # Map original sensor data to larger time dimension
-        varData[newTimeIdx] = self.data['spreadsheet'][:,1]
+        varData[newTimeIdx] = self.data['spreadsheet'][:, 1]
 
         # Finally, create xarray Dataset variable
         ncDS[varName] = (("time"), varData)
@@ -3145,7 +3137,7 @@ class Glider:
         varData = np.full(len(timeDimList), fillValue)
         self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
         # Map original sensor data to larger time dimension
-        varData[newTimeIdx] = self.data['spreadsheet'][:,2]
+        varData[newTimeIdx] = self.data['spreadsheet'][:, 2]
 
         # Finally, create xarray Dataset variable
         ncDS[varName] = (("time"), varData)
@@ -3154,7 +3146,6 @@ class Glider:
         self.addAttributes(ncDS, varName)
 
         return ncDS
-
 
     def applyGlobalMetadata(self, ncDS):
         '''
@@ -3174,7 +3165,6 @@ class Glider:
 
         return ncDS
 
-
     def writeNetCDF(self):
         '''
         Write out an IOOS DAC compatable netCDF file.
@@ -3189,41 +3179,44 @@ class Glider:
         ncDS = xr.Dataset()
 
         timeVarTbd = None
-        timeIdxTbd = None
+        #timeIdxTbd = None
         if 'tbd' in self.data['columns'].keys():
             timeVarTbd = 'sci_m_present_time'
             if timeVarTbd in self.data['columns']['tbd']:
-                timeIdxTbd = self.data['columns']['tbd'].index(timeVarTbd)
+                #timeIdxTbd = self.data['columns']['tbd'].index(timeVarTbd)
+                pass
             else:
                 timeVarTbd = None
 
         timeVarSbd = None
-        timeIdxSbd = None
+        #timeIdxSbd = None
         if 'sbd' in self.data['columns'].keys():
             timeVarSbd = 'm_present_time'
             if timeVarSbd in self.data['columns']['sbd']:
-                timeIdxSbd = self.data['columns']['sbd'].index(timeVarSbd)
+                #timeIdxSbd = self.data['columns']['sbd'].index(timeVarSbd)
+                pass
             else:
-               timeVarSbd = None
+                timeVarSbd = None
 
         timeVarEbd = None
-        timeIdxEbd = None
+        #timeIdxEbd = None
         if 'ebd' in self.data['columns'].keys():
             timeVarEbd = 'sci_m_present_time'
             if timeVarEbd in self.data['columns']['ebd']:
-                timeIdxEbd = self.data['columns']['ebd'].index(timeVarEbd)
+                #timeIdxEbd = self.data['columns']['ebd'].index(timeVarEbd)
+                pass
             else:
-               timeVarEbd = None
+                timeVarEbd = None
 
         timeVarDbd = None
-        timeIdxDbd = None
+        #timeIdxDbd = None
         if 'dbd' in self.data['columns'].keys():
             timeVarDbd = 'm_present_time'
             if timeVarDbd in self.data['columns']['dbd']:
-                timeIdxDbd = self.data['columns']['dbd'].index(timeVarDbd)
+                #timeIdxDbd = self.data['columns']['dbd'].index(timeVarDbd)
+                pass
             else:
-               timeVarDbd = None
-
+                timeVarDbd = None
 
         # Only do this if we are creating one monolithic netCDF file
         # NOTE: creating one monolithic file leads to large files! Not recommended.
@@ -3290,19 +3283,19 @@ class Glider:
 
         # Only do this if we are creating a monolithic netCDF file
         timesPg = None
-        if not(self.args.get('ncSeparate', True)):
-            if not(timesTbd is None) and not(timesSbd is None):
+        if not self.args.get('ncSeparate', True):
+            if timesTbd is not None and timesSbd is not None:
                 allTimes = np.sort(np.append(timesTbd, timesSbd))
             else:
-                if not(timesTbd is None):
+                if timesTbd is not None:
                     allTimes = timesTbd
-                if not(timesSbd is None):
+                if timesSbd is not None:
                     allTimes = timesSbd
 
             if self.data['spreadsheet'] is None:
                 timesPg = None
             else:
-                timesPg  = self.data['spreadsheet'][:,0]
+                timesPg  = self.data['spreadsheet'][:, 0]
 
             # Construct the time variable
             for tval in allTimes:
@@ -3322,27 +3315,29 @@ class Glider:
             ncDS['time'] = (("time"), timeDim)
             self.fillValues['time'] = {'_FillValue': -9999.9, 'dtype': 'double'}
         else:
-            if not(self.data['spreadsheet'] is None):
-                timesPg  = self.data['spreadsheet'][:,0]
+            if self.data['spreadsheet'] is not None:
+                timesPg  = self.data['spreadsheet'][:, 0]
 
         # Collect tbd variables
-        if not(timesTbd is None):
+        if timesTbd is not None:
             if self.debugFlag:
                 print("Collecting tbd variables")
             ncDS = self.collectTbdVariables(ncDS)
             if self.args.get('ncSeparate', True):
-                timeShape = ncDS['time'].shape
-                timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
+                #timeShape = ncDS['time'].shape
+                timeStamp = self.dateFormat(
+                    datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
                 tbdFilename = os.path.join(self.args['ncDir'], "%s_tbd.nc" % (timeStamp))
                 # Backfill variables to maintain consistency in the file
                 timeDimList = list(ncDS['time'].values)
-                ensureVariables = ['temperature', 'sci_flbbcd_bb_units', 'sci_flbbcd_chlor_units', 'sci_rinkoii_do',
+                ensureVariables = [
+                    'temperature', 'sci_flbbcd_bb_units', 'sci_flbbcd_chlor_units', 'sci_rinkoii_do',
                     'sci_water_cond', 'sci_flbbcd_cdom_units', 'sci_water_temp',
                     'pressure', 'sci_water_pressure', 'sci_echodroid_sv', 'sci_echodroid_sa', 'sci_echodroid_propocc',
                     'sci_echodroid_aggindex', 'sci_echodroid_ctrmass', 'sci_echodroid_inertia', 'sci_echodroid_eqarea']
                 for varName in ensureVariables:
-                    if not(varName in ncDS.variables):
+                    if varName not in ncDS.variables:
                         (fillValue, fillValueDtype) = self.obtainFillValue(varName)
                         varData = np.full(len(timeDimList), fillValue)
                         self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
@@ -3355,22 +3350,24 @@ class Glider:
                 ncDS = xr.Dataset()
 
         # Collect dbd variables
-        if not(timesDbd is None):
+        if timesDbd is not None:
             if self.debugFlag:
                 print("Collecting dbd variables")
             ncDS = self.collectDbdVariables(ncDS)
             if self.args.get('ncSeparate', True):
-                timeShape = ncDS['time'].shape
-                timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
+                #timeShape = ncDS['time'].shape
+                timeStamp = self.dateFormat(
+                    datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
                 dbdFilename = os.path.join(self.args['ncDir'], "%s_dbd.nc" % (timeStamp))
                 # Backfill variables to maintain consistency in the file
                 timeDimList = list(ncDS['time'].values)
-                ensureVariables = ['m_heading', 'm_lat', 'm_lon', 'm_pitch', 'm_depth', 'c_wpt_lon', 'c_wpt_lat',
+                ensureVariables = [
+                    'm_heading', 'm_lat', 'm_lon', 'm_pitch', 'm_depth', 'c_wpt_lon', 'c_wpt_lat',
                     'm_roll', 'm_battery', 'm_columb_amphr_total', 'm_gps_lat', 'm_gps_lon', 'm_coulomb_amphr_total',
                     'm_ballast_pumped']
                 for varName in ensureVariables:
-                    if not(varName in ncDS.variables):
+                    if varName not in ncDS.variables:
                         (fillValue, fillValueDtype) = self.obtainFillValue(varName)
                         varData = np.full(len(timeDimList), fillValue)
                         self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
@@ -3383,22 +3380,24 @@ class Glider:
                 ncDS = xr.Dataset()
 
         # Collect sbd variables
-        if not(timesSbd is None):
+        if timesSbd is not None:
             if self.debugFlag:
                 print("Collecting sbd variables")
             ncDS = self.collectSbdVariables(ncDS)
             if self.args.get('ncSeparate', True):
-                timeShape = ncDS['time'].shape
-                timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
+                #timeShape = ncDS['time'].shape
+                timeStamp = self.dateFormat(
+                    datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
                 sbdFilename = os.path.join(self.args['ncDir'], "%s_sbd.nc" % (timeStamp))
                 # Backfill variables to maintain consistency in the file
                 timeDimList = list(ncDS['time'].values)
-                ensureVariables = ['m_heading', 'm_lat', 'm_lon', 'm_pitch', 'm_depth', 'c_wpt_lon', 'c_wpt_lat',
+                ensureVariables = [
+                    'm_heading', 'm_lat', 'm_lon', 'm_pitch', 'm_depth', 'c_wpt_lon', 'c_wpt_lat',
                     'm_roll', 'm_battery', 'm_columb_amphr_total', 'm_gps_lat', 'm_gps_lon', 'm_coulomb_amphr_total',
                     'm_ballast_pumped']
                 for varName in ensureVariables:
-                    if not(varName in ncDS.variables):
+                    if varName not in ncDS.variables:
                         (fillValue, fillValueDtype) = self.obtainFillValue(varName)
                         varData = np.full(len(timeDimList), fillValue)
                         self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
@@ -3411,23 +3410,25 @@ class Glider:
                 ncDS = xr.Dataset()
 
         # Collect ebd variables
-        if not(timesEbd is None):
+        if timesEbd is not None:
             if self.debugFlag:
                 print("Collecting ebd variables")
             ncDS = self.collectEbdVariables(ncDS)
             if self.args.get('ncSeparate', True):
-                timeShape = ncDS['time'].shape
-                timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
+                #timeShape = ncDS['time'].shape
+                timeStamp = self.dateFormat(
+                    datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
                 ebdFilename = os.path.join(self.args['ncDir'], "%s_ebd.nc" % (timeStamp))
                 # Backfill variables to maintain consistency in the file
                 timeDimList = list(ncDS['time'].values)
-                ensureVariables = ['temperature', 'sci_flbbcd_bb_units', 'sci_flbbcd_chlor_units', 'sci_rinkoii_do',
+                ensureVariables = [
+                    'temperature', 'sci_flbbcd_bb_units', 'sci_flbbcd_chlor_units', 'sci_rinkoii_do',
                     'sci_water_cond', 'sci_flbbcd_cdom_units', 'sci_water_temp',
                     'pressure', 'sci_water_pressure', 'sci_echodroid_sv', 'sci_echodroid_sa', 'sci_echodroid_propocc',
                     'sci_echodroid_aggindex', 'sci_echodroid_ctrmass', 'sci_echodroid_inertia', 'sci_echodroid_eqarea']
                 for varName in ensureVariables:
-                    if not(varName in ncDS.variables):
+                    if varName not in ncDS.variables:
                         (fillValue, fillValueDtype) = self.obtainFillValue(varName)
                         varData = np.full(len(timeDimList), fillValue)
                         self.fillValues[varName] = {'_FillValue': fillValue, 'dtype': fillValueDtype}
@@ -3440,13 +3441,14 @@ class Glider:
                 ncDS = xr.Dataset()
 
         # Collect echogram
-        if not(timesPg is None):
+        if timesPg is not None:
             if self.debugFlag:
                 print("Collecting echogram")
             ncDS = self.collectEchogram(ncDS)
             if self.args.get('ncSeparate', True):
-                timeShape = ncDS['time'].shape
-                timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
+                #timeShape = ncDS['time'].shape
+                timeStamp = self.dateFormat(
+                    datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
                     fmt="%Y%m%d_%H%M%S")
                 svFilename = os.path.join(self.args['ncDir'], "%s_sv.nc" % (timeStamp))
                 ncDS = self.applyGlobalMetadata(ncDS)
@@ -3461,10 +3463,13 @@ class Glider:
                 # Reset after saving tbd netCDF
                 ncDS = xr.Dataset()
 
-        if not(self.args.get('ncSeparate', True)):
+        if not self.args.get('ncSeparate', True):
             ncDS = self.applyGlobalMetadata(ncDS)
-            timeStamp = self.dateFormat(datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
-                    fmt="%Y%m%d_%H%M%S")
+            timeStamp = self.dateFormat(
+                datetime.datetime.utcfromtimestamp(ncDS['time'].min().values + 0.0),
+                fmt="%Y%m%d_%H%M%S")
             if self.debugFlag:
                 print("Writing netCDF: %s" % (self.ncDir))
-            ncDS.to_netcdf(os.path.join(self.ncDir,"%s.nc" % (timeStamp)), unlimited_dims=self.ncUnlimitedDims, encoding=self.fillValues)
+            ncDS.to_netcdf(
+                os.path.join(self.ncDir, "%s.nc" % (timeStamp)),
+                unlimited_dims=self.ncUnlimitedDims, encoding=self.fillValues)
