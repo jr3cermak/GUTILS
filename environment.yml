@@ -137,7 +137,7 @@ dependencies:
   - libzip=1.9.2
   - libzlib=1.2.13
   - lxml=4.9.2
-  - lz4-c=1.9.4
+  - lz4-c=1.9.3
   - markupsafe=2.1.2
   - matplotlib=3.5.3
   - matplotlib-base=3.5.3
@@ -178,7 +178,7 @@ dependencies:
   - ptyprocess=0.7.0
   - pulseaudio=16.1
   - pure_eval=0.2.2
-  - pyarrow
+  - pyarrow=0.17.1
   - pycparser=2.21
   - pygeoif=1.0.0
   - pygments=2.14.0
