@@ -44,6 +44,9 @@ RUN mamba env update \
         -n base \
         -f /tmp/environment.yml \
         && \
+    mamba activate base    && \
+    mamba install -y pyarrow    && \
+    mamba deactivate    && \
     mamba clean -afy
 
 COPY pip-requirements.txt /tmp/pip-requirements.txt
