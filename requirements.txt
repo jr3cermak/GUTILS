@@ -1,5 +1,6 @@
 cc-plugin-glider>=1.0.6,<2.0.0
 compliance-checker>=4.1.1
+git+https://github.com/smerckel/dbdreader.git#egg=dbdreader
 gsw>=3.4.0,<4.0
 matplotlib
 netCDF4
