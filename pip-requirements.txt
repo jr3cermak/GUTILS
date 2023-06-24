@@ -1,1 +1,1 @@
-dbdreader>=0.4.8,<1.0
+git+https://github.com/smerckel/dbdreader.git#egg=dbdreader
