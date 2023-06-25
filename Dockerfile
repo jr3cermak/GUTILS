@@ -42,7 +42,7 @@ ENV PATH /opt/conda/bin:$PATH
 COPY environment.yml /tmp/environment.yml
 RUN mamba env update \
         -n base \
-        -f /tmp/environment.yml \
+        -f /tmp/environment.yml
 
 # Make RUN commands use `bash --login`:
 SHELL ["/bin/bash", "--login", "-c"]
