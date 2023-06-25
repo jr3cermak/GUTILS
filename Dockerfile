@@ -47,7 +47,8 @@ RUN mamba env update \
 # Make RUN commands use `bash --login`:
 SHELL ["/bin/bash", "--login", "-c"]
 RUN mamba init
-RUN mamba activate base && \
+RUN . /root/.bashrc && \
+    mamba activate base && \
     mamba install -y pyarrow
 RUN mamba clean -afy
 
