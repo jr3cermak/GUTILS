@@ -42,15 +42,9 @@ ENV PATH /opt/conda/bin:$PATH
 COPY environment.yml /tmp/environment.yml
 RUN mamba env update \
         -n base \
-        -f /tmp/environment.yml
-
-# Make RUN commands use `bash --login`:
-SHELL ["/bin/bash", "--login", "-c"]
-RUN mamba init
-RUN . /root/.bashrc && \
-    mamba activate base && \
-    mamba install -y pyarrow
-RUN mamba clean -afy
+        -f /tmp/environment.yml \
+        && \
+    mamba clean -afy
 
 COPY pip-requirements.txt /tmp/pip-requirements.txt
 RUN pip install \
