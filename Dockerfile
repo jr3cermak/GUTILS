@@ -43,9 +43,10 @@ COPY environment.yml /tmp/environment.yml
 RUN mamba env update \
         -n base \
         -f /tmp/environment.yml \
-        && \
-        mamba init
 
+# Make RUN commands use `bash --login`:
+SHELL ["/bin/bash", "--login", "-c"]
+RUN mamba init
 RUN mamba activate base && \
     mamba install -y pyarrow
 RUN mamba clean -afy
