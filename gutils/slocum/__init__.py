@@ -672,6 +672,9 @@ class SlocumMerger(object):
         # of a reader.
         self.extra_kwargs = self.attrs.pop('extra_kwargs', {})
 
+        if self.extra_kwargs.get('enable_debug', False):
+            L.setLevel(logging.DEBUG)
+
     def __del__(self):
         # Remove tmpdir
         shutil.rmtree(self.tmpdir, ignore_errors=True)
@@ -868,7 +871,7 @@ class SlocumMerger(object):
                 # upstream expects *.dat files, so produce
                 # a *.pq file and link with to *.dat file
                 try:
-                    os.symlink(pqFile, datFile)
+                    os.symlink(os.path.basename(pqFile), datFile)
                 except FileExistsError:
                     L.error(f"Symlink already exists for {datFile}")
         else:
@@ -888,7 +891,7 @@ class SlocumMerger(object):
             echograms_attrs = self.extra_kwargs.get('echograms', {})
             enable_ascii = echograms_attrs.get('enable_ascii', False)
             enable_image = echograms_attrs.get('enable_image', False)
-            enable_debug = echograms_attrs.get('enable_debug', False)
+            enable_debug = self.extra_kwargs.get('enable_debug', False)
 
             if enable_debug:
                 pargs.remove('-q')

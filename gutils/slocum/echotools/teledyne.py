@@ -8,6 +8,7 @@ import os
 import sys
 import struct
 import subprocess
+import warnings
 import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib as mpl
@@ -22,6 +23,21 @@ matplotlib.use('Agg')
 # scale down logging for matplotlib and dbdreader
 logging.getLogger("dbdreader").setLevel(logging.WARNING)
 logging.getLogger("matplotlib").setLevel(logging.WARNING)
+
+# Default
+if os.environ.get('PYTHONWARNINGS', None):
+    pass
+else:
+    warnings.simplefilter("default")
+
+# Development
+#warnings.resetwarnings()
+#warnings.filterwarnings("error")
+
+# netcdf4 (obscure error)
+warnings.filterwarnings("ignore", message='numpy.*size changed.*')
+# TODO: Plotting breaks down when there are multiple profiles
+warnings.filterwarnings("ignore", message='.*coordinates to pcolormesh.*')
 
 
 class Glider:
@@ -293,7 +309,7 @@ class Glider:
                 plabel = f"PATH{ct:04d}"
                 self.data['inventory_paths'][abspath] = plabel
 
-            dbdFp = dbdreader.DBD(infile, cacheDir=cache_dir)
+            dbdFp = dbdreader.DBD(infile, cacheDir=cache_dir, skip_initial_line=False)
             dbdData = dbdFp.get(*dbdFp.parameterNames, return_nans=True)
             cacheFile = f"{dbdFp.cacheID}.cac"
 
@@ -365,8 +381,8 @@ class Glider:
         # Convert 0000-00-00 00:00:00 to nan
         mask = ds['End'] == '0000-00-00 00:00:00'
         ds['End'][mask] = np.nan
-        ds['Start_dt'] = ds['Start'].astype('datetime64', errors='ignore')
-        ds['End_dt'] = ds['End'].astype('datetime64', errors='ignore')
+        ds['Start_dt'] = ds['Start'].astype('datetime64[ns]', errors='ignore')
+        ds['End_dt'] = ds['End'].astype('datetime64[ns]', errors='ignore')
 
         ds_start_time = pd.to_datetime(start_time).to_datetime64()
         ds_end_time = pd.to_datetime(end_time).to_datetime64()
@@ -420,9 +436,9 @@ class Glider:
         # and pull through files that match the base file for
         # completeness.
         for gkey in groupList.keys():
-            match = "%s\\." % (os.path.basename(gkey))
-            ss1 = ds.loc[ds['File'].str.contains(match)]
-            ss2 = df.loc[df['File'].str.contains(match)]
+            match = "%s." % (os.path.basename(gkey))
+            ss1 = ds.loc[ds['File'].str.contains(match, regex=False)]
+            ss2 = df.loc[df['File'].str.contains(match, regex=False)]
             df = pd.concat([df, ss1, ss2]).drop_duplicates()
         inv.data['inventory'] = df
         fileList = inv.getFullFilenamesFromFileInventory()
@@ -639,6 +655,7 @@ class Glider:
                     df = pd.concat([df, pd.Series(rec).to_frame().T], ignore_index=True)
 
         self.data['inventory'] = df
+        fn.close()
 
         return
 
@@ -662,7 +679,8 @@ class Glider:
         # Attempt to read echotools.json configuration file
         try:
             echotoolsFile = os.path.join(self.args['deploymentDir'], 'echotools.json')
-            testLoad = json.load(open(echotoolsFile))
+            with open(echotoolsFile) as fp:
+                testLoad = json.load(fp)
             self.echotools = testLoad
         except Exception:
             print("WARNING: Unable to parse json echotools file: %s" % (echotoolsFile))
@@ -671,7 +689,8 @@ class Glider:
         # Attempt to read deployment.json
         try:
             deploymentFile = os.path.join(self.args['deploymentDir'], 'deployment.json')
-            testLoad = json.load(open(deploymentFile))
+            with open(deploymentFile, "r") as fp:
+                testLoad = json.load(fp)
             self.deployment = testLoad
         except Exception:
             print("ERROR: Unable to parse json deployment file: %s" % (deploymentFile))
@@ -680,7 +699,8 @@ class Glider:
         # Attempt to read instruments.json
         try:
             instrumentsFile = os.path.join(self.args['deploymentDir'], 'instruments.json')
-            testLoad = json.load(open(instrumentsFile))
+            with open(instrumentsFile, "r") as fp:
+                testLoad = json.load(fp)
             self.instruments = testLoad
         except Exception as err:
             print(f"ERROR: Unable to parse json instruments file: {instrumentsFile} {err=}")
@@ -699,7 +719,8 @@ class Glider:
             # Attempt to read <template>.json
             try:
                 templateFile = os.path.join(self.args['templateDir'], self.args['template'])
-                testLoad = json.load(open(templateFile))
+                with open(templateFile, "r") as fp:
+                    testLoad = json.load(fp)
                 self.template = testLoad
             except Exception:
                 print("ERROR: Unable to parse json template file: %s" % (templateFile))
@@ -710,7 +731,8 @@ class Glider:
             # Attempt to read <dacOverlay>.json
             try:
                 dacOverlayFile = os.path.join(self.args['deploymentDir'], self.args['dacOverlay'])
-                testLoad = json.load(open(dacOverlayFile))
+                with open(dacOverlayFile) as fp:
+                    testLoad = json.load(fp)
                 self.dacOverlay = testLoad
             except Exception:
                 print("ERROR: Unable to parse json DAC overlay metadata file: %s" % (dacOverlayFile))
@@ -1138,7 +1160,7 @@ class Glider:
 
         # Default colorbar ylabel and size
         #default_cb_ylabel = r'Sv (dB re 1 $\bf{m^2}$/$\bf{m^3}$)'
-        default_cb_ylabel = r'$\bf{Sv}$ $\bf{(dB}$ $\bf{re}$ $\bf{1}$ $\bf{m^2}$/$\bf{m^3}$$\bf{)}$'
+        default_cb_ylabel = r"$\bf{Sv}$ $\bf{(dB}$ $\bf{re}$ $\bf{1}$ $\bf{m^2}$/$\bf{m^3}$$\bf{)}$"
         default_cb_shrink = 0.60
 
         # Default plot parameters
@@ -1308,7 +1330,11 @@ class Glider:
                 # Color bar using vmin,vmax
                 #cx = fig.colorbar(px, ticks=dB_ticks)
                 #cx = fig.colorbar(px, shrink=default_cb_shrink)
-                cx = fig.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap), shrink=default_cb_shrink)
+                cx = fig.colorbar(
+                    mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+                    ax=plt.gca(),
+                    shrink=default_cb_shrink
+                )
                 cx.ax.get_yaxis().labelpad = 15
                 cx.ax.set_ylabel(default_cb_ylabel)
 
@@ -1376,6 +1402,7 @@ class Glider:
                 #cbar = plt.colorbar(orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
                 plt.colorbar(
                     mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+                    ax=plt.gca(),
                     orientation='vertical', label=default_cb_ylabel, shrink=default_cb_shrink)
                 plt.gca().invert_yaxis()
                 plt.ylabel('depth (m)')
@@ -1429,6 +1456,8 @@ class Glider:
                 if len(plotDataShape) == 1:
                     if self.debugFlag:
                         print("WARNING: Not enough pings to produce binned plot.")
+
+                    plt.close()
                     return
                 #breakpoint()
                 plt.imshow(plotData, cmap=cmap, interpolation='none')
@@ -1513,6 +1542,7 @@ class Glider:
             # Determine if we are writing to stdout
             if stdoutFlag:
                 plt.savefig(sys.stdout.buffer, dpi=100)
+                plt.close()
             else:
                 # Plot image
                 if self.args['outDir']:
@@ -1589,8 +1619,8 @@ class Glider:
                 source_depth_data, columns=['m_present_time', 'm_depth'],
                 ignoreNaNColumns=['m_depth'])
             if barData is not None:
-                #self.stopToDebug()
-                barData = np.append(barData, depthData, axis=0)
+                if depthData is not None:
+                    barData = np.append(barData, depthData, axis=0)
             else:
                 barData = depthData
             #self.stopToDebug()
@@ -1626,8 +1656,10 @@ class Glider:
         depthBinLength = echogramRange / numberDepthBins
 
         # Determine time range to plot based on depthTimes
-        if len(depthTimes) == 0:
-            print("WARNING: No usable depth information found!")
+        # Requires at least 3 depth coordinates.
+        if len(depthTimes) < 3:
+            if self.debugFlag:
+                print("WARNING: Insufficient depth information found!")
             self.data['depthBinLength'] = None
             self.data['timeBinLength'] = None
             self.data['spreadsheet'] = None
@@ -1739,6 +1771,38 @@ class Glider:
 
         return
 
+    def mergeDuplicateValues(self, dbdData):
+        '''
+        This takes a given dbdData array and walks through all the data.
+        If a duplicate time entry is found, the duplicate row changes any
+        existing data.
+        '''
+
+        retData = []
+
+        for p in dbdData:
+            t = p[0]
+            v = p[1]
+            tt = []
+            vv = []
+
+            for i in range(0, len(t)):
+                if i == 0:
+                    tt.append(t[i])
+                    vv.append(v[i])
+                else:
+                    # Duplicate, existing values overwrite
+                    if t[i] == tt[-1]:
+                        if not np.isnan(v[i]):
+                            vv[-1] = v[i]
+                    else:
+                        tt.append(t[i])
+                        vv.append(v[i])
+
+            retData.append([np.array(tt), np.array(vv)])
+
+        return retData
+
     def readDbd(self, **kwargs):
         '''
         This function reads any DBD glider file using the dbdreader python library.
@@ -1793,7 +1857,7 @@ class Glider:
         #dbdFp = dbdreader.DBD(inputFile, cacheDir=cacheDir)
         dbdFp = None
         try:
-            dbdFp = dbdreader.DBD(inputFile, cacheDir=cacheDir)
+            dbdFp = dbdreader.DBD(inputFile, cacheDir=cacheDir, skip_initial_line=False)
         except Exception:
             print("WARNING: Unable to read glider DBD file: %s" % (inputFile))
 
@@ -1832,6 +1896,14 @@ class Glider:
                 dbdFp.close()
                 return
 
+            # Check for duplicate rows on the time axis and collapse first
+            uval, cval = np.unique(dbdData[dbdFp.parameterNames.index(timeDimension)][0], return_counts=True)
+            dval = uval[cval > 1]
+            if len(dval) > 0:
+                if self.debugFlag:
+                    print(f"Merging data for {inputFile}")
+                dbdData = self.mergeDuplicateValues(dbdData)
+
             timeIdx = dbdFp.parameterNames.index(timeDimension)
             timeLen = len(dbdData[timeIdx][1])
 
@@ -1863,7 +1935,8 @@ class Glider:
                         tempVar = np.array([np.nan] * timeLen)
                         tempVar[0:len(dbdData[idx][1])] = dbdData[idx][1]
                         data = tempVar
-                        print("  Resized:", dbdFp.parameterNames[idx])
+                        if self.debugFlag:
+                            print("  Resized:", dbdFp.parameterNames[idx])
                     dataObj[p] = (("time"), data)
                     #self.stopToDebug()
                     collectedParameters.append(p)
@@ -1874,6 +1947,15 @@ class Glider:
                     dataObj[p] = dbdData[idx][1]
                     collectedParameters.append(p)
                     collectedUnits.append(dbdFp.parameterUnits[p])
+
+            # Detect duplicate data rows, usually two
+            # Row 1 information is overwritten by Row 2
+            #uval, cval = np.unique(dataObj[timeDimension], return_counts=True)
+            #dval = uval[cval > 1]
+            #if len(dval) > 0:
+            #    if self.debugFlag:
+            #        print(f"Merging data for {inputFile}")
+            #    dataObj = self.mergeDuplicateValues(dataObj, dval, timeDimension)
 
             # Final assignments into object .data object
             self.data[dbdType] = dataObj
@@ -2649,6 +2731,7 @@ class Glider:
 
         # Sync failed
         if not success:
+            vbsFP.close()
             return
 
         #print(tsMetric, data)
@@ -2730,6 +2813,8 @@ class Glider:
 
             if endOfFile:
                 break
+
+        vbsFP.close()
 
     def applyDeploymentGlobalMetadata(self, ncDS):
         '''

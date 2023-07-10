@@ -425,7 +425,7 @@ do
 
     # dbdSource must have the ascii header line dbd_label: to be a valid *bd
     # file
-    is_dbd=$(grep 'dbd_label:' $dbdSource);
+    is_dbd=$(grep -a 'dbd_label:' $dbdSource);
     if [ -z "$is_dbd" ]
     then
         echo "Invalid flight source file: $dbdSource" >&2;
@@ -471,7 +471,7 @@ do
 
         # dbdSource must have the ascii header line dbd_label: to be a valid *bd
         # file
-        is_dbd=$(grep 'dbd_label:' $sciSource);
+        is_dbd=$(grep -a 'dbd_label:' $sciSource);
         if [ -z "$is_dbd" ]
         then
             echo "Invalid science source file: $sciSource" >&2;

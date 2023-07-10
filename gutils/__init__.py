@@ -12,7 +12,12 @@ from collections import namedtuple
 
 import numpy as np
 import pandas as pd
-from scipy.signal import boxcar, convolve
+try:
+    # SciPy 1.13.0 DepricationWarning
+    from scipy.signal.windows import boxcar
+    from scipy.signal import convolve
+except ImportError:
+    from scipy.signal import boxcar, convolve
 
 from pocean.meta import MetaInterface
 from pocean.utils import (

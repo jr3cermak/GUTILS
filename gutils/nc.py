@@ -396,10 +396,13 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
 
         if not extras_df.empty:
 
+            # Skip extra flag
+            skip_extra = False
+
             # Write the extras dimension to a new profile file
             profile_extras = extras_df.loc[extras_df.profile == pi].copy()
             if profile_extras.empty:
-                continue
+                skip_extra = True
 
             # Standardize the columns of the "extras" from the matched profile
             profile_extras.loc[:, 't'] = profile_extras.index
@@ -420,9 +423,18 @@ def create_netcdf(attrs, data, output_path, mode, profile_id_type=ProfileIdTypes
                     profile_extras.loc[:, c] = profile_extras[c].astype(profile[c].dtype)
             """
 
+            # If there is less than 3 time coordinates with an echogram, do not
+            # write out the profile.
+            if 'echogram_sv' in profile_extras.columns:
+                if 't' not in profile_extras.columns:
+                    skip_extra = True
+                if len(pd.unique(profile_extras['t'])) < 3:
+                    skip_extra = True
+
             try:
-                cr = create_profile_netcdf(attrs, profile_extras, output_path, mode + '_extra', profile_id_type)
-                written_files.append(cr)
+                if not skip_extra:
+                    cr = create_profile_netcdf(attrs, profile_extras, output_path, mode + '_extra', profile_id_type)
+                    written_files.append(cr)
             except BaseException:
                 L.exception('Error creating extra netCDF profile {}. Skipping.'.format(pi))
                 continue
