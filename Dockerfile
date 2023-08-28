@@ -1,7 +1,11 @@
 FROM phusion/baseimage:focal-1.2.0
 
-LABEL maintainer="Kyle Wilcox <kyle@axiomdatascience.com>" \
-      description='The GUTILS container'
+LABEL org.opencontainers.image.description="GUTILS as a docker image."
+LABEL org.opencontainers.image.authors="Kyle Wilcox <kyle@axiomdatascience.com>"
+LABEL org.opencontainers.image.url="https://git.axiom/SECOORA/GUTILS/"
+LABEL org.opencontainers.image.source="https://git.axiom/SECOORA/GUTILS/"
+LABEL org.opencontainers.image.licenses="MIT"
+
 
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
