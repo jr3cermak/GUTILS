@@ -177,8 +177,11 @@ class TestEchodroidOne(GutilsTestClass):
         self.cache_path = resource('slocum', 'unit_507_one', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         merger = SlocumMerger(
@@ -240,8 +243,11 @@ class TestEchodroidTwo(GutilsTestClass):
         self.cache_path = resource('slocum', 'unit_507_two', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         merger = SlocumMerger(
@@ -298,8 +304,11 @@ class TestEchoMetricsOne(GutilsTestClass):
         self.cache_path = resource('slocum', 'echometrics', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         merger = SlocumMerger(
@@ -363,8 +372,11 @@ class TestEchoMetricsTwo(GutilsTestClass):
         self.cache_path = resource('slocum', 'echometrics2', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         merger = SlocumMerger(
@@ -395,24 +407,23 @@ class TestEchoMetricsTwo(GutilsTestClass):
             )
             create_dataset(**args)
 
-        print(self.netcdf_path)
         assert os.path.exists(self.netcdf_path)
 
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 2
+        assert len(output_files) == 4, "expected 4 netcdf files"
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
             # first time in the first profile
-            assert ncd.variables['profile_id'][0] == 1679577217
+            assert ncd.variables['profile_id'][0] == 1679575271, "First profile id does not match"
 
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
             # first time in the last ecodroid profile
-            assert ncd.variables['profile_id'][0] == 1679577296
+            assert ncd.variables['profile_id'][0] == 1679577296, "Last profile id does not match"
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])
@@ -528,8 +539,11 @@ class TestEchoMetricsThree(GutilsTestClass):
         self.cache_path = resource('slocum', 'echometrics3', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         merger = SlocumMerger(
@@ -588,8 +602,11 @@ class TestEchoMetricsFour(GutilsTestClass):
         self.cache_path = resource('slocum', 'echometrics4', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         """
@@ -624,17 +641,17 @@ class TestEchoMetricsFour(GutilsTestClass):
         # Check number of profiles in netcdf directory
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 8, "Expected 8 netcdf files."
+        assert len(output_files) == 12, "Expected 12 netcdf files."
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1647114323, "First profile id does not match"
+            assert ncd.variables['profile_id'][0] == 1647110555, "First profile id does not match"
 
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1647141150, "Last profile id does not match"
+            assert ncd.variables['profile_id'][0] == 1647141015, "Last profile id does not match"
 
         # Check netCDF file for compliance
         ds = namedtuple('Arguments', ['file'])
@@ -670,8 +687,11 @@ class TestEchoMetricsFive(GutilsTestClass):
         self.cache_path = resource('slocum', 'echometrics5', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         merger = SlocumMerger(
@@ -751,8 +771,11 @@ class TestEchoMetricsSix(GutilsTestClass):
         self.cache_path = resource('slocum', 'echometrics6', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         merger = SlocumMerger(
@@ -832,8 +855,11 @@ class TestEchoMetricsSeven(GutilsTestClass):
         self.cache_path = resource('slocum', 'echometrics7', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         merger = SlocumMerger(
@@ -867,12 +893,12 @@ class TestEchoMetricsSeven(GutilsTestClass):
 
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 20, "expected 20 output files"
+        assert len(output_files) == 30, "expected 30 output files"
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1647789925, "First profile id does not match"
+            assert ncd.variables['profile_id'][0] == 1647788145, "First profile id does not match"
 
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:
@@ -898,8 +924,11 @@ class TestEchoMetricsEight(GutilsTestClass):
         self.cache_path = resource('slocum', 'echometrics8', 'config')
 
     def tearDown(self):
-        shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
-        shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
+        if os.environ.get('GUTILS_PYTEST_NOTEARDOWN'):
+            pass
+        else:
+            shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+            shutil.rmtree(self.netcdf_path, ignore_errors=True)  # Remove generated netCDF
 
     def test_echogram(self):
         merger = SlocumMerger(
@@ -933,12 +962,12 @@ class TestEchoMetricsEight(GutilsTestClass):
 
         output_files = sorted(os.listdir(self.netcdf_path))
         output_files = [ os.path.join(self.netcdf_path, o) for o in output_files ]
-        assert len(output_files) == 20
+        assert len(output_files) == 30, "expected 30 netcdf files"
 
         # First profile
         with nc4.Dataset(output_files[0]) as ncd:
             assert ncd.variables['profile_id'].ndim == 0
-            assert ncd.variables['profile_id'][0] == 1647789925, "First profile id does not match"
+            assert ncd.variables['profile_id'][0] == 1647788145, "First profile id does not match"
 
         # Last profile
         with nc4.Dataset(output_files[-1]) as ncd:

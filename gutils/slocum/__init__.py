@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import calendar
 import datetime
 import dbdreader
 import os
@@ -155,14 +156,19 @@ class SlocumReader(object):
                     from gutils.slocum.echotools import teledyne
                     have_teledyne = True
                 except ModuleNotFoundError:
-                    L.error("Echotools teledyne python package missing.")
+                    L.error("Echotools teledyne python module is missing.")
 
                 if have_teledyne:
                     # Metadata options that can be defined
                     #echogramBins = echograms_attrs.get('echogram_range_bins', 20)
                     #echogramRange = echograms_attrs.get('echogram_range', 60.0)
 
+                    # This is actually a parquet file (not an ascii file)
                     segment, segExt = os.path.splitext(os.path.basename(self.ascii_file))
+
+                    # Glider is before the first dash in the segment
+                    segment_data = segment.split("-")
+                    glider_name = segment_data[0]
 
                     glider = teledyne.Glider()
                     glider.args = {}
@@ -214,15 +220,23 @@ class SlocumReader(object):
                             echogram_data['echogram_time'], unit='s', origin='unix'
                         )
 
-                    # Determine if graphics need to be generated
-                    if enable_image:
-                        # Handle image: send to stdout or write to file
-                        image_file = "segment_plottype.png"
-                        glider.args['plotType'] = "binned,profile"
-                        glider.args['outDir'] = os.path.dirname(self.ascii_file)
-                        glider.args['imageOut'] = image_file
-                        glider.args['title'] = "segment (plottype)"
-                        glider.handleImage()
+                        # Determine if graphics need to be generated (if data exist)
+                        if enable_image:
+                            # Handle image: send to stdout or write to file
+                            # Find the first valid time of the first SV value
+                            profile_time = echogram_data['echogram_time'][0]
+                            profile_index = calendar.timegm(profile_time.utctimetuple())
+                            image_file = "{0}_{1:010d}_{2:%Y%m%dT%H%M%S}Z_plottype.png".format(
+                                glider_name,
+                                profile_index,
+                                profile_time
+                            )
+                            echogramPlotType = echograms_attrs.get('plot_type', 'binned,profile')
+                            glider.args['plotType'] = echogramPlotType
+                            glider.args['outDir'] = os.path.dirname(self.ascii_file)
+                            glider.args['imageOut'] = image_file
+                            glider.args['title'] = "segment (plottype)"
+                            glider.handleImage()
             else:
                 egram_file = Path(self.ascii_file).with_suffix(".echogram")
 
@@ -768,7 +782,8 @@ class SlocumMerger(object):
         processed = []
 
         if use_parquet:
-            L.debug("PARQUET enabled deployment (SlocumMerger)")
+            if self.extra_kwargs.get('enable_debug', False):
+                L.debug("PARQUET enabled deployment (SlocumMerger)")
 
             # self.tmpdir (source of DBD files)
             # self.destination_directory (ascii destination)
