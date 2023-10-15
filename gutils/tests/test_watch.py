@@ -70,6 +70,10 @@ class TestWatchClasses(GutilsTestClass):
         shutil.rmtree(ascii_path, ignore_errors=True)
         shutil.rmtree(netcdf_path, ignore_errors=True)
 
+        # Remove any cached .cac files
+        for cac in glob(os.path.join(original_binary, '*.cac')):
+            os.remove(cac)
+
     def test_gutils_binary_to_ascii_watch(self):
 
         wm = WatchManager()

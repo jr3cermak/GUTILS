@@ -1,5 +1,4 @@
 #!/bin/bash
-
 PATH=/bin:/usr/bin
 
 # Script basename
@@ -386,7 +385,7 @@ do
     [ ! -f "$dbdSource" ] && continue;
 
     # File must be of type data
-    ftype=$(file $dbdSource | grep data);
+    ftype=$(file $dbdSource | grep 'data\|ASCII');
     [ -z "$ftype" ] && continue;
 
     # Strip off extension

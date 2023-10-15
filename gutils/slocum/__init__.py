@@ -938,7 +938,7 @@ class SlocumMerger(object):
                 try:
                     dest_split_path = self.destination_directory.split('/')
                     foundType = dest_split_path[-2]
-                    allowedEchogramTypes = ['sfmc', 'rt', 'delayed']
+                    allowedEchogramTypes = ['rt', 'rtd', 'delayed']
                     if foundType in allowedEchogramTypes:
                         echogramType = foundType
                 except BaseException as e:

@@ -136,6 +136,9 @@ class TestSlocumExportDelayed(GutilsTestClass):
 
     def tearDown(self):
         shutil.rmtree(self.ascii_path, ignore_errors=True)  # Remove generated ASCII
+        # Remove any cached .cac files
+        for cac in glob(os.path.join(self.binary_path, '*.cac')):
+            os.remove(cac)
 
     def test_single_pair_existing_cac_files(self):
         # The 0 files are there to produce the required .cac files
